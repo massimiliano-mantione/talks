@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript: Evolution and Perspectives</title>
+    <meta name="description" content="Javascript: Evolution and Perspectives">
+    <meta name="author" content="Massimiliano Mantione">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/reveal.min.css">
+    
+    <link rel="stylesheet" href="theme.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+  </head>
+  <body>
+
+<div class="reveal">
+<div class="slides">
+
+
+<section><h1>Javascript:<br/>Evolution and<br/>Perspectives</h1>
+
+<h3>Massimiliano Mantione</h3>
+<p>massimiliano.mantione@gmail.com</p>
+
+<img src='img/jsday.png'/>
+
+</section>
+
+<section data-markdown><script type="text/template">
+About myself
+================================
+
+An enthusiast software engineer
+-------------------------------
+
+Mostly interested in programming languages
+and compiler optimizations.
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+Things I Did
+-------------------------------
+
+* V8 Javascript virtual machine (1 year)
+
+* Mono JIT compiler (6 years)
+
+* Other nice things
+
+  - game servers
+  - virtual tradeshows in a browser window
+  - embedded systems, GSM networks
+  - J2EE and databases.
+</script></section>
+
+<section>
+<h2>Things I Never Did</h2>
+
+<p class="fragment">Classical “web development”</p>
+
+<p class="fragment">Particularly, Javascript programming!</p>
+
+<blockquote class="fragment roll-in">
+When I sow Javascript for the 1st time (in 1995) I vowed that I would never touch such an abomination, even with a 10 feet pole
+</blockquote>
+
+<p class="fragment">Eventually, along this year, I changed my mind...</p>
+
+</section>
+
+<section data-markdown><script type="text/template">
+Part 1
+================================
+
+Javascript Evolution
+-------------------------------
+
+What kind of programming language is Javascript?
+
+How did it become what it is?
+
+How will it change in the future?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+Part 2
+================================
+
+Javascript Perspectives
+-------------------------------
+
+Is Javascript “the right tool for the job”?
+
+Does it even matter if it is the right tool or not?
+
+Do we know what to expect from its future?
+
+Do we even know what we want from its future?
+
+And if we do, can we influence it?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+Javascript Evolution
+-------------------------------
+
+**_What kind of programming language is Javascript?_**
+
+**_How did it become what it is?_**
+
+How will it change in the future?
+
+</script></section>
+
+
+<section>
+<h2>Javascript is a Hybrid Language</h2>
+
+<div style="display:table;table-layout:fixed;margin:2%">
+
+<div class="fragment roll-in" style="display:table-cell;border:2px solid;border-radius:4px;">
+<p>Functions (Lamba)</p>
+<p>Lexical Scope</p>
+<p>Loosely Typed</p>
+<img style="height:6vh;width:auto;" src='img/Scheme.png'/>
+<img style="height:6vh;width:auto;" src='img/Lisp.png'/>
+</div>
+
+<div class="fragment roll-in" style="display:table-cell;border:2px solid;border-radius:4px;">
+<p>Dynamic Objects</p>
+<p>Dynamic Dispatch</p>
+<p>Prototypal Inheritance</p>
+<img style="height:6vh;width:auto;" src='img/Self.png'/>
+<img style="height:6vh;width:auto;" src='img/Smalltalk.png'/>
+</div>
+
+<div class="fragment roll-in" style="display:table-cell;border:2px solid;border-radius:4px;">
+<p>Syntax</p>
+<p>Some conventions</p>
+<p>Name (Part)</p>
+<img style="height:6vh;width:auto;" src='img/Java.png'/>
+<img style="height:6vh;width:auto;" src='img/C.png'/>
+</div>
+
+</div>
+</section>
+
+<section data-markdown><script type="text/template">
+The most misunderstood programming language
+-------------------------------
+
+<span class="fragment">
+Programmers often think in Java, C# or C++
+</span>
+
+<span class="fragment">
+They generally think they can use Javascript<br/>without studying it
+</span>
+
+<span class="fragment">
+Wait, do we "think"?
+</span>
+
+<blockquote class="fragment roll-in">
+One week of coding can save one hour of thinking...
+</blockquote>
+
+<span class="fragment">
+Anyway, almost nobody thinks in Scheme or Smalltalk...
+</span>
+
+</script></section>
+
+<section>
+<h2>Enjoy your Javascript <br/> "WAT" moments!</h2>
+
+<pre class="fragment"><code>
+(null !== undefined) && (null == undefined) ==> true
+</code></pre>
+<pre class="fragment"><code>
+object = null;
+if ( !object ) ... ==> /* if branch not taken */
+</code></pre>
+<pre class="fragment"><code>
+[] + [] ==> ""
+</code></pre>
+<pre class="fragment"><code>
+[] + {} ==> "[object Object]"
+</code></pre>
+<pre class="fragment"><code>
+{} + [] ==> 0
+</code></pre>
+<pre class="fragment"><code>
+{} + {} ==> NaN
+</code></pre>
+
+</section>
+
+<section data-markdown><script type="text/template">
+Even the best part is not complete
+-------------------------------
+
+    function simpleJoin(stringArray) {
+      var accumulator = '';
+        for (var i=0, l=stringArray.length; i < l; i++) {
+          accumulator = accumulator + stringArray[i];
+        }
+      return accumulator;
+    }
+
+    function simpleJoin(stringArray, i, accumulator) {
+      return (i === stringArray.length)
+          ? accumulator
+          : simpleJoin(stringArray, i + 1, accumulator + stringArray[i])
+    }
+
+</script></section>
+
+<section>
+<h2>To be fair, Javascript<br/><u>has</u> good parts...</h2>
+
+<img class="fragment roll-in" src='img/JavascriptGoodBad.jpg' style="height:60vh;width:auto;"/>
+</section>
+
+<section data-markdown><script type="text/template">
+
+
+Javascript Evolution
+
+What kind of programming language is Javascript?
+*How did it become what it is?
+How will it change in the future?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Two weeks of work, by Brendan Eich...
+
+September 1995: Netscape Navigator 2.0 (Mocha or Livescript)
+
+Netscape browser version 2.0B3 (Javascript)
+
+August 1996: Internet Explorer 3.0 (JScript)
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Things are getting messy: enter Ecmascript
+
+November 1996: first submission to ECMA by Netscape
+Version 1 (June 1997): First edition
+Version 2 (June 1998): Align with ISO/IEC 16262
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+December 1999: Ecmascript 3
+
+Regular expressions
+Better string handling
+New control statements
+Try/catch exception handling
+Other enhancements
+  tighter definition of errors
+  formatting for numeric output
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Version 4: the Impossible Jump
+
+June 5, 2002: Mozilla 1.0
+November 9, 2004: Firefox 1.0
+September 2, 2008: Chrome 1.0
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+December 2009: Ecmascript 5
+
+Adds "strict mode"
+Clarifies ambiguities and fixes details
+New features:
+  getters and setters
+  library support for JSON
+  better reflection on object properties
+
+5.1 June 2011 Align with ISO/IEC 16262:2011
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Javascript Evolution
+
+What kind of programming language is Javascript?
+How did it become what it is?
+*How will it change in the future?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Version 6: “ECMAScript Harmony”
+
+Intended to gradually introduce the "reasonable" features from Ecmascript 4...
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Function improvements
+  arrow function syntax (brendan)
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Scoping, Binding, and Calling
+  Block scoped bindings
+    let, the new var but block-scoped and with better use-before-set semantics
+    const, for constant let-like bindings
+    block functions, let-scoped functions declared directly in block statements
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+  destructuring assignment and binding declaration forms
+  refutable matching: a non-sloppy semantics for matching
+  parameter default values
+  rest parameters (with spread “…” operator)
+  spread prefix operator for expanding an array actual parameter into its elements
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Collections: maps and sets
+
+Generation and Iteration
+  iterators (for more usable for-in constructs)
+  generators, (very Pythonic, can implement coroutines)
+  array comprehensions (eagerly-computed array iteration)
+  generator expressions (lazy iteration with comprehension)
+egal (identity-testing operator, “===” done right)
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Modules and Classes
+
+Quasis (Template Strings), simplify content generation
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Proxies (metaprogramming for virtual objects and wrappers)
+proper tail calls
+weak maps
+Binary Data (better than typed arrays!)
+Number, Math, String and Regex improvements
+Object.observe (to observe changes on objects)
+Private name objects
+“typeof null” bug fix cancelled due to too much breakage
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Version 7: to the Stars and Beyond...
+
+continue with language reform, code isolation, control of effects and library/tool support
+promises/concurrency
+number and math enhancements
+guards and trademarks (an alternative to static typing)
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+More Science Fiction from Version 7...
+
+operator overloading
+value types (first-class number-like objects)
+new record structures (records, tuples and typed arrays)
+pattern matching
+traits.
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Javascript Perspectives
+
+*Is Javascript “the right tool for the job”?
+Does it even matter if it is the right tool or not?
+Do we know what to expect from its future?
+Do we even know what we want from its future?
+And if we do, can we influence it?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+What other tools are there?
+
+Looking at the alternatives can help us understand what people want that is different from Javascript
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Let’s forget about...
+
+Java
+Flash
+Silverlight
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Coffescript: express yourself!
+
+Complier that targets Javascript
+Does not add a type system...
+...but adds a lot of syntactic sugar
+The result is very expressive
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Quenching Your Deep Lust for Types...
+
+Typescript (Microsoft)
+Dart (Google)
+Asm.js (Mozilla)
+NaCL (Google)
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Javascript Perspectives
+
+Is Javascript “the right tool for the job”?
+*Does it even matter if it is the right tool or not?
+Do we know what to expect from its future?
+Do we even know what we want from its future?
+And if we do, can we influence it?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Grand Theorem on Chances of Agreement
+
+Having two software developers agreeing about which tools should be used is much harder than having two random Italian politicians agreeing on anything at all, however trivial.
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+To Be Fair, Good Tools Are Hard...
+
+Parametric polymorphism
+Algebraic data types
+Type inference
+Phantom types
+Type classes
+Modules as Functors
+Monads
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Javascript Perspectives
+
+Is Javascript “the right tool for the job”?
+Does it even matter if it is the right tool or not?
+*Do we know what to expect from its future?
+*Do we even know what we want from its future?
+And if we do, can we influence it?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Now that we know where Javascript is going...
+
+Is it headed where we want to go?
+Do we know where we want to go?
+If we are happy with it, fine...
+...otherwise, what can we do about it?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Remember the Theorem on Agreement
+
+Many of us will want to go in different places
+And, heck, that’s perfectly fine!
+There’s room for lots of programming languages in the world...
+But, is there room for lots of programming languages in the web?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Look at what Coffescript and Typescript did
+
+They both target Javascript
+They solve very different problems
+So, if we accept to use compilers, diversity *is* possible
+Is there something that is *not* possible?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Let’s assume the VM is Javascript...
+
+Some kind of performance guarantees can only come from runtime features
+Also other details (private properties, call interception...) belong to the VM
+Everything else can be done with “front end” compilers
+After all we all use minifiers anyway!
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+My Wishlist (Strongly Opinionated):
+
+A simple “object shape guarantee” type system
+  guarantees efficient property access
+  memory allocation becomes precise
+
+Maybe a compact “binary format” for scripts
+  would cut download size and parsing time
+
+Go the asm.js way for numeric performance
+  maybe add a library for easy SIMD
+
+Do not waste time on anything else!!!
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+
+Javascript Perspectives
+-------------------------------
+
+
+Is Javascript “the right tool for the job”?
+Does it even matter if it is the right tool or not?
+Do we know what to expect from its future?
+Do we even know what we want from its future?
+*And if we do, can we influence it?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+Now That We Have Wishes...
+
+What can we do to make them come true?
+Again, look at Coffescript...
+
+Start implementing what we want!
+
+</script></section>
+
+
+</div>
+</div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
+
+<!--
+HTML
+
+<div id="container">
+    <div id="navi">a</div>
+    <div id="infoi"><img src="info_icon2.png" height="20" width="32"/>b</div>
+</div>
+CSS
+
+#container {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+#navi, 
+#infoi {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#infoi {
+    z-index: 10;
+}
+
+--!>
+
