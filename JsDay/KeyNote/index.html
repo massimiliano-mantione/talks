@@ -115,11 +115,23 @@ And if we do, can we influence it?
 Javascript Evolution
 -------------------------------
 
-**_What kind of programming language is Javascript?_**
+<u>**_What kind of programming language is Javascript?_**</u>
 
-**_How did it become what it is?_**
+How did it become what it is?
 
 How will it change in the future?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+Two weeks of work, by Brendan Eich...
+-------------------------------
+
+September 1995: Netscape Navigator 2.0 (Mocha or Livescript)
+
+Netscape browser version 2.0B3 (Javascript)
+
+August 1996: Internet Explorer 3.0 (JScript)
 
 </script></section>
 
@@ -234,367 +246,429 @@ Even the best part is not complete
 </section>
 
 <section data-markdown><script type="text/template">
-
-
 Javascript Evolution
+-------------------------------
 
 What kind of programming language is Javascript?
-*How did it become what it is?
+
+<u>**_How did it become what it is?_**</u>
+
 How will it change in the future?
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
-Two weeks of work, by Brendan Eich...
-
-September 1995: Netscape Navigator 2.0 (Mocha or Livescript)
-
-Netscape browser version 2.0B3 (Javascript)
-
-August 1996: Internet Explorer 3.0 (JScript)
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-
-
-Things are getting messy: enter Ecmascript
+Things were getting messy:<br/>enter Ecmascript
+-------------------------------
 
 November 1996: first submission to ECMA by Netscape
-Version 1 (June 1997): First edition
-Version 2 (June 1998): Align with ISO/IEC 16262
+
+June 1997, Version 1: First edition
+
+June 1998, Version 2: Align with ISO/IEC 16262
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 December 1999: Ecmascript 3
+-------------------------------
 
 Regular expressions
+
 Better string handling
+
 New control statements
+
 Try/catch exception handling
-Other enhancements
-  tighter definition of errors
-  formatting for numeric output
+
+Other enhancements:
+
+<small>
+tighter definition of errors<br/>
+formatting for numeric output
+<small>
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Version 4: the Impossible Jump
+-------------------------------
 
 June 5, 2002: Mozilla 1.0
+
 November 9, 2004: Firefox 1.0
+
 September 2, 2008: Chrome 1.0
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 December 2009: Ecmascript 5
+-------------------------------
 
 Adds "strict mode"
-Clarifies ambiguities and fixes details
-New features:
-  getters and setters
-  library support for JSON
-  better reflection on object properties
 
-5.1 June 2011 Align with ISO/IEC 16262:2011
+Clarifies ambiguities and fixes details
+
+New features:
+
+<small>
+getters and setters<br/>
+library support for JSON<br/>
+better reflection on object properties
+</small>
+
+June 2011: Version 5.1 (align with ISO/IEC 16262:2011)
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Javascript Evolution
+-------------------------------
 
 What kind of programming language is Javascript?
+
 How did it become what it is?
-*How will it change in the future?
+
+<u>**_How will it change in the future?_**</u>
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Version 6: “ECMAScript Harmony”
+-------------------------------
 
+<blockquote><h3>
 Intended to gradually introduce the "reasonable" features from Ecmascript 4...
+</h3></blockquote>
 
 </script></section>
 
 <section data-markdown><script type="text/template">
 
-Function improvements
-  arrow function syntax (brendan)
+Function and scoping improvements
+-------------------------------
+
+* Arrow function syntax and block scoped bindings
+
+* let, the new var but block-scoped and with better use-before-set semantics
+
+* const, for constant let-like bindings
+
+* Block functions, let-scoped functions declared directly in block statements
 
 </script></section>
 
 <section data-markdown><script type="text/template">
+More expressive syntactic forms
+-------------------------------
 
-Scoping, Binding, and Calling
-  Block scoped bindings
-    let, the new var but block-scoped and with better use-before-set semantics
-    const, for constant let-like bindings
-    block functions, let-scoped functions declared directly in block statements
+Destructuring assignment and binding declaration forms
 
-</script></section>
+Parameter default values
 
-<section data-markdown><script type="text/template">
+Rest parameters (with spread “…” operator)
 
-  destructuring assignment and binding declaration forms
-  refutable matching: a non-sloppy semantics for matching
-  parameter default values
-  rest parameters (with spread “…” operator)
-  spread prefix operator for expanding an array actual parameter into its elements
+Spread prefix operator for expanding an array actual parameter into its elements
 
 </script></section>
 
 <section data-markdown><script type="text/template">
+More expressive sequence handling
+-------------------------------
 
+New collections: **maps** and **sets**
 
-Collections: maps and sets
+**Iterators** _(for more usable for-in constructs)_
 
-Generation and Iteration
-  iterators (for more usable for-in constructs)
-  generators, (very Pythonic, can implement coroutines)
-  array comprehensions (eagerly-computed array iteration)
-  generator expressions (lazy iteration with comprehension)
-egal (identity-testing operator, “===” done right)
+**Generators**, _(very Pythonic, can implement coroutines)_
+
+**Array comprehensions** _(eager array iteration)_
+
+**Generator expressions** _(lazy comprehension)_
+
+**egal** _(identity-testing operator: “===” done right)_
 
 </script></section>
 
 <section data-markdown><script type="text/template">
+More syntactic sugar
+-------------------------------
 
-Modules and Classes
+Modules and Classes (but _"maximally minimal"_)
 
 Quasis (Template Strings), simplify content generation
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
+Runtime related improvements
+-------------------------------
 
 Proxies (metaprogramming for virtual objects and wrappers)
-proper tail calls
-weak maps
+
+Proper tail calls
+
+Weak maps
+
 Binary Data (better than typed arrays!)
+</script></section>
+
+<section data-markdown><script type="text/template">
+More runtime related improvements
+-------------------------------
+
 Number, Math, String and Regex improvements
+
 Object.observe (to observe changes on objects)
+
 Private name objects
+
 “typeof null” bug fix cancelled due to too much breakage
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
-
 Version 7: to the Stars and Beyond...
+-------------------------------
 
 continue with language reform, code isolation, control of effects and library/tool support
+
 promises/concurrency
+
 number and math enhancements
+
 guards and trademarks (an alternative to static typing)
 
 </script></section>
 
 <section data-markdown><script type="text/template">
+More Science Fiction<br/>from Version 7...
+-------------------------------
 
-More Science Fiction from Version 7...
+Operator overloading
 
-operator overloading
-value types (first-class number-like objects)
-new record structures (records, tuples and typed arrays)
-pattern matching
-traits.
+Value types (first-class number-like objects)
+
+New record structures (records, tuples and typed arrays)
+
+Pattern matching
+
+Traits (interface like contracts)
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Javascript Perspectives
+-------------------------------
 
-*Is Javascript “the right tool for the job”?
+<u>**_Is Javascript “the right tool for the job”?_**</u>
+
 Does it even matter if it is the right tool or not?
+
 Do we know what to expect from its future?
+
 Do we even know what we want from its future?
+
 And if we do, can we influence it?
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 What other tools are there?
+-------------------------------
 
+<blockquote><h3>
 Looking at the alternatives can help us understand what people want that is different from Javascript
+</h3></blockquote>
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Let’s forget about...
+-------------------------------
 
 Java
+
 Flash
+
 Silverlight
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Coffescript: express yourself!
+-------------------------------
 
 Complier that targets Javascript
+
 Does not add a type system...
-...but adds a lot of syntactic sugar
+
+...but adds a _lot_ of syntactic sugar!
+
 The result is very expressive
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
-Quenching Your Deep Lust for Types...
+Quenching Your Deep<br/>Lust for Types...
+-------------------------------
 
 Typescript (Microsoft)
+
 Dart (Google)
+
 Asm.js (Mozilla)
+
 NaCL (Google)
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Javascript Perspectives
+-------------------------------
 
 Is Javascript “the right tool for the job”?
-*Does it even matter if it is the right tool or not?
+
+<u>**_Does it even matter if it is the right tool or not?_**</u>
+
 Do we know what to expect from its future?
+
 Do we even know what we want from its future?
+
 And if we do, can we influence it?
 
 </script></section>
 
 <section data-markdown><script type="text/template">
+Grand Theorem on<br/>Chances of Agreement
+-------------------------------
 
-
-Grand Theorem on Chances of Agreement
-
-Having two software developers agreeing about which tools should be used is much harder than having two random Italian politicians agreeing on anything at all, however trivial.
+<blockquote>
+Having two software developers agreeing about which tools should be used is much harder than having two random Italian politicians agreeing on anything at all,<br/>however trivial.
+</blockquote>
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
-
 To Be Fair, Good Tools Are Hard...
+-------------------------------
 
 Parametric polymorphism
+
 Algebraic data types
+
 Type inference
+
 Phantom types
+
 Type classes
+
 Modules as Functors
+
 Monads
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
-
 Javascript Perspectives
+-------------------------------
 
 Is Javascript “the right tool for the job”?
+
 Does it even matter if it is the right tool or not?
-*Do we know what to expect from its future?
-*Do we even know what we want from its future?
+
+<u>**_Do we know what to expect from its future?_**</u>
+
+<u>**_Do we even know what we want from its future?_**</u>
+
 And if we do, can we influence it?
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
-Now that we know where Javascript is going...
+Now that we know<br/><u>where</u> Javascript is going...
+-------------------------------
 
 Is it headed where we want to go?
-Do we know where we want to go?
+
+_(do we know where we want to go?)_
+
 If we are happy with it, fine...
+
 ...otherwise, what can we do about it?
 
 </script></section>
 
 <section data-markdown><script type="text/template">
-
 Remember the Theorem on Agreement
-
-Many of us will want to go in different places
-And, heck, that’s perfectly fine!
-There’s room for lots of programming languages in the world...
-But, is there room for lots of programming languages in the web?
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-
-Look at what Coffescript and Typescript did
-
-They both target Javascript
-They solve very different problems
-So, if we accept to use compilers, diversity *is* possible
-Is there something that is *not* possible?
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-
-Let’s assume the VM is Javascript...
-
-Some kind of performance guarantees can only come from runtime features
-Also other details (private properties, call interception...) belong to the VM
-Everything else can be done with “front end” compilers
-After all we all use minifiers anyway!
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-
-My Wishlist (Strongly Opinionated):
-
-A simple “object shape guarantee” type system
-  guarantees efficient property access
-  memory allocation becomes precise
-
-Maybe a compact “binary format” for scripts
-  would cut download size and parsing time
-
-Go the asm.js way for numeric performance
-  maybe add a library for easy SIMD
-
-Do not waste time on anything else!!!
-
-</script></section>
-
-<section data-markdown><script type="text/template">
-
-
-Javascript Perspectives
 -------------------------------
 
+Many of us will want to go in different places
 
-Is Javascript “the right tool for the job”?
-Does it even matter if it is the right tool or not?
-Do we know what to expect from its future?
-Do we even know what we want from its future?
-*And if we do, can we influence it?
+And, heck, that’s perfectly fine!
+
+There’s room for lots of programming languages<br/>in the world...
+
+But, is there room for lots of programming languages<br/>for the web?
 
 </script></section>
 
 <section data-markdown><script type="text/template">
+Look at what Coffescript and Typescript did
+-------------------------------
 
+They both target Javascript
+
+They solve very different problems
+
+So, if we accept to use compilers, diversity *is* possible
+
+Is there something that is **not** possible?
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+Let’s assume the VM is Javascript...
+-------------------------------
+
+Some kind of performance guarantees can only come from runtime features
+
+Also other details (private properties, call interception...) belong to the VM
+
+Everything else can be done with compilers
+
+In the end we all use minifiers anyway!
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+My Wishlist:<br/>(Strongly Opinionated)
+-------------------------------
+
+A simple “object shape guarantee” type system
+<small>guarantees efficient property access<br/>
+and precise memory allocation</small>
+
+Maybe a compact “binary format” for scripts
+<small>would cut download size and parsing time</small>
+
+Go the asm.js way for numeric performance
+
+<small>maybe add a library for easy SIMD</small>
+
+<u>**Do not waste time on anything else!!!**</u>
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
 Now That We Have Wishes...
+-------------------------------
 
 What can we do to make them come true?
-Again, look at Coffescript...
+
+Again, look at Coffescript:
 
 Start implementing what we want!
 
