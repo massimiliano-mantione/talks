@@ -283,10 +283,10 @@ body {
 }
 
 .reveal pre {
-	display: block;
-	position: relative;
-	width: 90%;
-	margin: 15px auto;
+	//display: block;
+	//position: relative;
+	width: 100%;
+	//margin: auto auto;
 
 	text-align: left;
 	font-size: 0.55em;
@@ -301,9 +301,9 @@ body {
 	font-family: monospace;
 }
 .reveal pre code {
-	padding: 5px;
+	//padding: 5px;
 	overflow: auto;
-	max-height: 400px;
+	//max-height: 400px;
 	word-wrap: normal;
 }
 
@@ -579,7 +579,7 @@ body {
 	display: none;
 	position: absolute;
 	width: 100%;
-	padding: 20px 0px;
+	padding: 0px 0px;
 
 	z-index: 10;
 	line-height: 1.2em;
