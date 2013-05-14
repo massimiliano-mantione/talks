@@ -59,7 +59,7 @@ body {
     font-family: 'PT Sans', sans-serif;
     min-height: 740px;
     
-    background: #706ea6
+    background: #4d4c73
 }
 
 /* Hack to avoid scaling the radial background in huge slides */
@@ -125,7 +125,7 @@ a:focus {
     
     border: 8px solid #3c3c3d;
     border-radius: 8px;
-    background: #706ea6;
+    background: #4d4c73;
     
     font-family: 'Open Sans', Arial, sans-serif;
     line-height: 1.2;
