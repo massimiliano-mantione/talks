@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Writing Efficient Javascript Code</title>
+    
+    <meta name="description" content="How to write Javascript code so that moders Javascript VMs can optimize it easily." />
+    <meta name="author" content="Massimiliano Mantione"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="data/jstalkJSDay2013.css" rel="stylesheet" />
+    <link href="data/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="data/shThemeRDark.css" rel="stylesheet" type="text/css" />
+    
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress" data-transition-duration="1000" data-perspective="1000">
+
+
+<div id="start" class="step" data-x="1000" data-y="1000" data-z="-4000">
+  <div class="divt div10"></div>
+  <div class="titlediv"><p>Writing Efficient<br/>Javascript Code</p></div>
+  <div class="divt div20"></div>
+  <div class="subtitle">
+    <p>How to write code that modern<br/>VMs can optimize effectively<br/>(focusing on V8)</p>
+  </div>
+</div>
+
+<div id="sponsors" class="step" data-x="5000" data-y="3000" data-z="-3900" data-scale=3>
+  <div class="titlediv"><p>Thanks to the Organizers</p></div>
+  <div class="divt div3"></div>
+  <div style="border-radius: 5vh; background-color: white; padding: 10vh; width: 70vw; height: 50vh;">
+    <div class="divt div10"></div>
+    <div class="divt div5"></div>
+    <img src="data/jsday.png" style="width: 60vw; height: auto; "/>
+  </div>
+</div>
+
+<div id="whoami" class="step" data-x="1000" data-y="3000" data-z="-4000">
+  <div class="titlediv"><p>Who am I?</p></div>
+  <div class="divt">
+    <p class="t n">Massimiliano Mantione <span class="i">(software engineer at heart)</span></p>
+    <div class="divt div3"></div>
+    <p class="t n u">I've been working on...</p>
+    <ul class="t n">
+      <li>Telecom switching stations and Java corporate tools <span class="i u">(Siemens)</span></li>
+      <li>The Mono .NET JIT compiler and runtime <span class="i u">(Novell)</span></li>
+      <li>Porting Mono to gaming platforms <span class="i u">(Unity 3D)</span></li>
+      <li>Virtual tradeshows <span class="i u">(Hyperfair)</span></li>
+      <li>The V8 Javascript engine <span class="i u">(Google)</span></li>
+    </ul>
+  </div>
+</div>
+
+
+<div id="ineverdid" class="step" data-x="1000" data-y="5000" data-z="-4000">
+  <div class="titlediv"><p>Things I never did</p></div>
+
+  <div class="divt div10"></div>
+  <div class="divt">
+	  <p class="t n">Classical client side web applications (HTML and Havascript)</p>
+	  <p class="t n">Back in 1995 I wowed that I would never touch Javascript, even with a 10 foot pole</p>
+	  <p class="t n">Eventually I understood that this wicked language has a place in the world...</p>
+  </div>
+</div>
+
+<div id="whocares" class="step" data-x="9000" data-y="2000" data-z="-4000" data-scale=1>
+  <div class="titlediv"><p>Javascript is <span class="i">Interpreted</span>...</p></div>
+  <div class="divt div3"></div>
+  <div class="subtitle"><p>Who cares about Javascript performance?</p></div>
+  <div class="divt div5"></div>
+  <div class="divt">
+	  <p class="t n c">Does it actually matter?</p>
+	  <p class="t n c">Should I care?</p>
+  </div>
+</div>
+
+
+<div id="demointro" class="step" data-x="9000" data-y="4000" data-z="-4000" data-scale=1>
+  <div class="titlediv"><p>IT DOES MATTER</p></div>
+  <div class="divt div5"></div>
+  <div class="divt div20"></div>
+  <div class="subtitle" style=\"height: 70vh; width: 100vw; left: 0vw; right: 0vw;\">
+	  <p>And you should care</p>
+  </div>
+</div>
+
+<div id="demo" class="step onlyactive" data-x="9000" data-y="4000" data-z="-4000" data-scale=1>
+  <div class="titlediv"></div>
+  <div class="divt">
+	  <p class="t n c">How many of you would have imagined this in 1995?</p>
+  </div>
+  <div id="demodiv"></div>
+</div>
+
+<script>
+var demoActivationCallback = function(active) {
+  var activeDemoFrame = "<iframe style=\"height: 60vh; width: 100vw;\" src=\"demo/demo.html\"></iframe>";
+  var nullDemoFrame = "<div style=\"height: 70vh; width: 100vw; left: 0vw; right: 0vw;\"></div>";
+  var demodiv = document.getElementById('demodiv');
+  
+  if (active) {
+    demodiv.innerHTML = activeDemoFrame;
+  } else {
+    demodiv.innerHTML = nullDemoFrame;
+  }
+}
+demoActivationCallback(false);
+</script>
+
+<div id="why" class="step" data-x="12000" data-y="3000" data-z="-4000" data-scale=2>
+  <div class="titlediv"><p>Why it matters</p></div>
+  <div class="div3"></div>
+  <div class="subtitle" style="color: rgb(65, 65, 65);"><p>It's not about making<br/>your application run faster now</p></div>
+  <div class="div2"></div>
+  <div class="subtitle"><p>It is about enabling things<br/>that you could not do before</p></div>
+</div>
+
+
+<div id="how1" class="step first" data-x="17000" data-y="1500" data-z="-4000">
+  <div class="titledivdouble"><p>How do you make your<br/>web application faster?</p></div>
+</div>
+<div id="how2" class="step onlyactive" data-x="17000" data-y="1500" data-z="-4000">
+  <div class="titledivdouble"></div>
+  <div class="subtitle"><p>Obviously, you fix what needs fixing!</p></div>
+</div>
+
+<div id="how3" class="step first" data-x="17000" data-y="4500" data-z="-4000">
+  <div class="titledivdouble"><p>Ok, how do I know what needs fixing?</p></div>
+</div>
+<div id="how4" class="step onlyactive" data-x="17000" data-y="4500" data-z="-4000">
+  <div class="titledivdouble"></div>
+  <div class="subtitle"><p>You look at your code, understand it and identify the crux of your problem :-)</p></div>
+</div>
+
+<div id="primeproblem" class="step" data-x="19000" data-y="3000" data-z="-4000">
+  <div class="titledivdouble"><p>Problem: find 25000 prime numbers</p></div>
+  <div class="div5"></div>
+  <div class="divt t n">
+	  <p>For x = 1 to infinity:<br/>
+	  if x not divisible by any member of an initially empty list of primes,<br/>
+	  add x to the list until we have 25000 elements</p>
+  </div>
+</div>
+
+<div id="primejs" class="step" data-x="21000" data-y="3000" data-z="-4000">
+  <div class="titlediv">The contenders: Js</div>
+  <div class="codesmall">
+<pre class="brush: js">
+function Primes() {
+  this.prime_count = 0;
+  this.primes = new Array(25000);
+  this.getPrimeCount = function() { return this.prime_count; }
+  this.getPrime = function(i) { return this.primes[i]; }
+  this.addPrime = function(i) {
+    this.primes[this.prime_count++] = i;
+  }
+
+  this.isPrimeDivisible = function(candidate) {
+    for (var i = 1; i <= this.prime_count; ++i) {
+      if ((candidate % this.primes[i]) == 0) return true;
+    }
+    return false;
+  }
+};
+
+function main() {
+  p = new Primes();
+  var c = 1;
+  while (p.getPrimeCount() < 25000) {
+    if (!p.isPrimeDivisible(c)) {
+      p.addPrime(c);
+    }
+    c++;
+  }
+  print(p.getPrime(p.getPrimeCount()-1));
+}
+
+main();
+</pre>
+  </div>
+</div>
+
+<div id="primecpp" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv">The contenders: C++</div>
+  <div class="codesmall">
+<pre class="brush: cpp">
+class Primes {
+ public:
+  int getPrimeCount() const { return prime_count; }
+  int getPrime(int i) const { return primes[i]; }
+  void addPrime(int i) { primes[prime_count++] = i; }
+
+  bool isDivisibe(int i, int by) { return (i % by) == 0; }
+
+  bool isPrimeDivisible(int candidate) {
+    for (int i = 1; i < prime_count; ++i) {
+      if (isDivisibe(candidate, primes[i])) return true;
+    }
+    return false;
+  }
+
+ private:
+  volatile int prime_count;
+  volatile int primes[25000];
+};
+
+int main() {
+  Primes p;
+  int c = 1;
+  while (p.getPrimeCount() < 25000) {
+    if (!p.isPrimeDivisible(c)) {
+      p.addPrime(c);
+    }
+    c++;
+  }
+  printf("%d\n", p.getPrime(p.getPrimeCount()-1));
+}
+</pre>
+  </div>
+</div>
+
+<div id="primerace" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv" style="top: 40vh;">Let's RACE!</div>
+</div>
+<div id="primer1" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv" style="top: 30vh;">C++ is about 5 times<br/>faster than JavaScript</div>
+</div>
+<div id="primer2" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="subtitle" style="position: absolute; top: 30vh;">I guess that's<br/>not so bad, right?</div>
+</div>
+<div id="prime3x" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv">Of course it is <i>SO BAD!</i></div>
+  <div class="div3"></div>
+  <div class="subtitle">Don't give up! Demand faster!</div>
+  <div class="div5"></div>
+  <div class="divt n t c">
+	  <p>How much faster?</p>
+	  <p>3x?</p>
+  </div>
+</div>
+<div id="prime30x" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv">Of course it is <i>SO BAD!</i></div>
+  <div class="div3"></div>
+  <div class="subtitle">Don't give up! Demand faster!</div>
+  <div class="div5"></div>
+  <div class="divt n t c">
+	  <p>How much faster?</p>
+	  <p>3x?</p>
+	  <p>30x?</p>
+  </div>
+</div>
+<div id="prime300x" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv">Of course it is <i>SO BAD!</i></div>
+  <div class="div3"></div>
+  <div class="subtitle">Don't give up! Demand faster!</div>
+  <div class="div5"></div>
+  <div class="divt n t c">
+	  <p>How much faster?</p>
+	  <p>3x?</p>
+	  <p>30x?</p>
+	  <p>300x?</p>
+  </div>
+</div>
+<div id="prime3000x" class="step onlyactive" data-x="23000" data-y="3000" data-z="-4000">
+  <div class="titlediv">Of course it is <i>SO BAD!</i></div>
+  <div class="div3"></div>
+  <div class="subtitle">Don't give up! Demand faster!</div>
+  <div class="div5"></div>
+  <div class="divt n t c">
+	  <p>How much faster?</p>
+	  <p>3x?</p>
+	  <p>30x?</p>
+	  <p>300x?</p>
+	  <p>3000x?</p>
+	  <p>How do we know?</p>
+  </div>
+</div>
+
+<div id="beprepared" class="step next" data-x="6000" data-y="5000" data-z="-8000" data-scale=0.5>
+  <div class="titlediv">We need to be prepared</div>
+  <div class="div5"></div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Know what to expect,</p>
+	  <p>Know your tools,</p>
+	  <p>Know how the VM executes and optimizes your code,</p>
+	  <p>Know how to inspect what is really going on, and</p>
+	  <p>Know that you will <span class="i u">never</span> guess it right before experimenting!</p>
+  </div>
+</div>
+
+
+
+
+<div id="understanding" class="step onlyactive" data-x="9000" data-y="6000" data-z="100" data-scale="3">
+<p class="understanding">Understanding how V8 optimizes JavaScript</p>
+</div>
+
+
+<div id="optimized" class="step" data-x="2000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titlediv">What's <em>optimized code</em>?</div>
+  <div class="divt n t b">At each step (high level operation):</div>
+  <div class="div5"></div>
+  <div class="divt n t">
+	  <p>Interpreter: lots of branches to select the operation</p>
+	  <p>Fast JIT: machine code with calls to (slow) generic operations</p>
+	  <p>JIT with type info: machine code with calls to specific operations</p>
+	  <p>Optimizing JIT: as above but with compiler optimizations</p>
+  </div>
+</div>
+
+
+<div id="classes" class="step" data-x="6000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Hidden Classes</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>No type info in the source code means no optimizations</p>
+	  <p>Type info could make JavaScript faster (like C++?)</p>
+	  <p>V8 internally creates hidden classes for objects at runtime</p>
+	  <p>Objects with the same hidden class can use the same optimized code</p>
+  </div>
+</div>
+<div id="classes1" class="step onlyactive" data-x="6000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: js">
+function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+var p1 = new Point(11, 22);
+var p2 = new Point(33, 44);
+p2.z = 55;
+</pre>
+  </div>
+</div>
+
+
+<div id="speedtrap" class="step speedtrap" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div style="position: absolute; height: 100vh; width: 100vw">
+	  <img src= "data/speedtrap.jpg" style="width:100vw; height: auto;"/>
+  </div>
+  <div class="speedtraptitle">Avoid the Speed Trap!</div>
+</div>
+
+<div id="speedtrap1" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="trap">Initialize all object members in constructor functions</div>
+  <div class="div5"></div>
+  <div class="trap">Always initialize object members in the same order</div>
+</div>
+
+<div id="numbers" class="step" data-x="10000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Fast Numbers</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Objects and numbers are very different</p>
+	  <p>Javascript can mix them freely</p>
+	  <p>V8 uses tagging: 1 bit in a pointer</p>
+	  <p>Values can be objects, SMall Integers (SMI) or boxed double</p>
+  </div>
+</div>
+
+
+<div id="speedtrap2" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div20"></div>
+  <div class="trap">Prefer numeric values that can be represented as 31-bit signed integers</div>
+</div>
+
+
+<div id="arrays" class="step" data-x="14000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titledivdouble">Handling Large and Sparse Arrays</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Fast Elements: linear storage for compact key sets</p>
+	  <p>Dictionary Elements: hash table storage otherwise</p>
+  </div>
+</div>
+<div id="arrays1" class="step onlyactive" data-x="14000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titledivdouble"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: js">
+a = new Array();
+for (var b = 0; b < 10; b++) {
+  a[0] |= b;  // Oh no!
+}
+</pre>
+  </div>
+  <div class="div3"></div>
+  <div class="code">
+<pre class="brush: js">
+a = new Array();
+a[0] = 0;
+for (var b = 0; b < 10; b++) {
+  a[0] |= b;  // Much better! 2x faster.
+}
+</pre>
+  </div>
+</div>
+
+
+<div id="speedtrap3" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div2"></div>
+  <div class="trapsmall">Use contiguous keys starting at 0 for Arrays</div>
+  <div class="div3"></div>
+  <div class="trapsmall">Don't pre-allocate large Arrays (e.g. > 64K elements)</div>
+  <div class="div3"></div>
+  <div class="trapsmall">Don't delete elements in arrays, especially numeric arrays</div>
+  <div class="div3"></div>
+  <div class="trapsmall">Don't load uninitialized or deleted elements</div>
+</div>
+
+
+
+<div id="specializedelements" class="step" data-x="18000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Specialized array elements</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Arrays of "pure doubles" are not slow<br/>(thanks to Double Array Unboxing)</p>
+	  <p>Array's hidden class tracks element types</p>
+	  <p>[un]boxing causes hidden array class change</p>
+  </div>
+</div>
+
+<div id="specializedelements1" class="step onlyactive" data-x="18000" data-y="9000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: js">
+// The bad way
+var a = new Array();
+a[0] = 77;    // Allocates
+a[1] = 88;
+a[2] = 0.5;   // Allocates, converts
+a[3] = true;  // Allocates, converts
+
+// Hidden Classes for Elements - A Better Way
+var a = [77, 88, 0.5, true];
+</pre>
+  </div>
+</div>
+
+
+<div id="speedtrap4" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div1"></div>
+  <div class="trap">Initialize using array literals for small fixed-sized arrays</div>
+  <div class="div5"></div>
+  <div class="trap">Preallocate small arrays to correct size before using them</div>
+  <div class="div5"></div>
+  <div class="trap">Don't store non-numeric values (objects) in numeric arrays</div>
+</div>
+
+<div id="fullgen" class="step" data-x="2000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Fast or Optimizing?</div>
+  <div class="div5"></div>
+  <div class="divt n t">
+	  <p>"Full" compiler can generate good code for any JavaScript</p>
+	  <p>Optimizing compiler produces great code for most JavaScript</p>
+  </div>
+  <div class="div3"></div>
+  <div class="divt n t">
+	  <p>"Full" Compiler Starts Executing Code ASAP</p>
+	  <p>Quickly generates good but not great JIT code</p>
+	  <p>Assumes (almost) nothing about types at compilation time</p>
+  </div>
+</div>
+
+
+
+
+<div id="ICs" class="step" data-x="6000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Inline Caches (ICs)</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Handle types efficiently in fullgen</p>
+	  <p>Type-dependent code for every operation</p>
+	  <p>Validate type assumptions first, then do work</p>
+	  <p>ICs self-modify at runtime via backpatching</p>
+  </div>
+</div>
+<div id="ICs1" class="step onlyactive" data-x="6000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: js">
+// Consider candidate % this.primes[i] 
+this.isPrimeDivisible = function(candidate) {
+  for (var i = 1; i <= this.prime_count; ++i) {
+    if (candidate % this.primes[i] == 0) return true;
+  }
+  return false;
+}
+</pre>
+  </div>
+</div>
+<div id="ICs2" class="step onlyactive" data-x="6000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: bash">
+push [ebp+0x8]
+mov eax,[ebp+0xc]
+mov edx,eax
+mov ecx,0x50b155dd 
+call LoadIC_Initialize           ;; this.primes
+push eax
+mov eax,[ebp+0xf4]
+pop edx
+mov ecx,eax
+call KeyedLoadIC_Initialize      ;; this.primes[i]
+pop edx
+call BinaryOpIC_Initialize Mod   ;; candidate % this.primes[i]
+</pre>
+  </div>
+</div>
+
+
+
+
+
+<div id="megamorphic" class="step" data-x="10000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Megamorphic attack!</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Operations are monomorphic if the</br/>hidden class is always the same</p>
+	  <p>Otherwise they are polymorphic</p>
+	  <p>Monomorphic is better than polymorphic</p>
+  </div>
+</div>
+<div id="megamorphic1" class="step onlyactive" data-x="10000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: js">
+function add(x, y) {
+  return x + y;
+}
+
+add(1, 2);      // + in add is monomorphic
+add("a", "b");  // + in add becomes polymorphic
+</pre>
+  </div>
+</div>
+
+
+<div id="speedtrap5" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div20"></div>
+  <div class="trap">Prefer monomorphic over polymorphic wherever possible</div>
+</div>
+
+
+<div id="crankshaft" class="step" data-x="14000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">The Optimizing Compiler</div>
+  <div class="div5"></div>
+  <div class="divt n t">
+	  <p>V8 re-compiles hot functions with an optimizing compiler</p>
+  </div>
+  <div class="div3"></div>
+  <div class="divt n t">
+	  <p>Type information (from ICs) makes code faster</p>
+	  <p>Operations speculatively get inlined</p>
+	  <p>Monomorphic calls and are also inlined</p>
+	  <p>Inlining enables other optimizations</p>
+  </div>
+</div>
+<div id="crankshaft1" class="step onlyactive" data-x="14000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="div10"></div>
+  <div class="code">
+<pre class="brush: bash">
+;; candidate % this.primes[i] 
+cmp [edi+0xff],0x4920d181   ;; Is this a Primes object?
+jnz 0x2a90a03c              
+mov eax,[edi+0xf]           ;; Fetch this.primes
+test eax,0x1                ;; Is primes a SMI ?
+jz 0x2a90a050               
+cmp [eax+0xff],0x4920b001   ;; Is primes hidden class a packed SMI array? 
+mov ebx,[eax+0x7]
+mov esi,[eax+0xb]           ;; Load array length
+sar esi,1                   ;; Convert SMI length to int32
+cmp ecx,esi                 ;; Check array bounds
+jnc 0x2a90a06e             
+mov esi,[ebx+ecx*4+0x7]     ;; Load element
+sar esi,1                   ;; Convert SMI element to int32
+test esi,esi                ;; mod (int32)
+jz 0x2a90a078               
+... 				
+cdq
+idiv esi
+</pre>
+  </div>
+</div>
+
+
+
+
+
+<div id="bailout" class="step" data-x="18000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Emergency bailout</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Not everything can be optimized</p>
+	  <p></p>
+	  <p>Some features prevent the optimizing<br/>compiler from running (a "bail-out")</p>
+  </div>
+</div>
+
+<div id="speedtrap6" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div20"></div>
+  <div class="trap">Optimizing compiler "bails-out" on functions with try {} catch {} blocks</div>
+</div>
+
+
+
+<div id="deoptimization" class="step" data-x="22000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Aaarg... deoptimization!</div>
+  <div class="div3"></div>
+  <div class="divt n t">
+	  <p>Optimizations are speculative<br/>Usually, they pay off</p>
+  </div>
+  <div class="div3"></div>
+  <div class="divt n t">
+	  <p>Deoptimization:</p>
+	  <p>throws away optimized code</p>
+	  <p>resumes execution at the right place in "full" compiler code</p>
+  </div>
+  <div class="div3"></div>
+  <div class="divt n t">
+	  <p>Reoptimization might be triggered again later, but for the short term, execution slows down</p>
+  </div>
+</div>
+
+
+<div id="speedtrap7" class="step onlyactive" data-x="8000" data-y="20000" data-z="0" data-scale="4">
+  <div class="titlediv"></div>
+  <div class="div20"></div>
+  <div class="trap">Avoid hidden class changes in functions after they are optimized</div>
+</div>
+
+
+
+
+<div id="tools" class="step" data-x="26000" data-y="13000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Know your tools</div>
+  <div class="div2"></div>
+  <div class="divt n t">
+	  <p>Logging what gets optimized: <b>--trace-opt</b></p>
+	  <p>How to find bailouts: <b>--trace-bailout</b></p>
+	  <p>Detecting deoptimizations: <b>--trace-deopt</b></p>
+	  <p>Using the profiler: <b>--ll-prof</b> and<br/><b><i>platform</i>-tick-processor</b></p>
+	  <p>Passing V8 options to Chrome:<br/><b>--js-flags="--trace-opt --trace-deopt --trace-bailout"</b></p>
+  </div>
+</div>
+
+
+
+<div id="areyouready" class="step" data-x="20000" data-y="17000" data-z="-4000" data-scale="2">
+  <div class="titlediv">Are you prepared?</div>
+  <div class="div10"></div>
+  <div class="divt n t">
+	  <p>Ensure problem is JavaScript</p>
+	  <p>Reduce to pure JavaScript (no DOM!)</p>
+	  <p>Collect metrics</p>
+	  <p>Locate bottleneck(s)</p>
+	  <p>Fix problems(s)</p>
+  </div>
+</div>
+<div id="areyouready1" class="step onlyactive" data-x="20000" data-y="17000" data-z="-4000" data-scale="2">
+  <div class="titlediv"></div>
+  <div class="codesmall">
+<pre class="brush: js">
+
+// Come on...
+
+print("Let's make it...");
+//         _          _                  _          _            _            _      
+//        /\ \       / /\               / /\       /\ \         /\ \         /\ \    
+//       /  \ \     / /  \             / /  \      \_\ \       /  \ \       /  \ \   
+//      / /\ \ \   / / /\ \           / / /\ \__   /\__ \     / /\ \ \     / /\ \ \  
+//     / / /\ \_\ / / /\ \ \         / / /\ \___\ / /_ \ \   / / /\ \_\   / / /\ \_\ 
+//    / /_/_ \/_// / /  \ \ \        \ \ \ \/___// / /\ \ \ / /_/_ \/_/  / / /_/ / / 
+//   / /____/\  / / /___/ /\ \        \ \ \     / / /  \/_// /____/\    / / /__\/ /  
+//  / /\____\/ / / /_____/ /\ \   _    \ \ \   / / /      / /\____\/   / / /_____/   
+// / / /      / /_________/\ \ \ /_/\__/ / /  / / /      / / /______  / / /\ \ \     
+/// / /      / / /_       __\ \_\\ \/___/ /  /_/ /      / / /_______\/ / /  \ \ \    
+//\/_/       \_\___\     /____/_/ \_____\/   \_\/       \/__________/\/_/    \_\/    
+//
+eval("Put your code here!");                                                                                   
+</pre>
+  </div>
+</div>
+
+
+<div id="end" class="step" data-x="10000" data-y="17000" data-z="-5000" data-scale="4">
+  <div class="band" style="position: absolute; height: 7vh; width: 100vw; top: 0vh; pointer-events: auto;">
+    <p class="red" style="font-size: 5vh; text-align: center;">Writing efficient Javascript Code</p>
+  </div>
+
+  <div class="div40" style="position: absolute; width: 40vw; left: 5vh; top: 10vh; pointer-events: auto;">
+    <img src="data/jsday-rhyno.png" style="width: 40vh; height: auto; position: absolute; left: 0vh; "/>
+  </div>
+
+  <div class="div40" style="position: absolute; width: 70vw; right: 0vh; top: 10vh; pointer-events: auto;">
+    <div class="thanks1">That's all...</div>
+    <div class="div2"></div>
+    <div class="thanks2">QUESTIONS?</div>
+    <div class="div2"></div>
+    <div class="thanks2">@jsconfit</div>
+  </div>
+
+  <div class="div50"></div>
+  <div class="div5"></div>
+  <div class="material">Slides and code at</div>
+  <div class="div3"></div>
+  <div class="lasturl">http://massimiliano-mantione.github.io/talks/JsPerformance</div>
+  <div class="div5"></div>
+  <div class="material"><b>THANKS!</b></div>
+
+</div>
+
+
+
+</div>
+
+<div class="hint">
+<p>Use a spacebar or arrow keys to navigate</p>
+</div>
+
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<script src="data/impress.js"></script>
+<script src="data/shCore.js"></script>
+<script src="data/shBrushJScript.js"></script>
+<script src="data/shBrushCpp.js"></script>
+<script src="data/shBrushBash.js"></script>
+<script>
+var impressRoot = impress()
+impressRoot.init();
+impressRoot.hook['demo'] = demoActivationCallback;
+SyntaxHighlighter.all();
+</script>
+
+
+<!-- Bottom bar -->
+
+<div class="band" style="position: absolute; height: 4.1vh; width: 100vw; bottom: 0vh; left: 0vw; pointer-events: auto;"></div>
+
+<div style="position: absolute; height: 8vh; width: 10vh; bottom: 0vh; left: 1vh; pointer-events: auto;">
+  <img src="data/jsday-rhyno.png" style="height: 8vh; width: auto;"/>
+</div>
+<div class="normal" style="position: absolute; height: 3vh; width: 20vw; bottom: 0vh; left: 40vw; pointer-events: auto; font-size: 2vh; text-align: center;">Verona, May 16 2013</div>
+
+<div id="clock" class="normal" style="font-size: 4vh; position: absolute; height: 4vh; width: 10vw; bottom: 0vh; right: 1vh; pointer-events: auto;">
+.XXXX.
+</div>
+<script>
+function startClock() {
+  var today=new Date();
+  var h=today.getHours();
+  var m=today.getMinutes();
+  var s=today.getSeconds();
+  // add a zero in front of numbers<10
+  m=checkTime(m);
+  s=checkTime(s);
+  var t = h+":"+m+":"+s;
+  document.getElementById('clock').innerHTML=t;
+  setTimeout(function(){startClock()},500);
+}
+
+function checkTime(i)
+{
+  if (i<10) {
+    i="0" + i;
+  }
+  return i;
+}
+</script>
+<script>startClock();</script>
+
+
+</body>
+</html>
+
