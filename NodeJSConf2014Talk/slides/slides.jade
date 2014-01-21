@@ -1,0 +1,103 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/logo_base.png', alt='logo')
+  h1
+    veryBig Metascript
+  h2 going beyond Javascript limitations
+  p.dateStyle January 25 2014, Brescia
+  p Massimiliano Mantione
+
+section
+  h1 About myself
+  h2.fragment An enthusiast software engineer
+  p.fragment
+    | Mostly interested in programming languages
+    br
+    | and compiler optimizations.
+  p.fragment
+    | Also interested in scalable and fault tolerant
+    br
+    | distributed systems
+
+
+section
+  h1 Things I Did
+  ul
+    li Virtual tradeshows in a browser window
+    li V8 Javascript virtual machine (1 year and half)
+    li Mono JIT compiler (6 years)
+    li Other nice things
+      ul
+        li embedded systems, GSM networks
+        li J2EE and databases.
+
+section
+  h1 Things I Never Did
+  p.fragment Classical “web development”
+  p.fragment Particularly, Javascript programming!
+  blockquote.fragment.roll-in
+    | When I sow Javascript for the 1st time (in 1995)
+    | I vowed that I would never touch such an abomination,
+    | even with a 10 feet pole
+  p.fragment Eventually, I changed my mind, but...
+
+
+section
+  h1 What's the problem with Javascript?
+  p.fragment Too many to mention
+  p.fragment Convertion rules can kick in with <em>WAT?</em> results
+  p.fragment Forgetting a variable declaration can be catastrophic
+  p.fragment Lack of proper block-scoping (until ES6)
+  p.fragment Verbose <em>Java-like</em> syntax
+  p.fragment No type system, language is not extensible...
+
+section
+  h1 How can they be solved?
+  p.fragment Sticking to "the good parts"
+  p.fragment Using <em>jslint</em> or <em>jshint</em>
+  p.fragment.roll-in
+    | Or... with a different programming language!
+    br
+    | (like Coffeescript)
+
+
+section
+  h1 Javascript alternatives
+  p.fragment
+    | Coffeescript
+    br
+    em (nice, but not extensible)
+  p.fragment
+    | Typescript
+    br
+    em (has a type system, but is still Javascript)
+  p.fragment
+    | Lispyscript
+    br
+    em (semi-unknown, and is a Lisp)
+  p.fragment
+    | Clojurescript
+    br
+    em (not very Javascript-friendly, and is also a Lisp)
+
+section
+  h1 My wishlist
+  p.fragment Clean syntax <em>(like Coffeescript)</em>
+  p.fragment Sane scoping rules <em>(like ES6 <b>let</b>)</em>
+  p.fragment A type system <em>(like Typescript)</em>
+  p.fragment Real metaprogramming <em>(like Lisp)</em>
+  p.fragment Be a <em><u>Good Javascript Citizen</u></em>
+
+section
+  h1 A taste of<br/>
+    veryBig Metascript!
+  p Our all-time favorite first program:
+  pre.codebox
+    code.
+      console.log 'Hello, Metascript!'
+
+
