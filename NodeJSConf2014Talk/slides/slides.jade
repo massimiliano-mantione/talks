@@ -12,7 +12,7 @@ section
   p Massimiliano Mantione
 
 section
-  h1 About myself
+  h1 About Myself
   h2.fragment An enthusiast software engineer
   p.fragment
     | Mostly interested in programming languages
@@ -47,7 +47,7 @@ section
 
 
 section
-  h1 What's the problem with Javascript?
+  h1 What's the Problem with Javascript?
   p.fragment Too many to mention
   p.fragment Convertion rules can kick in with <em>WAT?</em> results
   p.fragment Forgetting a variable declaration can be catastrophic
@@ -56,7 +56,7 @@ section
   p.fragment No type system, language is not extensible...
 
 section
-  h1 How can they be solved?
+  h1 How Can They Be Solved?
   p.fragment Sticking to "the good parts"
   p.fragment Using <em>jslint</em> or <em>jshint</em>
   p.fragment.roll-in
@@ -66,7 +66,7 @@ section
 
 
 section
-  h1 Javascript alternatives
+  h1 Javascript Alternatives
   p.fragment
     | Coffeescript
     br
@@ -85,7 +85,7 @@ section
     em (not very Javascript-friendly, and is also a Lisp)
 
 section
-  h1 My wishlist
+  h1 My Wishlist
   p.fragment Clean syntax <em>(like Coffeescript)</em>
   p.fragment Sane scoping rules <em>(like ES6 <b>let</b>)</em>
   p.fragment A type system <em>(like Typescript)</em>
@@ -93,11 +93,37 @@ section
   p.fragment Be a <em><u>Good Javascript Citizen</u></em>
 
 section
-  h1 A taste of<br/>
+  h1 A Taste of<br/>
     veryBig Metascript!
   p Our all-time favorite first program:
   pre.codebox
-    code.
+    code.javascript.
       console.log 'Hello, Metascript!'
 
+
+section
+  h1 Simple Expressions
+  p ...<em>Just Work!</em>
+  pre.codebox
+    code.javascript.
+      (1 + 2 * 3).should.equal 7
+      
+      ('a' + 'b' + 'c').should.equal "abc"
+      
+      (typeof (1 + 2)).should.equal 'number'
+
+      (typeof {}).should.equal 'object'
+
+section
+  h1 Look, Ma, No Statements...
+  p ...<em>Just Expressions!</em>
+  pre.codebox
+    code.javascript.
+      (if true 1 else 2).should.equal 1
+      
+      (do
+        var a = 'a'
+        a = a + a
+        a
+      ).should.equal 'aa'
 

@@ -178,6 +178,7 @@ veryBig {
 .reveal pre code {
   padding: 0px;
   margin-top: 3vh;
+  margin-bottom: 3vh;
   margin-left: 3vh;
   vertical-align: middle;
   max-height: 70vh;
