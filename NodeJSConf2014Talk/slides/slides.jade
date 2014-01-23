@@ -231,15 +231,15 @@ section
     h1 These Are Also Equivalent
     pre.codebox
       code.codesmall.javascript.
-        if condition f(a) else f(b)
+        if condition (f a) else (g b)
 
         if condition
-          f(a)
+          f a
         else
-          f(b)
+          g b
 
         if condition f(a)
-        else f(b)
+        else g(b)
   section
     h1 You <b><em>Can</em></b> Add Parenthesis...
     p ...if you feel you need them
@@ -253,7 +253,7 @@ section
         if condition (
           f(a)
         ) else (
-          f(b)
+          g(b)
         )
   section
     h2 Sometimes Parenthesis are Mandatory
@@ -285,12 +285,22 @@ section
         var status =
           if ok do
             console.log 'Starting up'
-            engine.power 100
+            engine.power = 100
             give 'moving'
           else do
             console.log 'Stopping'
-            engine.power 0
+            engine.power = 0
             'stopped'
+  section
+    h2 Another way to write it
+    pre.codebox
+      code.javascript.
+        (var status, var message, engine.power) =
+          if ok
+            ('moving', 'Starting up', 100)
+          else
+            ('stopped', 'Stopping', 0)
+        console.log message
   section
     h2 The Coolest loop<br/> in the West!
     pre.codebox
@@ -420,12 +430,57 @@ section
     p.fragment Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique
 
 section
+  h2 A Way Out<br/>of Callback Hell
+  p We'll write code like this:
+  ul
+    li A <b><em>now</em></b> section with synchronous code
+    li Several <b><em>when</em></b> sections with the callbacks
+    li A final <b><em>then</em></b> section with the "last" callback
+    li In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions
+  p.fragment Let's see it in the code!
+
+section
   section
-    h2 A Way Out<br/>of Callback Hell
-    p We'll write code like this:
-    ul
-      li A <b><em>now</em></b> section with synchronous code
-      li Several <b><em>when</em></b> sections with the callbacks
-      li A final <b><em>then</em></b> section with the "last" callback
-      li In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions
-    p.fragment Let's see it in the code!
+    h1 What's Next?
+    p Making the compiler production-ready
+    p Completing the metaprogramming system
+    p Writing "standard" macros
+    p Implementing the type system
+  section
+    h1 Completing the compiler
+    p.fragment Wire the code for <em>try, catch, finally</em>
+    p.fragment Implement a <em>switch</em> expression
+    p.fragment String interpolation
+    p.fragment Write a proper script with command line options
+    p.fragment Make it run in the browser
+    p.fragment Implement a REPL shell
+  section
+    h1 Completing the metaprogramming system
+    p.fragment Polish and document the AST API that can be used inside macros.
+    p.fragment Settle on an API for a module system for macros (meta-modules!)
+    p.fragment Wire in code for more metacommands</br>(<em>do, extend, require</em>)
+  section
+    h1 Writing "standard" macros
+    p.fragment Looping ones
+    p.fragment Generators
+    p.fragment Array Comprehension
+    p.fragment Destructuring assignments and structure matchers
+    p.fragment 'double arrow' functions
+    p.fragment Small useful operators
+  section
+    h1 Implementing the type system
+    p.fragment Take structural subtyping from Typescript
+    p.fragment Take convention on type argumen names from Haskell
+    p.fragment Put real algebraic types into the mix
+    p.fragment Allow explicit typing of the <em>this</em> argument
+    p.fragment Make everything optional, with type inference
+
+section
+  h1 That's All, Folks
+  h1
+    veryBig Metascript
+  h2 is waiting for you!
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  p mails: metascript@googlegroups.com
+  h2 Thanks for following!
