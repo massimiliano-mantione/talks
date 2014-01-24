@@ -85,15 +85,15 @@ callFunction
 callFunction
   a
   b
-  c</code></pre></section><section><h1>These Are Also Equivalent</h1><pre class="codebox"><code class="codesmall javascript">if condition f(a) else f(b)
+  c</code></pre></section><section><h1>These Are Also Equivalent</h1><pre class="codebox"><code class="codesmall javascript">if condition (f a) else (g b)
 
 if condition
-  f(a)
+  f a
 else
-  f(b)
+  g b
   
 if condition f(a)
-else f(b)</code></pre></section><section><h1>You <b><em>Can</em></b> Add Parenthesis...</h1><p>...if you feel you need them</p><pre class="codebox"><code class="codesmall javascript">callFunction (
+else g(b)</code></pre></section><section><h1>You <b><em>Can</em></b> Add Parenthesis...</h1><p>...if you feel you need them</p><pre class="codebox"><code class="codesmall javascript">callFunction (
   a
   b
   c
@@ -101,7 +101,7 @@ else f(b)</code></pre></section><section><h1>You <b><em>Can</em></b> Add Parenth
 if condition (
   f(a)
 ) else (
-  f(b)
+  g(b)
 )</code></pre></section><section><h2>Sometimes Parenthesis are Mandatory</h2><pre class="codebox"><code class="javascript">callFunction (a, b, c)
 
 callFunction a b c
@@ -118,12 +118,17 @@ a.should.equal 2
 b.should.equal 1</code></pre></section><section><h2>Sometimes you do,<br/>sometimes you give...</h2><pre class="codebox"><code class="javascript">var status =
   if ok do
     console.log 'Starting up'
-    engine.power 100
+    engine.power = 100
     give 'moving'
   else do
     console.log 'Stopping'
-    engine.power 0
-    'stopped'</code></pre></section><section><h2>The Coolest loop<br/> in the West!</h2><pre class="codebox"><code class="codesmall javascript">var fact = (x) ->
+    engine.power = 0
+    'stopped'</code></pre></section><section><h2>Another way to write it</h2><pre class="codebox"><code class="javascript">(var status, var message, engine.power) =
+  if ok
+    ('moving', 'Starting up', 100)
+  else
+    ('stopped', 'Stopping', 0)
+console.log message</code></pre></section><section><h2>The Coolest loop<br/> in the West!</h2><pre class="codebox"><code class="codesmall javascript">var fact = (x) ->
   loop (var r = 1, x)
     if (x > 0)
       next (r * x, x - 1)
@@ -186,7 +191,24 @@ s.should.equal '123'</code></pre></section><section><h2>A Macro to Write Macros<
     arity: unary
     precedence: KEY
     expand:
-      \<- this. \-> expr.argAt(0)</code></pre></section><section><h2>Write <em>hygenic</em> Macros!</h2><p class="fragment">Sometimes inside macros you need to create variables that will be added to the program code</p><p class="fragment">You risk to use a variable name already in the scope where the macro is expanded</p><p class="fragment">Multiple expansions of the macro in the same scope risk to overwrite the variable</p><p class="fragment">Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique</p></section></section><section><section><h2>A Way Out<br/>of Callback Hell</h2><p>We'll write code like this:</p><ul><li>A <b><em>now</em></b> section with synchronous code</li><li>Several <b><em>when</em></b> sections with the callbacks</li><li>A final <b><em>then</em></b> section with the "last" callback</li><li>In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions</li></ul><p class="fragment">Let's see it in the code!</p></section></section>    </div>
+      \<- this. \-> expr.argAt(0)</code></pre></section><section><h2>Write <em>hygenic</em> Macros!</h2><p class="fragment">Sometimes inside macros you need to create variables that will be added to the program code</p><p class="fragment">You risk to use a variable name already in the scope where the macro is expanded</p><p class="fragment">Multiple expansions of the macro in the same scope risk to overwrite the variable</p><p class="fragment">Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique</p></section></section><section><section><h2>A Way Out<br/>of Callback Hell</h2><p>We'll write code like this:</p><ul><li>A <b><em>now</em></b> section with synchronous code</li><li>Several <b><em>when</em></b> sections with the callbacks</li><li>A final <b><em>then</em></b> section with the "last" callback</li><li>In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions</li></ul><p class="fragment">Let's see it in the code!</p></section><section><h2>A plan to handle loops</h2><p>I have this working...</p><pre class="codebox"><code class="codesmall javascript">var (a = [1, 2, 3], r = 0)
+foreach (var idx) (indexesOf a)
+  r += a[idx]
+r.should.equal(1 + 2 + 3)
+r = 0;
+foreach (var v) (3 .. 5)
+  r += v
+r.should.equal(3 + 4 + 5)</code></pre></section><section><h2>Coroutines and Channels</h2><p>I am prototyping this...</p><pre class="codebox"><code class="codesmall ruby">var readable = getAReadableStream()
+var writable = getAWritableStream()
+go
+  var counter = 0
+  loop ()
+    readable =>>
+      'data' : (var data)
+        writable <<= data
+        next (bufferCounter + 1)
+      'end': end
+  console.log('Got ' counter ' buffers')</code></pre></section></section><section><section><h1>What's Next?</h1><p>Making the compiler production-ready</p><p>Completing the metaprogramming system</p><p>Writing "standard" macros</p><p>Implementing the type system</p></section><section><h1>Completing the compiler</h1><p class="fragment">Wire the code for <em>try, catch, finally</em></p><p class="fragment">Implement a <em>switch</em> expression</p><p class="fragment">String interpolation</p><p class="fragment">Write a proper script with command line options</p><p class="fragment">Make it run in the browser</p><p class="fragment">Implement a REPL shell</p></section><section><h1>Completing the metaprogramming system</h1><p class="fragment">Polish and document the AST API that can be used inside macros.</p><p class="fragment">Settle on an API for a module system for macros (meta-modules!)</p><p class="fragment">Wire in code for more metacommands</br>(<em>do, extend, require</em>)</p></section><section><h1>Writing "standard" macros</h1><p class="fragment">Looping ones</p><p class="fragment">Generators</p><p class="fragment">Array Comprehension</p><p class="fragment">Destructuring assignments and structure matchers</p><p class="fragment">'double arrow' functions</p><p class="fragment">Small useful operators</p></section><section><h1>Implementing the type system</h1><p class="fragment">Take structural subtyping from Typescript</p><p class="fragment">Take convention on type argumen names from Haskell</p><p class="fragment">Put real algebraic types into the mix</p><p class="fragment">Allow explicit typing of the <em>this</em> argument</p><p class="fragment">Make everything optional, with type inference</p></section></section><section><h1>That's All, Folks</h1><h1><veryBig>Metascript</veryBig></h1><h2>is waiting for you!</h2><p>code, docs and slides are on github</p><p>twitter: @M_a_s_s_i, #metascript</p><p>group: metascript@googlegroups.com</p><h2>Thanks for following!</h2></section>    </div>
 </div>
 
 <script src="lib/js/head.min.js"></script>
