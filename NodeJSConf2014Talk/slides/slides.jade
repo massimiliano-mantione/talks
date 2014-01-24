@@ -430,15 +430,44 @@ section
     p.fragment Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique
 
 section
-  h2 A Way Out<br/>of Callback Hell
-  p We'll write code like this:
-  ul
-    li A <b><em>now</em></b> section with synchronous code
-    li Several <b><em>when</em></b> sections with the callbacks
-    li A final <b><em>then</em></b> section with the "last" callback
-    li In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions
-  p.fragment Let's see it in the code!
-
+  section
+    h2 A Way Out<br/>of Callback Hell
+    p We'll write code like this:
+    ul
+      li A <b><em>now</em></b> section with synchronous code
+      li Several <b><em>when</em></b> sections with the callbacks
+      li A final <b><em>then</em></b> section with the "last" callback
+      li In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions
+    p.fragment Let's see it in the code!
+  section
+    h2 A plan to handle loops
+    p I have this working...
+    pre.codebox
+      code.codesmall.javascript.
+        var (a = [1, 2, 3], r = 0)
+        foreach (var idx) (indexesOf a)
+          r += a[idx]
+        r.should.equal(1 + 2 + 3)
+        r = 0;
+        foreach (var v) (3 .. 5)
+          r += v
+        r.should.equal(3 + 4 + 5)
+  section
+    h2 Coroutines and Channels
+    p I am prototyping this...
+    pre.codebox
+      code.codesmall.ruby.
+        var readable = getAReadableStream()
+        var writable = getAWritableStream()
+        go
+          var counter = 0
+          loop ()
+            readable =>>
+              'data' : (var data)
+                writable <<= data
+                next (bufferCounter + 1)
+              'end': end
+          console.log('Got ' counter ' buffers')
 section
   section
     h1 What's Next?
@@ -482,5 +511,5 @@ section
   h2 is waiting for you!
   p code, docs and slides are on github
   p twitter: @M_a_s_s_i, #metascript
-  p mails: metascript@googlegroups.com
+  p group: metascript@googlegroups.com
   h2 Thanks for following!
