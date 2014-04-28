@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 /**
  * Default theme for reveal.js.
  *
@@ -159,7 +158,7 @@ veryBig {
 }
 
 .dateStyle {
-  color: #000000;
+  color: #D41064;
 }
 
 .reveal pre {
@@ -193,6 +192,13 @@ veryBig {
   max-height: 70vh;
   word-wrap: normal;
   background: none;
+}
+
+.embox {
+  /* #676598 0%, #34334d */
+  border-radius: 3vh;
+  background: #676598;
+  box-shadow: 10px 10px 5px #34334d;
 }
 
 
@@ -240,6 +246,8 @@ veryBig {
   color: #fff;
   background: #0d99a5; }
 
+
+
 /*********************************************
  * IMAGES
  *********************************************/
@@ -249,24 +257,17 @@ veryBig {
   box-shadow: none;
 }
 
-.reveal section div.logo {
-  background: inherit;
+.futurelogo {
+  background-image: url(FutureJsLogo.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
   border: none;
   box-shadow: none;
   text-align: center;
   width: 100%;
   height: 15vh;
-
 }
-.reveal section div.logo img {
-  display: block;
-  position: relative;
-  height: 100%;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 
 .reveal a:hover img {
   background: rgba(255, 255, 255, 0.2);
