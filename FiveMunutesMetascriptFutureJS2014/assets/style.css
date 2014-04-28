@@ -1,4 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 /**
  * Default theme for reveal.js.
  *
@@ -193,6 +192,13 @@ veryBig {
   max-height: 70vh;
   word-wrap: normal;
   background: none;
+}
+
+.embox {
+  /* #676598 0%, #34334d */
+  border-radius: 3vh;
+  background: #676598;
+  box-shadow: 10px 10px 5px #34334d;
 }
 
 
