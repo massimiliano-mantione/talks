@@ -79,7 +79,7 @@ section
 
 
 section
-  h1 Loops Are Statements, Too
+  h1 Loops Are Expressions, Too
   pre.codebox
     code.javascript.
       var fact = (x) ->
@@ -94,20 +94,22 @@ section
 
 
 section
-  h1 Metaprogramming in action
+  p.demotitle Macros in action
+  video.demovideo(autoplay)
+    source(src="assets/vector-code.webm", type="video/webm")
 
 section
   h1 Useful macros
   p.fragment Simple operators (<b>@</b>, <b>?</b>, <b>??</b>, <b>.?</b>)
-  p.fragment Smarter function definitions
+  p.fragment Smarter function definitions (<b>=></b>, <b>...</b>)
   p.fragment Destructuring assignment and matching
   p.fragment Monadic sequencing, which means...
   p.fragment <b>async</b> programming facilities!
   p.fragment Promises <b>and</b> rx.js <u>syntactic support!</u>
 
 section
-  h1 What this means...
-  p.fragment ES7 will likely have async for Promises
+  h1 Practical consequences
+  p.fragment ES7 will likely have <b>async</b> for <em>Promises</em>
   p.fragment Will it ever support rx.js?
   p.fragment ...even if you need it?
   p.fragment Will it ever support what you need <u><em>now</em></u>?

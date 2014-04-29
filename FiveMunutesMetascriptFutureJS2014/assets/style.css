@@ -95,7 +95,7 @@ body {
 
 veryBig {
   font-family: 'Keania';
-  font-size: 13vh; margin-bottom: 3vh;
+  font-size: 12vh; margin-bottom: 3vh;
 }
 
 .reveal h1 {
@@ -108,16 +108,16 @@ veryBig {
 }
 
 .reveal h1 {
-  font-size: 9vh; margin-bottom: 3vh;
+  font-size: 8vh; margin-bottom: 3vh;
 }
 .reveal h2 {
-  font-size: 7vh; margin-bottom: 3vh;
+  font-size: 6.5vh; margin-bottom: 3vh;
 }
 .reveal h3 {
-  font-size: 6vh;
+  font-size: 5.5vh;
 }
 .reveal h4 {
-  font-size: 5vh;
+  font-size: 4.5vh;
 }
 .reveal h5 {
   font-size: 4vh;
@@ -267,6 +267,17 @@ veryBig {
   text-align: center;
   width: 100%;
   height: 15vh;
+}
+
+p.demotitle {
+  text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbbbbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaaaaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  font-family: 'Allerta';
+  font-size: 8vh;
+  margin-bottom: 0vh;
+}
+video.demovideo {
+  height: 100vh;
 }
 
 .reveal a:hover img {
