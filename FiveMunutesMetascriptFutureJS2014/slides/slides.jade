@@ -23,74 +23,106 @@ section
     | web facing distributed systems
 
 section
-  h1 What's the Problem with Javascript?
-  p.fragment Too many to mention
-  p.fragment Convertion rules can kick in with <em>WAT?</em> results
-  p.fragment Forgetting a variable declaration can be catastrophic
-  p.fragment Lack of proper block-scoping (until ES6)
-  p.fragment Verbose <em>Java-like</em> syntax
-  p.fragment No type system, language is not extensible...
+    section
+      h1 Why Metascript?
+      h3.fragment What's the Problem with Javascript?
+      p.fragment Too many to mention
+      p.fragment Many languages address them
+      p.fragment Each of them focuses on a few selected issues
+      h3.fragment <b>I want 'em all...</b>
+
+    section
+      h1 A wicked language
+      p.fragment Convertion rules can kick in with <em>WAT?</em> results
+      p.fragment Forgetting a variable declaration can be catastrophic
+      p.fragment Lack of proper block-scoping (until ES6)
+      p.fragment Verbose <em>Java-like</em> syntax
+      p.embox.roll-in.fragment
+        | Metascript fixes these, mostly like Coffeescript
+        br
+        | (but declarations have block scoping)
+
+    section
+      h1 Functional style
+      p.fragment No statements, only Expressions
+      p.fragment Loops defined by tail recursive expressions<br/><em>(that translate into real loops)</em>
+      p.fragment Parallel assignments<br/><em>(less temporary variables around)</em>
+      p.fragment Can <em>optionally</em> use Clujurescript read only data structures<br/><em>(for <b>real</b> functiona programming)</em>
+
+    section
+      h1 Who needs a type system?
+      p.fragment When codebases get big, a typesystem can help
+      p.fragment The Typescript solution is nice, but apart from that Typescript is just plain Javascript
+      p.fragment For Metascript I am developing a Typescript-compatible type system
+      p.fragment <em>(sadly, the type system is still a work in progress)</em>
+
+    section
+      h1 Metaprogramming!
+      p.fragment Clojurescript (and Lisp dialects in general) provides this
+      p.fragment Lisp dialects can be really uncomfortable<br/><em>(Lots Of Silly Parenthesys)</em>
+      p.fragment However, Lisp-style macros are <b>amazingly</b> powerful
+      p.embox.roll-in.fragment
+        | Metascript fixes this with a uniform AST despite the support for infix syntax
+        br
+        em (and it even has hygienic macros)
+
+    section
+      h1 Good Javascript Citizen
+      p.embox.roll-in.fragment Designed for<br/><b>zero runtime overhead</b>
+      p.fragment Each core construct cleanly translates into a Javascript primitive
+      p.fragment Consuming existing modules is natural
+      p.fragment Producing modules of any kind is easy
+      p.embox.roll-in.fragment <b>Full source map support, from day 1</b>
 
 
 section
-  h1 Metascript!
-  p.fragment Real metaprogramming <em>(like Clojurescript)</em>
-  p.fragment Optionally, immutable structures <em>(<u>from</u> Clojurescript)</em>
-  p.fragment Clean syntax <em>(like Coffeescript)</em>
-  p.fragment Sane scoping rules <em>(like ES6 <b>let</b>)</em>
-  p.fragment Optionally, a type system <em>(like Typescript)</em> <b>[WIP!]</b>
-  p.fragment Zero runtime overhead
-  p.fragment Be a <em><u>Good Javascript Citizen</u></em>
+    section
+      h1 A Taste of<br/>
+        veryBig Metascript!
+      p Our all-time favorite first program:
+      pre.codebox
+        code.javascript.
+          console.log 'Hello, Metascript!'
+    section
+      h1 Simple Expressions
+      p ...<em>Just Work!</em>
+      pre.codebox
+        code.javascript.
+          (1 + 2 * 3).should.equal 7
+
+          ('a' + 'b' + 'c').should.equal "abc"
+
+          (typeof (1 + 2)).should.equal 'number'
+
+          (typeof {}).should.equal 'object'
+
+    section
+      h1 Look, Ma, No Statements...
+      p ...<em>Just Expressions!</em>
+      pre.codebox
+        code.javascript.
+          (if true 1 else 2).should.equal 1
+
+          (do
+            var a = 'a'
+            a = a + a
+            a
+          ).should.equal 'aa'
 
 
+    section
+      h1 Loops Are Expressions, Too
+      pre.codebox
+        code.javascript.
+          var fact = (x) ->
+            loop (var r = 1, x)
+              if (x > 0)
+                next (r * x, x - 1)
+              else
+                r
 
-section
-  h1 A Taste of<br/>
-    veryBig Metascript!
-  p Our all-time favorite first program:
-  pre.codebox
-    code.javascript.
-      console.log 'Hello, Metascript!'
-section
-  h1 Simple Expressions
-  p ...<em>Just Work!</em>
-  pre.codebox
-    code.javascript.
-      (1 + 2 * 3).should.equal 7
-
-      ('a' + 'b' + 'c').should.equal "abc"
-
-      (typeof (1 + 2)).should.equal 'number'
-
-      (typeof {}).should.equal 'object'
-
-section
-  h1 Look, Ma, No Statements...
-  p ...<em>Just Expressions!</em>
-  pre.codebox
-    code.javascript.
-      (if true 1 else 2).should.equal 1
-
-      (do
-        var a = 'a'
-        a = a + a
-        a
-      ).should.equal 'aa'
-
-
-section
-  h1 Loops Are Expressions, Too
-  pre.codebox
-    code.javascript.
-      var fact = (x) ->
-        loop (var r = 1, x)
-          if (x > 0)
-            next (r * x, x - 1)
-          else
-            r
-
-      fact(1).should.equal(1)
-      fact(5).should.equal(5 * 4 * 3 * 2 * 1)
+          fact(1).should.equal(1)
+          fact(5).should.equal(5 * 4 * 3 * 2 * 1)
 
 
 section
@@ -98,26 +130,34 @@ section
   video.demovideo(autoplay)
     source(src="assets/vector-code.webm", type="video/webm")
 
-section
-  h1 Useful macros
-  p.fragment Simple operators (<b>@</b>, <b>?</b>, <b>??</b>, <b>.?</b>)
-  p.fragment Smarter function definitions (<b>=></b>, <b>...</b>)
-  p.fragment Destructuring assignment and matching
-  p.fragment Monadic sequencing, which means...
-  p.fragment <b>async</b> programming facilities!
-  p.fragment Promises <b>and</b> rx.js <u>syntactic support!</u>
 
 section
-  h1 Practical consequences
-  p.fragment ES7 will likely have <b>async</b> for <em>Promises</em>
-  p.fragment Will it ever support rx.js?
-  p.fragment ...even if you need it?
-  p.fragment Will it ever support what you need <u><em>now</em></u>?
+    section
+      h1 This was simple...
+      p.fragment I showed this to let you see the coding environment we use every day at work
+      p.embox.roll-in.fragment Isn't instant compiler feedback and expression evaluation cool?
+      p.fragment Those macros were trivial, however...
+
+    section
+      h1 More useful macros
+      p.fragment Simple operators (<b>@</b>, <b>?</b>, <b>??</b>, <b>.?</b>)
+      p.fragment Smarter function definitions (<b>=></b>, <b>...</b>)
+      p.fragment Destructuring assignment and matching
+      p.fragment Monadic sequencing, which means...
+      p.fragment <b>async</b> programming facilities!
+      p.fragment Promises <b>and</b> rx.js <u>syntactic support!</u>
+
+    section
+      h1 Think about it
+      p.fragment ES7 will likely have <b>async</b> for <em>Promises</em>
+      p.fragment Will it ever support rx.js?
+      p.fragment ...even if you need it?
+      p.fragment Will it ever support what you need <u><em>now</em></u>?
 
 section
   h1 Final words
   p.embox.roll-in.fragment
-    | You should never wait for the ECMA committee,
+    | You should <b><u>never</u></b> wait for the ECMA committee,
     br
     | browser vendors or some compiler writer
     br
