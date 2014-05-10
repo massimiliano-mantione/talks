@@ -1,0 +1,36 @@
+{
+  "name": "JsDay2014ReactiveMetaprogramming",
+  "description": "Talk on Metaprogramming at JsDay conf 2014",
+  "version": "0.1.0",
+  "homepage": "https://github.com/massimiliano-mantione/",
+  "author": {
+    "name": "Massimiliano Mantione",
+    "email": "massimiliano.mantione@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/massi/talks"
+  },
+  "bugs": {
+    "url": "https://github.com/massimiliano-mantione/talks/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/massimiliano-mantione/talks/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.19"
+  },
+  "devDependencies": {
+    "matchdep": "~0.1.2",
+    "grunt-reveal-jade": "~0.0.3",
+    "grunt-open": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-contrib-livereload": "~0.1.2",
+    "grunt-build-gh-pages": "~0.0.4"
+  },
+  "keywords": []
+}

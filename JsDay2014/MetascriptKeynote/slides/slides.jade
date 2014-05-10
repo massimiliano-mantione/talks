@@ -1,0 +1,515 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/jsday.png', alt='logo')
+  h1
+    veryBig Metascript
+  h2 going beyond Javascript limitations
+  p.dateStyle May 14 2014, Verona
+  p Massimiliano Mantione
+
+section
+
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment
+      | Mostly interested in programming languages
+      br
+      | and compiler optimizations.
+    p.fragment
+      | Also interested in scalable and fault tolerant
+      br
+      | distributed systems
+
+
+  section
+    h1 Things I Did
+    ul
+      li Virtual tradeshows in a browser window
+      li V8 Javascript virtual machine (1 year and half)
+      li Mono JIT compiler (6 years)
+      li Other nice things
+        ul
+          li embedded systems, GSM networks
+          li J2EE and databases.
+
+  section
+    h1 Things I Never Did
+    p.fragment Classical “web development”
+    p.fragment Particularly, Javascript programming!
+    blockquote.fragment.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+
+
+section
+
+  section
+    h1 What's the Problem with Javascript?
+    p.fragment Too many to mention
+    p.fragment Convertion rules can kick in with <em>WAT?</em> results
+    p.fragment Forgetting a variable declaration can be catastrophic
+    p.fragment Lack of proper block-scoping (until ES6)
+    p.fragment Verbose <em>Java-like</em> syntax
+    p.fragment No type system, language is not extensible...
+
+  section
+    h1 How Can They Be Solved?
+    p.fragment Sticking to "the good parts"
+    p.fragment Using <em>jslint</em> or <em>jshint</em>
+    p.fragment.roll-in
+      | Or... with a different programming language!
+      br
+      | (like Coffeescript)
+
+
+  section
+    h1 Javascript Alternatives
+    p.fragment
+      | Coffeescript
+      br
+      em (nice, but not extensible)
+    p.fragment
+      | Typescript
+      br
+      em (has a type system, but is still Javascript)
+    p.fragment
+      | Lispyscript
+      br
+      em (semi-unknown, and is a Lisp)
+    p.fragment
+      | Clojurescript
+      br
+      em (not very Javascript-friendly, and is also a Lisp)
+
+  section
+    h1 My Wishlist
+    p.fragment Clean syntax <em>(like Coffeescript)</em>
+    p.fragment Sane scoping rules <em>(like ES6 <b>let</b>)</em>
+    p.fragment A type system <em>(like Typescript)</em>
+    p.fragment Real metaprogramming <em>(like Lisp)</em>
+    p.fragment Be a <em><u>Good Javascript Citizen</u></em>
+
+section
+
+  section
+    h1 A Taste of<br/>
+      veryBig Metascript!
+    p Our all-time favorite first program:
+    pre.codebox
+      code.javascript.
+        console.log 'Hello, Metascript!'
+
+
+  section
+    h1 Simple Expressions
+    p ...<em>Just Work!</em>
+    pre.codebox
+      code.javascript.
+        (1 + 2 * 3).should.equal 7
+
+        ('a' + 'b' + 'c').should.equal "abc"
+
+        (typeof (1 + 2)).should.equal 'number'
+
+        (typeof {}).should.equal 'object'
+
+  section
+    h1 Look, Ma, No Statements...
+    p ...<em>Just Expressions!</em>
+    pre.codebox
+      code.javascript.
+        (if true 1 else 2).should.equal 1
+
+        (do
+          var a = 'a'
+          a = a + a
+          a
+        ).should.equal 'aa'
+
+
+  section
+    h1 Loops Are Statements, Too
+    pre.codebox
+      code.javascript.
+        var fact = (x) ->
+          loop (var r = 1, x)
+            if (x > 0)
+              next (r * x, x - 1)
+            else
+              r
+
+        fact(1).should.equal(1)
+        fact(5).should.equal(5 * 4 * 3 * 2 * 1)
+
+
+  section
+    h1 Want an <em>@</em> operator...
+    p ...because you like Coffescript?
+    pre.codebox
+      code.codesmall.javascript.
+        meta
+          macro "@"
+            arity: unary
+            precedence: KEY
+            expand:
+              var code = \<- this.arg
+              code.replaceTag('arg', expr.argAt(0))
+              code
+
+  section
+    h1 ...Now You Have It!
+    p Isn't it Cool?
+    pre.codebox
+      code.javascript.
+        var obj = {
+          a: 1
+          b: 2
+          m: () -> (@a + @b)
+        }
+        obj.m().should.equal 3
+
+
+section
+  h1 A Bit More Depth
+  p.fragment The Metascript syntax
+  p.fragment Control flow statements
+  p.fragment Tuples and expressions result count
+  p.fragment Function definitions
+  p.fragment.roll-in
+    b
+      u Metaprogramming!
+
+
+section
+  section
+    h1 The Syntax Dilemma
+    p.fragment
+      b Two main conflicting goals:
+      ul
+        li.fragment Being <em>homoiconic</em>
+        li.fragment Being <u>readable!</u>
+    div.fragment
+      p
+        b Also in the wishlist:
+        ul
+          li Support different coding styles
+            ul
+              li Use parenthesis
+              li Be indentation based
+          li Be "diff friendly" if needed
+  section
+    h1 The Metascript Solution
+    p.fragment Note that expression grouping and nesting can be achieved in different ways
+      ul
+        li.fragment With parenthesis and commas
+        li.fragment With indentation
+        li.fragment With infix operators of different precedences
+        li.fragment With "dependent keywords" (like <em>else</em> or <em>catch</em>)
+    p.fragment
+      b Metascript uses all of them interchangeably!
+  section
+    h1 These Are All Equivalent
+    pre.codebox
+      code.codesmall.javascript.
+        callFunction(a, b, c)
+
+        callFunction
+          (a, b, c)
+
+        callFunction
+          a
+          b
+          c
+  section
+    h1 These Are Also Equivalent
+    pre.codebox
+      code.codesmall.javascript.
+        if condition (f a) else (g b)
+
+        if condition
+          f a
+        else
+          g b
+
+        if condition f(a)
+        else g(b)
+  section
+    h1 You <b><em>Can</em></b> Add Parenthesis...
+    p ...if you feel you need them
+    pre.codebox
+      code.codesmall.javascript.
+        callFunction (
+          a
+          b
+          c
+        )
+        if condition (
+          f(a)
+        ) else (
+          g(b)
+        )
+  section
+    h2 Sometimes Parenthesis are Mandatory
+    pre.codebox
+      code.javascript.
+        callFunction (a, b, c)
+
+        callFunction a b c
+
+        callFunction (a) (b) (c)
+
+        ( (callFunction(a)) (b) ) (c)
+  section
+    h1 Tuples!
+    pre.codebox
+      code.javascript.
+        var (a, b) =
+          if true (1, 2) else (3, 4)
+        a.should.equal 1
+        b.should.equal 2
+
+        (a, b) = (b, a)
+        a.should.equal 2
+        b.should.equal 1
+  section
+    h2 Sometimes you do,<br/>sometimes you give...
+    pre.codebox
+      code.javascript.
+        var status =
+          if ok do
+            console.log 'Starting up'
+            engine.power = 100
+            give 'moving'
+          else do
+            console.log 'Stopping'
+            engine.power = 0
+            'stopped'
+  section
+    h2 Another way to write it
+    pre.codebox
+      code.javascript.
+        (var status, var message, engine.power) =
+          if ok
+            ('moving', 'Starting up', 100)
+          else
+            ('stopped', 'Stopping', 0)
+        console.log message
+  section
+    h2 The Coolest loop<br/> in the West!
+    pre.codebox
+      code.codesmall.javascript.
+        var fact = (x) ->
+          loop (var r = 1, x)
+            if (x > 0)
+              next (r * x, x - 1)
+            else
+              r
+
+        fact(1).should.equal(1)
+        fact(5).should.equal(5 * 4 * 3 * 2 * 1)
+  section
+    h1 Clean Scoping Rules
+    pre.codebox
+      code.codesmall.javascript.
+        var r = []
+        loop (var i = 1)
+          if (i > 10) end
+          var s = 'element' + i
+          r.push s
+        ; These will not compile...
+        console.log i
+        console.log s
+  section
+    h2 Smart Function Declarations
+    p Functions guess if they returm a value or not
+    pre.codebox
+      code.codesmall.javascript.
+        var square = (x) -> x * x
+
+        var print = (message) ->
+          var text = message + ' ' + new Date ()
+          console.log text
+  section
+    h2 Easy String Interpolation
+    p Warning: this is not done yet...
+    pre.codebox
+      code.codesmall.javascript.
+        console. log('Error ' code ': ' message)
+        console. log ''
+          'Error ' code
+          ': ' message
+          ' (at ' (new Date()) ')'
+    p.fragment There are "heredoc" strings, too
+section
+  section
+    h2 Metaprogramming
+    p.fragment What is metaprogramming?
+    p.fragment It is writing programs that modify programs
+    p.fragment A piece of code that modifies other code is called a <b>macro</b>
+    p.fragment To write a macro, code must be handled as data
+    p.fragment Therefore a macro is a function that takes code as input and produces code as output
+
+  section
+    h2 A Simple Macro, Revisited
+    pre.codebox
+      code.codesmall.javascript.
+        meta
+          macro "@"
+            arity: unary
+            precedence: KEY
+            expand:
+              var code = \<- this.arg
+              code.replaceTag('arg', expr.argAt(0))
+              code
+
+        var obj = { a: 1, b: 2,
+          m: () -> (@a + @b)}
+  section
+    h2 Need a while Statement?
+    pre.codebox
+      code.codesmall.javascript.
+        meta
+          macro "while"
+            precedence: LOW
+            arity: binaryKeyword
+            expand: do
+              var code = \<- loop ()
+                if (!(condition))
+                  end
+                else
+                  body
+                  next ()
+              code.replaceTag('condition', expr.argAt(0))
+              code.replaceTag('body', expr.argAt(1))
+              code
+  section
+    h2 ...Now You Have It!
+    pre.codebox
+      code.codesmall.javascript.
+        var (c = 1, s = '')
+
+        while (c <= 3)
+          s += c
+          c = c + 1
+
+        s.should.equal '123'
+  section
+    h2 A Macro to Write Macros
+    pre.codebox
+      code.codesmall.javascript.
+        meta
+          macro "@"
+            arity: unary
+            precedence: KEY
+            expand:
+              { arg: expr.argAt(0) } \<->
+                this.arg
+  section
+    h2 An even smarter way
+    p Warning: still TODO...
+    pre.codebox
+      code.codesmall.javascript.
+        meta
+          macro "@"
+            arity: unary
+            precedence: KEY
+            expand:
+              \<- this. \-> expr.argAt(0)
+  section
+    h2 Write <em>hygenic</em> Macros!
+    p.fragment Sometimes inside macros you need to create variables that will be added to the program code
+    p.fragment You risk to use a variable name already in the scope where the macro is expanded
+    p.fragment Multiple expansions of the macro in the same scope risk to overwrite the variable
+    p.fragment Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique
+
+section
+  section
+    h2 A Way Out<br/>of Callback Hell
+    p We'll write code like this:
+    ul
+      li A <b><em>now</em></b> section with synchronous code
+      li Several <b><em>when</em></b> sections with the callbacks
+      li A final <b><em>then</em></b> section with the "last" callback
+      li In the  <b><em>now</em></b> section,  <b><em>async</em></b> will expand the callback definitions
+    p.fragment Let's see it in the code!
+  section
+    h2 A plan to handle loops
+    p I have this working...
+    pre.codebox
+      code.codesmall.javascript.
+        var (a = [1, 2, 3], r = 0)
+        foreach (var idx) (indexesOf a)
+          r += a[idx]
+        r.should.equal(1 + 2 + 3)
+        r = 0;
+        foreach (var v) (3 .. 5)
+          r += v
+        r.should.equal(3 + 4 + 5)
+  section
+    h2 Coroutines and Channels
+    p I am prototyping this...
+    pre.codebox
+      code.codesmall.ruby.
+        var readable = getAReadableStream()
+        var writable = getAWritableStream()
+        go
+          var counter = 0
+          loop ()
+            readable =>>
+              'data' : (var data)
+                writable <<= data
+                next (bufferCounter + 1)
+              'end': end
+          console.log('Got ' counter ' buffers')
+section
+  section
+    h1 What's Next?
+    p Making the compiler production-ready
+    p Completing the metaprogramming system
+    p Writing "standard" macros
+    p Implementing the type system
+  section
+    h1 Completing the compiler
+    p.fragment Wire the code for <em>try, catch, finally</em>
+    p.fragment Implement a <em>switch</em> expression
+    p.fragment String interpolation
+    p.fragment Write a proper script with command line options
+    p.fragment Make it run in the browser
+    p.fragment Implement a REPL shell
+  section
+    h1 Completing the metaprogramming system
+    p.fragment Polish and document the AST API that can be used inside macros.
+    p.fragment Settle on an API for a module system for macros (meta-modules!)
+    p.fragment Wire in code for more metacommands</br>(<em>do, extend, require</em>)
+  section
+    h1 Writing "standard" macros
+    p.fragment Looping ones
+    p.fragment Generators
+    p.fragment Array Comprehension
+    p.fragment Destructuring assignments and structure matchers
+    p.fragment 'double arrow' functions
+    p.fragment Small useful operators
+  section
+    h1 Implementing the type system
+    p.fragment Take structural subtyping from Typescript
+    p.fragment Take convention on type argumen names from Haskell
+    p.fragment Put real algebraic types into the mix
+    p.fragment Allow explicit typing of the <em>this</em> argument
+    p.fragment Make everything optional, with type inference
+
+section
+  h1 That's All, Folks
+  h1
+    veryBig Metascript
+  h2 is waiting for you!
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  p group: metascript@googlegroups.com
+  h2 Thanks for following!
