@@ -2,8 +2,8 @@ var fs = require('fs');
 var gm = require('gm');
 var inspect = require('util').inspect;
 
-var source = './img/';
-var destination = './dst/';
+var source = './img/src/';
+var destination = './img/dst/';
 var widths = [200, 200];
 
 fs.readdir(source, function(err, files) {

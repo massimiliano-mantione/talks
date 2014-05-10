@@ -144,7 +144,6 @@
         data -> do!
           var declaration =
             (name, expr) -> ` (var (~` (expr.newTag name).handle-as-tag-declaration()) = ~` expr)
-
           if (data.first-occurrences.length > 0)
             var expr = data.expr
             data.expr = ` do
@@ -184,7 +183,7 @@
             if (previous != null)
               results.push <- previous.expr
           last = current
-        previous = current
+        previous = last
       if (last != null)
         results.push <- last.expr
 
