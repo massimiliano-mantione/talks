@@ -49,22 +49,18 @@ var main = #-> do!
     input = document.querySelector '#searchtext'
     results = document.querySelector '#results'
 
-  var keyup = |>
+  |>
     ; Get all distinct key up events from the input and only fire if long enough and distinct
     Rx.Observable.fromEvent(input, 'keyup')
     # .select(e -> e.target.value) ; Project the text from the input
     # .where(text -> text.length > 2) ; Only if the text is longer than 2 characters
     # .throttle 750 ; Pause for 750ms
     # .distinctUntilChanged() ; Only if the value has changed
-
-  var searcher = |>
-    keyup.select(text -> searchWikipedia text) ; Search wikipedia
+    # .select(text -> searchWikipedia text) ; Search wikipedia
     # .switchLatest() ; Ensure no out of order results
     # .where(data -> data.length == 2) ; Where we have data
-
-  |>
-    searcher.subscribe(:# onData, :# onError)
-    onData: data -> do!
+    # .subscribe(:# onData, :# onError)
+    onData: data ->
       ; Append the results
       clearChildren(results)
       var res = data[1];
@@ -74,6 +70,7 @@ var main = #-> do!
           li.innerHTML = res[i]
           results.appendChild li
           next! i + 1
+        else end!
     onError: error ->
       ; Handle any errors
       clearChildren results

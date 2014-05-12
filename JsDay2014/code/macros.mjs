@@ -12,11 +12,6 @@
       result.resolveVirtual()
       result
 
-  #keepmacro |:
-    arity: unary
-    precedence: HIGH
-    expand: #->
-
   #keepmacro !->
     arity: binary
     precedence: FUNCTION
@@ -26,7 +21,7 @@
       var catch-arg = null
       args.for-each
         (arg) -> do!
-          if (arg.id == '!') do!
+          if (arg.id == '!')
             var actual-arg = arg.at 0
             if (actual-arg.tag?())
               error-args.push <- actual-arg.get-tag()
@@ -34,15 +29,11 @@
             else
               arg.error 'Invalid (error) argument name'
               arg.remove()
-          else if (arg.id == '~') do!
-            var actual-arg = arg.at 0
-            if (actual-arg.tag?())
-              if (catch-arg == null)
-                catch-arg = actual-arg.get-tag()
-              else
-                arg.error 'Cannot handle more than one catch argument'
+          else if (arg.id == '~')
+            if (catch-arg == null)
+              catch-arg = arg.at 0
             else
-              arg.error 'Invalid (catch) argument name'
+              arg.error 'Cannot handle more than one catch argument'
             arg.remove()
       if (error-args.length > 0)
         var thrower = name -> ` (if (~` ast.new-tag name) throw (~` ast.new-tag name))
@@ -54,17 +45,22 @@
           try
             ~` body
           catch (var \e)
-            (|: (~` ast.new-tag catch-arg)) \e
+            (~` catch-arg) \e
         body.resolve-virtual()
       ` (~`args) -> (~`body)
+
+  #keepmacro :#
+    arity: unary
+    precedence: HIGH
+    expand: #->
 
   #keepmacro |>
     arity: binary
     precedence: LOW
     expand: (start, exprs) ->
-
-      var inspect = (require 'util').inspect
-
+      var
+        previous-symbol = '#'
+        next-symbol = '#next'
       var named-exprs = Object.create(null)
       var exprs-data = []
 
@@ -107,17 +103,17 @@
           ph -> do!
             if (ph.placeholder?())
               var ph-value = ph.get-simple-value()
-              if (ph-value == null || ph-value == '<:')
+              if (ph-value == null || ph-value == '#')
                 if (data.previous == null)
                   data.previous = ph
                 else
-                  ph.error 'More than one <: reference specified'
-              else if (ph-value == ':>')
+                  ph.error 'More than one previous reference specified'
+              else if (ph-value == '#next')
                 if (data.next == null)
                   data.next = ph
                 else
-                  ph.error 'More than one :> reference specified'
-            else if (ph.id == '|:')
+                  ph.error 'More than one next reference specified'
+            else if (ph.id == ':#')
               var name = (ph.at 0).get-tag()
               if (name != null)
                 var named-data =
@@ -168,17 +164,15 @@
         var current = exprs-data.shift()
         if (previous != null && previous.next != null)
           if (current.previous != null)
-            current.previous.error 'Cannot have a # reference if the previous expression has a :> reference'
-          ;previous.next.replace-with(current.expr)
-          replace-placeholder(previous.expr, ':>', current.expr)
+            current.previous.error 'Cannot have a previous reference if the previous expression has a next reference'
+          replace-placeholder(previous.expr, previous.next.get-simple-value(), current.expr)
           last = previous
         else
           if (current.previous != null)
             if (last != null)
-              ;current.previous.replace-with(last.expr)
-              replace-placeholder(current.expr, '<:', last.expr)
+              replace-placeholder(current.expr, current.previous.get-simple-value(), last.expr)
             else
-              current.previous.error 'Cannot have a <: reference with no previous expression'
+              current.previous.error 'Cannot have a previous reference with no previous expression'
           else
             if (previous != null)
               results.push <- previous.expr
