@@ -44,10 +44,9 @@
         body = `
           try
             ~` body
-          catch (var \e)
-            (~` catch-arg) \e
-        body.resolve-virtual()
-      ` (~`args) -> (~`body)
+          catch (var $$__error$$)
+            (~` catch-arg) $$__error$$
+      (` (~`args) -> (~`body))
 
   #keepmacro :#
     arity: unary

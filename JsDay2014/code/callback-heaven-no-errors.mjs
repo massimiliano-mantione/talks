@@ -11,29 +11,29 @@ var
   widths = [200, 200]
 
 |>
-  fs.readdir(source, :>)
+  fs.readdir(source, #next)
   (err, files) ->
     console.log <- 'Got files: ' + inspect(files)
     if (err)
       throw new Error('Error finding files: ' + err)
     else
-      files.forEach :>
+      files.forEach #next
   (filename, fileIndex) ->
     console.log filename
     var image = gm(source + filename);
-    image.size :>
+    image.size #next
   (err, values) ->
     if (err)
       throw new Error('Error identifying file size: ' + err)
     else do!
       console.log <- filename + ' : ' + inspect values
       var aspect = values.width / values.height
-      widths.forEach :>
+      widths.forEach #next
   (width, widthIndex) ->
     var height = Math.round <- width / aspect
     console.log <- 'Resizing ' + filename + ' to ' + height + 'x' + height
     var destinationFile = destination + 'w' + width + '_' + filename
     console.log <- 'Writing to ' + destinationFile
-    image.resize(width, height).write(destinationFile, :>)
+    image.resize(width, height).write(destinationFile, #next)
   err -> do!
     if (err) throw new Error('Error writing file: ' + err)
