@@ -27,8 +27,6 @@ function prepare() {
   loadJs('lib/rx.html.js');
 }
 
-prepare();
-
 function getOffset(element) {
   var doc = element.ownerDocument,
       docElem = doc.documentElement;
@@ -76,4 +74,5 @@ function main() {
 
 }
 
+prepare();
 main();

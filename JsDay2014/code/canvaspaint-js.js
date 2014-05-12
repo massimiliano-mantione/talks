@@ -26,8 +26,6 @@ function prepare() {
   loadJs('lib/rx.html.js');
 }
 
-prepare();
-
 function getOffset(event) {
   return {
     offsetX: event.offsetX === undefined ? event.layerX : event.offsetX,
@@ -66,4 +64,5 @@ function main() {
   }
 }
 
+prepare();
 main();
