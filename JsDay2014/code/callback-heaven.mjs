@@ -11,29 +11,25 @@ var
   widths = [200, 200]
 
 |>
-  fs.readdir(source, :>
-  (err, files) ->
+  fs.readdir(source, :>)
+  (!err, files, ~error-finding-files) !-> do!
     console.log <- 'Got files: ' + inspect(files)
-    if (err)
-      throw new Error('Error finding files: ' + err)
-    else
-      files.forEach :>
+    files.forEach :>
   (filename, fileIndex) ->
     console.log filename
     var image = gm(source + filename);
     image.size :>
-  (err, values) ->
-    if (err)
-      throw new Error('Error identifying file size: ' + err)
-    else
-      console.log(filename + ' : ' + inspect(values));
-      aspect = (values.width / values.height);
-      widths.forEach :>
+  (!err, values, ~error-computing-size) !-> do!
+    console.log <- filename + ' : ' + inspect values
+    var aspect = values.width / values.height
+    widths.forEach :>
   (width, widthIndex) ->
-    height = Math.round(width / aspect);
-    console.log('Resizing ' + filename + ' to ' + height + 'x' + height);
-    var destinationFile = destination + 'w' + width + '_' + filename;
-    console.log('Writing to ' + destinationFile);
+    var height = Math.round <- width / aspect
+    console.log <- 'Resizing ' + filename + ' to ' + height + 'x' + height
+    var destinationFile = destination + 'w' + width + '_' + filename
+    console.log <- 'Writing to ' + destinationFile
     image.resize(width, height).write(destinationFile, :>)
-    err ->
-      if (err) throw new Error('Error writing file: ' + err)
+  (!err, ~error-writing-file) !-> ()
+  error-finding-files: (err) -> throw new Error('Error finding files: ' + err)
+  error-computing-size: (err) -> throw new Error('Error identifying file size: ' + err)
+  error-writing-file: (err) -> throw new Error('Error writing file: ' + err)

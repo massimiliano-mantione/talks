@@ -12,6 +12,11 @@
       result.resolveVirtual()
       result
 
+  #keepmacro |:
+    arity: unary
+    precedence: HIGH
+    expand: #->
+
   #keepmacro !->
     arity: binary
     precedence: FUNCTION
@@ -49,14 +54,9 @@
           try
             ~` body
           catch (var \e)
-            (~` ast.new-tag catch-arg) \e
+            (|: (~` ast.new-tag catch-arg)) \e
         body.resolve-virtual()
       ` (~`args) -> (~`body)
-
-  #keepmacro |:
-    arity: unary
-    precedence: HIGH
-    expand: #->
 
   #keepmacro |>
     arity: binary
