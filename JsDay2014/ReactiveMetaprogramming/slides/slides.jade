@@ -156,7 +156,7 @@ section
   pre.codebox.fragment
     code.javascript.
       r = v.f1().f2().f3();
-  p.fragment Or you could have a "monadic sequencing" notation
+  p.fragment ...or you could have a "monadic sequencing" notation:
   pre.codebox.fragment
     code.javascript.
       r = on v do
@@ -204,6 +204,12 @@ section
     br
     | because of a <b>"try-catch"</b> trick
 
+section
+  h1 Can we make it
+  h1
+    veryBig simpler?
+  h3.fragment Back to coding...
+
 
 section
   h1 Enter rx.js
@@ -233,7 +239,22 @@ section
 
 
 section
-  h1 Can we make it
+  h1 Takeaway
+  p.fragment The problem is the <b>nesting</b> and not the callbacks
+  p.fragment <em>(a verbose function syntax <b>can</b> be a problem)</em>
+  p.fragment Promises give you linear code, but they require a global API conversion
+  p.fragment A smarter language can give you linear code with <b>any</b> API
+  p.fragment
+    | Rx.Js adds real value, but will it ever be supported by Javascript?
+    br
+    | (think <em>async</em> in ES7)
+
+section
+  h1 That's All, Folks
   h1
-    veryBig simpler?
-  h3.fragment Back to coding...
+    veryBig Metascript
+  h2 is waiting for you!
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  p group: metascript@googlegroups.com
+  h2 Thanks for following!
