@@ -184,3 +184,46 @@
         results[0]
       else
         ` do! ~` results
+
+
+  #keepmacro ::
+    unary
+    HIGH
+    expand: v ->
+'''
+      mori value literals
+'''
+      if (v.object?()) do
+        var kvs = v.new-tuple()
+        v.forEach(p -> do
+          var k = p.at 0
+          kvs.push(k.new-value(k.val))
+          kvs.push(p.at(1).copy()))
+        `mori.hash_map(~`kvs)
+
+      else if (v.array?()) do
+        var vs = v.new-tuple(v.map(e -> e.copy()))
+        `mori.vector(~`vs)
+
+      else if (v.tuple?()) do
+        `mori.list(~`v)
+
+      else if (v.tag?())
+        v.new-value(v.val.to-string())
+
+      else
+        v
+
+  #keepmacro !!
+    binary
+    MUL
+    expand: (coll, path) ->
+'''
+      associative collection navigation
+        by single key: coll !! key
+        by path: coll !! (k0, k1, kn)
+'''
+      if (path.tuple?())
+        ` mori.get_in(~`coll, [~`path.map(_ -> _)])
+      else
+        ` mori.get(~`coll, ~`path)
