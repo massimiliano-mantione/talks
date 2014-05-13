@@ -1,6 +1,6 @@
 #metaimport macros
 
-var v
+var v = 0
 
 '''
   2 + 1
@@ -36,7 +36,7 @@ v = (5 * 4) - Math.pow(4, 2)
 
 '''
   5 * 4     Math.pow(4,2)
-    |               |
+    |           |
    #left  -   #right
 '''
 
