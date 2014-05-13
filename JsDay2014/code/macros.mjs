@@ -72,6 +72,11 @@
           next: null
         }
 
+      var get-leftmost = (root) ->
+        while (root.isCall() || root.isMember())
+          root = root.at 0
+        root
+
       var replace-placeholder = (expr, ph-name, replacement) -> do!
         expr.for-each-recursive
           ph -> do!
@@ -155,7 +160,6 @@
               ~` expr.newTag '$$dataExpr$$'
             data.expr.replace-tag('$$dataExpr$$', expr)
 
-      var results = []
       var previous = null
       var next-reference = null
       var last = null
@@ -174,16 +178,16 @@
               current.previous.error 'Cannot have a previous reference with no previous expression'
           else
             if (previous != null)
-              results.push <- previous.expr
+              if (!current.expr.call?())
+                current.expr = `((~`current.expr) ())
+              var leftmost = get-leftmost <- current.expr
+              var leftmost-parent = leftmost.parent
+              leftmost-parent.shift()
+              leftmost-parent.unshift(` (~`last.expr).(~`leftmost))
           last = current
         previous = last
-      if (last != null)
-        results.push <- last.expr
 
-      if (results.length == 1)
-        results[0]
-      else
-        ` do! ~` results
+      last.expr
 
 
   #keepmacro ::

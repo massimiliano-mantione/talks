@@ -33,209 +33,225 @@ section
   p.fragment We think that the problem is the nesting of <em><u>callbacks</u></em>...
   p.embox.roll-in.fragment But it is the <em><u>nesting</u></em> of callbacks!
 
-section
-  h1 Did you know...
-
-  p.fragment That also synchronous code can suffer from nesting?
-  pre.codebox.fragment
-    code.javascript.
-      writeFiles(
-        resizeImages(
-          readFiles(
-            listFiles(directoryName))));
-
 
 section
-  h1 The usual trick:
-  h2.fragment Make a <em><b>flowing API</b>!</em>
-  pre.codebox.fragment
-    code.javascript.
-      listFiles(directoryName)
-        .readFiles()
-        .resizeImages()
-        .writeFiles();
+  section
+    h1
+      veryBig Nesting
+
+  section
+    h1 Did you know...
+
+    p.fragment That also synchronous code can suffer from nesting?
+    pre.codebox.fragment
+      code.javascript.
+        writeFiles(
+          resizeImages(
+            readFiles(
+              listFiles(directoryName))));
 
 
-section
-  h1 The root of the problem
-
-  p.fragment Nested expressions are unreadable
-  p.fragment A nested expression is a complex one
-  p.fragment A complex expression is a deep tree
-  p.embox.roll-in.fragment Usually what we want is a <em>single</em> path in the tree!
-
-
-
-section
-  h1 Wow do we
-  h1
-    veryBig frame
-  h1 the problem?
+  section
+    h1 The usual trick:
+    h2.fragment Make a <em><b>flowing API</b>!</em>
+    pre.codebox.fragment
+      code.javascript.
+        listFiles(directoryName)
+          .readFiles()
+          .resizeImages()
+          .writeFiles();
 
 
-section
-  h1 Be pragmatic
+  section
+    h1 The root of the problem
 
-  p.fragment Parenthesis must be nested
-  p.fragment Representing tree levels with parenthesis produces nesting
-  p.fragment A single tree path is like a chain
-  p.fragment Binary, left-associative infix operators can be chained
-  p.fragment
-    | The "<b>.</b>" operator links very versatile entities
-    br
-    | (objects and properties)
-
-
-section
-  h1 The chained API!
-
-  p
-    | Remember: the "<b>.</b>" operator links very versatile entities
-    br
-    | (objects and properties)
-  p.fragment Let's build objects that represent the steps in the chain!
-  p.fragment Every object will have a method that returns the next step in the chain...
-  pre.codebox.fragment
-    code.javascript.
-      listFiles(directoryName)
-        .readFiles()
-        .resizeImages()
-        .writeFiles();
-
-section
-  h1 Go async with promises
-
-  p.fragment Remember that each step in the chain represents an intermediate value
-  pre.codebox.fragment
-    code.javascript.
-      listFiles(directoryName)
-        .then(readFiles)
-        .then(resizeImages)
-        .then(writeFiles);
+    p.fragment Nested expressions are unreadable
+    p.fragment A nested expression is a complex one
+    p.fragment A complex expression is a deep tree
+    p.embox.roll-in.fragment Usually what we want is a <em>single</em> path in the tree!
 
 
 
-section
-  h1 Monadic sequencing
+  section
+    h1 Wow do we
+    h1
+      veryBig frame
+    h1 the problem?
 
-  p.embox.roll-in.fragment Does anybody understand monads?
-  p.fragment <b><em>No?</em></b>
-  p.embox.roll-in.fragment <b><u>Neither do I!</u></b>
-  p.fragment
-    | Please watch the talk
-    br
-    em "Monads and Gonads"
-    br
-    | by Douglas Crockford
 
-section
-  h1 Modads for dummies
+  section
+    h1 Be pragmatic
 
-  p.fragment Suppose you want to compute result <b>r</b> from value <b>v</b> applying functions <b>f1</b>, <b>f2</b> and <b>f3</b>
-  pre.codebox.fragment
-    code.javascript.
-      r = f3 (f2 (f1 (v)));
-  p.fragment <em>(note the nesting)</em>
-  p.fragment
-    | You could represent the intermediate values explicitly:
-    br
-    | <b>v1</b> and <b>v2</b>
-  pre.codebox.fragment
-    code.javascript.
-      v1 = f1 (v);
-      v2 = f2 (v1);
-      r  = f3 (v2);
-  p.fragment <em>(note: no nesting!)</em>
-  p.fragment <b>But lots of clutter...</b>
+    p.fragment Parenthesis must be nested
+    p.fragment Representing tree levels with parenthesis produces nesting
+    p.fragment A single tree path is like a chain
+    p.fragment Binary, left-associative infix operators can be chained
+    p.fragment
+      | The "<b>.</b>" operator links very versatile entities
+      br
+      | (objects and properties)
+
+
+  section
+    h1 The chained API!
+
+    p
+      | Remember: the "<b>.</b>" operator links very versatile entities
+      br
+      | (objects and properties)
+    p.fragment Let's build objects that represent the steps in the chain!
+    p.fragment Every object will have a method that returns the next step in the chain...
+    pre.codebox.fragment
+      code.javascript.
+        listFiles(directoryName)
+          .readFiles()
+          .resizeImages()
+          .writeFiles();
+
+  section
+    h1 Go async with promises
+
+    p.fragment Remember that each step in the chain represents an intermediate value
+    pre.codebox.fragment
+      code.javascript.
+        listFiles(directoryName)
+          .then(readFiles)
+          .then(resizeImages)
+          .then(writeFiles);
 
 
 section
-  h1 Modads for dummies
+  section
+    h1
+      veryBig Monads
 
-  p.fragment You could build a flowing API...
-  pre.codebox.fragment
-    code.javascript.
-      r = v.f1().f2().f3();
-  p.fragment ...or you could have a "monadic sequencing" notation:
-  pre.codebox.fragment
-    code.javascript.
-      r = on v do
-        f1
-        f2
-        f3
-  p.fragment <em>(note: this is not Javascript)</em>
+  section
+    h1 Monadic sequencing
+
+    p.embox.roll-in.fragment Does anybody understand monads?
+    p.fragment <b><em>No?</em></b>
+    p.embox.roll-in.fragment <b><u>Neither do I!</u></b>
+    p.fragment
+      | Please watch the talk
+      br
+      em "Monads and Gonads"
+      br
+      | by Douglas Crockford
+
+  section
+    h1 Modads for dummies
+
+    p.fragment Suppose you want to compute result <b>r</b> from value <b>v</b> applying functions <b>f1</b>, <b>f2</b> and <b>f3</b>
+    pre.codebox.fragment
+      code.javascript.
+        r = f3 (f2 (f1 (v)));
+    p.fragment <em>(note the nesting)</em>
+    p.fragment
+      | You could represent the intermediate values explicitly:
+      br
+      | <b>v1</b> and <b>v2</b>
+    pre.codebox.fragment
+      code.javascript.
+        v1 = f1 (v);
+        v2 = f2 (v1);
+        r  = f3 (v2);
+    p.fragment <em>(note: no nesting!)</em>
+    p.fragment <b>But lots of clutter...</b>
 
 
-section
-  h1 Back to promises
+  section
+    h1 Modads for dummies
 
-  p.fragment Remember our previous example?
-  pre.codebox.fragment
-    code.javascript.
-      listFiles(directoryName)
-        .then(readFiles)
-        .then(resizeImages)
-        .then(writeFiles)
-        .fail(handleError)
-  p.fragment What does the final <b>fail</b> invocation add?
-  p.fragment
-    | The expression is a list,
-    br
-    | but what about the flow of values?
-
-
-section
-  h1 Real trees!
-  p.fragment This is the graph of intermediate values:
-  pre.codebox.fragment
-    code.javascript.
-      // directoryName --------\
-      //       |               |
-      // listFiles ------------+
-      //       |               |
-      // readFiles ------------+
-      //       |               |
-      // resizeImages ---------+
-      //       |               |
-      // writeFiles        handleError
-  p.fragment As you can see, this is a real tree!
-  p.fragment
-    | It can be represented as a list
-    br
-    | because of a <b>"try-catch"</b> trick
-
-section
-  h1 Can we make it
-  h1
-    veryBig simpler?
-  h3.fragment Back to coding...
+    p.fragment You could build a flowing API...
+    pre.codebox.fragment
+      code.javascript.
+        r = v.f1().f2().f3();
+    p.fragment ...or you could have a "monadic sequencing" notation:
+    pre.codebox.fragment
+      code.javascript.
+        r = on v do
+          f1
+          f2
+          f3
+    p.fragment <em>(note: this is not Javascript)</em>
 
 
 section
-  h1 Enter rx.js
+  section
+    h1
+      veryBig Trees
 
-  p.fragment An <b>observable</b> can do one of three things:
-    ul
-      li.fragment Produce values: <b>onNext</b>
-      li.fragment Terminate: <b>onCompleted</b>
-      li.fragment Fail: <b>onError</b>
+  section
+    h1 Back to promises
+
+    p.fragment Remember our previous example?
+    pre.codebox.fragment
+      code.javascript.
+        listFiles(directoryName)
+          .then(readFiles)
+          .then(resizeImages)
+          .then(writeFiles)
+          .fail(handleError)
+    p.fragment What does the final <b>fail</b> invocation add?
+    p.fragment
+      | The expression is a list,
+      br
+      | but what about the flow of values?
+
+
+  section
+    h1 Real trees!
+    p.fragment This is the graph of intermediate values:
+    pre.codebox.fragment
+      code.javascript.
+        // directoryName --------\
+        //       |               |
+        // listFiles ------------+
+        //       |               |
+        // readFiles ------------+
+        //       |               |
+        // resizeImages ---------+
+        //       |               |
+        // writeFiles        handleError
+    p.fragment As you can see, this is a real tree!
+    p.fragment
+      | It can be represented as a list
+      br
+      | because of a <b>"try-catch"</b> trick
+
+  section
+    h1 Can we make it
+    h1
+      veryBig simpler?
+    h3.fragment Back to coding...
 
 
 section
-  h1 The rx.js graph
-  p.fragment Like a monad with three functions
-  pre.codebox.fragment
-    code.javascript.
-      // observable -----+----------\
-      //     |           |          |
-      //   filter -------+----------+
-      //     |           |          |
-      //  throttle ------+----------+
-      //     |           |          |
-      //    map ---------+----------+
-      //     |           |          |
-      //   onNext   onCompleted  onError
-  p.fragment Let's look at some code!
+  section
+    h1 Enter rx.js
+
+    p.fragment An <b>observable</b> can do one of three things:
+      ul
+        li.fragment Produce values: <b>onNext</b>
+        li.fragment Terminate: <b>onCompleted</b>
+        li.fragment Fail: <b>onError</b>
+
+
+  section
+    h1 The rx.js graph
+    p.fragment Like a monad with three functions
+    pre.codebox.fragment
+      code.javascript.
+        // observable -----+----------\
+        //     |           |          |
+        //   filter -------+----------+
+        //     |           |          |
+        //  throttle ------+----------+
+        //     |           |          |
+        //    map ---------+----------+
+        //     |           |          |
+        //   onNext   onCompleted  onError
+    p.fragment Let's look at some code!
 
 
 section
