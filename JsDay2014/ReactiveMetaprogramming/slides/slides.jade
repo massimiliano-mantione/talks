@@ -231,7 +231,7 @@ section
 
 
   section
-    h1 Real trees!
+    h1 Nonlinear graphs!
     p.fragment This is the graph of intermediate values:
     pre.codebox.fragment
       code.javascript.
@@ -244,11 +244,11 @@ section
         // resizeImages ---------+
         //       |               |
         // writeFiles        handleError
-    p.fragment As you can see, this is a real tree!
+    p.fragment As you can see, this is not a simple chain of values!
     p.fragment
-      | It can be represented as a list
+      em However, it can be represented as a list
       br
-      | because of a <b>"try-catch"</b> trick
+      em because of a <b>"try-catch"</b> trick
 
 
 section
@@ -266,7 +266,6 @@ section
 
   section
     h1 The rx.js graph
-    p.fragment Like a monad with three functions
     pre.codebox.fragment
       code.javascript.
         // observable -----+----------\
@@ -278,19 +277,43 @@ section
         //    map ---------+----------+
         //     |           |          |
         //   onNext   onCompleted  onError
-    p.fragment Let's look at some code!
+    p.fragment Like a monad, with three functions...
+
+  section
+    h1 Rx.Js is different
+    p.fragment
+      b It adds some <em>real</em> value over promises
+    p.fragment Promises frameworks lack the comprehensive set of operations on flowing values that Rx.Js has
+    p.fragment Moreover, promises can fire only once, while observables are more like node.js streams
+    p.fragment
+      em Of course, ES6 and ES7 will support Promises and not Rx.Js
+    p.embox.roll-in.fragment Let's look at some code!
 
 
 section
-  h1 Takeaway
-  p.fragment The problem is the <b>nesting</b> and not the callbacks
-  p.fragment <em>(a verbose function syntax <b>can</b> be a problem)</em>
-  p.fragment Promises give you linear code, but they require a global API conversion
-  p.fragment A smarter language can give you linear code with <b>any</b> API
-  p.fragment
-    | Rx.Js adds real value, but will it ever be supported by Javascript?
-    br
-    | (think <em>async</em> in ES7)
+  section
+    h1 Final thoughts
+    p.fragment The problem is the <b>nesting</b> and not the callbacks
+    p.fragment
+      em (a verbose syntax <b>is</b> annoying anyway)
+    p.fragment Promises give you linear code, but they require a global API conversion
+    p.fragment
+      | A smarter language can give you linear code with <b>any</b> API
+      br
+      em (Promises, Rx.Js, or plain callbacks)
+
+  section
+    h1 Other techniques
+    p.fragment
+      | Rx.Js adds real value, but will it ever be supported by Javascript?
+      br
+      em (think <em>async</em> in ES7)
+    p.fragment
+      b Don't forget generators and coroutines!
+    p.embox.roll-in.fragment
+      | But... when will we have
+      br
+      | <em>migratable</em> coroutines?
 
 section
   h1 That's All, Folks
