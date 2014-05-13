@@ -50,18 +50,6 @@ section
             readFiles(
               listFiles(directoryName))));
 
-
-  section
-    h1 The usual trick:
-    h2.fragment Make a <em><b>flowing API</b>!</em>
-    pre.codebox.fragment
-      code.javascript.
-        listFiles(directoryName)
-          .readFiles()
-          .resizeImages()
-          .writeFiles();
-
-
   section
     h1 The root of the problem
 
@@ -69,15 +57,6 @@ section
     p.fragment A nested expression is a complex one
     p.fragment A complex expression is a deep tree
     p.embox.roll-in.fragment Usually what we want is a <em>single</em> path in the tree!
-
-
-
-  section
-    h1 Wow do we
-    h1
-      veryBig frame
-    h1 the problem?
-
 
   section
     h1 Be pragmatic
@@ -91,9 +70,8 @@ section
       br
       | (objects and properties)
 
-
   section
-    h1 The chained API!
+    h1 Let's think...
 
     p
       | Remember: the "<b>.</b>" operator links very versatile entities
@@ -101,23 +79,37 @@ section
       | (objects and properties)
     p.fragment Let's build objects that represent the steps in the chain!
     p.fragment Every object will have a method that returns the next step in the chain...
+
+  section
+    h1 Enter the
+    h1
+      veryBig Flowing API!
     pre.codebox.fragment
       code.javascript.
         listFiles(directoryName)
           .readFiles()
           .resizeImages()
           .writeFiles();
+    p.fragment
+      b This usually works well, but...
 
   section
-    h1 Go async with promises
+    h1 Is there a
+    h1
+      veryBig simpler
+    h1 way?
 
-    p.fragment Remember that each step in the chain represents an intermediate value
-    pre.codebox.fragment
-      code.javascript.
-        listFiles(directoryName)
-          .then(readFiles)
-          .then(resizeImages)
-          .then(writeFiles);
+section
+  section
+    h2 Expression
+    h1
+      veryBig Trees!
+    p.fragment
+      em Let's see how the language
+      br
+      em can help us
+    p.fragment
+      b Let's revisit callback hell
 
 
 section
@@ -139,7 +131,7 @@ section
       | by Douglas Crockford
 
   section
-    h1 Modads for dummies
+    h1 Monads for dummies
 
     p.fragment Suppose you want to compute result <b>r</b> from value <b>v</b> applying functions <b>f1</b>, <b>f2</b> and <b>f3</b>
     pre.codebox.fragment
@@ -160,7 +152,7 @@ section
 
 
   section
-    h1 Modads for dummies
+    h1 Monads for dummies
 
     p.fragment You could build a flowing API...
     pre.codebox.fragment
@@ -175,16 +167,35 @@ section
           f3
     p.fragment <em>(note: this is not Javascript)</em>
 
+  section
+    h1 Monads for dummies
+
+    p.fragment Monads are object that encapsulate a function
+    p.fragment Actually, they represent the (future?) result of applying that function
+    p.fragment They can be linked to other monads, representing the input and result of the function...
+    p.embox.roll-in.fragment Does this ring a bell?
+
 
 section
   section
     h1
-      veryBig Trees
+      veryBig Promises!
 
   section
-    h1 Back to promises
+    h1 Go async with promises
 
-    p.fragment Remember our previous example?
+    p.fragment Remember that each step in the chain represents an intermediate value
+    pre.codebox.fragment
+      code.javascript.
+        listFiles(directoryName)
+          .then(readFiles)
+          .then(resizeImages)
+          .then(writeFiles);
+
+  section
+    h1 What about failure?
+
+    p.fragment Let's add something to our previous example
     pre.codebox.fragment
       code.javascript.
         listFiles(directoryName)
@@ -219,16 +230,12 @@ section
       br
       | because of a <b>"try-catch"</b> trick
 
-  section
-    h1 Can we make it
-    h1
-      veryBig simpler?
-    h3.fragment Back to coding...
-
 
 section
   section
-    h1 Enter rx.js
+    h1 What about
+    h1
+      veryBig Rx.Js?
 
     p.fragment An <b>observable</b> can do one of three things:
       ul
