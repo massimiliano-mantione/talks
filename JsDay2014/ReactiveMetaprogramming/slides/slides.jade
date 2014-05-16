@@ -10,6 +10,8 @@ section
   h1 Reactive Metaprogramming!
   p.dateStyle May 15 2014, Verona
   p Massimiliano Mantione
+  p
+    em (Hyperfair CTO)
 
 
 section
@@ -81,7 +83,7 @@ section
 
     p.fragment Parenthesis must be nested
     p.fragment Representing tree levels with parenthesis produces nesting
-    p.fragment A single tree path is like a chain
+    p.fragment A single tree path is like a linked chain
     p.fragment Binary, left-associative infix operators can be chained
     p.fragment
       | The "<b>.</b>" operator links very versatile entities
@@ -95,7 +97,7 @@ section
       | Remember: the "<b>.</b>" operator links very versatile entities
       br
       | (objects and properties)
-    p.fragment Let's build objects that represent the steps in the chain!
+    p.fragment Let's build <b>objects</b> that represent the steps in the chain!
     p.fragment Every object will have a method that returns the next step in the chain...
 
   section
@@ -129,7 +131,20 @@ section
       br
       em "straightening" trees
     p.fragment
-      b Let's revisit callback hell
+
+  section
+    h1 Sounds scary?
+    p.fragment <b>It is</b>: write the wrong macro and your code will become an unreadable mess
+    p.embox.roll-in.fragment
+      em With great power comes great responsibility
+    p.fragment Macros give you superpowers
+    p.embox.roll-in.fragment
+      b Would you really give up superpowers
+      br
+      b because you don't want the responsibility?
+
+    p.fragment
+      em Let's revisit callback hell
 
 
 section
@@ -190,9 +205,9 @@ section
   section
     h1 Monads for dummies
 
-    p.fragment Monads are object that encapsulate a function
+    p.fragment Monads are objecs that encapsulate a function
     p.fragment Actually, they represent the (future?) result of applying that function
-    p.fragment They can be linked to other monads, representing the input and result of the function...
+    p.fragment They can be linked to other monads, which represent the input and result of the function...
     p.embox.roll-in.fragment Does this ring a bell?
 
 
@@ -286,7 +301,7 @@ section
     p.fragment Promises frameworks lack the comprehensive set of operations on flowing values that Rx.Js has
     p.fragment Moreover, promises can fire only once, while observables are more like node.js streams
     p.fragment
-      em Of course, ES6 and ES7 will support Promises and not Rx.Js
+      em Of course, ES6 and ES7 will support <b>Promises</b> and not <b>Rx.Js</b>
     p.embox.roll-in.fragment Let's look at some code!
 
 
