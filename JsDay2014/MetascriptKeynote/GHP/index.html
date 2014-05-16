@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="Metascript: Going Beyond Javascript Limitations">
+		<meta name="author" content="Massimiliano Mantione">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+            <div class="slides"><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script src="assets/highlight.min.css"></script><section><div class="logo"><img src="assets/jsday.png" alt="logo"/></div><h3>Javascript</h3><h1>Metaprogramming</h1><h2>and you</h2><p class="dateStyle">May 14 2014, Verona</p><p>Massimiliano Mantione</p></section><section><section><h1>About Myself</h1><h2 class="fragment">An enthusiast software engineer</h2><p class="fragment">Passionate about languages and compilers</p><p class="fragment roll-in"><b>Worked in the V8 team in Google</b></p><p class="fragment">Overall, worked on JIT compilers for +7 years</p><p class="fragment">Now working on scalable, fault tolerant,<br/>web facing distributed systems</p></section><section><h1>Javascript and me</h1><p class="fragment">I started as a Javascript hater</p><blockquote class="fragment roll-in">When I sow Javascript for the 1st time (in 1995)
+I vowed that I would never touch such an abomination,
+even with a 10 feet pole</blockquote><p class="fragment">Eventually, I changed my mind, but...</p><p class="fragment"><em>Let's change subject!</em></p></section></section><section><section><h2>Metaprogramming</h2><p class="fragment">Do you know what <b>metaprogramming</b> is?</p><p class="embox roll-in fragment">Are you sure?</p><p class="fragment">It is not <em>"code that can see your code"</em>...</p><p class="embox roll-in fragment">It is <em>"code that can <b>modify</b> your code"!</em></p><p class="fragment"><em>Please read "Beating the Average"</em><br/><em>by Paul Graham</em></p></section><section><h1>Expressive power</h1><p class="fragment">Structured control flow<br/><em>(if then else, while...)</em></p><p class="fragment">Record and arrays <em>(dynamic?)</em></p><p class="fragment">First class functions</p><p class="fragment">Lexical scoping <em>(closures!)</em></p><p class="fragment">Automating memory management</p><p class="fragment"><b>Metaprogramming!</b></p></section><section><h1><veryBig>MACROS</veryBig></h1><p class="fragment">Metaprogramming is writing code that modifies code</p><p class="fragment">A piece of code that modifies other code is called a <b>macro</b></p><p class="fragment">To write a macro, code must be handled as data</p><p class="embox roll-in fragment">Therefore a macro is a function that takes code as input and produces code as output</p><p class="fragment"><u>Let's experiment</u></p></section></section><section><h3>Enter</h3><h1><veryBig>Metascript</veryBig></h1><h2 class="fragment">Do we really need<br/>one more language?</h2></section><section><section><h1>What's the Problem with Javascript?</h1><p class="fragment">Too many to mention</p><p class="fragment">Convertion rules can kick in with <em>WAT?</em> results</p><p class="fragment">Forgetting a variable declaration can be catastrophic</p><p class="fragment">Lack of proper block-scoping (until ES6)</p><p class="fragment">Verbose <em>Java-like</em> syntax</p><p class="fragment">No type system and <b>no metaprogramming</b></p></section><section><h1>How Can They Be Solved?</h1><p class="fragment">Sticking to "the good parts"</p><p class="fragment">Using <em>jslint</em> or <em>jshint</em></p><p class="fragment roll-in">Or... with a different programming language!<br/><em>(like Coffeescript)</em></p></section><section><h1>Javascript Alternatives</h1><p class="fragment">Coffeescript<br/><em>(nice, but no metaprogramming)</em></p><p class="fragment">Typescript<br/><em>(has a type system, but is still Javascript)</em></p><p class="fragment">Lispyscript<br/><em>(semi-unknown, and is a Lisp)</em></p><p class="fragment">Clojurescript<br/><em>(not very Javascript-friendly, and is also a Lisp)</em></p></section><section><h1>My Wishlist</h1><p class="fragment">Clean syntax <em>(like Coffeescript)</em></p><p class="fragment">Sane scoping rules <em>(like ES6 <b>let</b>)</em></p><p class="fragment">A type system <em>(like Typescript)</em></p><p class="fragment">Real metaprogramming <em>(like Lisp)</em></p><p class="fragment">Be a <em><u>Good Javascript Citizen</u></em></p></section><section><h2>Good Javascript Citizen</h2><p class="embox roll-in fragment">Designed for<br/><b>zero runtime overhead</b></p><p class="fragment">Each core construct cleanly translates into a Javascript primitive</p><p class="fragment">Consuming existing modules is natural</p><p class="fragment">Producing modules of any kind is easy</p><p class="embox roll-in fragment"><b>Full source map support, from day 1</b></p></section></section><section><section><h1>A Taste of<br/><veryBig>Metascript!</veryBig></h1><p>Our all-time favorite first program:</p><pre class="codebox"><code class="javascript">console.log 'Hello, Metascript!'
+
+</code></pre></section><section><h1>Simple Expressions</h1><p>...<em>Just Work!</em></p><pre class="codebox"><code class="javascript">(1 + 2 * 3).should.equal 7
+
+('a' + 'b' + 'c').should.equal "abc"
+
+(typeof (1 + 2)).should.equal 'number'
+
+(typeof {}).should.equal 'object'
+</code></pre></section><section><h1>Look, Ma, No Statements...</h1><p>...<em>Just Expressions!</em></p><pre class="codebox"><code class="javascript">(if true 1 else 2).should.equal 1
+
+(do
+  var a = 'a'
+  a = a + a
+  a
+).should.equal 'aa'
+
+</code></pre></section><section><h1>Loops Are Statements, Too</h1><pre class="codebox"><code class="javascript">var fact = (x) ->
+  loop (var r = 1, x)
+    if (x > 0)
+      next! (r * x, x - 1)
+    else
+      r
+      
+fact(1).should.equal(1)
+fact(5).should.equal(5 * 4 * 3 * 2 * 1)
+
+
+</code></pre></section></section><section><section><h1>The Syntax Dilemma</h1><p class="fragment"><b>Two main conflicting goals:</b><ul><li class="fragment">Being <em>homoiconic</em></li><li class="fragment">Being <u>readable!</u></li></ul></p><div class="fragment"><p><b>Also in the wishlist:</b><ul><li>Support different coding styles<ul><li>Use parenthesis</li><li>Be indentation based</li></ul></li><li>Be "diff friendly" if needed</li></ul></p></div></section><section><h1>The Metascript Solution</h1><p class="fragment">Note that expression grouping and nesting can be achieved in different ways<ul><li class="fragment">With parenthesis and commas</li><li class="fragment">With indentation</li><li class="fragment">With infix operators of different precedences</li><li class="fragment">With "dependent keywords" (like <em>else</em> or <em>catch</em>)</li></ul></p><p class="fragment"><b>Metascript uses all of them interchangeably!</b></p></section><section><h1>These Are All Equivalent</h1><pre class="codebox"><code class="codesmall javascript">callFunction(a, b, c)
+
+callFunction
+  (a, b, c)
+  
+callFunction
+  a
+  b
+  c</code></pre></section><section><h1>These Are Also Equivalent</h1><pre class="codebox"><code class="codesmall javascript">if condition (f a) else (g b)
+
+if condition
+  f a
+else
+  g b
+  
+if condition f(a)
+else g(b)</code></pre></section><section><h1>You <b><em>Can</em></b> Add Parenthesis...</h1><p>...if you feel you need them</p><pre class="codebox"><code class="codesmall javascript">callFunction (
+  a
+  b
+  c
+)
+if condition (
+  f(a)
+) else (
+  g(b)
+)</code></pre></section><section><h2>Sometimes Parenthesis are Mandatory</h2><pre class="codebox"><code class="javascript">callFunction (a, b, c)
+
+callFunction a b c
+
+callFunction (a) (b) (c)
+
+( (callFunction(a)) (b) ) (c)</code></pre></section><section><h1>Tuples!</h1><pre class="codebox"><code class="javascript">var (a, b) =
+  if true (1, 2) else (3, 4)
+a.should.equal 1
+b.should.equal 2
+
+(a, b) = (b, a)
+a.should.equal 2
+b.should.equal 1</code></pre></section><section><h2>Blocks give values</h2><pre class="codebox"><code class="javascript">var status =
+  if ok do
+    console.log 'Starting up'
+    engine.power = 100
+    give! 'moving'
+  else do
+    console.log 'Stopping'
+    engine.power = 0
+    'stopped'</code></pre></section><section><h2>Another way to write it</h2><pre class="codebox"><code class="javascript">(var status, var message, engine.power) =
+  if ok
+    ('moving', 'Starting up', 100)
+  else
+    ('stopped', 'Stopping', 0)
+console.log message</code></pre></section><section><h1>Clean Scoping Rules</h1><pre class="codebox"><code class="codesmall javascript">var r = []
+loop (var i = 1)
+  if (i > 10) end
+  var s = 'element' + i
+  r.push s
+; These will not compile...
+console.log i
+console.log s</code></pre></section><section><h2>Write <em>hygenic</em> Macros!</h2><p class="fragment">Sometimes inside macros you need to create variables that will be added to the program code</p><p class="fragment">You risk to use a variable name already in the scope where the macro is expanded</p><p class="fragment">Multiple expansions of the macro in the same scope risk to overwrite the variable</p><p class="fragment">Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique</p></section></section><section><section><h1>What's Next?</h1><p>Making the compiler production-ready</p><p>Completing the metaprogramming system</p><p>Writing "standard" macros</p><p>Implementing the type system</p></section><section><h1>Completing the compiler</h1><p class="fragment">It is already pretty solid</p><p class="fragment">Add support for <b>for ... in</b><br/><em>(Object.keys() is not always enough)</em></p><p class="fragment">Running in the browser and implement a REPL shell are not on my radar<br/><em>(the Lighttable plugin is IMHO even better)</em></p></section><section><h1>Completing the metaprogramming system</h1><p class="fragment">Document the AST API that can be used inside macros.</p><p class="fragment">Polish the module system for macros</p><p class="fragment">Fix a stupid issue with hygienic macros</p><p class="fragment">Fix another stupid issue with <em>quote</em> and <em>unquote</em></p></section><section><h1>Writing "standard" macros</h1><p class="fragment">We already have a <em>lot</em> of them<br/><em>(Destructuring assignments, structure matchers, argument splicing, switch/case, many small operators...)</em></p><p class="fragment">I should publish a module on github for them</p><p class="fragment">Eventually add proper generator and coroutine support</p></section><section><h1>Implementing the type system</h1><p class="fragment">Take structural subtyping from Typescript</p><p class="fragment">Take convention on type argument names from Haskell</p><p class="fragment">Put real algebraic types into the mix</p><p class="fragment">Allow explicit typing of the <em>this</em> argument</p><p class="fragment">Make everything optional, with type inference</p></section></section><section><section><h1>Nice, but...</h1><h1 class="fragment"><veryBig>is that all?</veryBig></h1></section><section><h1>Language evolution</h1><p class="embox roll-in fragment"><b>It is damn too slow!</b></p><p class="fragment">ES7 will likely have <b>async</b> for <em>Promises</em></p><p class="fragment">Will it ever support rx.js?</p><p class="fragment">Will it ever support <b>async</b> machines with <em>persistent</em> state?</p><p class="fragment">Will it ever support what you need <u><em>now</em></u>?</p></section><section><h1>Final words</h1><p class="embox roll-in fragment">You should <b><u>never</u></b> wait for the ECMA committee,<br/>browser vendors or some compiler writer<br/>to extend your programming language</p><p class="roll-in fragment"><b>You</b> should add the features <b>you</b> need to your language</p><p class="roll-in fragment">It should take only a handful of lines of code</p><p class="embox roll-in fragment">If you cannot do it,<br/><b>you are using the wrong language!</b></p></section></section><section><h1>That's All, Folks</h1><h1><veryBig>Metascript</veryBig></h1><h2>is waiting for you!</h2><p>code, docs and slides are on github</p><p>twitter: @M_a_s_s_i, #metascript</p><p>group: metascript@googlegroups.com</p><h2>Thanks for following!</h2></section>    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme || "default", // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || "default" || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+</body>
+</html>
+        
