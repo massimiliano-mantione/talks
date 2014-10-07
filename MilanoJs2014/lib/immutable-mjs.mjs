@@ -117,3 +117,12 @@
       }
       process-member-expression (value, data)
       ` (~` (data.value)).cursor([(~` (data.members))], #-> ~`mutator)
+
+  #keepmacro |..=
+    arity: binary
+    precedence: ASSIGNMENT
+    expand: (value, mutations) ->
+      ` (~` value).with-mutations
+        mutable ->
+          mutable |:
+            ~` mutations

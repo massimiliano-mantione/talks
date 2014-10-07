@@ -69,8 +69,11 @@ describe
       #->
         var m = null
         var c = (m1..a ..?= (m = #it))
-        c ..= 42
+        expect(c.deref()).to.equal 1
+        var c1 = (c ..= 42)
         expect(m..a).to.equal 42
+        expect(c.deref()).to.equal 1
+        expect(c1.deref()).to.equal 42
 
     it
       'Can get a deep cursor'
@@ -79,3 +82,14 @@ describe
         var c = (m3..a..b..c..[1] ..?= (m = #it))
         c ..= 42
         expect(m..a..b..c..[1]).to.equal 42
+
+'''
+    it.skip()
+      'Can batch mutations'
+      var m =
+        m1 |..=
+          ..a ..= 42
+          ..b ..= 69
+      expect(m..a).to.equal 42
+      expect(m..a).to.equal 69
+'''

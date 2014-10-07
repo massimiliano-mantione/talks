@@ -1,7 +1,7 @@
 var _$0;
 _$0: {
     module.exports = function (ast) {
-        var _$1, _$2, _$3, _$4, _$5, _$6;
+        var _$1, _$2, _$3, _$4, _$5, _$6, _$7;
         _$2: {
             _$3: {
                 _$4: {
@@ -307,6 +307,27 @@ _$0: {
                                 break _$8;
                             }
                             return _$7;
+                        }
+                    }));
+                }
+                _$7: {
+                    ast.defineSymbol(ast.createMacro('|..=', 'binary', 'ASSIGNMENT', {
+                        'expand': function (ast) {
+                            var mutations, value, _$8, _$9, _$10, _$11, codeTag0;
+                            _$9: {
+                                mutations = ast.at(1);
+                                value = ast.at(0);
+                                _$11: {
+                                    codeTag0 = ast.fromJsonString('{"id":"<call>","kind":"builtin","val":null,"loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":126,"column":8},"end":{"line":129,"column":0}},"args":[{"id":".","kind":"builtin","val":".","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":125,"column":18},"end":{"line":125,"column":18}},"args":[{"id":"<tag>","kind":"tag","val":"unquote1","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":125,"column":8},"end":{"line":125,"column":17}},"args":[]},{"id":"<name>","kind":"tag","val":"withMutations","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":125,"column":19},"end":{"line":125,"column":19}},"args":[]}]},{"id":"->","kind":"builtin","val":"->","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":126,"column":8},"end":{"line":129,"column":0}},"args":[{"id":"<argument>","kind":"tag","val":"mutable","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":126,"column":8},"end":{"line":126,"column":8}},"args":[]},{"id":"|:","kind":"macro","val":"|:","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":127,"column":10},"end":{"line":129,"column":0}},"args":[{"id":"<tag>","kind":"tag","val":"mutable","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":127,"column":10},"end":{"line":127,"column":10}},"args":[]},{"id":"<tag>","kind":"tag","val":"unquote2","loc":{"source":"/ssd/massi/talks/MilanoJs2014/lib/immutable-mjs.mjs","start":{"line":128,"column":12},"end":{"line":129,"column":0}},"args":[]}]}]}]}');
+                                    codeTag0.replaceTag('unquote1', value);
+                                    codeTag0.replaceTag('unquote2', mutations);
+                                    _$10 = codeTag0;
+                                    break _$11;
+                                }
+                                _$8 = _$10;
+                                break _$9;
+                            }
+                            return _$8;
                         }
                     }));
                 }

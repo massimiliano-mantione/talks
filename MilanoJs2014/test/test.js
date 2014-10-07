@@ -101,16 +101,19 @@ _$0: {
                 return _$6;
             });
             it('Can get a cursor', function () {
-                var m, c, _$6, _$7;
+                var m, c, c1, _$6, _$7;
                 _$7: {
                     m = null;
                     c = m1.cursor(['a'], function (__$arg$1) {
                         return m = __$arg$1;
                     });
-                    c.update(function () {
+                    expect(c.deref()).to.equal(1);
+                    c1 = c.update(function () {
                         return 42;
                     });
-                    _$6 = expect(m.get('a')).to.equal(42);
+                    expect(m.get('a')).to.equal(42);
+                    expect(c.deref()).to.equal(1);
+                    _$6 = expect(c1.deref()).to.equal(42);
                     break _$7;
                 }
                 return _$6;
