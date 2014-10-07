@@ -30,36 +30,52 @@ describe
 
     it
       'Can get a map property'
-      #-> expect(m1.:a).to.equal 1
+      #-> expect(m1..a).to.equal 1
 
     it
       'Can get into a map property'
-      #-> expect(m2.:a.:b).to.equal 42
+      #-> expect(m2..a..b).to.equal 42
 
     it
       'Can get a vector element'
-      #-> expect(v.:[0]).to.equal 1
+      #-> expect(v..[0]).to.equal 1
 
     it
       'Can set a map property'
       #->
-        var m = (m1.:a <-- 42)
-        expect(m.:a).to.equal 42
+        var m = (m1..a ..= 42)
+        expect(m..a).to.equal 42
 
     it
       'Can set into a map property'
       #->
-        var m = (m2.:a.:b <-- 0)
-        expect(m.:a.:b).to.equal 0
+        var m = (m2..a..b ..= 0)
+        expect(m..a..b).to.equal 0
 
     it
       'Can update a map property'
       #->
-        var m = (m1.:a <== #it + 41)
-        expect(m.:a).to.equal 42
+        var m = (m1..a ..= #it + 41)
+        expect(m..a).to.equal 42
 
     it
       'Can update into a map property'
       #->
-        var m = (m2.:a.:b <-- #it / 2)
-        expect(m.:a.:b).to.equal 21
+        var m = (m2..a..b ..= #it / 2)
+        expect(m..a..b).to.equal 21
+
+    it
+      'Can get a cursor'
+      #->
+        var m = null
+        var c = (m1..a ..?= (m = #it))
+        c ..= 42
+        expect(m..a).to.equal 42
+
+    it
+      'Can get a deep cursor'
+      #->
+        var m = null
+        var c = (m3..a..b..c..[1] ..?= (m = #it))
+        c ..= 42
+        expect(m..a..b..c..[1]).to.equal 42

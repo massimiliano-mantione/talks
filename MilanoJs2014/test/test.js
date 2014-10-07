@@ -100,6 +100,41 @@ _$0: {
                 }
                 return _$6;
             });
+            it('Can get a cursor', function () {
+                var m, c, _$6, _$7;
+                _$7: {
+                    m = null;
+                    c = m1.cursor(['a'], function (__$arg$1) {
+                        return m = __$arg$1;
+                    });
+                    c.update(function () {
+                        return 42;
+                    });
+                    _$6 = expect(m.get('a')).to.equal(42);
+                    break _$7;
+                }
+                return _$6;
+            });
+            it('Can get a deep cursor', function () {
+                var m, c, _$6, _$7;
+                _$7: {
+                    m = null;
+                    c = m3.cursor([
+                        'a',
+                        'b',
+                        'c',
+                        1
+                    ], function (__$arg$1) {
+                        return m = __$arg$1;
+                    });
+                    c.update(function () {
+                        return 42;
+                    });
+                    _$6 = expect(m.get('a').get('b').get('c').get(1)).to.equal(42);
+                    break _$7;
+                }
+                return _$6;
+            });
             _$3 = undefined;
             break _$4;
         }
