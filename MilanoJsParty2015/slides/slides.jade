@@ -1,0 +1,187 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/mijs.png', alt='logo')
+  p -
+  h3 Jou Can Have It
+  h1 Both Ways:
+  h2 Web Components + React.JS
+  p.dateStyle May 5 2015, Milano
+  p Massimiliano Mantione
+
+section
+  h1 Credits
+  h3
+    | Andrew Rota
+    <br/> 
+    a(href='http://webcomponents.org/presentations/complementarity-of-react-and-web-components-at-reactjs-conf') (talk)
+  h3
+    | Irakli Gozalishvili
+    <br/>
+    a(href='https://github.com/Gozala/firefox.html/blob/react/js/element.js') (code)
+
+section
+  section
+    h1 Web Components
+    p Custom Elements
+    p Shadow DOM
+    p HTML Imports
+    p HTML Templates
+    p Portable (standard Web Platform)
+
+  section
+    p
+      img(src='assets/I.png', alt='I')
+      img(src='assets/heart.png', alt='love')
+      img(src='assets/web-components-logo.png', alt='Web Components')
+
+section
+  section
+    h1 React.JS
+    p Virtual DOM
+    p One-Way Data Flow
+    p High Performance
+    p Portable Synthetic Event System
+    p Code-centric component definitions
+    p Client and Server Rendering
+
+  section
+    p
+      img(src='assets/I.png', alt='I')
+      img(src='assets/heart.png', alt='love')
+      img(src='assets/react-logo.png', alt='Web Components')
+
+section
+  section
+    p
+      img(src='assets/web-components-logo.png', alt='Web Components')
+      img(src='assets/question-mark.png', alt='love')
+      img(src='assets/react-logo.png', alt='Web Components')
+
+  section
+    p.embox.roll-in
+      somewhatBig
+        | I definitely think it's 
+        b the wrong programming paradigm;
+        br
+        | I really hope that 
+        em [web components]
+        br
+        b 
+          u do not succeed
+    p (Pete Hunt)
+
+  section
+    p
+      img(src='assets/react-logo.png', alt='Web Components')
+      img(src='assets/broken-heart.png', alt='love')
+      img(src='assets/web-components-logo.png', alt='Web Components')
+
+section
+  section
+    h3 React or Web Components:
+    h2 Pick One?
+
+    div(style='float:left')
+      ul
+        li Custom Elements
+        li Shadow DOM
+        li Encapsulation
+        li Reusability
+        li Portability
+    div(style='float:right')
+      ul
+        li Virtual DOM
+        li Event System
+        li Functional UI
+        li High Performance
+        li Isomorphic JS
+
+  section
+    h2 Technical Issues
+    p Custom Events
+    p Custom Attributes
+    p Custom Children
+    br
+    h2 Fundamental Issue
+    p Stateful Components
+
+  section
+    h3
+      | Solution:
+      br
+      | a Custom React Class
+    ul
+      li 
+        u getInitialState: 
+        | add custom attributes
+      li
+        u componentDidMount:
+        br
+        ul
+          li set custom attributes
+          li set custom children
+          li add event handlers
+      li
+        u componentWillUnmount: 
+        | remove event handlers
+      li
+        u componentDidUpdate:
+        br
+        ul
+          li reset custom attributes
+          li reset event handlers
+      li
+        u render: 
+        | display web component
+
+  section
+    p
+      img(src='assets/react-logo.png', alt='Web Components')
+      img(src='assets/heart.png', alt='love')
+      img(src='assets/web-components-logo.png', alt='Web Components')
+
+  section
+    p
+      veryBig DEMO!
+
+section
+  section
+    h1
+      veryBig
+        | General Ideas
+        br
+        | About Components
+
+  section
+    h1 Components should be
+      p Small
+      p Encapsulated
+      p Stateless
+      p Performant
+
+  section
+    h1 State is "ok"...
+    p.embox ...as long as it can be fully specified through attributes and children!
+
+
+  section
+    h1 Good Idea
+    pre.codebox
+      code.html.
+        <my-button></my-button>
+
+  section
+    h1 Bad Idea
+    pre.codebox
+      code.html.
+        <my-application></my-application>
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!
