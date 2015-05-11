@@ -1,0 +1,138 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/jsday.png', alt='logo')
+  p -
+  h1 Transducers FTW!
+  p.dateStyle May 13 2015, Verona
+  p Massimiliano Mantione
+
+section
+  h1 Credits
+  h3
+    | Rich Hickey
+    br
+    a(href='https://www.youtube.com/watch?v=6mTbuzafcII') (Transducers in Clojure)
+  h3
+    | Kevin Beaty
+    br
+    a(href='http://simplectic.com/blog/2014/transducers-explained-1') (Transducers in Ramda, and much more)
+  h3
+    | Erik Meijer
+    br
+    a(href='http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality') (Duality Talk)
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    blockquote.fragment.embox.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Let's change subject!
+
+section
+  h1 What are we talking about?
+  p.fragment Functional programming
+  p.fragment Functional programming in Javascript
+  p.fragment Utility libraries for base algorithms
+  p.fragment Approaches to asynchronous data processing
+  blockquote.fragment.embox.roll-in Hope you'll have fun!
+
+section
+  h1 Functional Programming is...
+  p.fragment
+    veryBig a fashionable trend!
+
+section
+  h1 What does it mean?
+  p.fragment First-class and higher-order functions
+  p.fragment Pure functions (no side effects)
+  p.fragment Describe what to compute and not how to do it
+
+section
+  h1 Less object oriented
+  p.fragment No mutable objects
+  p.fragment General functions instead of specific methods
+  p.fragment No entanglement of code and state
+
+
+section
+  h1 Why is underscore.js popular?
+  p.fragment Functional approach (no monkey patching)
+  p.fragment Provides useful functions that...
+  ul
+    li.fragment say what you want to do (each, map, filter...)
+    li.fragment instead of writing loops (how to do it)
+
+
+section
+  h1 Seriously...
+  br
+  p.fragment
+    veryBig
+      | Take the
+      br
+      a(href='http://joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs') 30 days no-loop
+      br
+      br
+      | challenge!
+
+section
+  h1 Isn't lodash better?
+  br
+  p.fragment No flame wars, please!
+  p.fragment It improves:
+  ul.fragment
+    li completeness
+    li performance
+    li coherence
+    li customizability
+  p.fragment.embox.roll-in Otherwise, it is really similar
+
+
+section
+  h1 What about Ramda?
+  p.fragment It makes functional best practices even simpler
+  p.fragment Function composition is useful if you have useful building blocks to compose
+  p.fragment Rambda makes currying the default, making it easy to build the building blocks!
+
+
+section
+  h1 Let's prove the point
+  pre.codebox.fragment
+    code.codesmall.javascript.
+      var incompleteTasks = tasks.filter(task => !task.complete);
+  pre.codebox.fragment
+    code.codesmall.javascript.
+      var incompleteTasks = _.filter(tasks, {complete: false});
+  pre.codebox.fragment
+    code.codesmall.javascript.
+      var incomplete = R.filter(R.where({complete: false});
+      var incompleteTasks = incomplete(tasks);
+
+
+
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!
