@@ -2,6 +2,7 @@ var R = require('ramda');
 var fs = require('fs');
 var lines = require('transduce/string/lines');
 var callback = require('transduce/async/callback');
+var U = require('underarm');
 var inspect = require('util').inspect;
 
 var log = R.curry (
