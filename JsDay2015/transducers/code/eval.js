@@ -39,7 +39,7 @@ transformer = function(reducingFunction){
 input = [2,3,4];
 
 xf = transformer(sum);
-var output = input.reduce(xf.step, xf.init());
+output = input.reduce(xf.step, xf.init());
 // output = 10 (=1+2+3+4)
 
 xf = transformer(mult);
@@ -47,7 +47,7 @@ output = input.reduce(xf.step, xf.init());
 // output = 24 (=1*2*3*4)
 
 
-// reduce
+// reduce that takes a transformer instead of a stepper
 
 reduce = function(xf, init, input){
   var result = input.reduce(xf.step, init);
@@ -65,6 +65,7 @@ xf = transformer(mult);
 output = reduce(xf, xf.init(), input);
 // output = 24 (=1*2*3*4)
 
+// we can choose an initial value different from the default one
 
 input = [2,3,4];
 xf = transformer(sum);
@@ -78,7 +79,7 @@ output = reduce(xf, 2, input);
 
 
 
-// wrap functions onto transformers
+// wrap a stepper function into a transformer
 
 wrap = function(f){
   return {
@@ -99,7 +100,7 @@ wrap = function(f){
 };
 
 
-// reduce with wrapper
+// reduce with wrapper (accepts eiter stepper or transformer)
 
 reduce = function(xf, init, input){
   if(typeof xf === 'function'){
@@ -145,7 +146,8 @@ output = reduce(append, [], input);
 // output = [2, 3, 4]
 
 
-// a transformer that adds 1
+// let's make a transformer that adds 1
+// and then reduce it to the sum of the elements
 
 plus1 = function(item){
   return item + 1;
@@ -167,8 +169,14 @@ output = xf.result(result);
 // [3,4,5]
 
 
-// reduce works, but creates a new array at each step...
+// reduce works, but creates a new array...
 output = reduce(sum, 0, output);
+// output = 12 (=3+4+5)
+
+
+
+// back to slides...
+
 
 
 // out 1st transducer (it adds 1):
@@ -210,7 +218,10 @@ output = xf.result(result);
 stepper = wrap(sum);
 init = 0;
 transducer = transducerPlus1;
-xf = transducer(stepper); // combine plus1 and reduce(sum)
+
+// composition: combine plus1 and reduce(sum)
+xf = transducer(stepper);
+
 result = xf.step(init, 2);
 // 3 (=sum(0, 2+1)))
 result = xf.step(result, 3);
