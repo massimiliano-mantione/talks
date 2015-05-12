@@ -129,6 +129,205 @@ section
       var incompleteTasks = incomplete(tasks);
 
 
+section
+  h1 Enter transducers
+  p.fragment Composable algorithmic transformations
+  p.fragment Decoupled from input or output sources
+  p.fragment They compose directly (like functions)
+  ul
+    li.fragment no awareness of input or creation
+    li.fragment no need of intermediate aggregates
+
+
+section
+  h1 Transducer building blocks
+  p.fragment Stepper
+  p.fragment Transformer
+  p.fragment Transducer
+  p.fragment reduce and transduce
+
+
+section
+  h1 Stepper
+  pre.codebox.fragment.roll-in
+    code.javascript
+      = 'Stepper<I,E> :: (I, E) -> I'
+
+  p.fragment A function that takes a initial value and an element, and returns a new value for the initial item
+  p.fragment It is the typical argument of reduce
+
+
+section
+  h1 Transformer
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Transformer<I,E,R> :: {\n'
+      = '  init :: () -> I\n'
+      = '  step :: Stepper<I,E>\n'
+      = '  result :: I -> R\n'
+      = '}'
+
+  p.fragment Three functions, like e generalized stepper (with added begin and completion handlers)
+
+
+section
+  h1 Transducer
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'TransformerOrStepper :: Transformer | Stepper\n'
+      = 'Transducer :: TransformerOrStepper -> Transformer'
+
+  p.fragment A function that transforms a transformer into another transformer
+  p.fragment
+    em (let that sink in...)
+  p.fragment.embox.roll-in
+    b It transforms transformers!
+
+
+section
+  h1 Where's the catch?
+  p.fragment A transformer can also be a simple stepper
+  p.fragment Particularly, it can be an "iterator" that scans a sequence without transforming anything
+  p.fragment Typically an "iterator transformer" of this kind is the starting point of a transduce chain
+
+
+section
+  h1 The base example: reduce
+
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'reduce<I,E,R> :: (\n'
+      = '    TransformerOrStepper<I,E,R> // transformation\n'
+      = '    I                           // initial value\n'
+      = '    Iterator<E>                 // input sequence\n'
+      = '  ) -> R                        // result'
+
+
+section
+  h1 The generalized form: transduce
+
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'transduce<I,E,R> :: (\n'
+      = '    Transducer<I,E,R> // transformation\n'
+      = '    Stepper<I,E>      // result builder\n'
+      = '    I?                // initial value\n'
+      = '    Iterator<E>       // input sequence\n'
+      = '  ) -> R              // result'
+
+
+section
+  h1 Let's see some
+  p
+    veryBig real code!
+
+
+
+section
+  h1 What about async?
+  p.fragment
+    | What does 
+    em "async computation" 
+    | mean?
+  p.fragment
+    | Many say it is about 
+    b push 
+    | vs 
+    b pull
+  p.fragment.embox.roll-in I don't fully buy it
+  p.fragment Let's see why
+
+
+section
+  h1 getter - setter
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = '// getter<T> (pull)\n'
+      = '() -> T'
+  p -
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = '// setter<T> (push)\n'
+      = 'T -> ()'
+
+section
+  h2 Iterable - Observable
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Iterable<T> :: {\n'
+      = '  \'@@iterator\' :: Iterator<T>\n'
+      = '}'
+  br
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Observable<T> :: {\n'
+      = '  Subscribe :: Observer<T> -> (() -> ())\n'
+      = '}'
+
+
+section
+  h2 Iterator - Observer
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Iterator<T> :: {\n'
+      = '  next :: () -> ({done :: bool, value :: T} | throws Error)\n'
+      = '}'
+  br
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Observer<T> :: {\n'
+      = '  onCompleted :: () -> ()\n'
+      = '  onError :: Error -> ()\n'
+      = '  onNext :: T -> ()\n'
+      = '}'
+
+
+section
+  h3
+    | What do Observer and Iterator
+    br
+    | have in common?
+  p.fragment Both specify what to do in case of
+    ul.fragment
+      li next value
+      li completion
+      li error
+  p.fragment.embox.roll-in
+    | What changes is just the 
+    b push 
+    | vs 
+    b pull
+
+section
+  h1 The good news
+  p.fragment
+    | Remember that transducers don't care about the 
+    em sequence 
+    | they operate on?
+  p.fragment They work in push contexts, too!
+  p.fragment.embox.roll-in
+    | And they work 
+    b unmodified!
+  p.fragment
+    em Let's see...
+
+
+
+section
+  h1 Promises
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Promise<T> :: {\n'
+      = '  next :: T -> ()\n'
+      = '  error :: Error -> ()\n'
+      = '}'
+  br
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'AsyncElement<T> :: {\n'
+      = '  value :: T\n'
+      = '  next :: Promise<AsyncElement<T>>\n'
+      = '}'
 
 
 section
