@@ -55,4 +55,4 @@ var result = R.join('', processor(input));
 console.timeEnd('Processing');
 console.timeEnd('All');
 
-//console.log (result);
+console.log (result);

@@ -12,15 +12,15 @@ section
 
 section
   h1 Credits
-  h3
+  p.fragment
     | Rich Hickey
     br
     a(href='https://www.youtube.com/watch?v=6mTbuzafcII') (Transducers in Clojure)
-  h3
+  p.fragment
     | Kevin Beaty
     br
     a(href='http://simplectic.com/blog/2014/transducers-explained-1') (Transducers in Ramda, and much more)
-  h3
+  p.fragment
     | Erik Meijer
     br
     a(href='http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality') (Duality Talk)
@@ -89,16 +89,15 @@ section
   p.fragment
     veryBig
       | Take the
-      br
       a(href='http://joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs') 30 days no-loop
-      br
       br
       | challenge!
 
 section
   h1 Isn't lodash better?
   br
-  p.fragment No flame wars, please!
+  p.fragment
+    u No flame wars, please!
   p.fragment It improves:
   ul.fragment
     li completeness
@@ -185,10 +184,10 @@ section
 
 
 section
-  h1 Where's the catch?
+  h1 What's the trick?
   p.fragment A transformer can also be a simple stepper
   p.fragment Particularly, it can be an "iterator" that scans a sequence without transforming anything
-  p.fragment Typically an "iterator transformer" of this kind is the starting point of a transduce chain
+  p.fragment Typically an "iterator transformer" of this kind is the terminal point of a transduce chain
 
 
 section
@@ -244,7 +243,6 @@ section
     code.codesmall.javascript
       = '// getter<T> (pull)\n'
       = '() -> T'
-  p -
   pre.codebox.fragment
     code.codesmall.javascript
       = '// setter<T> (push)\n'
@@ -276,9 +274,9 @@ section
   pre.codebox.fragment
     code.codesmall.javascript
       = 'Observer<T> :: {\n'
+      = '  onNext :: T -> ()\n'
       = '  onCompleted :: () -> ()\n'
       = '  onError :: Error -> ()\n'
-      = '  onNext :: T -> ()\n'
       = '}'
 
 
