@@ -197,3 +197,75 @@ result = xf.step(result, 4);
 // 12 (=sum(7, 4+1)))
 output = xf.result(result);
 // 12
+
+
+
+// transduce
+
+var transduce = function(transducer, stepper, init, input){
+  if(typeof stepper === 'function'){
+    // make sure we have a transformer for stepping
+    stepper = wrap(stepper);
+  }
+
+  // pass in stepper to create transformer
+  var xf = transducer(stepper);
+
+  // xf is now a transformer
+  // we now can use reduce defined above to
+  // iterate and transform input
+  return reduce(xf, init, input);
+};
+
+
+// a useful transducer: map
+
+map = function(f){
+  return function(xf){
+    return {
+      init: function(){
+        return xf.init();
+      },
+      step: function(result, item){
+        var mapped = f(item);
+        return xf.step(result, mapped);
+      },
+      result: function(result){
+        return xf.result(result);
+      }
+    }
+  }
+};
+
+
+input = [2,3,4];
+output = transduce(map(plus1), append, [], input);
+// [3,4,5]
+output = transduce(map(plus1), sum, 0, input);
+// 12
+output = transduce(map(plus1), mult, 1, input);
+// 60
+
+plus2 = function(input){
+  return input+2;
+};
+output = transduce(map(plus2), append, [], input);
+// [4,5,6]
+output = transduce(map(plus2), sum, 0, input);
+// 15
+output = transduce(map(plus2), mult, 1, input);
+// 120
+
+
+// more than one transformation...
+
+compose2 = function(fn1, fn2){
+  return function(item){
+    var result = fn2(item);
+    result = fn1(result);
+    return result;
+  }
+}
+
+output = transduce(map(compose2(plus1, plus2)), sum, 0, input);
+// 18 (2+3 + 3+3 + 4+3)
