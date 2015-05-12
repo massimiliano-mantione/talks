@@ -50,6 +50,8 @@ section
 
 section
   h1 What are we talking about?
+  p.fragment
+    b Transducers!
   p.fragment Functional programming
   p.fragment Functional programming in Javascript
   p.fragment Utility libraries for base algorithms
@@ -57,75 +59,73 @@ section
   blockquote.fragment.embox.roll-in Hope you'll have fun!
 
 section
-  h1 Functional Programming is...
-  p.fragment
-    veryBig a fashionable trend!
+  section
+    h1 Functional Programming is...
+    p.fragment
+      veryBig a fashionable trend!
+
+  section
+    h1 What does it mean?
+    p.fragment First-class and higher-order functions
+    p.fragment Pure functions (no side effects)
+    p.fragment Describe what to compute and not how to do it
+
+  section
+    h1 Less object oriented
+    p.fragment No mutable objects
+    p.fragment General functions instead of specific methods
+    p.fragment No entanglement of code and state
 
 section
-  h1 What does it mean?
-  p.fragment First-class and higher-order functions
-  p.fragment Pure functions (no side effects)
-  p.fragment Describe what to compute and not how to do it
+  section
+    h1 Why is underscore.js popular?
+    p.fragment Functional approach (no monkey patching)
+    p.fragment Provides useful functions that...
+    ul
+      li.fragment say what you want to do (each, map, filter...)
+      li.fragment instead of writing loops (how to do it)
 
-section
-  h1 Less object oriented
-  p.fragment No mutable objects
-  p.fragment General functions instead of specific methods
-  p.fragment No entanglement of code and state
+  section
+    h1 Seriously...
+    br
+    p.fragment
+      veryBig
+        | Take the
+        a(href='http://joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs') 30 days no-loop
+        br
+        | challenge!
 
+  section
+    h1 Isn't lodash better?
+    br
+    p.fragment
+      u No flame wars, please!
+    p.fragment It improves:
+    ul.fragment
+      li completeness
+      li performance
+      li coherence
+      li customizability
+    p.fragment.embox.roll-in Otherwise, it is really similar
 
-section
-  h1 Why is underscore.js popular?
-  p.fragment Functional approach (no monkey patching)
-  p.fragment Provides useful functions that...
-  ul
-    li.fragment say what you want to do (each, map, filter...)
-    li.fragment instead of writing loops (how to do it)
+  section
+    h1 What about Ramda?
+    p.fragment It makes functional best practices even simpler
+    p.fragment Function composition is useful if you have useful building blocks to compose
+    p.fragment Rambda makes currying the default, making it easy to build the building blocks!
 
-
-section
-  h1 Seriously...
-  br
-  p.fragment
-    veryBig
-      | Take the
-      a(href='http://joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs') 30 days no-loop
-      br
-      | challenge!
-
-section
-  h1 Isn't lodash better?
-  br
-  p.fragment
-    u No flame wars, please!
-  p.fragment It improves:
-  ul.fragment
-    li completeness
-    li performance
-    li coherence
-    li customizability
-  p.fragment.embox.roll-in Otherwise, it is really similar
-
-
-section
-  h1 What about Ramda?
-  p.fragment It makes functional best practices even simpler
-  p.fragment Function composition is useful if you have useful building blocks to compose
-  p.fragment Rambda makes currying the default, making it easy to build the building blocks!
-
-
-section
-  h1 Let's prove the point
-  pre.codebox.fragment
-    code.codesmall.javascript.
-      var incompleteTasks = tasks.filter(task => !task.complete);
-  pre.codebox.fragment
-    code.codesmall.javascript.
-      var incompleteTasks = _.filter(tasks, {complete: false});
-  pre.codebox.fragment
-    code.codesmall.javascript.
-      var incomplete = R.filter(R.where({complete: false});
-      var incompleteTasks = incomplete(tasks);
+  section
+    h1 Let's prove the point
+    pre.codebox.fragment
+      code.codesmall.javascript.
+        var incompleteTasks = tasks.filter(task => !task.complete);
+    pre.codebox.fragment
+      code.codesmall.javascript.
+        var incompleteTasks = _.filter(tasks, {complete: false});
+    pre.codebox.fragment
+      code.codesmall.javascript.
+        var incomplete = R.filter(R.where({complete: false});
+        var incompleteTasks = incomplete(tasks);
 
 
 section
@@ -168,12 +168,23 @@ section
 
   p.fragment Three functions, like e generalized stepper (with added begin and completion handlers)
 
+section
+  h1 Reduce
+  p (the base transformation)
+
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'TransformerOrStepper :: Transformer | Stepper\n'
+      = 'reduce<I,E,R> :: (\n'
+      = '    TransformerOrStepper<I,E,R> // transformation\n'
+      = '    I                           // initial value\n'
+      = '    Iterator<E>                 // input sequence\n'
+      = '  ) -> R                        // result'
 
 section
   h1 Transducer
   pre.codebox.fragment
     code.codesmall.javascript
-      = 'TransformerOrStepper :: Transformer | Stepper\n'
       = 'Transducer :: TransformerOrStepper -> Transformer'
 
   p.fragment A function that transforms a transformer into another transformer
@@ -184,26 +195,8 @@ section
 
 
 section
-  h1 What's the trick?
-  p.fragment A transformer can also be a simple stepper
-  p.fragment Particularly, it can be an "iterator" that scans a sequence without transforming anything
-  p.fragment Typically an "iterator transformer" of this kind is the terminal point of a transduce chain
-
-
-section
-  h1 The base example: reduce
-
-  pre.codebox.fragment
-    code.codesmall.javascript
-      = 'reduce<I,E,R> :: (\n'
-      = '    TransformerOrStepper<I,E,R> // transformation\n'
-      = '    I                           // initial value\n'
-      = '    Iterator<E>                 // input sequence\n'
-      = '  ) -> R                        // result'
-
-
-section
-  h1 The generalized form: transduce
+  h1 Transduce
+  p (the generalized transformation)
 
   pre.codebox.fragment
     code.codesmall.javascript
@@ -213,6 +206,12 @@ section
       = '    I?                // initial value\n'
       = '    Iterator<E>       // input sequence\n'
       = '  ) -> R              // result'
+
+section
+  h1 What's the trick?
+  p.fragment A transformer can also be a simple stepper
+  p.fragment Particularly, it can be an "iterator" that scans a sequence without transforming anything
+  p.fragment Typically an "iterator transformer" is the terminal point of a transduce chain
 
 
 section

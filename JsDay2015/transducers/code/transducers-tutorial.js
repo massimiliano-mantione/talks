@@ -47,52 +47,20 @@ output = input.reduce(xf.step, xf.init());
 // output = 24 (=1*2*3*4)
 
 
-// reduce that takes a transformer instead of a stepper
-
-reduce = function(xf, init, input){
-  var result = input.reduce(xf.step, init);
-  return xf.result(result);
-};
-
-
-input = [2,3,4];
-xf = transformer(sum);
-output = reduce(xf, xf.init(), input);
-// output = 10 (=1+2+3+4)
-
-input = [2,3,4];
-xf = transformer(mult);
-output = reduce(xf, xf.init(), input);
-// output = 24 (=1*2*3*4)
-
-// we can choose an initial value different from the default one
-
-input = [2,3,4];
-xf = transformer(sum);
-output = reduce(xf, 2, input);
-// output = 11 (=2+2+3+4)
-
-input = [2,3,4];
-xf = transformer(mult);
-output = reduce(xf, 2, input);
-// output = 48 (=2*2*3*4)
-
-
 
 // wrap a stepper function into a transformer
 
 wrap = function(f){
   return {
-    // 1. We require init as arg, so do not need here
+    // reduce requires init as arg, so no need here
     init: function(){
       throw new Error('init not supported');
     },
 
-    // 2. Input one item at a time, passing
-    //    each result to next iteration
+    // stepper function
     step: f,
 
-    // 3. Output last computed result
+    // output last computed result
     result: function(result){
       return result;
     }
@@ -100,7 +68,7 @@ wrap = function(f){
 };
 
 
-// reduce with wrapper (accepts eiter stepper or transformer)
+// reduce with wrapper (accepts a stepper or a transformer)
 
 reduce = function(xf, init, input){
   if(typeof xf === 'function'){
@@ -115,21 +83,17 @@ reduce = function(xf, init, input){
 // now reduce also accepts a reducing function or a transformer
 
 input = [2,3,4];
+
 output = reduce(sum, 1, input);
 // output = 10 (=1+2+3+4)
 
-input = [2,3,4];
 output = reduce(mult, 2, input);
 // output = 48 (=2*2*3*4)
 
-input = [2,3,4];
-xf = wrap(sum);
-output = reduce(xf, 2, input);
+output = reduce(wrap(sum), 1, input);
 // output = 11 (=2+2+3+4)
 
-input = [2,3,4];
-xf = wrap(mult);
-output = reduce(xf, 1, input);
+output = reduce(wrap(mult), 1, input);
 // output = 24 (=1*2*3*4)
 
 
@@ -141,10 +105,12 @@ append = function(result, item){
   return result;
 };
 
-input = [2,3,4];
 output = reduce(append, [], input);
 // output = [2, 3, 4]
 
+
+
+// combination of transformations, 1st attempt
 
 // let's make a transformer that adds 1
 // and then reduce it to the sum of the elements
@@ -213,7 +179,7 @@ output = xf.result(result);
 // [3,4,5]
 
 
-// and now, let's combine it with reduce(add):
+// and now, let's combine it with add (to reduce to sum):
 
 stepper = wrap(sum);
 init = 0;
@@ -221,6 +187,7 @@ transducer = transducerPlus1;
 
 // composition: combine plus1 and reduce(sum)
 xf = transducer(stepper);
+// equivalent to 'transducerPlus1(wrap(sum))'
 
 result = xf.step(init, 2);
 // 3 (=sum(0, 2+1)))

@@ -14,7 +14,7 @@ var log = R.curry (
 
 var filename = require('process').argv[2] || 'data-small.log';
 
-console.time('All');
+//console.time('All');
 var input = fs.createReadStream(filename, {encoding: 'utf8'});
 
 var isGet = R.test(/GET \//);
@@ -54,24 +54,24 @@ var processor = R.compose(
     //R.map(log('DONE'))
   );
 
-console.time('Processing');
+//console.time('Processing');
 //var result = R.into('', processor, input.split('\n'));
 //var result = toArray (input.pipe(stream(lines())));
-//input.pipe(stream(processor)).pipe(process.stdout);
+input.pipe(stream(processor)).pipe(process.stdout);
 
 //var result = toArray(input.pipe(stream(processor)), function(err, res){
 //  console.log ('err: ' + inspect(err));
 //  console.log ('res: ' + inspect(res));
 //  console.log ('argsss: ' + inspect(arguments));
 //});
-var result = toArray(input.pipe(stream(processor)));
+//var result = toArray(input.pipe(stream(processor)));
 
 
 
 //console.log (result);
 //console.log ('RES: ' + inspect(result));
-result.then(function(){
-  console.timeEnd('All');
-  console.timeEnd('Processing');
-  //console.log ('args: ' + inspect(arguments));
-});
+//result.then(function(){
+//  console.timeEnd('All');
+//  console.timeEnd('Processing');
+//  console.log ('args: ' + inspect(arguments));
+//});
