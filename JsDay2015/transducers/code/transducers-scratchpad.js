@@ -2,11 +2,6 @@ var R = require('ramda');
 var stream = require('transduce-stream');
 var lines = require('transduce/string/lines');
 
-// Is line a GET request for something other than static?
-var isGet = R.test(/GET \//);
-var notStatic = R.complement(R.test(/GET \/static/));
-var isPage = R.allPass([isGet, notStatic]);
-
 var input = [
   '127.0.0.1 - - [26/Feb/2015 19:25:25] "GET /static/r.js HTTP/1.1"',
   '127.0.0.5 - - [26/Feb/2015 19:27:35] "GET /blog/ HTTP/1.1" 200 -',
@@ -15,6 +10,11 @@ var input = [
 var out;
 console.log('--- input:');
 console.log(input);
+
+// Is line a GET request for something other than static?
+var isGet = R.test(/GET \//);
+var notStatic = R.complement(R.test(/GET \/static/));
+var isPage = R.allPass([isGet, notStatic]);
 
 out = R.filter(isPage, input);
 // => [ '127.0.0.5 - - [26/Feb/2015 19:27:35] "GET /blog/ HTTP/1.1" 200 -',
