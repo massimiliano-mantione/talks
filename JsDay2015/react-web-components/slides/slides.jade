@@ -38,7 +38,7 @@ section
   section
     h1 Javascript and me
     p.fragment I started as a Javascript hater
-    blockquote.fragment.roll-in
+    blockquote.fragment.embox.roll-in
       | When I sow Javascript for the 1st time (in 1995)
       | I vowed that I would never touch such an abomination,
       | even with a 10 feet pole
@@ -50,11 +50,13 @@ section
 section
   section
     h1 Web Components
-    p Custom Elements
-    p Shadow DOM
-    p HTML Imports
-    p HTML Templates
-    p Portable (standard Web Platform)
+    p.fragment Custom Elements
+    p.fragment Shadow DOM
+    p.fragment HTML Imports
+    p.fragment HTML Templates
+    p.fragment.embox.roll-in Portable (standard Web Platform)
+    p.fragment
+      em so...
 
   section
     p
@@ -65,12 +67,14 @@ section
 section
   section
     h1 React.JS
-    p Virtual DOM
-    p One-Way Data Flow
-    p High Performance
-    p Portable Synthetic Event System
-    p Code-centric component definitions
-    p Client and Server Rendering
+    p.fragment Virtual DOM
+    p.fragment One-Way Data Flow
+    p.fragment High Performance
+    p.fragment Portable Synthetic Event System
+    p.fragment Code-centric component definitions
+    p.fragment Client and Server Rendering
+    p.fragment
+      em so...
 
   section
     p
@@ -126,12 +130,15 @@ section
 
   section
     h2 Technical Issues
-    p Custom Events
-    p Custom Attributes
-    p Custom Children
+    p.fragment Custom Events
+    p.fragment Custom Attributes
+    p.fragment Custom Children
     br
-    h2 Fundamental Issue
-    p Stateful Components
+    p.fragment.embox.roll-in
+      | Fundamental Issue:
+      br
+      b
+        u Stateful Components
 
   section
     h3
@@ -139,26 +146,26 @@ section
       br
       | a Custom React Class
     ul
-      li 
+      li.fragment
         u getInitialState: 
         | add custom attributes
-      li
+      li.fragment
         u componentDidMount:
         br
         ul
           li set custom attributes
           li set custom children
           li add event handlers
-      li
+      li.fragment
         u componentWillUnmount: 
         | remove event handlers
-      li
+      li.fragment
         u componentDidUpdate:
         br
         ul
           li reset custom attributes
           li reset event handlers
-      li
+      li.fragment
         u render: 
         | display web component
 
@@ -182,14 +189,14 @@ section
 
   section
     h1 Components should be
-      p Small
-      p Encapsulated
-      p Stateless
-      p Performant
+      p.fragment Small
+      p.fragment Stateless
+      p.fragment Encapsulated
+      p.fragment Performant
 
   section
     h1 State is "ok"...
-    p.embox ...as long as it can be fully specified through attributes and children!
+    p.fragment.embox.roll-in ...as long as it can be fully specified through attributes and children!
 
 
   section
