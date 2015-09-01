@@ -1,10 +1,14 @@
+// Function to use 'require' inside LT from this code dir
 var load = function(name) {
   var root = '/SSD/massi/talks/FutureJs2015Transducers/code/node_modules/';
   return require(root + name);
 };
 
+
+// This code uses ramda's transducer implementation
 var R = load('ramda');
 
+// This is the input we have (like an Apache log):
 var input = [
   '127.0.0.1 - - [26/Feb/2015 19:25:25] "GET /static/r.js HTTP/1.1"',
   '127.0.0.5 - - [26/Feb/2015 19:27:35] "GET /blog/ HTTP/1.1" 200 -',
@@ -12,9 +16,15 @@ var input = [
   '127.0.0.1 - - [28/Feb/2015 16:44:03] "POST / HTTP/1.1" 200 -'];
 var out;
 
+// This is what we want:
+// only get requests to non-static files:
 var expected =
   '127.0.0.5 visited http://simplectic.com/blog/\n' +
   '127.0.0.1 visited http://simplectic.com/\n';
+
+
+// Let's implement the parser building blocks
+
 
 // Is line a GET request for something other than static?
 var isGet = R.test(/ "GET \//);
@@ -28,6 +38,7 @@ out = R.filter(isPage, input)
 //      '127.0.0.1 - - [28/Feb/2015 16:44:03] "GET / HTTP/1.1" 200 -' ]
 
 
+// Transformation:
 // 'log line' -> ['IP', 'GET /url/path']
 var toIpAndRequest = R.pipe(
       R.match(/^(\S+).+"([^"]+)"/),
@@ -41,6 +52,7 @@ out = R.map(toIpAndRequest, [
 //      [ '127.0.0.1', 'GET / HTTP/1.1' ] ]
 
 
+// Transformation:
 // 'GET /url/path' -> 'http://simplectic.com/url/path'
 var requestToUrl = R.pipe(
       R.split(' '),
@@ -56,6 +68,7 @@ out = R.map(requestToUrl, [
 //     'http://simplectic.com/' ]
 
 
+// Transformation:
 // ['IP', 'GET /url/path'] -> ['IP', 'http://simplectic.com/url/path']
 var requestToUrlInPair = R.over(R.lensIndex(1), requestToUrl);
 out = R.map(requestToUrlInPair, [
@@ -67,7 +80,7 @@ out = R.map(requestToUrlInPair, [
 
 
 // Build the whole log parser as a transducer
-// (it is mostly a composition of steppers)
+// (it is a composition of the previous blocks)
 var parseLog = R.compose(
       // filter non-static GET requests
       R.filter(isPage),
