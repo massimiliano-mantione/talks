@@ -67,70 +67,35 @@ section
 
   section
     h1 What does it mean?
-    p.fragment First-class and higher-order functions
-    p.fragment Pure functions (no side effects)
-    p.fragment Describe what to compute and not how to do it
+    p.fragment a <em>lot</em> of things
+    p.fragment ...really, too many to mention!
+    p.fragment But mostly:
+      ul
+        li.fragment <b>Stateless</b>, pure functions
+        li.fragment
+          | <b>State</b> (preferably immutable values)
+          br
+          | separated from <b>logic</b>
 
   section
-    h1 Less object oriented
-    p.fragment No mutable objects
-    p.fragment General functions instead of specific methods
-    p.fragment No entanglement of code and state
-
-section
-  section
-    h1 Why is underscore.js popular?
-    p.fragment Functional approach (no monkey patching)
-    p.fragment Provides useful functions that...
-    ul
-      li.fragment say what you want to do (each, map, filter...)
-      li.fragment instead of writing loops (how to do it)
-
-  section
-    h1 Seriously...
-    br
-    p.fragment
-      veryBig
-        | Take the
-        a(href='http://joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs') 30 days no-loop
-        br
-        | challenge!
-
-  section
-    h1 Isn't lodash better?
-    br
-    p.fragment
-      u No flame wars, please!
-    p.fragment It arguably improves:
-    ul.fragment
-      li completeness
-      li performance
-      li coherence
-      li customizability
-    p.fragment.embox.roll-in
-      | Otherwise, they are so similar
-      br
-      | that they are 
-      em merging...
-
-  section
-    h1 What about Ramda?
-    p.fragment It makes functional best practices even simpler
+    h1 Ramda: a functional library
+    p.fragment It makes functional best practices simpler
     p.fragment Function composition is useful if you have useful building blocks to compose
     p.fragment Rambda makes currying the default, making it easy to build the building blocks!
 
   section
-    h1 Let's prove the point
+    h1 Currying at work
     pre.codebox.fragment
-      code.codesmall.javascript.
-        var incompleteTasks = tasks.filter(task => !task.complete);
-    pre.codebox.fragment
-      code.codesmall.javascript.
+      code.codesmall.javascript.fragment.
+        // Lodash
         var incompleteTasks = _.filter(tasks, {complete: false});
     pre.codebox.fragment
-      code.codesmall.javascript.
-        var incomplete = R.filter(R.where({complete: false});
+      code.codesmall.javascript.fragment.
+        // Ramda
+        var incomplete = R.filter(R.where({complete: false}));
         var incompleteTasks = incomplete(tasks);
+        // same result
+        var same = R.filter(R.where({complete: false}), tasks);
 
 
 section
