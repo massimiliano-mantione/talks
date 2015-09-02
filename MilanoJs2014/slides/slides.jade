@@ -1,0 +1,489 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/mijs.png', alt='logo')
+  p -
+  h3 Javascript
+  h1 Metaprogramming
+  h2 and you
+  p.dateStyle October 7 2014, Milano
+  p Massimiliano Mantione
+
+section
+
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    p.embox.fragment.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Let's change subject!
+
+section
+  section
+    h2 Metaprogramming
+    p.fragment Do you know what <b>metaprogramming</b> is?
+    p.embox.roll-in.fragment Are you sure?
+    p.fragment It is not <em>"code that can see your code"</em>...
+    p.embox.roll-in.fragment It is <em>"code that can <b>modify</b> your code"!</em>
+    p.fragment
+      em Please read "Beating the Average"
+      br
+      em by Paul Graham
+
+  section
+    h1 Let's Think About...
+    p.embox.roll-in.fragment <b>Programming Languages</b>
+
+  section
+    h1 Expressive power scale
+    p.fragment
+      | Structured control flow
+      br
+      em (if then else, while...)
+    p.fragment
+      | Record and arrays <em>(dynamic?)</em>
+    p.fragment First class functions
+    p.fragment Lexical scoping <em>(closures!)</em>
+    p.fragment Automating memory management
+    p.fragment
+      b Metaprogramming!
+
+  section
+    h1
+      veryBig MACROS
+    p.fragment Metaprogramming is writing code that modifies code
+    p.fragment A piece of code that modifies other code is called a <b>macro</b>
+    p.fragment To write a macro, code must be handled as data
+    p.embox.roll-in.fragment Therefore a macro is a function that takes code as input and produces code as output
+    p.fragment
+      u Let's experiment
+
+section
+  h3 Enter
+  h1
+    veryBig Metascript
+  h2.fragment
+    | Do we really need
+    br
+    | one more language?
+
+section
+  section
+    h1 What's the Problem with Javascript?
+    p.fragment Too many to mention
+    p.fragment Convertion rules can kick in with <em>WAT?</em> results
+    p.fragment Forgetting a variable declaration can be catastrophic
+    p.fragment Lack of proper block-scoping (until ES6)
+    p.fragment Verbose <em>Java-like</em> syntax
+    p.fragment No type system and <b>no metaprogramming</b>
+
+  section
+    h1 How Can They Be Solved?
+    p.fragment Sticking to "the good parts"
+    p.fragment Using <em>jslint</em> or <em>jshint</em>
+    p.fragment.roll-in
+      | Or... with a different programming language!
+      br
+      em (like Coffeescript)
+
+
+  section
+    h1 Javascript Alternatives
+    p.fragment
+      | Coffeescript
+      br
+      em (nice, but no metaprogramming)
+    p.fragment
+      | Typescript
+      br
+      em (has a type system, but is still Javascript)
+    p.fragment
+      | Clojurescript
+      br
+      em (not very Javascript-friendly, Lisp "syntax")
+    p.fragment
+      | SweetJs
+      br
+      em (Javascript AST is not "macro friendly")
+
+  section
+    h1 My Wishlist
+    p.fragment Clean syntax <em>(like Coffeescript)</em>
+    p.fragment Sane scoping rules <em>(like ES6 <b>let</b>)</em>
+    p.fragment A type system <em>(like Typescript)</em>
+    p.fragment Real metaprogramming <em>(like Lisp)</em>
+    p.fragment Be a <em><u>Good Javascript Citizen</u></em>
+
+  section
+    h2 Good Javascript Citizen
+    p.embox.roll-in.fragment Designed for<br/><b>zero runtime overhead</b>
+    p.fragment Each core construct cleanly translates into a Javascript primitive
+    p.fragment Consuming existing modules is natural
+    p.fragment Producing modules of any kind is easy
+    p.embox.roll-in.fragment <b>Full source map support, from day 1</b>
+
+section
+
+  section
+    h1 A Taste of<br/>
+      veryBig Metascript!
+    p Our all-time favorite first program:
+    pre.codebox
+      code.javascript.
+        console.log 'Hello, Metascript!'
+
+
+  section
+    h1 Simple Expressions
+    p ...<em>Just Work!</em>
+    pre.codebox
+      code.javascript.
+        (1 + 2 * 3).should.equal 7
+
+        ('a' + 'b' + 'c').should.equal "abc"
+
+        (typeof (1 + 2)).should.equal 'number'
+
+        (typeof {}).should.equal 'object'
+
+  section
+    h1 Look, Ma, No Statements...
+    p ...<em>Just Expressions!</em>
+    pre.codebox
+      code.javascript.
+        (if true 1 else 2).should.equal 1
+
+        (do
+          var a = 'a'
+          a = a + a
+          a
+        ).should.equal 'aa'
+
+
+  section
+    h1 Loops Are Statements, Too
+    pre.codebox
+      code.javascript.
+        var fact = (x) ->
+          loop (var r = 1, x)
+            if (x > 0)
+              next! (r * x, x - 1)
+            else
+              r
+
+        fact(1).should.equal(1)
+        fact(5).should.equal(5 * 4 * 3 * 2 * 1)
+
+
+
+section
+  section
+    h1 The Syntax Dilemma
+    p.fragment
+      b Two main conflicting goals:
+      ul
+        li.fragment Being <em>homoiconic</em>
+        li.fragment Being <u>readable!</u>
+    div.fragment
+      p
+        b Also in the wishlist:
+        ul
+          li Support different coding styles
+            ul
+              li Use parenthesis
+              li Be indentation based
+          li Be <em>"diff friendly"</em> if needed
+  section
+    h1 The Metascript Solution
+    p.fragment Note that expression grouping and nesting can be achieved in different ways
+      ul
+        li.fragment With parenthesis and commas
+        li.fragment With indentation
+        li.fragment With infix operators of different precedences
+        li.fragment With "dependent keywords" (like <em>else</em> or <em>catch</em>)
+    p.fragment
+      b Metascript uses all of them interchangeably!
+  section
+    h1 These Are All Equivalent
+    pre.codebox
+      code.codesmall.javascript.
+        callFunction(a, b, c)
+
+        callFunction
+          (a, b, c)
+
+        callFunction
+          a
+          b
+          c
+  section
+    h1 These Are Also Equivalent
+    pre.codebox
+      code.codesmall.javascript.
+        if condition (f a) else (g b)
+
+        if condition
+          f a
+        else
+          g b
+
+        if condition f(a)
+        else g(b)
+  section
+    h1 You <b><em>Can</em></b> Add Parenthesis...
+    p ...if you feel you need them
+    pre.codebox
+      code.codesmall.javascript.
+        callFunction (
+          a
+          b
+          c
+        )
+        if condition (
+          f(a)
+        ) else (
+          g(b)
+        )
+  section
+    h2 Sometimes Parenthesis are Mandatory
+    pre.codebox
+      code.javascript.
+        callFunction (a, b, c)
+
+        callFunction a b c
+
+        callFunction (a) (b) (c)
+
+        ( (callFunction(a)) (b) ) (c)
+  section
+    h1 Tuples!
+    pre.codebox
+      code.javascript.
+        var (a, b) =
+          if true (1, 2) else (3, 4)
+        a.should.equal 1
+        b.should.equal 2
+
+        (a, b) = (b, a)
+        a.should.equal 2
+        b.should.equal 1
+  section
+    h2 Blocks give values
+    pre.codebox
+      code.javascript.
+        var status =
+          if ok do
+            console.log 'Starting up'
+            engine.power = 100
+            give! 'moving'
+          else do
+            console.log 'Stopping'
+            engine.power = 0
+            'stopped'
+  section
+    h2 Another way to write it
+    pre.codebox
+      code.javascript.
+        (var status, var message, engine.power) =
+          if ok
+            ('moving', 'Starting up', 100)
+          else
+            ('stopped', 'Stopping', 0)
+        console.log message
+  section
+    h1 Clean Scoping Rules
+    pre.codebox
+      code.codesmall.javascript.
+        var r = []
+        loop (var i = 1)
+          if (i > 10) end
+          var s = 'element' + i
+          r.push s
+        ; These will not compile...
+        console.log i
+        console.log s
+  section
+    h2 Write <em>hygenic</em> Macros!
+    p.fragment Sometimes inside macros you need to create variables that will be added to the program code
+    p.fragment You risk to use a variable name already in the scope where the macro is expanded
+    p.fragment Multiple expansions of the macro in the same scope risk to overwrite the variable
+    p.fragment Metascript allows you to have variable with "virtual" names that will be transformed so they are guaranteed to be uinique
+
+section
+  section
+    h2 Let's see more!
+    h1.embox.roll-in.fragment
+      | Who fears
+      br
+      | callback hell?
+  section
+    h1 The Problem
+    p.fragment We all know <b>async</b> is hard in "pure" Javascript
+    p.embox.roll-in.fragment Do we?
+    p.fragment
+      b Let's see...
+  section
+    h1 Think differently
+    p.fragment
+      | The <em>easiest</em> way make an API asynchronous
+      br
+      | is to get a <b>callback</b> as argument
+    p.embox.roll-in.fragment But this matters <em>nothing</em>!
+    p.fragment We think that the problem is the nesting of <em><u>callbacks</u></em>...
+    p.embox.roll-in.fragment But it is the <em><u>nesting</u></em> of callbacks!
+  section
+    h1 Did you know...
+    p.fragment That also synchronous code can suffer from nesting?
+    pre.codebox.fragment
+      code.javascript.
+        writeFiles(
+          resizeImages(
+            readFiles(
+              listFiles(directoryName))));
+  section
+    h1 The root of the problem
+    p.fragment Nested expressions are unreadable
+    p.fragment A nested expression is a complex one
+    p.fragment A complex expression is a deep tree
+    p.embox.roll-in.fragment Usually what we want is a <em>single</em> path in the tree!
+
+  section
+    h1 Is this<br/>a tree?
+    pre.codebox.fragment
+      code.javascript.
+        listFiles(directoryName)
+          .readFiles()
+          .resizeImages()
+          .writeFiles();
+    p.fragment
+      em This usually works well, but...
+      br
+      b.fragment it needs a "flowing API"
+  section
+    h1 Is there a
+    h1
+      veryBig simpler
+    h1 way?
+  section
+    h2 Expression
+    h1
+      veryBig Trees!
+    p.fragment
+      em Let's see how the language
+      br
+      em can help us
+      br
+      em "straightening" trees
+    p.fragment
+  section
+    h1 Sounds scary?
+    p.fragment <b>It is</b>: write the wrong macro and your code will become an unreadable mess
+    p.embox.roll-in.fragment
+      em With great power comes great responsibility
+    p.fragment Macros give you superpowers
+    p.embox.roll-in.fragment
+      b Would you really give up superpowers
+      br
+      b because you don't want the responsibility?
+
+
+
+
+
+
+
+
+section
+  section
+    h1 What's Next?
+    p.fragment Macros for immutable data structures
+    p.fragment Better development tools
+    p.fragment
+      | Making the compiler self-hosting
+      br
+      em.fragment with an immutable AST!
+    p.fragment More "standard" macros
+    p.fragment Implementing the type system
+  section
+    h1 Development tools
+    p.fragment
+      | We have a REPL and a "linter"
+      br
+      em.fragment Thanks Rodrigo!
+    p.fragment Emacs, Atom and LightTable integration works
+    p.fragment Could somebody add Sublime? :-)
+    p.fragment I think the compiler should work in the browser with browserify...
+  section
+    h1 More macros
+    p.fragment
+      | We already have a <em>lot</em> of macros
+      br
+      em (Destructuring assignments, structure matchers, argument splicing, switch/case, many small operators...)
+    p.fragment We also support generators!
+    p.fragment When the compiler will be self-hosting the AST API will change...
+  section
+    h1 Implementing the type system
+    p.fragment Take structural subtyping from Typescript
+    p.fragment Take convention on type argument names from Haskell
+    p.fragment Put real algebraic types into the mix
+    p.fragment Allow explicit typing of the <em>this</em> argument
+    p.fragment Make everything optional, with type inference
+
+section
+  section
+    h1 Nice, but...
+    h1.fragment
+      veryBig is that all?
+
+  section
+    h1 Language evolution
+    p.embox.roll-in.fragment
+      b It is damn too slow!
+    p.fragment ES7 will likely have <b>async</b> for <em>Promises</em>
+    p.fragment Will it ever support rx.js?
+    p.fragment Will it ever support <b>async</b> machines with <em>persistent</em> state?
+    p.fragment Will it ever support what you need <u><em>now</em></u>?
+
+  section
+    h1 Final words
+    p.embox.roll-in.fragment
+      | You should <b><u>never</u></b> wait for the ECMA committee,
+      br
+      | browser vendors or some compiler writer
+      br
+      | to extend your programming language
+    p.roll-in.fragment <b>You</b> should add the features <b>you</b> need to your language
+    p.roll-in.fragment It should take only a handful of lines of code
+    p.embox.roll-in.fragment
+      | If you cannot do it,
+      br
+      | <b>you are using the wrong language!</b>
+
+
+section
+  h1 That's All, Folks
+  h1
+    veryBig Metascript
+  h2 is waiting for you!
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  p group: metascript@googlegroups.com
+  h2 Thanks for following!

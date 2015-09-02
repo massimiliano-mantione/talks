@@ -1,0 +1,399 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/jsday.png', alt='logo')
+  p -
+  h1 Transducers FTW!
+  p.dateStyle May 13 2015, Verona
+  p Massimiliano Mantione
+
+section
+  h1 Credits
+  p.fragment
+    | Rich Hickey
+    br
+    a(href='https://www.youtube.com/watch?v=6mTbuzafcII') (Transducers in Clojure)
+  p.fragment
+    | Kevin Beaty
+    br
+    a(href='http://simplectic.com/blog/2014/transducers-explained-1') (Transducers in Ramda, and much more)
+  p.fragment
+    | Erik Meijer
+    br
+    a(href='http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality') (Duality Talk)
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    blockquote.fragment.embox.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Let's change subject!
+
+section
+  h1 What are we talking about?
+  p.fragment
+    b Transducers!
+  p.fragment Functional programming
+  p.fragment Functional programming in Javascript
+  p.fragment
+    b Transducers fit into...
+  p.fragment Utility libraries for base algorithms
+  p.fragment Approaches to [a]synchronous data processing
+  blockquote.fragment.embox.roll-in Hope you'll have fun!
+
+section
+  section
+    h1 Functional Programming is...
+    p.fragment
+      veryBig a fashionable trend!
+
+  section
+    h1 What does it mean?
+    p.fragment First-class and higher-order functions
+    p.fragment Pure functions (no side effects)
+    p.fragment Describe what to compute and not how to do it
+
+  section
+    h1 Less object oriented
+    p.fragment No mutable objects
+    p.fragment General functions instead of specific methods
+    p.fragment No entanglement of code and state
+
+section
+  section
+    h1 Why is underscore.js popular?
+    p.fragment Functional approach (no monkey patching)
+    p.fragment Provides useful functions that...
+    ul
+      li.fragment say what you want to do (each, map, filter...)
+      li.fragment instead of writing loops (how to do it)
+
+  section
+    h1 Seriously...
+    br
+    p.fragment
+      veryBig
+        | Take the
+        a(href='http://joelhooks.com/blog/2014/02/06/stop-writing-for-loops-start-using-underscorejs') 30 days no-loop
+        br
+        | challenge!
+
+  section
+    h1 Isn't lodash better?
+    br
+    p.fragment
+      u No flame wars, please!
+    p.fragment It improves:
+    ul.fragment
+      li completeness
+      li performance
+      li coherence
+      li customizability
+    p.fragment.embox.roll-in Otherwise, it is really similar
+
+  section
+    h1 What about Ramda?
+    p.fragment It makes functional best practices even simpler
+    p.fragment Function composition is useful if you have useful building blocks to compose
+    p.fragment Rambda makes currying the default, making it easy to build the building blocks!
+
+  section
+    h1 Let's prove the point
+    pre.codebox.fragment
+      code.codesmall.javascript.
+        var incompleteTasks = tasks.filter(task => !task.complete);
+    pre.codebox.fragment
+      code.codesmall.javascript.
+        var incompleteTasks = _.filter(tasks, {complete: false});
+    pre.codebox.fragment
+      code.codesmall.javascript.
+        var incomplete = R.filter(R.where({complete: false});
+        var incompleteTasks = incomplete(tasks);
+
+
+section
+  h1 Enter transducers
+  p.fragment Composable algorithmic transformations
+  p.fragment Decoupled from input or output sources
+  p.fragment They compose directly (like functions)
+  ul
+    li.fragment no awareness of input or creation
+    li.fragment no need of intermediate aggregates
+
+
+section
+  h1 Transducer building blocks
+  p.fragment Stepper
+  p.fragment Transformer
+  p.fragment Transducer
+  p.fragment reduce and transduce
+
+
+section
+  h1 Stepper
+  pre.codebox.fragment.roll-in
+    code.javascript
+      = 'Stepper<I,E> :: (I, E) -> I'
+
+  p.fragment A function that takes a initial value and an element, and returns a new value for the initial item
+  p.fragment It is the typical argument of reduce
+
+
+section
+  h1 Transformer
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Transformer<I,E,R> :: {\n'
+      = '  init :: () -> I\n'
+      = '  step :: Stepper<I,E>\n'
+      = '  result :: I -> R\n'
+      = '}'
+
+  p.fragment Three functions, like e generalized stepper (with added begin and completion handlers)
+
+section
+  h1 Reduce
+  p (the base transformation)
+
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'TransformerOrStepper :: Transformer | Stepper\n'
+      = 'reduce<I,E,R> :: (\n'
+      = '    TransformerOrStepper<I,E,R> // transformation\n'
+      = '    I                           // initial value\n'
+      = '    Iterator<E>                 // input sequence\n'
+      = '  ) -> R                        // result'
+
+section
+  h1 Transducer
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Transducer :: TransformerOrStepper -> Transformer'
+
+  p.fragment A function that transforms a transformer into another transformer
+  p.fragment
+    em (let that sink in...)
+  p.fragment.embox.roll-in
+    b It transforms transformers!
+
+
+section
+  h1 Transduce
+  p (the generalized transformation)
+
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'transduce<I,E,R> :: (\n'
+      = '    Transducer<I,E,R> // transformation\n'
+      = '    Stepper<I,E>      // result builder\n'
+      = '    I?                // initial value\n'
+      = '    Iterator<E>       // input sequence\n'
+      = '  ) -> R              // result'
+
+section
+  h1 What's the trick?
+  p.fragment A transformer can also be a simple stepper
+  p.fragment Particularly, it can be an "reducer" that scans a sequence building a result value
+  p.fragment Typically a "reducer transformer" is the terminal point of a transduce chain
+
+
+section
+  h1 Let's see some
+  p
+    veryBig real code!
+
+
+
+section
+  h1 What about async?
+  p.fragment
+    | What does 
+    em "async computation" 
+    | mean?
+  p.fragment
+    | Many say it is about 
+    b push 
+    | vs 
+    b pull
+  p.fragment.embox.roll-in I don't fully buy it
+  p.fragment Let's see why
+
+section
+  section
+    h1 Push and Pull are Dual
+    p.fragment
+      | What does 
+      em dual 
+      | mean?
+    p.fragment
+      | It is similar to De Morgan's laws for
+      br
+      b or 
+      | and 
+      b and
+    p.fragment.embox.roll-in Reverse the direction of every function!
+
+  section
+    h1 getter - setter
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = '// getter<T> (pull)\n'
+        = '() -> T'
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = '// setter<T> (push)\n'
+        = 'T -> ()'
+
+  section
+    h2 Iterable - Observable
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = 'Iterable<T> :: {\n'
+        = '  \'@@iterator\' :: Iterator<T>\n'
+        = '}'
+    br
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = 'Observable<T> :: {\n'
+        = '  Subscribe :: Observer<T> -> (() -> ())\n'
+        = '}'
+
+  section
+    h2 Iterator - Observer
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = 'Iterator<T> :: {\n'
+        = '  next :: () -> ({done :: bool, value :: T} | throws Error)\n'
+        = '}'
+    br
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = 'Observer<T> :: {\n'
+        = '  onNext :: T -> ()\n'
+        = '  onCompleted :: () -> ()\n'
+        = '  onError :: Error -> ()\n'
+        = '}'
+
+  section
+    h3
+      | What do Observer and Iterator
+      br
+      | have in common?
+    p.fragment Both specify what to do in case of
+      ul.fragment
+        li next value
+        li completion
+        li error
+    p.fragment.embox.roll-in
+      | What changes is just the 
+      b push 
+      | vs 
+      b pull
+
+section
+  h1 The good news
+  p.fragment
+    | Remember that transducers don't care about the 
+    em sequence 
+    | they operate on?
+  p.fragment They work in push contexts, too!
+  p.fragment.embox.roll-in
+    | And they work 
+    b unmodified!
+  p.fragment
+    em Let's see...
+
+section
+  h1 So far, so well...
+  p.fragment
+    | ...but what about 
+    em async
+    | ?
+  p.fragment A push API looks async, but when the push happens the code is synchronous
+  p.fragment.embox.roll-in So, what construct is really async?
+
+section
+  h1 Promises
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'Promise<T> :: {\n'
+      = '  next :: T -> ()\n'
+      = '  error :: Error -> ()\n'
+      = '}'
+  p.fragment A promise represents a future value
+  p.fragment It models a latency between the value availability and the moment when the code is ready to handle it
+  p.fragment ...or vice versa!
+
+section
+  h1 An async sequence
+  p.fragment Implemented using promises
+  pre.codebox.fragment
+    code.codesmall.javascript
+      = 'AsyncSequence<T> :: Promise<AsyncSequenceElement<T>>\n'
+      = 'AsyncSequenceElement<T> :: {\n'
+      = '  value :: T?\n'
+      = '  done :: bool?\n'
+      = '  error :: Error?\n'
+      = '  next :: AsyncSequence<T>\n'
+      = '}'
+
+section
+  section
+    h1 Push and Pull, async style
+    p.fragment Like the regular push-pull duality...
+    p.fragment.embox.roll-in ...but with promises thrown in to model latency
+
+  section
+    h1 getter - setter
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = '// async-getter<T> (pull)\n'
+        = '() -> Promise<T>'
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = '// async-setter<T> (push)\n'
+        = 'Promise<T> -> ()'
+
+  section
+    h2 Iterator - Observer
+    p.fragment An Iterator that gives promises
+    p.fragment An observer that expects promises
+    p.fragment.embox.roll-in
+      | Note that 
+      em ramda 
+      | and 
+      em underarm
+      br
+      | already support this model!
+
+section
+  h1 Takeaway
+  p.fragment Transducers model composable and reusable transformations of sequences of values
+  p.fragment Several modern libraries are starting to support them
+  p.fragment Push and Pull are dual
+  p.fragment Async is properly represented by promises
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!

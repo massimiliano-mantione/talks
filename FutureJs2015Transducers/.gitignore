@@ -1,0 +1,4 @@
+/node_modules/
+/code/node_modules/
+.idea
+build/
