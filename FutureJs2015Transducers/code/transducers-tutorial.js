@@ -75,10 +75,10 @@ wrap = function(stepper){
       throw new Error('init not supported');
     },
 
-    // stepper function
+    // step: (stepper function)
     stepper,
 
-    // output last computed result
+    // result: (compute final result)
     identity
   )
 };
@@ -86,7 +86,7 @@ wrap = function(stepper){
 
 // reduce with wrapper (accepts a stepper or a transformer)
 // (for now we expect input to support the reduce method,
-// which wirks on arrays)
+// which works on arrays)
 
 reduce = function(xf, init, input){
   if(typeof xf === 'function'){
@@ -111,7 +111,7 @@ output = reduce(mult, 2, input);
 output = reduce(wrap(sum), 1, input);
 // output = 10 (=1+2+3+4)
 
-output = reduce(wrap(mult), 1, input);
+output = reduce(wrap(mult), 2, input);
 // output = 24 (=1*2*3*4)
 
 
@@ -142,16 +142,17 @@ output = reduce(append, [], input);
 // combination of transformations, 1st attempt
 
 // let's make a transformer that adds 1
+// and combine it with the append stepper
 
 plus1 = function(item){
   return item + 1;
 };
-xfplus1 = wrap (function(result, item) {
+plus1AndAppend = wrap (function(result, item) {
   return append(result, plus1(item));
 });
 
 // let's step through it manually
-xf = xfplus1;
+xf = plus1AndAppend;
 result = xf.step([], 2);
 // [3] (=append([], 2+1)))
 result = xf.step(result, 3);
@@ -160,14 +161,6 @@ result = xf.step(result, 4);
 // [3,4,5] (=append([3,4], 4+1)))
 output = xf.result(result);
 // [3,4,5]
-
-
-// now reduce the result to the sum of the elements
-
-output = reduce(sum, 0, output);
-// output = 12 (=3+4+5)
-// (reduce worked, but it created a new array...)
-
 
 
 
@@ -194,6 +187,8 @@ transducerPlus1 = function(xf){
 
 // let's use it!
 
+// combine plus1 and append:
+
 xf = transducerPlus1(wrap(append));
 result = xf.step([], 2);
 // [3] (=append([], 2+1)))
@@ -202,10 +197,10 @@ result = xf.step(result, 3);
 result = xf.step(result, 4);
 // [3,4,5] (=append([3,4], 4+1)))
 output = xf.result(result);
-// [3,4,5]
+// [3,4,5] (=[2+1, 3+1. 4+1])
 
 
-// and now, let's combine it with add (to reduce to sum):
+// now let's combine it with add (to reduce to sum):
 
 xf = transducerPlus1(wrap(sum));
 
@@ -216,7 +211,7 @@ result = xf.step(result, 3);
 result = xf.step(result, 4);
 // 12 (=sum(7, 4+1)))
 output = xf.result(result);
-// 12
+// 12 (= 2+1 + 3+1 + 4+1)
 
 
 
@@ -256,7 +251,9 @@ var transduce = function(
 // a useful transducer: map
 
 map = function(f) {
+  // returns the transducer...
   return function(xf){
+    // the transducer builds a transformer...
     return transformer (
       // init:
       function(){

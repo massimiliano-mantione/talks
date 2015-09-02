@@ -74,62 +74,7 @@ section
       em Let's change subject!
 
 section
-  h1 What are we talking about?
-  p.fragment
-    b Transducers!
-  p.fragment Functional programming
-  p.fragment Functional programming in Javascript
-  p.fragment
-    b Transducers fit into...
-  p.fragment Utility libraries for base algorithms
-  p.fragment Approaches to [a]synchronous data processing
-  blockquote.fragment.embox.roll-in Hope you'll have fun!
-
-section
-  section
-    h1 Functional Programming is...
-    p.fragment
-      veryBig a fashionable trend!
-
-  section
-    h1 What does it mean?
-    p.fragment a <em>lot</em> of things
-    p.fragment ...really, too many to mention!
-    p.fragment But mostly:
-    p.fragment.embox.roll-in composition of <b>stateless</b>, pure functions
-    p.fragment.embox.roll-in
-      | <b>state</b> (preferably immutable values)
-      br
-      | separated from <b>logic</b>
-
-  section
-    h1
-      | Ramda:
-      br
-      | a functional library
-    p.fragment It makes functional best practices simpler
-    p.fragment Function composition is useful if you have useful building blocks to compose
-    p.fragment Rambda makes currying the default, making it easy to build the building blocks!
-
-  section
-    h1 Currying at work
-    pre.codebox.fragment
-      code.codesmall.javascript.fragment.
-        // Lodash (no currying, tasks is 1st arg)
-        var incompleteTasks = _.filter(tasks, {complete: false});
-    pre.codebox.fragment
-      code.codesmall.javascript.fragment.
-        // Ramda (with currying)
-        var incomplete = R.filter(R.where({complete: false}));
-        var incompleteTasks = incomplete(tasks);
-    pre.codebox.fragment
-      code.codesmall.javascript.fragment.
-        // Ramda (without currying)
-        var same = R.filter(R.where({complete: false}), tasks);
-
-
-section
-  h1 Enter transducers
+  h1 Transducers
   p.fragment Composable algorithmic transformations
   p.fragment Decoupled from input or output sources
   p.fragment They compose directly (like functions)
@@ -140,10 +85,14 @@ section
 
 section
   h1 Transducer building blocks
-  p.fragment Stepper
-  p.fragment Transformer
-  p.fragment Transducer
-  p.fragment reduce and transduce
+  p.fragment A <b>stepper</b> function...
+  p.fragment A <b>transformer</b> object...
+  p.fragment The <b>reduce</b> transformation...
+  p.fragment.embox.roll-in ...give us a <b>transducer</b>!
+  p.fragment
+    | Then we can use
+    br
+    | the <b>transduce</b> transformation
 
 
 section
@@ -152,7 +101,7 @@ section
     code.javascript
       = 'Stepper<I,E> :: (I, E) -> I'
 
-  p.fragment A function that takes a initial value and an element, and returns a new value for the initial item
+  p.fragment A function that takes an initial value and an element, and returns a new value for the initial item
   p.fragment It is the typical argument of reduce
 
 
@@ -161,9 +110,9 @@ section
   pre.codebox.fragment
     code.codesmall.javascript
       = 'Transformer<I,E,R> :: {\n'
-      = '  init :: () -> I\n'
-      = '  step :: Stepper<I,E>\n'
-      = '  result :: I -> R\n'
+      = '  init :: () -> I      // initial value\n'
+      = '  step :: Stepper<I,E> // transformation\n'
+      = '  result :: I -> R     // build the result\n'
       = '}'
 
   p.fragment Three functions, like a generalized stepper (with added begin and completion handlers)
@@ -210,7 +159,7 @@ section
 section
   h1 What's the trick?
   p.fragment A transformer can also be a simple stepper
-  p.fragment Particularly, it can be an "reducer" that scans a sequence building a result value
+  p.fragment Particularly, it can be a "reducer" that scans a sequence building a result value
   p.fragment Typically a "reducer transformer" is the terminal point of a transduce chain
 
 
@@ -260,19 +209,23 @@ section
       code.codesmall.javascript
         = '// setter<T> (push)\n'
         = 'T -> ()'
+    p.fragment
+      | Remember them!
+      br
+      em (we'll find them everywhere)
 
   section
     h2 Iterable - Observable
     pre.codebox.fragment
       code.codesmall.javascript
         = 'Iterable<T> :: {\n'
-        = '  \'@@iterator\' :: Iterator<T>\n'
+        = '  \'@@iterator\' :: Iterator<T> // getter\n'
         = '}'
     br
     pre.codebox.fragment
       code.codesmall.javascript
         = 'Observable<T> :: {\n'
-        = '  Subscribe :: Observer<T> -> (() -> ())\n'
+        = '  Subscribe :: Observer<T> -> (() -> ()) // setter\n'
         = '}'
 
   section
@@ -280,12 +233,14 @@ section
     pre.codebox.fragment
       code.codesmall.javascript
         = 'Iterator<T> :: {\n'
+        = '  // getter of one of three things (pulls them)\n'
         = '  next :: () -> ({done :: bool, value :: T} | throws Error)\n'
         = '}'
     br
     pre.codebox.fragment
       code.codesmall.javascript
         = 'Observer<T> :: {\n'
+        = '  // three setters (accepts pushes)\n'
         = '  onNext :: T -> ()\n'
         = '  onCompleted :: () -> ()\n'
         = '  onError :: Error -> ()\n'
@@ -392,6 +347,8 @@ section
 
 section
   h1 That's All, Folks
+  p -
   p code, docs and slides are on github
   p twitter: @M_a_s_s_i, #metascript
+  p -
   h2 Thanks for following!
