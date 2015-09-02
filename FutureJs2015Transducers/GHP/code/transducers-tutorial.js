@@ -68,8 +68,9 @@ output = input.reduce(xf.step, xf.init());
 
 // If needed, wrap a stepper function into a transformer
 
-wrap = function(maybeStepper){
-  if (typeof maybeStepper === 'function'){
+wrap = function(stepperOrTransformer){
+  if (typeof stepperOrTransformer === 'function') {
+    // It was a stepper: return a transformer
     return transformer (
       // this transformer does not support initialization
       // (reduce will provide the initial value)
@@ -78,13 +79,14 @@ wrap = function(maybeStepper){
       },
 
       // step: (stepper function)
-      maybeStepper,
+      stepperOrTransformer,
 
       // result: (compute final result)
       identity
     );
   } else {
-    return maybeStepper;
+    // It was a transformer: just return it
+    return stepperOrTransformer;
   }
 };
 
