@@ -2,7 +2,33 @@ link(rel="stylesheet", href="assets/style.css")
 link(rel="stylesheet", href="assets/highlight.css")
 script(src="assets/highlight.min.css")
 
+script
+  function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    m = checkTime(m);
+    document.getElementById('clock').innerHTML = h+" "+m;
+    var t = setTimeout(function(){startTime()},500);
+  }
+  function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+  }
+  function prepareClock() {
+    var clock = document.getElementById('clock');
+    var body = clock.parentNode.parentNode.parentNode;
+    clock = clock.parentNode.removeChild(clock);
+    body.appendChild(clock);
+    startTime();
+  }
+body(onload="prepareClock()")
+  div.myclock(id="clock")
+  
+
 section
+  div.fulllogo
+    img(src="assets/full-stack-fest.svg")
   div.futurelogo
     img(src="assets/FutureJsLogo.svg")
   h1 Transducers FTW!
@@ -26,8 +52,8 @@ section
 
 section
   section
-    h1 About Myself
-    h2.fragment An enthusiast software engineer
+    h2 About Myself
+    h1.fragment An enthusiast software engineer
     p.fragment Passionate about languages and compilers
     p.fragment.roll-in <b>Worked in the V8 team in Google</b>
     p.fragment Overall, worked on JIT compilers for +7 years
@@ -70,15 +96,17 @@ section
     p.fragment a <em>lot</em> of things
     p.fragment ...really, too many to mention!
     p.fragment But mostly:
-      ul
-        li.fragment <b>Stateless</b>, pure functions
-        li.fragment
-          | <b>State</b> (preferably immutable values)
-          br
-          | separated from <b>logic</b>
+    p.fragment.embox.roll-in composition of <b>stateless</b>, pure functions
+    p.fragment.embox.roll-in
+      | <b>state</b> (preferably immutable values)
+      br
+      | separated from <b>logic</b>
 
   section
-    h1 Ramda: a functional library
+    h1
+      | Ramda:
+      br
+      | a functional library
     p.fragment It makes functional best practices simpler
     p.fragment Function composition is useful if you have useful building blocks to compose
     p.fragment Rambda makes currying the default, making it easy to build the building blocks!
@@ -87,14 +115,16 @@ section
     h1 Currying at work
     pre.codebox.fragment
       code.codesmall.javascript.fragment.
-        // Lodash
+        // Lodash (no currying, tasks is 1st arg)
         var incompleteTasks = _.filter(tasks, {complete: false});
     pre.codebox.fragment
       code.codesmall.javascript.fragment.
-        // Ramda
+        // Ramda (with currying)
         var incomplete = R.filter(R.where({complete: false}));
         var incompleteTasks = incomplete(tasks);
-        // same result
+    pre.codebox.fragment
+      code.codesmall.javascript.fragment.
+        // Ramda (without currying)
         var same = R.filter(R.where({complete: false}), tasks);
 
 

@@ -45,6 +45,36 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Segment14';
+  src: url("./Segment14.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*********************************************
+ * CLOCK
+ *********************************************/
+
+div.slides {
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+}
+
+div#clock {
+  background: rgba(0, 0, 0, 0);
+  color: #13daec;
+  font-family: 'Segment14';
+  font-size: 3vh;
+  margin: 0 0 0 0;
+  line-height: 100%;
+  position: absolute;
+  display: inline-block;
+  left: 0px;
+  bottom: 10px;
+}
 
 /*********************************************
  * GLOBAL STYLES
@@ -130,15 +160,15 @@ somewhatBig {
   font-size: 3vh;
 }
 .reveal code {
-  font-size: 3.5vh;
+  font-size: 3vh;
   font-family: 'ShareTech';
 }
 .reveal code.codesmall {
-  font-size: 3.0vh;
+  font-size: 2.5vh;
   font-family: 'ShareTech';
 }
 .reveal code.codetiny {
-  font-size: 2.5vh;
+  font-size: 2vh;
   font-family: 'ShareTech';
 }
 .reveal pre {
@@ -169,14 +199,11 @@ somewhatBig {
   padding: 0px;
   display: inline-block;
   position: relative;
-  width: 90%;
-  margin: 0px auto;
+  width: 100%;
+  margin: 5px;
 
   text-align: left;
   vertical-align: middle;
-
-  //width: 90vw;
-
 }
 
 .reveal code {
@@ -189,10 +216,10 @@ somewhatBig {
 
 .reveal pre code {
   padding: 0px;
-  margin-top: 3vh;
-  margin-bottom: 3vh;
-  margin-left: 3vh;
-  border-bottom: 2vh;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-bottom: 5px;
   vertical-align: middle;
   max-height: 70vh;
   word-wrap: normal;
@@ -208,15 +235,9 @@ somewhatBig {
 
 
 .codebox {
-  border-radius: 5vh;
+  border-radius: 5px;
   background: #303030;
   box-shadow: 10px 10px 5px #888888;
-}
-.codenormal {
-  font-size: 2.5vh;
-}
-.codesmall {
-  font-size: 2vh;
 }
 
 
@@ -268,15 +289,30 @@ p.demotitle {
   margin-bottom: 0vh;
 }
 
-.reveal section div.logo {
+.reveal section div.fulllogo {
   background: inherit;
   border: none;
   box-shadow: none;
   text-align: center;
   width: 100%;
-  height: 15vh;
+  height: 5vh;
+.reveal section div.fulllogo img {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-.reveal section div.logo img {
+.reveal section div.futurelogo {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+  width: 100%;
+  height: 17vh;
+.reveal section div.futurelogo img {
   display: block;
   position: relative;
   height: 100%;
