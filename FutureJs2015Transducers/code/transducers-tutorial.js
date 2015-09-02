@@ -28,7 +28,7 @@ result = [2,3,4].reduce(mult, 1);
 var one = function() { return 1; };
 var identity = function(result) { return result; };
 
-transformer = function(init, stepper, result){
+transformer = function(init, stepper, result) {
   return {
     // 1. Start with an initial value
     init: init,
@@ -77,7 +77,7 @@ wrap = function(maybeStepper){
       },
 
       // step: (stepper function)
-      stepper,
+      maybeStepper,
 
       // result: (compute final result)
       identity
@@ -149,12 +149,12 @@ output = reduce(append, [], input);
 plus1 = function(item){
   return item + 1;
 };
-plus1AndAppend = wrap (function(result, item) {
+plus1AndAppend = function(result, item) {
   return append(result, plus1(item));
-});
+};
 
 // let's step through it manually
-xf = plus1AndAppend;
+xf = wrap (plus1AndAppend);
 result = xf.step([], 2);
 // [3] (=append([], 2+1)))
 result = xf.step(result, 3);
@@ -168,7 +168,7 @@ output = xf.result(result);
 
 // out 1st transducer (it adds 1):
 
-transducerPlus1 = function(xf){
+transducerPlus1 = function(xf) {
   return transformer (
     // init:
     function(){
@@ -252,7 +252,7 @@ var transduce = function(
 
 map = function(f) {
   // returns the transducer...
-  return function(xf){
+  return function(xf) {
     // the transducer builds a transformer...
     return transformer (
       // init:
@@ -275,35 +275,33 @@ map = function(f) {
 
 input = [2,3,4];
 output = transduce(map(plus1), append, [], input);
-// [3,4,5]
+// [3,4,5] (= [2+1, 3+1, 4+1])
 output = transduce(map(plus1), sum, 0, input);
-// 12
+// 12 (= 0 + 2+1 + 3+1 + 4+1)
 output = transduce(map(plus1), mult, 1, input);
-// 60
+// 60 (= 1 * 2+1 * 3+1 * 4+1)
 
 plus2 = function(input){
   return input+2;
 };
 output = transduce(map(plus2), append, [], input);
-// [4,5,6]
+// [4,5,6] (= [2+2, 3+2, 4+2])
 output = transduce(map(plus2), sum, 0, input);
-// 15
+// 15 (= 0 + 2+2 + 3+2 + 4+2)
 output = transduce(map(plus2), mult, 1, input);
-// 120
+// 120 (= 1 * 2+2 * 3+2 * 4+2)
 
 
 // more than one transformation...
 
 // compose 2 functions
-compose2 = function(fn1, fn2){
-  return function(item){
-    var result = fn2(item);
-    result = fn1(result);
-    return result;
+compose2 = function(fn1, fn2) {
+  return function(item) {
+    return fn1(fn2(item));
   }
 }
 
 // transduce using a combined transformer
 // (reduces to the sum of mapping plus1 and plus2)
 output = transduce(map(compose2(plus1, plus2)), sum, 0, input);
-// 18 (2+3 + 3+3 + 4+3)
+// 18 (= 0 + 2+3 + 3+3 + 4+3)
