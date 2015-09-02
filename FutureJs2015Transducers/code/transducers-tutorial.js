@@ -65,22 +65,26 @@ output = input.reduce(xf.step, xf.init());
 
 // Reduce
 
-// First we wrap a stepper function into a transformer
+// If needed, wrap a stepper function into a transformer
 
-wrap = function(stepper){
-  return transformer (
-    // this transformer does not support initialization
-    // (reduce will provide the initial value)
-    function(){
-      throw new Error('init not supported');
-    },
+wrap = function(maybeStepper){
+  if (typeof maybeStepper === 'function'){
+    return transformer (
+      // this transformer does not support initialization
+      // (reduce will provide the initial value)
+      function(){
+        throw new Error('init not supported');
+      },
 
-    // step: (stepper function)
-    stepper,
+      // step: (stepper function)
+      stepper,
 
-    // result: (compute final result)
-    identity
-  )
+      // result: (compute final result)
+      identity
+    );
+  } else {
+    return maybeStepper;
+  }
 };
 
 
@@ -89,10 +93,8 @@ wrap = function(stepper){
 // which works on arrays)
 
 reduce = function(xf, init, input){
-  if(typeof xf === 'function'){
-    // make sure we have a transformer
-    xf = wrap(xf);
-  }
+  // make sure we have a transformer
+  xf = wrap(xf);
   var result = input.reduce(xf.step, init);
   return xf.result(result);
 };
@@ -233,15 +235,13 @@ var transduce = function(
       stepper,
       init,
       input) {
-  if(typeof stepper === 'function'){
-    // make sure we have a transformer for stepping
-    stepper = wrap(stepper);
-  }
+  // make sure we have a transformer for stepping
+  stepper = wrap(stepper);
 
   // pass in stepper to get the combined transformer
   var xf = transducer(stepper);
 
-  // xf is now a transformer
+  // xf is now the combined transformer
   // we now can use reduce defined above to
   // iterate and transform input
   return reduce(xf, init, input);
