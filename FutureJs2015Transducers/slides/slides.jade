@@ -150,10 +150,11 @@ section
       = '  ) -> R              // result'
 
 section
-  h1 What's the trick?
-  p.fragment A transformer can also be a simple stepper
-  p.fragment Particularly, it can be a "reducer" that scans a sequence building a result value
-  p.fragment Typically a "reducer transformer" is the terminal point of a transduce chain
+  h1 What does this mean?
+  p.fragment Transformations can be composed
+  p.fragment Each stepper only deals with its own values
+  p.fragment Intermediate steppers don't create intermediate collections
+  p.fragment Only the final transformer fully builds the actual result
 
 
 section
@@ -288,7 +289,6 @@ section
       = '}'
   p.fragment A promise represents a future value
   p.fragment It models a latency between the value availability and the moment when the code is ready to handle it
-  p.fragment ...or vice versa!
 
 section
   h1 An async sequence
@@ -297,15 +297,20 @@ section
     code.codesmall.javascript
       = 'AsyncSequence<T> :: Promise<AsyncSequenceElement<T>>\n'
       = 'AsyncSequenceElement<T> :: {\n'
+      = '  // These three are like an iterator\n'
       = '  value :: T?\n'
       = '  done :: bool?\n'
       = '  error :: Error?\n'
+      = '  // ...but next gives a promise!\n'
       = '  next :: AsyncSequence<T>\n'
       = '}'
 
 section
   section
-    h1 Push and Pull, async style
+    h1
+      | Push and Pull,
+      br
+      | async style
     p.fragment Like the regular push-pull duality...
     p.fragment.embox.roll-in ...but with promises thrown in to model latency
 
