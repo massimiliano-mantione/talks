@@ -281,8 +281,9 @@ section
   pre.codebox.fragment
     code.codesmall.javascript
       = 'Promise<T> :: {\n'
-      = '  next :: T -> ()\n'
-      = '  error :: Error -> ()\n'
+      = '  // Two setters (works in push mode)\n'
+      = '  next :: T -> ()      // value\n'
+      = '  error :: Error -> () // error\n'
       = '}'
   p.fragment A promise represents a future value
   p.fragment It models a latency between the value availability and the moment when the code is ready to handle it

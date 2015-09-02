@@ -8,11 +8,13 @@ mult = function(result, item){
   return result * item;
 };
 
+var input = [2,3,4];
+
 // 10 (=1+2+3+4)
-result = [2,3,4].reduce(sum, 1);
+result = input.reduce(sum, 1);
 
 // 24 (=1*2*3*4)
-result = [2,3,4].reduce(mult, 1);
+result = input.reduce(mult, 1);
 
 
 ////////////////////
@@ -42,7 +44,6 @@ transformer = function(init, stepper, result) {
     result: result || identity
   }
 };
-
 
 input = [2,3,4];
 
@@ -107,13 +108,13 @@ input = [2,3,4];
 output = reduce(sum, 1, input);
 // output = 10 (=1+2+3+4)
 
-output = reduce(mult, 2, input);
+output = reduce(mult, 1, input);
 // output = 48 (=2*2*3*4)
 
 output = reduce(wrap(sum), 1, input);
 // output = 10 (=1+2+3+4)
 
-output = reduce(wrap(mult), 2, input);
+output = reduce(wrap(mult), 1, input);
 // output = 24 (=1*2*3*4)
 
 
@@ -140,30 +141,12 @@ output = reduce(append, [], input);
 
 // Transducer
 
-
-// combination of transformations, 1st attempt
-
 // let's make a transformer that adds 1
 // and combine it with the append stepper
 
 plus1 = function(item){
   return item + 1;
 };
-plus1AndAppend = function(result, item) {
-  return append(result, plus1(item));
-};
-
-// let's step through it manually
-xf = wrap (plus1AndAppend);
-result = xf.step([], 2);
-// [3] (=append([], 2+1)))
-result = xf.step(result, 3);
-// [3,4] (=append([3], 3+1)))
-result = xf.step(result, 4);
-// [3,4,5] (=append([3,4], 4+1)))
-output = xf.result(result);
-// [3,4,5]
-
 
 
 // out 1st transducer (it adds 1):
@@ -192,6 +175,8 @@ transducerPlus1 = function(xf) {
 // combine plus1 and append:
 
 xf = transducerPlus1(wrap(append));
+
+// Input was [2, 3, 4]
 result = xf.step([], 2);
 // [3] (=append([], 2+1)))
 result = xf.step(result, 3);
@@ -206,6 +191,7 @@ output = xf.result(result);
 
 xf = transducerPlus1(wrap(sum));
 
+// Input was [2, 3, 4]
 result = xf.step(0, 2);
 // 3 (=sum(0, 2+1)))
 result = xf.step(result, 3);
