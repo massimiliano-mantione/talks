@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="Web Components + React.JS">
+		<meta name="author" content="Massimiliano Mantione">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+            <div class="slides"><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script src="assets/highlight.min.css"></script><script>function startTime() {
+  var today=new Date();
+  var h=today.getHours();
+  var m=today.getMinutes();
+  m = checkTime(m);
+  document.getElementById('clock').innerHTML = h+" "+m;
+  var t = setTimeout(function(){startTime()},500);
+}
+function checkTime(i) {
+  if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+function prepareClock() {
+  var clock = document.getElementById('clock');
+  var body = clock.parentNode.parentNode.parentNode;
+  clock = clock.parentNode.removeChild(clock);
+  body.appendChild(clock);
+  startTime();
+}</script><body onload="prepareClock()"><div id="clock" class="myclock"></div></body><section><div class="fulllogo"><img src="assets/full-stack-fest.svg"/></div><div class="futurelogo"><img src="assets/FutureJsLogo.svg"/></div><h1>Transducers FTW!</h1><p class="dateStyle">September 4 2015, Barcelona</p><p>Massimiliano Mantione</p></section><section><h1>Credits</h1><p class="fragment">Rich Hickey<br/><a href="https://www.youtube.com/watch?v=6mTbuzafcII">(Transducers in Clojure)</a></p><p class="fragment">Kevin Beaty<br/><a href="http://simplectic.com/blog/2014/transducers-explained-1">(Transducers in Ramda, and much more)</a></p><p class="fragment">Erik Meijer<br/><a href="http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2014/Keynote-Duality">(push-pull duality Talk)</a></p></section><section><section><p>About Myself</p><h2 class="fragment">An enthusiast software engineer</h2><p class="fragment">Passionate about languages and compilers</p><p class="fragment roll-in"><b>Worked in the V8 team in Google</b></p><p class="fragment">Overall, worked on JIT compilers for +7 years</p><p class="fragment">Started as a Javascript hater</p><p class="fragment embox roll-in">Developing my own ideal language<br/>that transpiles to Javascript<br/><b>(Metascript)</b></p></section></section><section><h1>Transducers</h1><p class="fragment">Composable algorithmic transformations</p><p class="fragment">Decoupled from input or output sources</p><p class="fragment">They compose directly (like functions)</p><ul><li class="fragment">no awareness of input or creation</li><li class="fragment">no need of intermediate aggregates</li></ul></section><section><h1>Transducer building blocks</h1><p class="fragment">A <b>stepper</b> function...</p><p class="fragment">A <b>transformer</b> object...</p><p class="fragment">The <b>reduce</b> transformation...</p><p class="fragment embox roll-in">...give us a <b>transducer</b>!</p><p class="fragment">Then we can use<br/>the <b>transduce</b> transformation</p></section><section><h1>Stepper</h1><pre class="codebox fragment roll-in"><code class="javascript">Stepper&lt;I,E&gt; :: (I, E) -&gt; I</code></pre><p class="fragment">A function that takes an initial value and an element, and returns a new value for the initial item</p><p class="fragment">It is the typical argument of reduce</p></section><section><h1>Transformer</h1><pre class="codebox fragment"><code class="codesmall javascript">Transformer&lt;I,E,R&gt; :: {
+  init :: () -&gt; I      // initial value
+  step :: Stepper&lt;I,E&gt; // transformation
+  result :: I -&gt; R     // build the result
+}</code></pre><p class="fragment">Three functions, like a generalized stepper (with added begin and completion handlers)</p></section><section><h1>Reduce</h1><p>(the base transformation)</p><pre class="codebox fragment"><code class="codesmall javascript">TransformerOrStepper :: Transformer | Stepper
+reduce&lt;I,E,R&gt; :: (
+    TransformerOrStepper&lt;I,E,R&gt; // transformation
+    I                           // initial value
+    Iterator&lt;E&gt;                 // input sequence
+  ) -&gt; R                        // result</code></pre></section><section><h1>Transducer</h1><pre class="codebox fragment"><code class="codesmall javascript">Transducer :: TransformerOrStepper -&gt; Transformer</code></pre><p class="fragment">A function that transforms a transformer into another transformer</p><p class="fragment"><em>(let that sink in...)</em></p><p class="fragment embox roll-in"><b>It transforms transformers!</b></p></section><section><h1>Transduce</h1><p>(the generalized transformation)</p><pre class="codebox fragment"><code class="codesmall javascript">transduce&lt;I,E,R&gt; :: (
+    Transducer&lt;I,E,R&gt; // transformation
+    Stepper&lt;I,E&gt;      // result builder
+    I?                // initial value
+    Iterator&lt;E&gt;       // input sequence
+  ) -&gt; R              // result</code></pre></section><section><h1>What's the trick?</h1><p class="fragment">A transformer can also be a simple stepper</p><p class="fragment">Particularly, it can be a "reducer" that scans a sequence building a result value</p><p class="fragment">Typically a "reducer transformer" is the terminal point of a transduce chain</p></section><section><h1>Let's see some</h1><p><veryBig>real code!</veryBig></p></section><section><h1>What about async?</h1><p class="fragment">What does <em>"async computation" </em>mean?</p><p class="fragment">Many say it is about <b>push </b>vs <b>pull</b></p><p class="fragment embox roll-in">I don't fully buy it</p><p class="fragment">Let's see why</p></section><section><section><h1>Push and Pull are Dual</h1><p class="fragment">What does <em>dual </em>mean?</p><p class="fragment">It is similar to De Morgan's laws for<br/><b>or </b>and <b>and</b></p><p class="fragment embox roll-in">Reverse the direction of every function!</p></section><section><h1>getter - setter</h1><pre class="codebox fragment"><code class="codesmall javascript">// getter&lt;T&gt; (pull)
+() -&gt; T</code></pre><pre class="codebox fragment"><code class="codesmall javascript">// setter&lt;T&gt; (push)
+T -&gt; ()</code></pre><p class="fragment">Remember them!<br/><em>(we'll find them everywhere)</em></p></section><section><h2>Iterable - Observable</h2><pre class="codebox fragment"><code class="codesmall javascript">Iterable&lt;T&gt; :: {
+  '@@iterator' :: Iterator&lt;T&gt; // getter
+}</code></pre><br/><pre class="codebox fragment"><code class="codesmall javascript">Observable&lt;T&gt; :: {
+  Subscribe :: Observer&lt;T&gt; -&gt; (() -&gt; ()) // setter
+}</code></pre></section><section><h2>Iterator - Observer</h2><pre class="codebox fragment"><code class="codesmall javascript">Iterator&lt;T&gt; :: {
+  // getter of one of three things (pulls them)
+  next :: () -&gt; ({done :: bool, value :: T} | throws Error)
+}</code></pre><br/><pre class="codebox fragment"><code class="codesmall javascript">Observer&lt;T&gt; :: {
+  // three setters (accepts pushes)
+  onNext :: T -&gt; ()
+  onCompleted :: () -&gt; ()
+  onError :: Error -&gt; ()
+}</code></pre></section><section><h3>What do Observer and Iterator<br/>have in common?</h3><p class="fragment">Both specify what to do in case of<ul class="fragment"><li>next value</li><li>completion</li><li>error</li></ul></p><p class="fragment embox roll-in">What changes is just the <b>push </b>vs <b>pull</b></p></section></section><section><h1>The good news</h1><p class="fragment">Remember that transducers don't care about the <em>sequence </em>they operate on?</p><p class="fragment">They work in push contexts, too!</p><p class="fragment embox roll-in">And they work <b>unmodified!</b></p><p class="fragment"><em>Let's see...</em></p></section><section><h1>So far, so well...</h1><p class="fragment">...but what about <em>async</em>?</p><p class="fragment">A push API looks async, but when the push happens the code is synchronous</p><p class="fragment embox roll-in">So, what construct is really async?</p></section><section><h1>Promises</h1><pre class="codebox fragment"><code class="codesmall javascript">Promise&lt;T&gt; :: {
+  next :: T -&gt; ()
+  error :: Error -&gt; ()
+}</code></pre><p class="fragment">A promise represents a future value</p><p class="fragment">It models a latency between the value availability and the moment when the code is ready to handle it</p><p class="fragment">...or vice versa!</p></section><section><h1>An async sequence</h1><p class="fragment">Implemented using promises</p><pre class="codebox fragment"><code class="codesmall javascript">AsyncSequence&lt;T&gt; :: Promise&lt;AsyncSequenceElement&lt;T&gt;&gt;
+AsyncSequenceElement&lt;T&gt; :: {
+  value :: T?
+  done :: bool?
+  error :: Error?
+  next :: AsyncSequence&lt;T&gt;
+}</code></pre></section><section><section><h1>Push and Pull, async style</h1><p class="fragment">Like the regular push-pull duality...</p><p class="fragment embox roll-in">...but with promises thrown in to model latency</p></section><section><h1>getter - setter</h1><pre class="codebox fragment"><code class="codesmall javascript">// async-getter&lt;T&gt; (pull)
+() -&gt; Promise&lt;T&gt;</code></pre><pre class="codebox fragment"><code class="codesmall javascript">// async-setter&lt;T&gt; (push)
+Promise&lt;T&gt; -&gt; ()</code></pre></section><section><h2>Iterator - Observer</h2><p class="fragment">An Iterator that gives promises</p><p class="fragment">An observer that expects promises</p><p class="fragment embox roll-in">Note that <em>ramda </em>and <em>underarm</em><br/>already support this model!</p></section></section><section><h1>Takeaway</h1><p class="fragment">Transducers model composable and reusable transformations of sequences of values</p><p class="fragment">Several modern libraries are starting to support them</p><p class="fragment">Push and Pull are dual</p><p class="fragment">Async is properly represented by promises</p></section><section><h1>That's All, Folks</h1><p>-</p><p>code, docs and slides are on github</p><p>twitter: @M_a_s_s_i, #metascript</p><p>-</p><h2>Thanks for following!</h2></section>    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme || "default", // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || "default" || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+</body>
+</html>
+        
