@@ -81,11 +81,11 @@ T -&gt; ()</code></pre><p class="fragment">Remember them!<br/><em>(we'll find th
   onError :: Error -&gt; ()
 }</code></pre></section><section><h3>What do Observer and Iterator<br/>have in common?</h3><p class="fragment">Both specify what to do in case of<ul class="fragment"><li>next value</li><li>completion</li><li>error</li></ul></p><p class="fragment embox roll-in">What changes is just the <b>push </b>vs <b>pull</b></p></section></section><section><h1>The good news</h1><p class="fragment">Remember that transducers don't care about the <em>sequence </em>they operate on?</p><p class="fragment">They work in push contexts, too!</p><p class="fragment embox roll-in">And they work <b>unmodified!</b></p><p class="fragment"><em>Let's see...</em></p></section><section><h1>So far, so well...</h1><p class="fragment">...but what about <em>async</em>?</p><p class="fragment">A push API looks async, but when the push happens the code is synchronous</p><p class="fragment embox roll-in">So, what construct is really async?</p></section><section><h1>Promises</h1><pre class="codebox fragment"><code class="codesmall javascript">Promise&lt;T&gt; :: {
   // Two setters (works in push mode)
-  resolve :: T -&gt; ()    // value
-  reject :: Error -&gt; () // error
-}</code></pre><p class="fragment">A promise represents a future value</p><p class="fragment">It models a latency between the value availability and the moment when the code is ready to handle it</p><p class="fragment">It is different from an Observable because it does not model a sequence of values</p></section><section><h1>An async sequence</h1><p class="fragment">Implemented using promises</p><pre class="codebox fragment"><code class="codesmall javascript">AsyncSequence&lt;T&gt; :: Promise&lt;AsyncSequenceElement&lt;T&gt;&gt;
-</code></pre><pre class="codebox fragment"><code class="codesmall javascript">AsyncSequenceElement&lt;T&gt; :: {
-  // These three work like an iterator
+  next :: T -&gt; ()      // value
+  error :: Error -&gt; () // error
+}</code></pre><p class="fragment">A promise represents a future value</p><p class="fragment">It models a latency between the value availability and the moment when the code is ready to handle it</p></section><section><h1>An async sequence</h1><p class="fragment">Implemented using promises</p><pre class="codebox fragment"><code class="codesmall javascript">AsyncSequence&lt;T&gt; :: Promise&lt;AsyncSequenceElement&lt;T&gt;&gt;
+AsyncSequenceElement&lt;T&gt; :: {
+  // These three are like an iterator
   value :: T?
   done :: bool?
   error :: Error?
