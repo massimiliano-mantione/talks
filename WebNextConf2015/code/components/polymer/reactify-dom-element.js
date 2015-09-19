@@ -107,7 +107,7 @@ export default function Reactify(name) {
 // & in general use of `Attribute` is preferred, this should
 // be reserved only for attributes changes to which aren't picked
 // up after node is in the tree.
-// Example: Element("iframe", { browser: Option("mozbrowser") })
+// Example: Reactify("iframe", { browser: Option("mozbrowser") })
 var Option = function (name) {
   if (!(this instanceof Option)) {
     return new Option(name);
@@ -126,7 +126,7 @@ Reactify.Option = Option;
 // DOM attribute with a given `name`. If the field is
 // set to `undefined` or `null` attribute is removed
 // othrewise it's set to given value.
-// Example: Element("hbox", {flex: Attribute("flex")})
+// Example: Reactify("hbox", {flex: Attribute("flex")})
 var Attribute = function (name) {
   if (!(this instanceof Attribute)) {
     return new Attribute(name);
@@ -160,7 +160,7 @@ Reactify.Attribute = Attribute;
 // render `past` will be `void(0)`.
 //
 // Example:
-// Element("iframe", {focused: (node, current, past) => {
+// Reactify("iframe", {focused: (node, current, past) => {
 //   if (current) {
 //     node.focus()
 //   }
@@ -186,7 +186,7 @@ Reactify.Field = Field;
 // second argument, in which case event handler will be
 // invoked with `read(event)` instead of `event`.
 // Example:
-// Element("iframe", {onTitleChange: Event("mozbrowsertitlechange")})
+// Reactify("iframe", {onTitleChange: Event("mozbrowsertitlechange")})
 var Event = function (type, read, capture) {
   var capture = capture === undefined ? false : capture;
   if (!(this instanceof Event)) {
