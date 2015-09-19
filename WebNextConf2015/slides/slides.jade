@@ -1,0 +1,218 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/jsday.png', alt='logo')
+  p -
+  h3 Jou Can Have It
+  h1 Both Ways:
+  h2 Web Components + React.JS
+  p.dateStyle May 14 2015, Verona
+  p Massimiliano Mantione
+
+section
+  h1 Credits
+  p.fragment
+    | Andrew Rota
+    br
+    a(href='http://webcomponents.org/presentations/complementarity-of-react-and-web-components-at-reactjs-conf') (talk)
+  p.fragment
+    | Irakli Gozalishvili
+    br
+    a(href='https://github.com/Gozala/firefox.html/blob/react/js/element.js') (code)
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    blockquote.fragment.embox.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Let's change subject!
+
+
+section
+  section
+    h1 Web Components
+    p.fragment Custom Elements
+    p.fragment Shadow DOM
+    p.fragment HTML Imports
+    p.fragment HTML Templates
+    p.fragment.embox.roll-in Portable (standard Web Platform)
+    p.fragment
+      em so...
+
+  section
+    p
+      img(src='assets/I.png', alt='I')
+      img(src='assets/heart.png', alt='love')
+      img(src='assets/web-components-logo.png', alt='Web Components')
+
+section
+  section
+    h1 React.JS
+    p.fragment Virtual DOM
+    p.fragment One-Way Data Flow
+    p.fragment High Performance
+    p.fragment Portable Synthetic Event System
+    p.fragment Code-centric component definitions
+    p.fragment Client and Server Rendering
+    p.fragment
+      em so...
+
+  section
+    p
+      img(src='assets/I.png', alt='I')
+      img(src='assets/heart.png', alt='love')
+      img(src='assets/react-logo.png', alt='Web Components')
+
+section
+  section
+    p
+      img(src='assets/web-components-logo.png', alt='Web Components')
+      img(src='assets/question-mark.png', alt='love')
+      img(src='assets/react-logo.png', alt='Web Components')
+
+  section
+    p.embox.roll-in
+      somewhatBig
+        | I definitely think it's 
+        b the wrong programming paradigm;
+        br
+        | I really hope that 
+        em [web components]
+        br
+        b 
+          u do not succeed
+    p (Pete Hunt)
+
+  section
+    p
+      img(src='assets/react-logo.png', alt='Web Components')
+      img(src='assets/broken-heart.png', alt='love')
+      img(src='assets/web-components-logo.png', alt='Web Components')
+
+section
+  section
+    h3 React or Web Components:
+    h2 Pick One?
+
+    div(style='float:left')
+      ul
+        li Custom Elements
+        li Shadow DOM
+        li Encapsulation
+        li Reusability
+        li Portability
+    div(style='float:right')
+      ul
+        li Virtual DOM
+        li Event System
+        li Functional UI
+        li High Performance
+        li Isomorphic JS
+
+  section
+    h2 Technical Issues
+    p.fragment Custom Events
+    p.fragment Custom Attributes
+    p.fragment Custom Children
+    br
+    p.fragment.embox.roll-in
+      | Fundamental Issue:
+      br
+      b
+        u Stateful Components
+
+  section
+    h3
+      | Solution:
+      br
+      | a Custom React Class
+    ul
+      li.fragment
+        u getInitialState: 
+        | add custom attributes
+      li.fragment
+        u componentDidMount:
+        br
+        ul
+          li set custom attributes
+          li set custom children
+          li add event handlers
+      li.fragment
+        u componentWillUnmount: 
+        | remove event handlers
+      li.fragment
+        u componentDidUpdate:
+        br
+        ul
+          li reset custom attributes
+          li reset event handlers
+      li.fragment
+        u render: 
+        | display web component
+
+  section
+    p
+      img(src='assets/react-logo.png', alt='Web Components')
+      img(src='assets/heart.png', alt='love')
+      img(src='assets/web-components-logo.png', alt='Web Components')
+
+  section
+    p
+      veryBig DEMO!
+
+section
+  section
+    h1
+      veryBig
+        | General Ideas
+        br
+        | About Components
+
+  section
+    h1 Components should be
+      p.fragment Small
+      p.fragment Stateless
+      p.fragment Encapsulated
+      p.fragment Performant
+
+  section
+    h1 State is "ok"...
+    p.fragment.embox.roll-in ...as long as it can be fully specified through attributes and children!
+
+
+  section
+    h1 Good Idea
+    pre.codebox
+      code.html.
+        <my-button></my-button>
+
+  section
+    h1 Bad Idea
+    pre.codebox
+      code.html.
+        <my-application></my-application>
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!
