@@ -2,15 +2,43 @@ link(rel="stylesheet", href="assets/style.css")
 link(rel="stylesheet", href="assets/highlight.css")
 script(src="assets/highlight.min.css")
 
+script
+  function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    m = checkTime(m);
+    document.getElementById('clock').innerHTML = h+" "+m;
+    var t = setTimeout(function(){startTime()},500);
+  }
+  function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+  }
+  function prepareClock() {
+    var clock = document.getElementById('clock');
+    var body = clock.parentNode.parentNode.parentNode;
+    clock = clock.parentNode.removeChild(clock);
+    body.appendChild(clock);
+    startTime();
+  }
+body(onload="prepareClock()")
+  div.myclock(id="clock")
+  
+
 section
   div.logo
-    img(src='assets/jsday.png', alt='logo')
-  p -
+    img(src='assets/WEC.png', alt='logo')
+  p.wec -
   h3 Jou Can Have It
   h1 Both Ways:
   h2 Web Components + React.JS
-  p.dateStyle May 14 2015, Verona
-  p Massimiliano Mantione
+  p.dateStyle September 26 2015, Milano
+  p.wec Massimiliano Mantione
+
+section
+  div.sponsors
+    img(src='assets/WEC-sponsors-white.png', alt='sponsors')
 
 section
   h1 Credits
@@ -22,6 +50,10 @@ section
     | Irakli Gozalishvili
     br
     a(href='https://github.com/Gozala/firefox.html/blob/react/js/element.js') (code)
+  p.fragment
+    | Dan Abramov
+    br
+    a(href='https://github.com/gaearon') (redux)
 
 section
   section
@@ -147,27 +179,29 @@ section
       | a Custom React Class
     ul
       li.fragment
-        u getInitialState: 
-        | add custom attributes
+        u getInitialState
+        | : add custom attributes
       li.fragment
-        u componentDidMount:
+        u componentDidMount
+        | :
         br
         ul
           li set custom attributes
           li set custom children
           li add event handlers
       li.fragment
-        u componentWillUnmount: 
-        | remove event handlers
+        u componentWillUnmount
+        | : remove event handlers
       li.fragment
-        u componentDidUpdate:
+        u componentDidUpdate
+        | :
         br
         ul
           li reset custom attributes
           li reset event handlers
       li.fragment
-        u render: 
-        | display web component
+        u render
+        | : display web component
 
   section
     p
@@ -216,3 +250,17 @@ section
   p code, docs and slides are on github
   p twitter: @M_a_s_s_i, #metascript
   h2 Thanks for following!
+
+section
+  div.sponsors
+    img(src='assets/WEC-sponsors-white.png', alt='sponsors')
+
+section
+  div.logo15
+    img(src='assets/WEC-15.png', alt='logo')
+  p.wec webnextconf.eu
+  p.wec -
+  h6
+    | This work is licensed under a
+    br
+    a(href='http://creativecommons.org/licenses/by-nc-sa/3.0/') Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License
