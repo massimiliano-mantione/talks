@@ -7,6 +7,9 @@ export var PaperCheckbox = Reactify('paper-checkbox', {
 export var PaperButton = Reactify('paper-button', {
   'onClick': Reactify.Event('click')
 });
+export var PaperIconButton = Reactify('paper-icon-button', {
+  'onClick': Reactify.Event('click')
+});
 export var PaperInput = Reactify('paper-input', {
   'onChange': Reactify.Event('change'),
   'onBlur': Reactify.Event('blur'),

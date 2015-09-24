@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { PaperButton, PaperCheckbox, PaperInput } from './polymer-elements';
+import { PaperButton, PaperIconButton, PaperCheckbox, PaperInput } from './polymer-elements';
 import classnames from 'classnames';
 import TodoTextInput from './TodoTextInput';
 
@@ -37,14 +37,13 @@ class TodoItem extends Component {
     } else {
       element = (
         <div className="view">
-          <input className="toggle"
-                 type="checkbox"
+          <PaperCheckbox className="toggle"
                  checked={todo.completed}
                  onChange={() => completeTodo(todo.id)} />
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text}
           </label>
-          <button className="destroy"
+          <PaperIconButton className="destroy"
                   onClick={() => deleteTodo(todo.id)} />
         </div>
       );
