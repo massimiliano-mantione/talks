@@ -32,7 +32,7 @@ class TodoTextInput extends Component {
 
   render() {
     return (
-      <input className={
+      <PaperInput className={
         classnames({
           edit: this.props.editing,
           'new-todo': this.props.newTodo

@@ -127,11 +127,13 @@ Reactify.Option = Option;
 // set to `undefined` or `null` attribute is removed
 // othrewise it's set to given value.
 // Example: Reactify("hbox", {flex: Attribute("flex")})
-var Attribute = function (name) {
+var Attribute = function (name, writer, force) {
   if (!(this instanceof Attribute)) {
-    return new Attribute(name);
+    return new Attribute(name, writer, force);
   }
   this.name = name;
+  this.writer = writer;
+  this.force = force;
 };
 Attribute.prototype = {
   constructor: Attribute,
@@ -141,11 +143,15 @@ Attribute.prototype = {
     }
   },
   write: function write(node, present, past) {
-    if (present !== past) {
-      if (present === void 0) {
+    if (present !== past || this.force) {
+      if (present === void 0 && ! force) {
         node.removeAttribute(this.name);
       } else {
-        node.setAttribute(this.name, present);
+        if (typeof this.writer !== 'function') {
+          node.setAttribute(this.name, present);
+        } else {
+          this.writer(node, present);
+        }
       }
     }
   }
@@ -213,7 +219,10 @@ Event.prototype = {
   },
   handleEvent: function handleEvent(event) {
     if (this.handler) {
-      this.handler(this.read ? this.read(event) : event);
+      var e = this.read ? this.read(event) : event;
+      if (e) {
+        this.handler(e);
+      }
     }
   }
 };

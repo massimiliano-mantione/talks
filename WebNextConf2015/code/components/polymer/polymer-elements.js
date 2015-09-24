@@ -1,14 +1,19 @@
 import Reactify from './reactify-dom-element';
 
 export var PaperCheckbox = Reactify('paper-checkbox', {
-  'on-change': Reactify.Event('change'),
-  'on-click': Reactify.Event('click')
+  'onChange': Reactify.Event('change'),
+  'onClick': Reactify.Event('click')
 });
 export var PaperButton = Reactify('paper-button', {
-  'on-click': Reactify.Event('click')
+  'onClick': Reactify.Event('click')
 });
 export var PaperInput = Reactify('paper-input', {
-  'on-change': Reactify.Event('change'),
-  'on-blur': Reactify.Event('blur'),
-  'on-key-down': Reactify.Event('keydown')
+  'onChange': Reactify.Event('change'),
+  'onBlur': Reactify.Event('blur'),
+  'onKeyDown': Reactify.Event('keydown', function(event) {
+    event.nativeEvent !== undefined ? e : undefined
+  }),
+  'value': Reactify.Attribute('value', function(node, value) {
+    node.inputElement.value = value;
+  }, true)
 });
