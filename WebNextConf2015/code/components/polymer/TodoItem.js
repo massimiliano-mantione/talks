@@ -36,14 +36,16 @@ class TodoItem extends Component {
       );
     } else {
       element = (
+        // Use PaperCheckbox (remove type) and PaperIconButton
         <div className="view">
-          <PaperCheckbox className="toggle"
+          <input className="toggle"
+                 type="checkbox"
                  checked={todo.completed}
                  onChange={() => completeTodo(todo.id)} />
           <label onDoubleClick={this.handleDoubleClick.bind(this)}>
             {todo.text}
           </label>
-          <PaperIconButton className="destroy"
+          <button className="destroy"
                   onClick={() => deleteTodo(todo.id)} />
         </div>
       );

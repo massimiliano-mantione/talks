@@ -38,10 +38,11 @@ class Footer extends Component {
     const { completedCount, onClearCompleted } = this.props;
     if (completedCount > 0) {
       return (
-        <PaperButton className="clear-completed"
+        // Use PaperButton
+        <button className="clear-completed"
                 onClick={onClearCompleted} >
           Clear completed
-        </PaperButton>
+        </button>
       );
     }
   }
