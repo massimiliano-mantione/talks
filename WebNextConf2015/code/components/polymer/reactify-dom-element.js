@@ -32,7 +32,7 @@ export default function Reactify(name) {
   // React component is a wrapper around the our custom HTML Node
   // who's whole purpose is to update attributes of the node that
   // are not recognized by react.
-  var Type = React.createClass({
+  var NodeWrapper = React.createClass({
     displayName: 'html:' + name,
     getInitialState: () => {
       var state = {};
@@ -94,11 +94,10 @@ export default function Reactify(name) {
       return Node(this.props, this.props.children);
     }
   });
-  Type.propTypes = {
+  NodeWrapper.propTypes = {
     children: PropTypes.array.isRequired
   };
-  //return React.createFactory(Type);
-  return Type;
+  return NodeWrapper;
 }
 
 // Option can be used to define attribute on the element
