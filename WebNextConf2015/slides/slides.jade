@@ -223,10 +223,10 @@ section
 
   section
     h1 Components should be
-      p.fragment Small
-      p.fragment Stateless
-      p.fragment Encapsulated
-      p.fragment Performant
+    p.fragment Small
+    p.fragment Stateless
+    p.fragment Encapsulated
+    p.fragment Performant
 
   section
     h1 State is "ok"...
@@ -234,16 +234,37 @@ section
 
 
   section
-    h1 Good Idea
-    pre.codebox
-      code.html.
-        <my-button></my-button>
+    h3 Web Component Granularity
+    div.fragment
+      h1 Good Idea
+      pre.codebox
+        code.codebig.html.
+          <my-button></my-button>
+    p.fragment vs
+    div.fragment
+      h1 Bad Idea
+      pre.codebox
+        code.codebig.html.
+          <my-application></my-application>
+
+section
+  section
+    h1
+      veryBig
+        | Opinionated
+        br
+        | Section
 
   section
-    h1 Bad Idea
-    pre.codebox
-      code.html.
-        <my-application></my-application>
+    h3.wec In the end...
+    h1.fragment Should we do it?
+    p.fragment Should we use Web Components in React SPAs?
+    p.fragment.wec.embox.roll-in Right now, <b>NO</b>
+    p.fragment
+      em (just consider the size of the downloads...)
+    p.fragment.wec.embox.roll-in In the future between <b>SURE</b> and <em>likely...</em>
+    p.fragment
+      em as long as the web components are stateless!
 
 section
   h1 That's All, Folks

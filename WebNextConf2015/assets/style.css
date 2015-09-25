@@ -216,6 +216,11 @@ somewhatBig {
   font-size: 2vh;
   font-family: 'ShareTech';
 }
+.reveal code.codebig {
+  font-size: 4.5vh;
+  font-family: 'ShareTech';
+}
+
 .reveal pre {
   font-size: 3.5vh;
   font-family: 'ShareTech';
