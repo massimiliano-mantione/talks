@@ -6,6 +6,7 @@ class Todos extends Component {
   render() {
     const { todos, actions } = this.props;
 
+    // Filter: pass filter={filter} to MainSection (add to Todos.propTypes)
     return (
       <div>
         <Header addTodo={actions.addTodo} />

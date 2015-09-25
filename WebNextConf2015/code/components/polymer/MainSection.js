@@ -23,6 +23,7 @@ class MainSection extends Component {
     }
   }
 
+  // Filter: this.props.actions.filter(filter);
   handleShow(filter) {
     this.setState({ filter });
   }
@@ -39,6 +40,7 @@ class MainSection extends Component {
     }
   }
 
+  // Filter: take { filter } from props
   renderFooter(completedCount) {
     const { todos } = this.props;
     const { filter } = this.state;
@@ -55,6 +57,7 @@ class MainSection extends Component {
     }
   }
 
+  // Filter: take { filter } from props
   render() {
     const { todos, actions } = this.props;
     const { filter } = this.state;
