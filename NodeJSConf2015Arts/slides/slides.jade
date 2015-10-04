@@ -1,0 +1,335 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+
+script
+script(src="assets/highlight.min.css")
+  function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    m = checkTime(m);
+    document.getElementById('clock').innerHTML = h+" "+m;
+    var t = setTimeout(function(){startTime()},500);
+  }
+  function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+  }
+  function prepareClock() {
+    var clock = document.getElementById('clock');
+    var body = clock.parentNode.parentNode.parentNode;
+    clock = clock.parentNode.removeChild(clock);
+    body.appendChild(clock);
+    startTime();
+  }
+body(onload="prepareClock()")
+  div.myclock(id="clock")
+  
+
+section
+  div.logo
+    img(src='assets/logo_base_light.png', alt='logo')
+  p.node -
+  h1 Deterministic Deployments
+  h2 with Node.Js
+  p.dateStyle October 10 2015, Desenzano
+  p.node Massimiliano Mantione
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    blockquote.fragment.embox.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Let's change subject!
+
+
+section
+  section
+    h3 About deployments
+    h1.fragment Deployments wishlist
+    p.fragment Reliable
+    p.fragment Fast
+    p.fragment Always successful
+
+  section
+    h1 Reliable
+    p.fragment Most of all, deterministic
+    p.fragment.embox.roll-in Deploying more times the same artifact must produce the same result
+
+  section
+    h1 Fast
+    p.fragment It means efficient
+    p.fragment.embox.roll-in Should not waste bandwidth (time)
+    p.fragment.embox.roll-in Should not waste disk (space)
+
+
+
+section
+  section
+    h1 What about docker?
+    p.fragment.embox.roll-in.node We love it!
+    p.fragment Containers are a smart idea
+    p.fragment
+      em Docker is not perfect...
+
+  section
+    h3 say that I must wait for docker build to complete...
+    h3 ...one more time!
+
+  section
+    h3 and what about
+    h3 docker pull?
+
+  section
+    h1 Docker is amazing!
+    p.fragment It brings determinism to deployment
+    p.fragment.embox.roll-in It makes it feasible to deploy a new "VM" every time you need to start something
+    p.fragment The initial state of each container is fully under your control
+    p.fragment
+      em Say goodbye to...
+    ul
+      li.fragment was this package on the production machine?
+      li.fragment at which version was it?
+
+  section
+    h1 Yes, it is amazing
+    p.fragment
+      veryBig HOWEVER
+    p.fragment.embox.roll-in
+      | While running containers is 
+      span.node blazingly fast
+      | ,
+      br
+      | preparing them is a 
+      span.node chore
+
+
+  section
+    h1 What's a new docker image?
+    p.fragment You put there a mix of...
+    ul
+      li.fragment the initial OS image
+      li.fragment
+        | every "tech package" you need
+        br
+        em (nodejs, nginx, redis...)
+      li.fragment
+        | your own code
+        br
+        em (build artifacts)
+      li.fragment eventually, a "state" volume
+      li.fragment finally, maybe configuration files
+
+  section
+    h1 merkel trees
+    p.fragment A way to uniquely identify a piece of immutable data
+    p.fragment Each piece of data is identified by its cryptographic hash
+    p.fragment If the data is composed of other pieces, it is cheaper to hash their hashes instead of their contents!
+
+  section
+    h1 Linear example
+    p.fragment A list of messages
+    p.fragment Each item is:
+    ul
+      li.fragment the message data
+      li.fragment the list of previous messages
+    p.fragment Each item's hash should be the hash of both
+    p.fragment For the list of messages, hashing the hash is enough!
+
+  section
+    h1 The actual list
+    pre.codebox.fragment
+      code.javascript.
+        M1
+          data: "Hi"
+          prev: null
+          hash: H1 = H("Hi", null)
+        M2
+          data: "Welcome"
+          prev: M1
+          hash: H2 = H("Welcome", H1)
+        M3
+          data: "Thank you"
+          prev: M2
+          hash: H3 = H("Thank you", H2)
+
+  section
+    h1 Use hashes as identifiers
+    pre.codebox.fragment
+      code.javascript.
+        H1
+          data: "Hi"
+          prev: null
+          hash: H1 = H("Hi", null)
+        H2
+          data: "Welcome"
+          prev: H1
+          hash: H2 = H("Welcome", H1)
+        H3
+          data: "Thank you"
+          prev: H2
+          hash: H3 = H("Thank you", H2)
+
+
+  section
+    h1 An alternative list
+    pre.codebox.fragment
+      code.javascript.
+        H1
+          data: "Hi"
+          prev: null
+          hash: H1 = H("Hi", null)
+        H2a
+          data: "Wat?"
+          prev: H1
+          hash: H2a = H("Wat?", H1)
+        H3a
+          data: "Sorry..."
+          prev: H2a
+          hash: H3a = H("Sorry...", H2a)
+
+  section
+    h1 Let's merge them...
+    pre.codebox.fragment
+      code.javascript.
+        H1 {data: "Hi", prev: null}
+          H2 {data: "Welcome", prev: H1}
+            H3 {data: "Thank you", prev: H2"
+          H2a {data: "Wat?", prev: H1}
+            H3a {data: "Sorry...", prev: H2a}
+    p.fragment.embox.roll-in It's a tree!
+
+
+section
+  h3 This is what
+  h1
+    b.node docker
+    |  does
+  p.fragment
+    | Docker images (and containers) use layered file systems
+    br
+    em (AUFS, BTRFS, Device Mapper, Overlayfs, VFS)
+  p.fragment
+    | Each layer represents the result of one step in the docker build
+    br
+    em (which means one line in the docker file)
+  p
+  p.fragment.embox.roll-in
+    | Docker hashes Dockerfile "
+    span.node RUN
+    | " lines!
+  p.fragment
+    em Hopefully those lines give deterministic results
+  p.fragment
+    b.node Except when they don't...
+
+section
+  h1 File system layers...
+  p.fragment.node Can get large
+  p.fragment Can waste space deleted by subsequent layers
+  p.fragment Do not share space well between images
+  p.fragment Most of all, they can have only one parent
+  p.fragment.embox.roll-in
+    | This is because they model
+    br
+    b.node changes 
+    | and not 
+    b.node contents
+
+section
+  h3 Git also uses
+  h1 merkel trees
+  p.fragment
+    | Except that they are 
+    span.node DAG
+    | s
+    br
+    em
+      | (
+      span.node D
+      | irectly 
+      span.node A
+      | cyclic 
+      span.node G
+      | raphs)
+  p.fragment The Git object store represents trees
+  p.fragment Each tree is the content of a git revision
+  p.fragment
+    | However, trees can 
+    span.node share
+    |  subtrees
+    p.fragment.embox.roll-in
+      | This is because they model
+      br
+      b.node contents 
+      | and not 
+      b.node changes
+  p.fragment
+    em (changes are represented in the revision graph)
+
+section
+  he The advantage of hashing content
+  h1.fragment ...is that you can share content!
+  p.fragment.embox.roll-in What if we handled our build artifacts with a Git-like content addressable storage distinct from the docker one?
+
+
+section
+  h1 Let's recap...
+  p.fragment.embox.roll-in Docker <b>run</b> is fast
+  p.fragment.embox.roll-in Docker <b>build</b> and <b>pull</b> are slow
+
+
+section
+  h2
+    | Frequency of 
+    b.node change
+    |  of 
+    b.node deployed 
+    | contents
+  p.fragment
+      | underlying OS image: 
+      b.node weeks
+      br
+      em (for security updates)
+  p.fragment
+      | technology stack: 
+      b.node months
+      br
+      em (new versions of nodejs, nginx...)
+  p.fragment
+      | our own artifacts: 
+      u
+        b.node minutes!
+      br
+      em (every time you run the result of a build)
+  p.fragment.embox.roll-in.node should we handle them all in the same way?
+
+section
+  h1 A different approach
+  p.fragment Use docker images for the OS and the "tech stack"
+  p.fragment Use a Git-like repository for build artifacts
+  p.fragment.embox.roll-in Mount the build artifact as a read-only volume in a docker image when you deploy it
+
+
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!
