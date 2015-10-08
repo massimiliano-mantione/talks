@@ -1,8 +1,8 @@
 link(rel="stylesheet", href="assets/style.css")
 link(rel="stylesheet", href="assets/highlight.css")
 
-script
 script(src="assets/highlight.min.css")
+script
   function startTime() {
     var today=new Date();
     var h=today.getHours();
@@ -69,38 +69,181 @@ section
 
   section
     h1 Reliable
-    p.fragment Most of all, deterministic
-    p.fragment.embox.roll-in Deploying more times the same artifact must produce the same result
+    p.fragment
+      | Most of all, 
+      b.node deterministic
+    p.fragment.embox.roll-in
+      | Deploying more times the
+      b.node  same
+      |  artifact
+      br
+      | must produce the 
+      b.node same
+      |  result
 
   section
     h1 Fast
-    p.fragment It means efficient
-    p.fragment.embox.roll-in Should not waste bandwidth (time)
-    p.fragment.embox.roll-in Should not waste disk (space)
-
-
+    p.fragment
+      | It means 
+      b.node efficient
+    p.fragment.embox.roll-in
+      | Should not waste bandwidth (
+      b.node time
+      | )
+    p.fragment.embox.roll-in
+      | Should not waste disk (
+      b.node space
+      | )
 
 section
   section
-    h1 What about docker?
-    p.fragment.embox.roll-in.node We love it!
-    p.fragment Containers are a smart idea
+    h1
+      veryBig Reliability
+    p and
+    h1
+      veryBig Determinism
+    p -
+    h2 (speed later)
+  
+  section
+    h1 Determinism means...
     p.fragment
-      em Docker is not perfect...
+      | When you deploy a 
+      b.node build
+      |  more than once, you are sure to deploy the 
+      b.node same
+      |  files every time
+    p.fragment.embox.roll-in
+      | Wait... did we say 
+      b.node build
+      | ?
+      
+  section
+    h3 Do we have a
+    h1
+      b.node build
+      |  process?
+    p.fragment
+      | Usually with node.js you do 
+      b.node not 
+      | need a build step, right?
+    p.fragment Javascript is immediately executable...
+    p.fragment
+      em (we all know that front end code 
+      b.node does
+      em  need a build)
+    p.fragment
+      | But what about 
+      b.node npm install
+      | ?
 
   section
-    h3 say that I must wait for docker build to complete...
-    h3 ...one more time!
+    h3
+      b.node If
+      |  we have a
+    h1
+      b.node build
+      |  process...
+    p.fragment
+      | Is npm install part of the 
+      b.node build
+      | ?
+    p.fragment
+      | Or is it part of the 
+      b.node deployment
+      | ?
+    p.fragment.embox.roll-in
+      | I would say 
+      b.node build
 
   section
-    h3 and what about
-    h3 docker pull?
+    h1
+      | Does it
+      br 
+      | make sense...
+    p.fragment.embox
+      | To perform 
+      b.node build steps
+      |  during the 
+      b.node deployment?
+    p.fragment.roll-in
+      veryBig No, it does not
+    p.fragment
+      | It can be 
+      b.node non deterministic
+    p.fragment
+      | It can be 
+      b.node slow
 
   section
-    h1 Docker is amazing!
-    p.fragment It brings determinism to deployment
+    h1 Then we need...
+    h1.fragment.roll-in
+      veryBig
+        | An artifact
+        br
+        | repository!
+
+  section
+    h1 Do you...
+    p.fragment
+      | Use a 
+      b.node source
+      |  code repository?
+    p.fragment.embox.roll-in
+      span.fragment
+        | Check build artifacts
+        br
+        | into it? 
+      b.node.fragment BAD IDEA!
+    p.fragment
+      | Use an 
+      b.node artifact
+      |  repository?
+    p.fragment
+      | Feel the 
+      b.node need
+      |  of an artifact repository?
+
+  section
+    h3
+      | Say you understand that you need an 
+      b.node artifact repository
+    h1.fragment
+      veryBig Which one?
+    p.fragment
+      | If all your artifacts are npm modules,
+      br
+      | a 
+      b.node private npm repo
+      |  could be a good idea
+    p.fragment.embox.roll-in
+      | Otherwise, make 
+      b.node npm install
+      |  part of the 
+      b.node build
+      | !
+
+section
+  section
+    h2 What about docker?
+    h1.fragment.embox.roll-in
+      b.node We love it!
+    p.fragment Containers are a smart idea
+
+  section
+    h1
+      b.node Docker
+      |  is amazing!
+    p.fragment
+      | It brings 
+      b.node determinism
+      |  to deployment
     p.fragment.embox.roll-in It makes it feasible to deploy a new "VM" every time you need to start something
     p.fragment The initial state of each container is fully under your control
+    p.fragment
+      | It is the ultimate 
+      b.node artifact repository
+      | !
     p.fragment
       em Say goodbye to...
     ul
@@ -120,8 +263,38 @@ section
       span.node chore
 
 
+
+
   section
-    h1 What's a new docker image?
+    div(style="display:flex;flex-direction:column;justify-content:space-between;height:80vh;background:url(assets/say-one-more-time.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+      div
+        p.fragment.node
+          b Say that I must wait for
+          br
+          b docker build to complete...
+      div
+        p.fragment.node
+          b ...one more time!
+
+  section
+    div(style="display:flex;flex-direction:column;justify-content:space-between;height:80vh;background:url(assets/say-one-more-time-older.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+      div
+        p.fragment.node
+          b Should I also wait...
+      div
+        p.fragment.node
+          b ...for docker pull?
+
+section
+  section
+    h1
+      veryBig
+        | Understanding
+        br
+        | Docker images
+  
+  section
+    h1 What's in a docker image?
     p.fragment You put there a mix of...
     ul
       li.fragment the initial OS image
@@ -137,7 +310,8 @@ section
       li.fragment finally, maybe configuration files
 
   section
-    h1 merkel trees
+    h3 A docker image is
+    h1.fragment a merkel tree
     p.fragment A way to uniquely identify a piece of immutable data
     p.fragment Each piece of data is identified by its cryptographic hash
     p.fragment If the data is composed of other pieces, it is cheaper to hash their hashes instead of their contents!
@@ -205,95 +379,109 @@ section
           hash: H3a = H("Sorry...", H2a)
 
   section
-    h1 Let's merge them...
+    h1
+      | Let's 
+      b.node merge
+      |  them...
     pre.codebox.fragment
       code.javascript.
-        H1 {data: "Hi", prev: null}
-          H2 {data: "Welcome", prev: H1}
-            H3 {data: "Thank you", prev: H2"
-          H2a {data: "Wat?", prev: H1}
-            H3a {data: "Sorry...", prev: H2a}
-    p.fragment.embox.roll-in It's a tree!
-
-
-section
-  h3 This is what
-  h1
-    b.node docker
-    |  does
-  p.fragment
-    | Docker images (and containers) use layered file systems
-    br
-    em (AUFS, BTRFS, Device Mapper, Overlayfs, VFS)
-  p.fragment
-    | Each layer represents the result of one step in the docker build
-    br
-    em (which means one line in the docker file)
-  p
-  p.fragment.embox.roll-in
-    | Docker hashes Dockerfile "
-    span.node RUN
-    | " lines!
-  p.fragment
-    em Hopefully those lines give deterministic results
-  p.fragment
-    b.node Except when they don't...
+        H1 {data: "Hi", prev: null}            // Start
+          H2 {data: "Welcome", prev: H1}       // 1s2 list
+            H3 {data: "Thank you", prev: H2}   // ... (1st)
+          H2a {data: "Wat?", prev: H1}         // 2nd list
+            H3a {data: "Sorry...", prev: H2a}  // ... (2nd)
+    h2.fragment.embox.roll-in
+      b.node It's a tree!
 
 section
-  h1 File system layers...
-  p.fragment.node Can get large
-  p.fragment Can waste space deleted by subsequent layers
-  p.fragment Do not share space well between images
-  p.fragment Most of all, they can have only one parent
-  p.fragment.embox.roll-in
-    | This is because they model
-    br
-    b.node changes 
-    | and not 
-    b.node contents
+  section
+    h3 This is what
+    h1
+      b.node docker
+      |  does
+    p.fragment
+      | Docker images (and containers) use layered file systems
+      br
+      em (AUFS, BTRFS, Device Mapper, Overlayfs, VFS)
+    p.fragment
+      | Each layer represents the result of one step in the docker build
+      br
+      em (which means one line in the docker file)
+    p
+    p.fragment.embox.roll-in
+      | Docker hashes Dockerfile "
+      span.node RUN
+      | " lines!
+    p.fragment
+      em Hopefully those lines give deterministic results
+    p.fragment
+      b.node Except when they don't...
 
-section
-  h3 Git also uses
-  h1 merkel trees
-  p.fragment
-    | Except that they are 
-    span.node DAG
-    | s
-    br
-    em
-      | (
-      span.node D
-      | irectly 
-      span.node A
-      | cyclic 
-      span.node G
-      | raphs)
-  p.fragment The Git object store represents trees
-  p.fragment Each tree is the content of a git revision
-  p.fragment
-    | However, trees can 
-    span.node share
-    |  subtrees
+  section
+    h1 File system layers...
+    p.fragment.node Can get large
+    p.fragment Can waste space deleted by subsequent layers
+    p.fragment Do not share space well between images
+    p.fragment Most of all, they can have only one parent
     p.fragment.embox.roll-in
       | This is because they model
       br
-      b.node contents 
+      b.node changes 
       | and not 
-      b.node changes
-  p.fragment
-    em (changes are represented in the revision graph)
+      b.node contents
 
-section
-  he The advantage of hashing content
-  h1.fragment ...is that you can share content!
-  p.fragment.embox.roll-in What if we handled our build artifacts with a Git-like content addressable storage distinct from the docker one?
+  section
+    h3 Git also uses
+    h1 merkel trees
+    p.fragment
+      | Except that they are 
+      span.node DAG
+      | s
+      br
+      em
+        | (
+        span.node D
+        | irectly 
+        span.node A
+        | cyclic 
+        span.node G
+        | raphs)
+    p.fragment The Git object store represents trees
+    p.fragment Each tree is the content of a git revision
+    p.fragment
+      | However, trees can 
+      span.node share
+      |  subtrees
+      p.fragment.embox.roll-in
+        | This is because they model
+        br
+        b.node contents 
+        | and not 
+        b.node changes
+    p.fragment
+      em (changes are represented in the revision graph)
 
+  section
+    he The advantage of hashing content...
+    h1.fragment ...is that you can share content!
+    p.fragment.embox.roll-in What if we handled our build artifacts with a Git-like content addressable storage distinct from the docker one?
 
 section
   h1 Let's recap...
-  p.fragment.embox.roll-in Docker <b>run</b> is fast
-  p.fragment.embox.roll-in Docker <b>build</b> and <b>pull</b> are slow
-
+  p.fragment Docker would be an ideal artifact repository
+  p.fragment
+    em however
+  p.fragment.embox.roll-in
+    | Docker 
+    b.node run
+    |  is fast
+  p.fragment.embox.roll-in
+    | Docker 
+    b.node build
+    |  and 
+    b.node pull
+    |  are slow
+  h2.fragment Can we do something about it?
 
 section
   h2

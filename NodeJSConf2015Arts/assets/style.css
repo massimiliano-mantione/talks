@@ -250,6 +250,7 @@ somewhatBig {
 
 .node {
   color: #bbcb48;
+  -webkit-text-stroke: 1px #000000;
 }
 
 .reveal pre {
