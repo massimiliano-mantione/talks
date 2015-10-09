@@ -56,7 +56,7 @@ section
       | even with a 10 feet pole
     p.fragment Eventually, I changed my mind, but...
     p.fragment
-      em Let's change subject!
+      em Back to the actual topic!
 
 
 section
@@ -75,7 +75,7 @@ section
     p.fragment.embox.roll-in
       | Deploying more times the
       b.node  same
-      |  artifact
+      |  build
       br
       | must produce the 
       b.node same
@@ -96,15 +96,6 @@ section
       | )
 
 section
-  section
-    h1
-      veryBig Reliability
-    p and
-    h1
-      veryBig Determinism
-    p -
-    h2 (speed later)
-  
   section
     h1 Determinism means...
     p.fragment
@@ -139,8 +130,9 @@ section
 
   section
     h3
-      b.node If
-      |  we have a
+      | We 
+      b.node have
+      |  a
     h1
       b.node build
       |  process...
@@ -153,9 +145,49 @@ section
       b.node deployment
       | ?
     p.fragment.embox.roll-in
-      | I would say 
-      b.node build
-
+      | Let's 
+      b.node define 
+      em build 
+      |  and 
+      em deployment
+  
+  section
+    h2
+      b.node Build
+    p.fragment
+      b.node Transforming
+      |  code so that it can be executed
+    p.fragment
+      | Must happen 
+      b.node every
+      |  time the developer touches the code
+      br
+      | (to test it)
+    p.fragment
+      | Should be 
+      b.node followed
+      |  by a 
+      b.node QA
+      |  process
+      br
+      | (to throughly test it!)
+    h2.fragment
+      b.node Deployment
+    p.fragment
+      b.node Transferring
+      |  the result of a build to other machines
+      br
+      | where it wiil be executed...
+    p.fragment
+      | ...and then actually 
+      b.node running
+      |  that code
+    p.fragment
+      b.node QA
+      |  should 
+      b.node already
+      |  have happened (especially if the deployment is to production servers)
+    
   section
     h1
       | Does it
@@ -205,30 +237,100 @@ section
       |  of an artifact repository?
 
   section
+    h1
+      b.node Decouple
+      |  build and deploy
+    p.fragment
+      | Put a 
+      b.node QA
+      |  phase in the middle
+    p.fragment
+      | Assume the QA lasts 
+      b.node days
+      br
+      em (validation on a staging server)
+    p.fragment
+      | How can you put the 
+      b.node same
+      |  build in production?
+    p.fragment
+      | How can you put the 
+      b.node same
+      |  build on other nodes if you want 
+      b.node dynamic
+      |  scaling?
+    p.fragment.embox.roll-in
+      em
+        | You 
+        b.node store
+        |  the result of the build 
+        b.node somewhere
+    
+  section
     h3
       | Say you understand that you need an 
       b.node artifact repository
     h1.fragment
       veryBig Which one?
+
+  section
+    h2 An artifact repository...
+    p.fragment Looks a lot like a key-value store
+    p.fragment You store build results into it
+    p.fragment You identify them by name@version (a unique key)
+    p.fragment You can fetch them when and where you need them
+    
+
+  section
+    h1 In a node-centric world
     p.fragment
       | If all your artifacts are npm modules,
       br
       | a 
       b.node private npm repo
-      |  could be a good idea
+      |  could be a good artifact repository
     p.fragment.embox.roll-in
       | Otherwise, make 
       b.node npm install
       |  part of the 
       b.node build
       | !
+    p.fragment
+      em
+        | and you 
+        b.node still
+        |  need an artifact repository...
+
+  section
+    h3
+      | You need to make 
+      b.node npm install
+    h1 deterministic
+    h2
+      b.node anyway
+    p.fragment
+      | Just use 
+      b.node npm shrinkwrap
+      br
+      em
+        | and eventually 
+        span.node greenkeeper.io
+    p.fragment.embox.roll-in
+      | If 
+      b.node npm install
+      |  is part of the 
+      b.node build
+      | ,
+      br
+      | what is the artifact repository?
 
 section
   section
     h2 What about docker?
     h1.fragment.embox.roll-in
-      b.node We love it!
-    p.fragment Containers are a smart idea
+      b.node We all love it!
+    p.fragment
+      em But what are we using it for?
 
   section
     h1
@@ -238,7 +340,10 @@ section
       | It brings 
       b.node determinism
       |  to deployment
-    p.fragment.embox.roll-in It makes it feasible to deploy a new "VM" every time you need to start something
+    p.fragment.embox.roll-in
+      | It makes it feasible to deploy a new "VM"
+      br
+      | every time you need to start something
     p.fragment The initial state of each container is fully under your control
     p.fragment
       | It is the ultimate 
@@ -255,11 +360,16 @@ section
     p.fragment
       veryBig HOWEVER
     p.fragment.embox.roll-in
-      | While running containers is 
+      | While 
+      b
+        em running
+      |  containers is 
       span.node blazingly fast
       | ,
       br
-      | preparing them is a 
+      b
+        em preparing
+      |  them is a 
       span.node chore
 
 
@@ -285,6 +395,13 @@ section
         p.fragment.node
           b ...for docker pull?
 
+
+   section
+     h2 Docker is "almost there"
+     p.fragment Running is fast
+     p.fragment Deployment is deterministic
+     p.fragment Can we fix its build issues?
+     
 section
   section
     h1
@@ -295,26 +412,26 @@ section
   
   section
     h1 What's in a docker image?
-    p.fragment You put there a mix of...
-    ul
-      li.fragment the initial OS image
-      li.fragment
-        | every "tech package" you need
-        br
-        em (nodejs, nginx, redis...)
-      li.fragment
-        | your own code
-        br
-        em (build artifacts)
-      li.fragment eventually, a "state" volume
-      li.fragment finally, maybe configuration files
+    p.fragment
+      em You put there a mix of...
+    p.fragment the initial OS image
+    p.fragment
+      | every "tech package" you need
+      br
+      em (nodejs, nginx, redis...)
+    p.fragment
+      | your own code
+      br
+      em (build artifacts)
+    p.fragment eventually, a "state" volume
+    p.fragment finally, maybe configuration files
 
   section
-    h3 A docker image is
-    h1.fragment a merkel tree
+    h3 A docker image is a
+    h1.fragment merkel tree
     p.fragment A way to uniquely identify a piece of immutable data
     p.fragment Each piece of data is identified by its cryptographic hash
-    p.fragment If the data is composed of other pieces, it is cheaper to hash their hashes instead of their contents!
+    p.fragment.embox.roll-in If the data is composed of other pieces, it is cheaper to hash their hashes instead of their contents!
 
   section
     h1 Linear example
@@ -324,7 +441,10 @@ section
       li.fragment the message data
       li.fragment the list of previous messages
     p.fragment Each item's hash should be the hash of both
-    p.fragment For the list of messages, hashing the hash is enough!
+    p.fragment.embox.roll-in
+      | For the list of previous messages,
+      br
+      em hashing the hash is enough!
 
   section
     h1 The actual list
@@ -412,10 +532,12 @@ section
       | Docker hashes Dockerfile "
       span.node RUN
       | " lines!
+      br
+      em (this gives us a Merkel tree)
     p.fragment
-      em Hopefully those lines give deterministic results
+      b Hopefully those lines give deterministic results
     p.fragment
-      b.node Except when they don't...
+      em.node Except when they don't...
 
   section
     h1 File system layers...
@@ -431,7 +553,9 @@ section
       b.node contents
 
   section
-    h3 Git also uses
+    h3
+      b.node Git
+      |  also uses
     h1 merkel trees
     p.fragment
       | Except that they are 
