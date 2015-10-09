@@ -58,11 +58,34 @@ section
     p.fragment
       em Back to the actual topic!
 
+section
+  h1 Intense trip ahead!
+  p.fragment
+    em We'll see...
+  p.fragment
+    | What an 
+    b.node artifact
+    |  repository is
+    br
+    em (and why we need it)
+  p.fragment
+    | How 
+    b.node docker
+    |  works internally
+  p.fragment
+    | How we can do 
+    b.node better
+    |  than that!
+  p.fragment.embox.roll-in
+    em
+      | And even something relevant to 
+      b.node node.js
+      |  land!
 
 section
   section
-    h3 About deployments
-    h1.fragment Deployments wishlist
+    h1 Deployments
+    h3.fragment They should be...
     p.fragment Reliable
     p.fragment Fast
     p.fragment Always successful
@@ -121,7 +144,8 @@ section
     p.fragment Javascript is immediately executable...
     p.fragment
       em (we all know that front end code 
-      b.node does
+      em
+        b.node does
       em  need a build)
     p.fragment
       | But what about 
@@ -171,6 +195,7 @@ section
       |  process
       br
       | (to throughly test it!)
+    p.fragment -
     h2.fragment
       b.node Deployment
     p.fragment
@@ -309,7 +334,7 @@ section
     h2
       b.node anyway
     p.fragment
-      | Just use 
+      | Use 
       b.node npm shrinkwrap
       br
       em
@@ -586,59 +611,196 @@ section
       em (changes are represented in the revision graph)
 
   section
-    he The advantage of hashing content...
-    h1.fragment ...is that you can share content!
-    p.fragment.embox.roll-in What if we handled our build artifacts with a Git-like content addressable storage distinct from the docker one?
+    h3
+      | The advantage of hashing 
+      b.node content
+      | ...
+    h1.fragment
+      | ...is that you can share 
+      b.node more
+      |  content!
+    p.fragment.embox.roll-in
+      em Is there a way to put this to our advantage?
+    
+section
+  section
+    h1 Let's recap...
+    p.fragment Docker would be an ideal artifact repository
+    p.fragment
+      em however
+    p.fragment.embox.roll-in
+      | Docker 
+      b.node run
+      |  is fast
+    p.fragment.embox.roll-in
+      | Docker 
+      b.node build
+      |  and 
+      b.node pull
+      |  are slow
+    h2.fragment
+      | Could we do
+      br
+      b.node push
+      |  and 
+      b.node pull
+      br
+      | less often?
+
+  section
+    h2
+      | Frequency of 
+      b.node change
+      |  of 
+      b.node deployed 
+      | contents
+    p.fragment
+        | underlying OS image: 
+        b.node weeks
+        br
+        em (for security updates)
+    p.fragment
+        | technology stack: 
+        b.node months
+        br
+        em (new versions of nodejs, nginx...)
+    p.fragment
+        | our own artifacts: 
+        u
+          b.node minutes!
+        br
+        em (every time you run the result of a build)
+    p.fragment.embox.roll-in.node should we handle them all in the same way?
+
+      p.fragment.embox.roll-in What if we handled our build artifacts with a Git-like content addressable storage distinct from the docker one?
+
+
+  section
+    h1
+      | A 
+      b.node different
+      |  approach
+    p.fragment
+      em
+        | Tho 
+        b.node distinct
+        |  artifact repositories
+    p.fragment
+      | Use 
+      b.node docker images
+      |  for the OS and the "tech stack"
+    p.fragment
+      | Use a 
+      b.node Git-like repository
+      |  for build artifacts
+    p.fragment.embox.roll-in
+      | Mount the build artifact as a 
+      b.node read-only volume
+      |  in a docker image when you deploy it
+
+  section
+    h2 Using git as
+    h2 artifact repository
+    p.fragment
+      | Create a new branch for every commit
+      br
+      em (so you can forget history)
+    p.fragment
+      | Do shallow clones to create the client repo
+      br
+      em (so you don't clone it all)
+    p.fragment Pull and checkout at every deploy
+    p.fragment Mount the checked out directory as a read only volume into the docker container
+
+  section
+    h1
+      | Let's go 
+      b.node deeper
+      | !
+    p.fragment
+      em We are still wasting space on the servers
+    p.fragment
+      | The artifact files are 
+      b.node both
+      |  on the local git repo and in every checked out copy
+    p.fragment.embox.roll-in
+      | Can we have a repository that
+      br
+      | shares 
+      b.node every
+      |  identical
+      br
+      | file instance?
+
+  section
+    h1
+      b.node ARTS
+    h3.fragment
+      | (
+      b.node ART
+      | ifact 
+      b.node S
+      | tore)
+    p.fragment A Merkel DAG based artifact store
+    p.fragment.embox.roll-in
+      | Checked out files are 
+      b.node hard links
+      |  to files in the local repo
+      
+  section
+    h1 ARTs implementation
+    p.fragment
+      em still experimental
+    p.fragment Modular backends
+    p.fragment Implemented local files and remote S3
+    p.fragment Each backend is about 100 lines of code
+    p.fragment.embox.roll-in It already works!
+  
+  section
+    h1 ARTs commands
+    p.fragment archive
+    p.fragment pull
+    p.fragment checkout
+    p.fragment copy - trim - gc
+    p.fragment
+      em list - remove - check
 
 section
-  h1 Let's recap...
-  p.fragment Docker would be an ideal artifact repository
+  h1 Takeaway
   p.fragment
-    em however
+    em We have seen...
+  p.fragment
+    | Why we need an 
+    b.node artifact repository
+  p.fragment
+    | How 
+    b.node docker
+    |  works internally
+    br
+    em (Merkel trees)
+  p.fragment
+    | How we can do 
+    b.node better
+    |  than that!
+    br
+    em (Merkel DAGs hashing pure content)
   p.fragment.embox.roll-in
-    | Docker 
-    b.node run
-    |  is fast
+    em
+      | And that implementing it is not  
+      b.node that
+      |  hard!
+
+section
+  h1 BTW
+  h1.fragment
+    veryBig
+      b.node We are hiring!
   p.fragment.embox.roll-in
-    | Docker 
-    b.node build
-    |  and 
-    b.node pull
-    |  are slow
-  h2.fragment Can we do something about it?
-
-section
-  h2
-    | Frequency of 
-    b.node change
-    |  of 
-    b.node deployed 
-    | contents
-  p.fragment
-      | underlying OS image: 
-      b.node weeks
-      br
-      em (for security updates)
-  p.fragment
-      | technology stack: 
-      b.node months
-      br
-      em (new versions of nodejs, nginx...)
-  p.fragment
-      | our own artifacts: 
-      u
-        b.node minutes!
-      br
-      em (every time you run the result of a build)
-  p.fragment.embox.roll-in.node should we handle them all in the same way?
-
-section
-  h1 A different approach
-  p.fragment Use docker images for the OS and the "tech stack"
-  p.fragment Use a Git-like repository for build artifacts
-  p.fragment.embox.roll-in Mount the build artifact as a read-only volume in a docker image when you deploy it
-
-
+    | Come and talk to me
+    br
+    em
+      | or email 
+      span.node jobs@hyperfair.com
 
 section
   h1 That's All, Folks
