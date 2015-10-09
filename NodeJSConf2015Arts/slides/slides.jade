@@ -59,6 +59,8 @@ section
       em Back to the actual topic!
 
 section
+  h3
+    b.node Warning:
   h1 Intense trip ahead!
   p.fragment
     em We'll see...
@@ -154,7 +156,7 @@ section
 
   section
     h3
-      | We 
+      | Suppose we 
       b.node have
       |  a
     h1
@@ -233,6 +235,36 @@ section
       b.node slow
 
   section
+    h1
+      b.node Decouple
+      |  build and deploy
+    p.fragment
+      | Put a 
+      b.node QA
+      |  phase in the middle
+    p.fragment
+      | Assume the QA lasts 
+      b.node days
+      br
+      em (validation on a staging server)
+    p.fragment
+      | How can you put in production the 
+      b.node same
+      |  build you tested in staging?
+    p.fragment
+      | How can you put the 
+      b.node same
+      |  build on other nodes if you want 
+      b.node dynamic
+      |  scaling?
+    p.fragment.embox.roll-in
+      em
+        | You 
+        b.node store
+        |  the result of the build 
+        b.node somewhere
+
+  section
     h1 Then we need...
     h1.fragment.roll-in
       veryBig
@@ -261,35 +293,6 @@ section
       b.node need
       |  of an artifact repository?
 
-  section
-    h1
-      b.node Decouple
-      |  build and deploy
-    p.fragment
-      | Put a 
-      b.node QA
-      |  phase in the middle
-    p.fragment
-      | Assume the QA lasts 
-      b.node days
-      br
-      em (validation on a staging server)
-    p.fragment
-      | How can you put the 
-      b.node same
-      |  build in production?
-    p.fragment
-      | How can you put the 
-      b.node same
-      |  build on other nodes if you want 
-      b.node dynamic
-      |  scaling?
-    p.fragment.embox.roll-in
-      em
-        | You 
-        b.node store
-        |  the result of the build 
-        b.node somewhere
     
   section
     h3
