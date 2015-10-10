@@ -217,25 +217,6 @@ section
     
   section
     h1
-      | Does it
-      br 
-      | make sense...
-    p.fragment.embox
-      | To perform 
-      b.node build steps
-      |  during the 
-      b.node deployment?
-    p.fragment.roll-in
-      veryBig No, it does not
-    p.fragment
-      | It can be 
-      b.node non deterministic
-    p.fragment
-      | It can be 
-      b.node slow
-
-  section
-    h1
       b.node Decouple
       |  build and deploy
     p.fragment
@@ -293,7 +274,48 @@ section
       b.node need
       |  of an artifact repository?
 
-    
+  section
+    h2
+      b.node Deterministic
+      |  deployments
+    h1.fragment
+      | are 
+      b.node easy
+    p.fragment
+      | Store your builds in an 
+      b.node artifact repository
+    p.fragment
+      b.node Transfer
+      |  them to the production machine...
+    p.fragment
+      | ...and then 
+      b.node start
+      |  them
+    p.fragment.embox.roll-in
+      | Most of all,
+      br
+      em
+        b.node stick to that!
+
+  section
+    h1
+      | Does it
+      br 
+      | make sense...
+    p.fragment.embox
+      | To perform 
+      b.node build steps
+      |  during the 
+      b.node deployment?
+    p.fragment.roll-in
+      veryBig No, it does not
+    p.fragment
+      | It can be 
+      b.node non deterministic
+    p.fragment
+      | It will be 
+      b.node slow
+
   section
     h3
       | Say you understand that you need an 
