@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="Web Components + React.JS">
+		<meta name="author" content="Massimiliano Mantione">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+            <div class="slides"><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script src="assets/highlight.min.css"></script><script>function startTime() {
+  var today=new Date();
+  var h=today.getHours();
+  var m=today.getMinutes();
+  m = checkTime(m);
+  document.getElementById('clock').innerHTML = h+" "+m;
+  var t = setTimeout(function(){startTime()},500);
+}
+function checkTime(i) {
+  if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+function prepareClock() {
+  var clock = document.getElementById('clock');
+  var body = clock.parentNode.parentNode.parentNode;
+  clock = clock.parentNode.removeChild(clock);
+  body.appendChild(clock);
+  startTime();
+}</script><body onload="prepareClock()"><div id="clock" class="myclock"></div></body><section><div class="logo"><img src="assets/logo_base_light.png" alt="logo"/></div><p class="node">-</p><h1>Deterministic Deployments</h1><h2>with Node.Js</h2><p class="dateStyle">October 10 2015, Desenzano</p><p class="node">Massimiliano Mantione</p></section><section><section><h1>About Myself</h1><h2 class="fragment">An enthusiast software engineer</h2><p class="fragment">Passionate about languages and compilers</p><p class="fragment roll-in"><b>Worked in the V8 team in Google</b></p><p class="fragment">Overall, worked on JIT compilers for +7 years</p><p class="fragment">Now working on scalable, fault tolerant,<br/>web facing distributed systems</p></section><section><h1>Javascript and me</h1><p class="fragment">I started as a Javascript hater</p><blockquote class="fragment embox roll-in">When I sow Javascript for the 1st time (in 1995)
+I vowed that I would never touch such an abomination,
+even with a 10 feet pole</blockquote><p class="fragment">Eventually, I changed my mind, but...</p><p class="fragment"><em>Back to the actual topic!</em></p></section></section><section><h3><b class="node">Warning:</b></h3><h1>Intense trip ahead!</h1><p class="fragment"><em>We'll see...</em></p><p class="fragment">What an <b class="node">artifact</b> repository is<br/><em>(and why we need it)</em></p><p class="fragment">How <b class="node">docker</b> works internally</p><p class="fragment">How we can do <b class="node">better</b> than that!</p><p class="fragment embox roll-in"><em>And even something relevant to <b class="node">node.js</b> land!</em></p></section><section><section><h1>Deployments</h1><h3 class="fragment">They should be...</h3><p class="fragment">Reliable</p><p class="fragment">Fast</p><p class="fragment">Always successful</p></section><section><h1>Reliable</h1><p class="fragment">Most of all, <b class="node">deterministic</b></p><p class="fragment embox roll-in">Deploying more times the<b class="node"> same</b> build<br/>must produce the <b class="node">same</b> result</p></section><section><h1>Fast</h1><p class="fragment">It means <b class="node">efficient</b></p><p class="fragment embox roll-in">Should not waste bandwidth (<b class="node">time</b>)</p><p class="fragment embox roll-in">Should not waste disk (<b class="node">space</b>)</p></section></section><section><section><h1>Determinism means...</h1><p class="fragment">When you deploy a <b class="node">build</b> more than once, you are sure to deploy the <b class="node">same</b> files every time</p><p class="fragment embox roll-in">Wait... did we say <b class="node">build</b>?</p></section><section><h3>Do we have a</h3><h1><b class="node">build</b> process?</h1><p class="fragment">Usually with node.js you do <b class="node">not </b>need a build step, right?</p><p class="fragment">Javascript is immediately executable...</p><p class="fragment"><em>(we all know that front end code </em><em><b class="node">does</b></em><em> need a build)</em></p><p class="fragment">But what about <b class="node">npm install</b>?</p></section><section><h3>Suppose we <b class="node">have</b> a</h3><h1><b class="node">build</b> process...</h1><p class="fragment">Is npm install part of the <b class="node">build</b>?</p><p class="fragment">Or is it part of the <b class="node">deployment</b>?</p><p class="fragment embox roll-in">Let's <b class="node">define </b><em>build </em> and <em>deployment</em></p></section><section><h2><b class="node">Build</b></h2><p class="fragment"><b class="node">Transforming</b> code so that it can be executed</p><p class="fragment">Must happen <b class="node">every</b> time the developer touches the code<br/>(to test it)</p><p class="fragment">Should be <b class="node">followed</b> by a <b class="node">QA</b> process<br/>(to throughly test it!)</p></section><section><h2><b class="node">Deployment</b></h2><p class="fragment"><b class="node">Transferring</b> the result of a build to other machines<br/>where it wiil be executed...</p><p class="fragment">...and then actually <b class="node">running</b> that code</p><p class="fragment"><b class="node">QA</b> should <b class="node">already</b> have happened (especially if the deployment is to production servers)</p></section><section><h1><b class="node">Decouple</b> build and deploy</h1><p class="fragment">Put a <b class="node">QA</b> phase in the middle</p><p class="fragment">Assume the QA lasts <b class="node">days</b><br/><em>(validation on a staging server)</em></p><p class="fragment">How can you put in production the <b class="node">same</b> build you tested in staging?</p><p class="fragment">How can you put the <b class="node">same</b> build on other nodes if you want <b class="node">dynamic</b> scaling?</p><p class="fragment embox roll-in"><em>You <b class="node">store</b> the result of the build <b class="node">somewhere</b></em></p></section><section><h1>Then we need...</h1><h1 class="fragment roll-in"><veryBig>An artifact<br/>repository!</veryBig></h1></section><section><h1>Do you...</h1><p class="fragment">Use a <b class="node">source</b> code repository?</p><p class="fragment embox roll-in"><span class="fragment">Check build artifacts<br/>into it? </span><b class="node fragment">BAD IDEA!</b></p><p class="fragment">Use an <b class="node">artifact</b> repository?</p><p class="fragment">Feel the <b class="node">need</b> of an artifact repository?</p></section><section><h2><b class="node">Deterministic</b> deployments</h2><h1 class="fragment">are <b class="node">easy</b></h1><p class="fragment">Store your builds in an <b class="node">artifact repository</b></p><p class="fragment"><b class="node">Transfer</b> them to the production machine...</p><p class="fragment">...and then <b class="node">start</b> them</p><p class="fragment embox roll-in">Most of all,<br/><em><b class="node">stick to that!</b></em></p></section><section><h1>Does it<br/>make sense...</h1><p class="fragment embox">To perform <b class="node">build steps</b> during the <b class="node">deployment?</b></p><p class="fragment roll-in"><veryBig>No, it does not</veryBig></p><p class="fragment">It can be <b class="node">non deterministic</b></p><p class="fragment">It will be <b class="node">slow</b></p></section><section><h3>Say you understand that you need an <b class="node">artifact repository</b></h3><h1 class="fragment"><veryBig>Which one?</veryBig></h1></section><section><h2>An artifact repository...</h2><p class="fragment">Looks a lot like a key-value store</p><p class="fragment">You store build results into it</p><p class="fragment">You identify them by name@version (a unique key)</p><p class="fragment">You can fetch them when and where you need them</p></section><section><h1>In a node-centric world</h1><p class="fragment">If all your artifacts are npm modules,<br/>a <b class="node">private npm repo</b> could be a good artifact repository</p><p class="fragment embox roll-in">Otherwise, make <b class="node">npm install</b> part of the <b class="node">build</b>!</p><p class="fragment"><em>and you <b class="node">still</b> need an artifact repository...</em></p></section><section><h3>You need to make <b class="node">npm install</b></h3><h1>deterministic</h1><h2><b class="node">anyway</b></h2><p class="fragment">Use <b class="node">npm shrinkwrap</b><br/><em>and eventually <span class="node">greenkeeper.io</span></em></p><p class="fragment embox roll-in">If <b class="node">npm install</b> is part of the <b class="node">build</b>,<br/>what is the artifact repository?</p></section></section><section><section><h2>What about docker?</h2><h1 class="fragment embox roll-in"><b class="node">We all love it!</b></h1><p class="fragment"><em>But what are we using it for?</em></p></section><section><h1><b class="node">Docker</b> is amazing!</h1><p class="fragment">It brings <b class="node">determinism</b> to deployment</p><p class="fragment embox roll-in">It makes it feasible to deploy a new "VM"<br/>every time you need to start something</p><p class="fragment">The initial state of each container is fully under your control</p><p class="fragment">It is the ultimate <b class="node">artifact repository</b>!</p><p class="fragment"><em>Say goodbye to...</em></p><ul><li class="fragment">was this package on the production machine?</li><li class="fragment">at which version was it?</li></ul></section><section><h1>Yes, it is amazing</h1><p class="fragment"><veryBig>HOWEVER</veryBig></p><p class="fragment embox roll-in">While <b><em>running</em></b> containers is <span class="node">blazingly fast</span>,<br/><b><em>preparing</em></b> them is a <span class="node">chore</span></p></section><section><div style="display:flex;flex-direction:column;justify-content:space-between;height:80vh;background:url(assets/say-one-more-time.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;"><div><p class="fragment node"><b>Say that I must wait for</b><br/><b>docker build to complete...</b></p></div><div><p class="fragment node"><b>...one more time!</b></p></div></div></section><section><div style="display:flex;flex-direction:column;justify-content:space-between;height:80vh;background:url(assets/say-one-more-time-older.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;"><div><p class="fragment node"><b>Should I also wait...</b></p></div><div><p class="fragment node"><b>...for docker pull?</b></p></div></div></section><section><h2>Docker is "almost there"</h2><p class="fragment">Running is fast</p><p class="fragment">Deployment is deterministic</p><p class="fragment">Can we fix its build issues?</p></section></section><section><section><h1>Understanding<br/><veryBig>Docker images</veryBig></h1></section><section><h1>What's in a docker image?</h1><p class="fragment"><em>You put there a mix of...</em></p><p class="fragment">the initial OS image</p><p class="fragment">every "tech package" you need<br/><em>(nodejs, nginx, redis...)</em></p><p class="fragment">your own code<br/><em>(build artifacts)</em></p><p class="fragment">eventually, a "state" volume</p><p class="fragment">finally, maybe configuration files</p></section><section><h3>A docker image is a</h3><h1 class="fragment">merkel tree</h1><p class="fragment">A way to uniquely identify a piece of immutable data</p><p class="fragment">Each piece of data is identified by its cryptographic hash</p><p class="fragment embox roll-in">If the data is composed of other pieces, it is cheaper to hash their hashes instead of their contents!</p></section><section><h1>Linear example</h1><p class="fragment">A list of messages</p><p class="fragment">Each item is:</p><ul><li class="fragment">the message data</li><li class="fragment">the list of previous messages</li></ul><p class="fragment">Each item's hash should be the hash of both</p><p class="fragment embox roll-in">For the list of previous messages,<br/><em>hashing the hash is enough!</em></p></section><section><h1>The actual list</h1><pre class="codebox fragment"><code class="javascript">M1
+  data: "Hi"
+  prev: null
+  hash: H1 = H("Hi", null)
+M2
+  data: "Welcome"
+  prev: M1
+  hash: H2 = H("Welcome", H1)
+M3
+  data: "Thank you"
+  prev: M2
+  hash: H3 = H("Thank you", H2)
+  </code></pre></section><section><h1>Use hashes as identifiers</h1><pre class="codebox fragment"><code class="javascript">H1
+  data: "Hi"
+  prev: null
+  hash: H1 = H("Hi", null)
+H2
+  data: "Welcome"
+  prev: H1
+  hash: H2 = H("Welcome", H1)
+H3
+  data: "Thank you"
+  prev: H2
+  hash: H3 = H("Thank you", H2)
+  
+  </code></pre></section><section><h1>An alternative list</h1><pre class="codebox fragment"><code class="javascript">H1
+  data: "Hi"
+  prev: null
+  hash: H1 = H("Hi", null)
+H2a
+  data: "Wat?"
+  prev: H1
+  hash: H2a = H("Wat?", H1)
+H3a
+  data: "Sorry..."
+  prev: H2a
+  hash: H3a = H("Sorry...", H2a)
+  </code></pre></section><section><h1>Let's <b class="node">merge</b> them...</h1><pre class="codebox fragment"><code class="javascript">H1 {data: "Hi", prev: null}            // Start
+  H2 {data: "Welcome", prev: H1}       // 1s2 list
+    H3 {data: "Thank you", prev: H2}   // ... (1st)
+  H2a {data: "Wat?", prev: H1}         // 2nd list
+    H3a {data: "Sorry...", prev: H2a}  // ... (2nd)</code></pre><h2 class="fragment embox roll-in"><b class="node">It's a tree!</b></h2></section></section><section><section><h3>This is what</h3><h1><b class="node">docker</b> does</h1><p class="fragment">Docker images (and containers) use layered file systems<br/><em>(AUFS, BTRFS, Device Mapper, Overlayfs, VFS)</em></p><p class="fragment">Each layer represents the result of one step in the docker build<br/><em>(which means one line in the docker file)</em></p><p></p><p class="fragment embox roll-in">Docker hashes Dockerfile "<span class="node">RUN</span>" lines!<br/><em>(this gives us a Merkel tree)</em></p><p class="fragment"><b>Hopefully those lines give deterministic results</b></p><p class="fragment"><em class="node">Except when they don't...</em></p></section><section><h1>File system layers...</h1><p class="fragment node">Can get large</p><p class="fragment">Can waste space deleted by subsequent layers</p><p class="fragment">Do not share space well between images</p><p class="fragment">Most of all, they can have only one parent</p><p class="fragment embox roll-in">This is because they model<br/><b class="node">changes </b>and not <b class="node">contents</b></p></section><section><h3><b class="node">Git</b> also uses</h3><h1>merkel trees</h1><p class="fragment">Except that they are <span class="node">DAG</span>s<br/><em>(<span class="node">D</span>irectly <span class="node">A</span>cyclic <span class="node">G</span>raphs)</em></p><p class="fragment">The Git object store represents trees</p><p class="fragment">Each tree is the content of a git revision</p><p class="fragment">However, trees can <span class="node">share</span> subtrees<p class="fragment embox roll-in">This is because they model<br/><b class="node">contents </b>and not <b class="node">changes</b></p></p><p class="fragment"><em>(changes are represented in the revision graph)</em></p></section><section><h3>The advantage of hashing <b class="node">content</b>...</h3><h1 class="fragment">...is that you can share <b class="node">more</b> content!</h1><p class="fragment embox roll-in"><em>Is there a way to put this to our advantage?</em></p></section></section><section><section><h1>Let's recap...</h1><p class="fragment">Docker would be an ideal artifact repository</p><p class="fragment"><em>however</em></p><p class="fragment embox roll-in">Docker <b class="node">run</b> is fast</p><p class="fragment embox roll-in">Docker <b class="node">build</b> and <b class="node">pull</b> are slow</p><h2 class="fragment">Could we do<br/><b class="node">push</b> and <b class="node">pull</b><br/>less often?</h2></section><section><h2>Frequency of <b class="node">change</b> of <b class="node">deployed </b>contents</h2><p class="fragment">underlying OS image: <b class="node">weeks</b><br/><em>(for security updates)</em></p><p class="fragment">technology stack: <b class="node">months</b><br/><em>(new versions of nodejs, nginx...)</em></p><p class="fragment">our own artifacts: <u><b class="node">minutes!</b></u><br/><em>(every time you run the result of a build)</em></p><p class="fragment embox roll-in node">should we handle them all in the same way?<p class="fragment embox roll-in">What if we handled our build artifacts with a Git-like content addressable storage distinct from the docker one?</p></p></section><section><h1>A <b class="node">different</b> approach</h1><p class="fragment"><em>Tho <b class="node">distinct</b> artifact repositories</em></p><p class="fragment">Use <b class="node">docker images</b> for the OS and the "tech stack"</p><p class="fragment">Use a <b class="node">Git-like repository</b> for build artifacts</p><p class="fragment embox roll-in">Mount the build artifact as a <b class="node">read-only volume</b> in a docker image when you deploy it</p></section><section><h2>Using git as</h2><h2>artifact repository</h2><p class="fragment">Create a new branch for every commit<br/><em>(so you can forget history)</em></p><p class="fragment">Do shallow clones to create the client repo<br/><em>(so you don't clone it all)</em></p><p class="fragment">Pull and checkout at every deploy</p><p class="fragment">Mount the checked out directory as a read only volume into the docker container</p></section><section><h1>Let's go <b class="node">deeper</b>!</h1><p class="fragment"><em>We are still wasting space on the servers</em></p><p class="fragment">The artifact files are <b class="node">both</b> on the local git repo and in every checked out copy</p><p class="fragment embox roll-in">Can we have a repository that<br/>shares <b class="node">every</b> identical<br/>file instance?</p></section><section><h1><b class="node">ARTS</b></h1><h3 class="fragment">(<b class="node">ART</b>ifact <b class="node">S</b>tore)</h3><p class="fragment">A Merkel DAG based artifact store</p><p class="fragment embox roll-in">Checked out files are <b class="node">hard links</b> to files in the local repo</p></section><section><h1>ARTs implementation</h1><p class="fragment"><em>still experimental</em></p><p class="fragment">Modular backends</p><p class="fragment">Implemented local files, remote S3 and leveldb</p><p class="fragment">Each backend is about 100 lines of code</p><p class="fragment embox roll-in">It already works!</p></section><section><h1>ARTs commands</h1><p class="fragment">archive</p><p class="fragment">pull</p><p class="fragment">checkout</p><p class="fragment">copy - trim - gc</p><p class="fragment"><em>list - remove - check</em></p></section></section><section><h1>Takeaway</h1><p class="fragment"><em>We have seen...</em></p><p class="fragment">Why we need an <b class="node">artifact repository</b></p><p class="fragment">How <b class="node">docker</b> works internally<br/><em>(Merkel trees)</em></p><p class="fragment">How we can do <b class="node">better</b> than that!<br/><em>(Merkel DAGs hashing pure content)</em></p><p class="fragment embox roll-in"><em>And that implementing it is not  <b class="node">that</b> hard!</em></p></section><section><h1>BTW</h1><h1 class="fragment"><veryBig><b class="node">We are hiring!</b></veryBig></h1><p class="fragment embox roll-in">Come and talk to me<br/><em>or email <span class="node">jobs@hyperfair.com</span></em></p></section><section><h1>That's All, Folks</h1><p>code, docs and slides are on github</p><p>twitter: @M_a_s_s_i, #metascript</p><h2>Thanks for following!</h2></section>    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme || "default", // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || "default" || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+</body>
+</html>
+        
