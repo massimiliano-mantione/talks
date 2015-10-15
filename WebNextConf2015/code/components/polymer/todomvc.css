@@ -1,0 +1,40 @@
+paper-button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-size: 100%;
+	vertical-align: baseline;
+	font-family: inherit;
+	font-weight: inherit;
+	color: inherit;
+	-webkit-appearance: none;
+	appearance: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+}
+
+
+paper-checkbox.paper-checkbox-0 #checkbox.paper-checkbox {
+	border-color: #cccccc;
+}
+.paper-checkbox-0 #checkboxContainer.paper-checkbox {
+  width: 100%;
+  height: 100%;
+  display: inline;
+  vertical-align: middle;
+}
+paper-checkbox #checkmark.paper-checkbox {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: -4px;
+  left: 16px;
+}
+
+paper-input {
+	font-style: italic;
+	font-weight: 300;
+	color: #e6e6e6;
+}
