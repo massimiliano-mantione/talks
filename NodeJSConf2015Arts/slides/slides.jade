@@ -197,8 +197,8 @@ section
       |  process
       br
       | (to throughly test it!)
-    p.fragment -
-    h2.fragment
+  section
+    h2
       b.node Deployment
     p.fragment
       b.node Transferring
@@ -455,10 +455,9 @@ section
 section
   section
     h1
-      veryBig
-        | Understanding
-        br
-        | Docker images
+      | Understanding
+      br
+      veryBig Docker images
   
   section
     h1 What's in a docker image?
@@ -777,7 +776,7 @@ section
     p.fragment
       em still experimental
     p.fragment Modular backends
-    p.fragment Implemented local files and remote S3
+    p.fragment Implemented local files, remote S3 and leveldb
     p.fragment Each backend is about 100 lines of code
     p.fragment.embox.roll-in It already works!
   
