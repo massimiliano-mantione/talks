@@ -1,0 +1,89 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+
+script(src="assets/highlight.min.css")
+script
+  function startTime() {
+    var today=new Date();
+    var h=today.getHours();
+    var m=today.getMinutes();
+    m = checkTime(m);
+    document.getElementById('clock').innerHTML = h+" "+m;
+    var t = setTimeout(function(){startTime()},500);
+  }
+  function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+  }
+  function prepareClock() {
+    var clock = document.getElementById('clock');
+    var body = clock.parentNode.parentNode.parentNode;
+    clock = clock.parentNode.removeChild(clock);
+    body.appendChild(clock);
+    startTime();
+  }
+body(onload="prepareClock()")
+  div.myclock(id="clock")
+  
+
+section
+  div.logo
+    img(src='assets/react-logo-white.svg', alt='react logo')
+  p.node -
+  h2 What the Flux?
+  h1 Let's Redux!
+  p.dateStyle October 30 2015, Verona
+  p.node Massimiliano Mantione
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    blockquote.fragment.embox.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Back to the actual topic!
+
+
+section
+  section
+    h1 Let's write slides...
+
+  section
+    h3 You start like this...
+    div(style="display:flex;flex-direction:column;justify-content:space-between;height:60vh;background:url(assets/model-view-unidir.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+
+  section
+    div(style="display:flex;flex-direction:column;justify-content:space-between;height:80vh;background:url(assets/flux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+
+section
+  h1 BTW
+  h1.fragment
+    veryBig
+      b.node We are hiring!
+  p.fragment.embox.roll-in
+    | Come and talk to me
+    br
+    em
+      | or email 
+      span.node jobs@hyperfair.com
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!
