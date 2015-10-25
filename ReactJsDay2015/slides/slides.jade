@@ -29,11 +29,11 @@ body(onload="prepareClock()")
 section
   div.logo
     img(src='assets/react-logo-white.svg', alt='react logo')
-  p.node -
+  p.cem ReactJsDay 2015
   h2 What the Flux?
   h1 Let's Redux!
   p.dateStyle October 30 2015, Verona
-  p.node Massimiliano Mantione
+  p.cem Massimiliano Mantione
 
 section
   section
@@ -58,29 +58,236 @@ section
     p.fragment
       em Back to the actual topic!
 
+section
+  section
+    h1 React
+    h1.fragment Flux
+    h1.fragment Redux
+
+
+  section
+    h1 Why React?
+    p.fragment.embox.roll-in ...you should already know!
+    p.fragment
+      em After all you are here today
+
+  section
+    h2 The benefits of React
+    p.fragment View is a pure function of the "model"
+    p.fragment No markup language, just code
+    p.fragment
+      em
+        | view is really a 
+        b function
+        |  of the model
+    p.fragment
+      | Performance
+      br
+      em (thanks to the shadow DOM)
+
+  section
+    h3 What about
+    h2 data binding?
+    p.fragment The view is a function of the model
+    p.fragment Changes in the model are reflected in the view
+    p.fragment This looks like "one way" data binding
+    p.fragment Isn't this poor?
+
+  section
+    h2 Two way data binding...
+    p.fragment
+      b ...is cool at first!
+    p.fragment.cem It works like magic
+    p.fragment.embox.roll-in But when it fails, it fails in mysterious ways
+
+  section
+    h1 Classical MVC
+    p.fragment A two way data binding MVC framework does two things to the model
+    h2.fragment change detection
+    p.fragment
+      em usually automagical
+    p.fragment
+      em triggers change events
+    h2.fragment change injection
+    p.fragment
+      em which should not be detected!
+    p.fragment.embox.roll-in
+      em soon the dynamic behavior of your code is a jungle of events
+
+  section
+    h2 You start thinking like this
+    div(style="height:60vh;background:url(assets/model-view-unidir.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+
+  section
+    h2 But it works like this
+    div(style="height:60vh;background:url(assets/model-view-multipath.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    p.fragment.embox.roll-in Facebook has been bitten by this
+
+  section
+    h1 One way data flow
+    p.fragment
+      veryBig Flux
+    p.fragment
+      em It works like this
+
+  section
+    div(style="height:80vh;background:url(assets/flux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
 
 section
   section
-    h1 Let's write slides...
+    h1 Why not Flux?
+    p.fragment Flux as a concept is great
+    p.fragment.embox.roll-in but the reference implementation from Facebook leaves a lot to be desired
 
   section
-    h3 You start like this...
-    div(style="display:flex;flex-direction:column;justify-content:space-between;height:60vh;background:url(assets/model-view-unidir.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    h3 Flux issue:
+    h1 Developer Experience
+    p.fragment
+      | Editing stores breaks hot reloading
+      br
+      em (the store content is lost)
+    p.fragment Implementing an undo-redo debugger (time traveling) is hard
 
   section
-    div(style="display:flex;flex-direction:column;justify-content:space-between;height:80vh;background:url(assets/flux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    h3 Flux issue:
+    h1 Stores are singletons
+    p.fragment Server-side rendering is possible but overcomplicated
+    p.fragment.embox.roll-in (harder to separate data for different requests on the server)
+
+  section
+    h3 Flux issue:
+    h1 Multiple isolated stores
+    p.fragment Sharing code for common functionality, like pagination, is possible but overcomplicated
+
+  section
+    h3 Flux issue:
+    h1 Poor extensibility
+    p.fragment
+      em (at the framework level)
+    p.fragment No hooks for third party extensions
+    p.fragment.embox.roll-in Example: a logging extension would need to be aware every store, and subscribe to each separately
+
+
+section
+  section
+    h1 Enter
+    p.fragment
+      veryBig Redux
+    p.fragment
+      em It works like this
+
+  section
+    div(style="height:80vh;background:url(assets/redux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+
+   section
+     p Let's see some code
+
+
+  section
+    div(style="height:80vh;background:url(assets/mvi-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+
+section
+  section
+    p
+      veryBig Why redux?
+
+  section
+    h3 Why Redux?
+    h1 Reducer Composition
+    p.fragment Redux has a single store, but reducers can be combined
+    p.fragment Different reducers can handle
+    ul
+      li.fragment different parts of the model
+      li.fragment
+        | different application concerns
+        br
+        em.fragment pagination
+        |  
+        em.fragment undo-redo
+
+  section
+    h3 Why Redux?
+    h1 Server side rendering
+    p.fragment Executing reducers on the server is trivial
+    p.fragment Just feed them an initial state and a few actions
+    p.fragment Then you have your model and you can invoke render on it
+
+  section
+    h3 Why Redux?
+    h1 Developer Experience
+    p.fragment Reducer code is disentangled from the store state
+    p.fragment Therefore it can be changed at run time (hot reloading)
+    p.fragment Since the state is immutable, we can keep copies of it over time and have a time-traveling debugger
+
+  section
+    h3 Why Redux?
+    h1 Ecosystem
+    p.fragment Clever use of middleware as extension point, enabling:
+    p.fragment
+      em logging
+    p.fragment
+      em persistence
+    p.fragment
+      em immutability checks
+    p.fragment
+      em routing
+    p.fragment
+      em asynchronous actions
+      br
+      em (plain, promises, observables)
+
+  section
+    h3 Why Redux?
+    h1 Redux is like Flux
+    p.fragment All the benefits of Flux
+    p.fragment
+      em recording and replaying of actions
+    p.fragment
+      em unidirectional data flow
+    p.fragment
+      em dependent mutations
+
+  section
+    h3 Why Redux?
+    h1 Redux evolves Flux
+    p.fragment
+      b Adding
+    p.fragment
+      em easy undo-redo
+    p.fragment
+      em hot reloading
+    p.fragment
+      em time traveling debugger
+    p.fragment
+      b Removing
+    p.fragment
+      em dispatcher
+    p.fragment
+      em store registration
+
+  section
+    h3 Why Redux?
+    h1 Simplicity
+    p.fragment Tiny API surface
+    p.fragment Core code (removing warnings and sanity checks) is 99 lines
+    p.fragment
+      | No tricky async code
+      br
+      em (confined to middleware)
+    p.fragment You can actually read it all!
+
 
 section
   h1 BTW
   h1.fragment
     veryBig
-      b.node We are hiring!
+      b.cem We are hiring!
   p.fragment.embox.roll-in
     | Come and talk to me
     br
     em
       | or email 
-      span.node jobs@hyperfair.com
+      span.cem jobs@hyperfair.com
 
 section
   h1 That's All, Folks
