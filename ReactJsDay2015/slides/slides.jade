@@ -42,10 +42,22 @@ section
     p.fragment Passionate about languages and compilers
     p.fragment.roll-in <b>Worked in the V8 team in Google</b>
     p.fragment Overall, worked on JIT compilers for +7 years
-    p.fragment
-      | Now working on scalable, fault tolerant,
+    p
+      em.fragment Now working for
+      div.fragment(style="height:20vh;background:url(assets/hf-logo.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+  
+  section
+    h3 BTW
+    h1.fragment
+      veryBig
+        b.cem We are hiring!
+      div(style="height:20vh;background:url(assets/hf-logo.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    p.fragment.embox.roll-in
+      | Come and talk to me
       br
-      | web facing distributed systems
+      em
+        | or email 
+        span.cem jobs@hyperfair.com
 
   section
     h1 Javascript and me
@@ -60,9 +72,16 @@ section
 
 section
   section
-    h1 React
-    h1.fragment Flux
-    h1.fragment Redux
+    h3 Talk topics
+    h2.fragment
+      span.cem React
+    em.fragment (you should know about it)
+    h2.fragment
+      span.cem Flux
+    em.fragment (you should have heard about it)
+    h2.fragment
+      span.cem Redux
+    em.fragment (we will explain this)
 
 
   section
@@ -165,7 +184,7 @@ section
     p.fragment
       em (at the framework level)
     p.fragment No hooks for third party extensions
-    p.fragment.embox.roll-in Example: a logging extension would need to be aware every store, and subscribe to each separately
+    p.fragment.embox.roll-in Example: a logging extension would need to be aware of every store, and subscribe to each separately
 
 
 section
@@ -179,12 +198,103 @@ section
   section
     div(style="height:80vh;background:url(assets/redux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
 
-   section
-     p Let's see some code
+  section
+     p.fragment.embox.roll-in Let's see some code
 
+section
+  section
+    h1 What about async?
+    p.fragment.embox.roll-in Flux is synchronous
+    p.fragment
+      b And for good reason!
+    p.fragment
+      em However, real world applications
+      br
+      em need asynchronous interactions
+    p.cem.fragment Let's reason about it
+    
+  section
+    div(style="height:80vh;background:url(assets/redux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+  
+  section
+    h3 Dialogues are
+    h1 asynchronous
+    p.fragment In a dialogue, there are two subjects
+    p.fragment Each subject uses two async channels
+    ul
+      li.fragment one for receiving
+      li.fragment one for transmitting
+    p.fragment.embox.roll-in
+      | The user and the application have a conversation using the 
+      em window
+      |  and the 
+      em input devices
+      | .
+  
+  section
+    h3 Things are
+    h1 more complex
+    p.fragment The typical application does not have only the user as counterpart
+    p.fragment
+      | Actually, the application is often a 
+      em middle man
+      | , having symultaneous dialogues with:
+    ul
+      li.fragment the user
+      li.fragment other remote services
+    p.fragment.embox.roll-in Let's see how this works with Redux
 
   section
-    div(style="height:80vh;background:url(assets/mvi-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    div(style="height:80vh;background:url(assets/ReduxAsync.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+  
+  section
+    h2 Middleware
+    h3 is the key
+    p.fragment In Redux, middleware plugins are higher order functions
+    p.fragment
+      | They take a 
+      b store
+      |  (a 
+      em dispatch
+      |  and a 
+      em getState
+      |  function)
+    p.fragment
+      | ...and return a function that is supposed to be chained with other middleware (it receives the 
+      em next
+      |  middleware to invoke)...
+    p.fragment
+      | ...and in turn wraps the actual middleware action (that wraps the 
+      em user
+      |  action)!
+
+  section
+    h2 The thunk middleware
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = 'export default function thunkMiddleware({ dispatch, getState }) {\n'
+        = '  return next =>\n'
+        = '     action =>\n'
+        = '       typeof action === ‘function’ ?\n'
+        = '         action(dispatch, getState) :\n'
+        = '         next(action);\n'
+        = '}'
+
+  section
+    h2 An async action
+    pre.codebox.fragment
+      code.codesmall.javascript
+        = 'function fetchPosts(reddit) {\n'
+        = '  return dispatch => {\n'
+        = '    dispatch(requestPosts(reddit));\n'
+        = '    return fetch(`http://www.reddit.com/r/${reddit}.json`)\n'
+        = '      .then(response => response.json())\n'
+        = '      .then(json => dispatch(receivePosts(reddit, json)));\n'
+        = '  };\n'
+        = '}'
+
+  section
+     p.fragment.embox.roll-in Let's see some more code
 
 section
   section
@@ -276,21 +386,22 @@ section
       em (confined to middleware)
     p.fragment You can actually read it all!
 
-
 section
-  h1 BTW
-  h1.fragment
-    veryBig
-      b.cem We are hiring!
-  p.fragment.embox.roll-in
-    | Come and talk to me
-    br
-    em
-      | or email 
-      span.cem jobs@hyperfair.com
+  section
+    h1 That's All, Folks
+    p code, docs and slides are on github
+    p twitter: @M_a_s_s_i, #metascript
+    h2 Thanks for following!
 
-section
-  h1 That's All, Folks
-  p code, docs and slides are on github
-  p twitter: @M_a_s_s_i, #metascript
-  h2 Thanks for following!
+  section
+    h3 BTW
+    h1.fragment
+      veryBig
+        b.cem We are hiring!
+      div(style="height:20vh;background:url(assets/hf-logo.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    p.fragment.embox.roll-in
+      | Come and talk to me
+      br
+      em
+        | or email 
+        span.cem jobs@hyperfair.com
