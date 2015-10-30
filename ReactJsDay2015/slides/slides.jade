@@ -37,14 +37,27 @@ section
 
 section
   section
-    h1 About Myself
-    h2.fragment An enthusiast software engineer
-    p.fragment Passionate about languages and compilers
-    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
-    p.fragment Overall, worked on JIT compilers for +7 years
-    p
-      em.fragment Now working for
-      div.fragment(style="height:20vh;background:url(assets/hf-logo.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
+    h1 Credits
+    p.fragment
+      | Henrik Joreteg
+      br
+      em
+        a(href='https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux') (for the title)
+    p.fragment
+      | André Staltz
+      br
+      em
+        a(href='http://staltz.com/unidirectional-user-interface-architectures.html') (for Cycle, the insight, and graphs)
+    p.fragment
+      | Mark
+      br
+      em
+        a(href='https://medium.com/@meagle/understanding-87566abcfb7a') (for insight and other graphs)
+    p.fragment
+      | Dan Abramov
+      br
+      em
+        a(href='https://www.youtube.com/watch?v=xsSnOQynTHs') (for Redux!)
   
   section
     h3 BTW
@@ -58,6 +71,22 @@ section
       em
         | or email 
         span.cem jobs@hyperfair.com
+
+  section
+    p.cem We do this
+    video(style="height:80vh",autoplay="autoplay",loop="loop",muted="muted")
+      source(src="assets/hf-montage.webm",type="video/webm")
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p
+      em.fragment Now working for
+      div.fragment(style="height:20vh;background:url(assets/hf-logo.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
 
   section
     h1 Javascript and me
@@ -110,7 +139,9 @@ section
     p.fragment The view is a function of the model
     p.fragment Changes in the model are reflected in the view
     p.fragment This looks like "one way" data binding
-    p.fragment Isn't this poor?
+    p.fragment
+      em Isn't this poor?
+    p.fragment.embox.roll-in Would two way be better?
 
   section
     h2 Two way data binding...
@@ -120,14 +151,18 @@ section
     p.fragment.embox.roll-in But when it fails, it fails in mysterious ways
 
   section
-    h1 Classical MVC
+    h3 Two way
+    h1
+      span.cem Data binding
     p.fragment A two way data binding MVC framework does two things to the model
-    h2.fragment change detection
+    h2.fragment
+      span.cem change detection
     p.fragment
       em usually automagical
     p.fragment
       em triggers change events
-    h2.fragment change injection
+    h2.fragment
+      span.cem change injection
     p.fragment
       em which should not be detected!
     p.fragment.embox.roll-in
@@ -140,11 +175,11 @@ section
   section
     h2 But it works like this
     div(style="height:60vh;background:url(assets/model-view-multipath.png);background-size:contain;background-repeat:no-repeat;background-position:center;")
-    p.fragment.embox.roll-in Facebook has been bitten by this
+    p.cem.fragment.embox.roll-in Facebook has been bitten by this!
 
   section
-    h1 One way data flow
-    p.fragment
+    h2 One way data flow
+    p.fragment.cem
       veryBig Flux
     p.fragment
       em It works like this
@@ -154,18 +189,10 @@ section
 
 section
   section
-    h1 Why not Flux?
+    h2 What's wrong
+    h1 with Flux?
     p.fragment Flux as a concept is great
     p.fragment.embox.roll-in but the reference implementation from Facebook leaves a lot to be desired
-
-  section
-    h3 Flux issue:
-    h1 Developer Experience
-    p.fragment
-      | Editing stores breaks hot reloading
-      br
-      em (the store content is lost)
-    p.fragment Implementing an undo-redo debugger (time traveling) is hard
 
   section
     h3 Flux issue:
@@ -180,6 +207,15 @@ section
 
   section
     h3 Flux issue:
+    h1 Developer Experience
+    p.fragment
+      | Editing stores breaks hot reloading
+      br
+      em (the store content is lost)
+    p.fragment Implementing an undo-redo debugger (time traveling) is hard
+
+  section
+    h3 Flux issue:
     h1 Poor extensibility
     p.fragment
       em (at the framework level)
@@ -189,8 +225,8 @@ section
 
 section
   section
-    h1 Enter
-    p.fragment
+    h2 Enter
+    p.fragment.cem
       veryBig Redux
     p.fragment
       em It works like this
@@ -214,9 +250,6 @@ section
     p.cem.fragment Let's reason about it
     
   section
-    div(style="height:80vh;background:url(assets/redux-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
-  
-  section
     h3 Dialogues are
     h1 asynchronous
     p.fragment In a dialogue, there are two subjects
@@ -230,6 +263,9 @@ section
       |  and the 
       em input devices
       | .
+  
+  section
+    div(style="height:80vh;background:url(assets/mvi-unidir-ui-arch.jpg);background-size:contain;background-repeat:no-repeat;background-position:center;")
   
   section
     h3 Things are
@@ -298,7 +334,8 @@ section
 
 section
   section
-    p
+    h3 In the end...
+    p.fragment.cem
       veryBig Why redux?
 
   section

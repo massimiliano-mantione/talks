@@ -170,7 +170,7 @@ body {
 
 veryBig {
   font-family: 'Keania';
-  font-size: 12vh; margin-bottom: 3vh; border-bottom: 2vh; border-top: 2vh;
+  font-size: 12vh; margin-top: 3vh; margin-bottom: 3vh; border-bottom: 2vh; border-top: 2vh;
 }
 somewhatBig {
   font-family: 'Keania';
