@@ -12,17 +12,6 @@ section
   p Massimiliano Mantione
 
 section
-  h1 Related Work
-  p.fragment
-    a(href='https://git-scm.com') git
-  p.fragment
-    a(href='http://live.gnome.org/OSTree') ostree
-  p.fragment
-    a(href='https://www.docker.com') docker
-  p.fragment
-    a(href='http://bazel.io') bazel
-
-section
   section
     h1 About Myself
     h2.fragment An enthusiast software engineer
@@ -32,7 +21,9 @@ section
     p.fragment
       | Now working on scalable, fault tolerant,
       br
-      | web facing distributed systems
+      | web facing distributed systems...
+    p.fragment
+      em ...serving vitual reality on the web!
 
   section
     h1 Javascript and me
@@ -57,6 +48,38 @@ section
         br
         | I was not happy...
 
+  section
+    h1 What's the problem?
+    p.fragment Simple is good
+    p.fragment Everybody starts with a few scripts
+    p.fragment
+      | The project 
+      em grows
+      | , the scripts get 
+      b slow...
+    p.fragment.embox.roll-in
+      | Dependency tracking is 
+      em the
+      |  needed feature
+    p.fragment
+      em (performing build steps in parallel also helps)
+
+  section
+    h1 The recipe for speed
+    p.fragment
+      b independency
+      br
+      | (A, B, C, need A, skip B and C)
+    p.fragment
+      b dependency
+      br
+      | (A ► B ► C, need C, skip A and B)
+    p.fragment
+      b parallelism
+      br
+      | (A, B, C, need all, run in parallel)
+
+section
   section
     h3 State of the build
     h1.fragment Grunt
@@ -85,6 +108,9 @@ section
     h3 State of the build
     h1.fragment Other tools
     p.fragment
+      b Webpack 
+      | (specific use, fast only when hot)
+    p.fragment
       b Jake 
       | (mostly like make)
     p.fragment
@@ -96,22 +122,6 @@ section
     p.fragment.embox.roll-in Why do I have to write code in a specific language?
 
 section
-  section
-    h1 What's the problem?
-    p.fragment Simple is good
-    p.fragment Everybody starts with a few scripts
-    p.fragment
-      | The project 
-      em grows
-      | , the scripts get 
-      b slow...
-    p.fragment.embox.roll-in
-      | Dependency tracking is 
-      em the
-      |  needed feature
-    p.fragment
-      em ...performing build steps in parallel also helps...
-
   section
     h3 Wishlist
     h1.fragment Builds need to be...
@@ -140,7 +150,9 @@ section
     p.fragment.embox.roll-in
       | You use the file system and check the mtime of input and output files
       br
-      | (Jake, Make, likely Gradle...)
+      | (Jake, Make...)
+    p.fragment
+      em (can get cumbersome)
 
   section
     h3 Dependency tracking howto
@@ -148,7 +160,7 @@ section
     p.fragment.embox.roll-in
       | The build system has an internal graph that carries the build artifacts
       br
-      em (Gulp, Broccoli...)
+      em (Gulp, WebPack...)
     p.fragment
       | Fast when the build system stays running
       br 
@@ -284,6 +296,18 @@ section
     p.fragment Repo transfer network protocol
     p.fragment Repo web browser
     p.fragment.embox.roll-in Take Over the World!
+
+section
+  section
+    h1 Related Work
+    p.fragment
+      a(href='https://git-scm.com') git
+    p.fragment
+      a(href='http://live.gnome.org/OSTree') ostree
+    p.fragment
+      a(href='https://www.docker.com') docker
+    p.fragment
+      a(href='http://bazel.io') bazel
 
   section
     h1 Wrapping up
