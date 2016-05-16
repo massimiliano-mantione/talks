@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="Web Components + React.JS">
+		<meta name="author" content="Massimiliano Mantione">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+            <div class="slides"><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script src="assets/highlight.min.css"></script><section><div class="logo"><img src="assets/jsday.png" alt="logo"/></div><p>-</p><h1>FFTT</h1><h3>A Modern Build tool</h3><p class="dateStyle">May 12 2015, Verona</p><p>Massimiliano Mantione</p></section><section><section><h1>About Myself</h1><h2 class="fragment">An enthusiast software engineer</h2><p class="fragment">Passionate about languages and compilers</p><p class="fragment roll-in"><b>Worked in the V8 team in Google</b></p><p class="fragment">Overall, worked on JIT compilers for +7 years</p><p class="fragment">Now working on scalable, fault tolerant,<br/>web facing distributed systems...</p><p class="fragment"><em>...serving vitual reality on the web!</em></p></section><section><h1>Javascript and me</h1><p class="fragment">I started as a Javascript hater</p><blockquote class="fragment embox roll-in">When I sow Javascript for the 1st time (in 1995)
+I vowed that I would never touch such an abomination,
+even with a 10 feet pole</blockquote><p class="fragment">Eventually, I changed my mind, but...</p><p class="fragment"><em>Let's change subject!</em></p></section></section><section><section><h3>What are we talking about?</h3><h1 class="fragment">Build Tools!</h1><p class="fragment"><em>Why?</em></p><p class="fragment embox roll-in"><em>I tried several, and<br/>I was not happy...</em></p></section><section><h1>What's the problem?</h1><p class="fragment">Simple is good</p><p class="fragment">Everybody starts with a few scripts</p><p class="fragment">The project <em>grows</em>, the scripts get <b>slow...</b></p><p class="fragment embox roll-in">Dependency tracking is <em>the</em> needed feature</p><p class="fragment"><em>(performing build steps in parallel also helps)</em></p></section><section><h1>The recipe for speed</h1><p class="fragment"><b>independency</b><br/>(A, B, C, need A, skip B and C)</p><p class="fragment"><b>dependency</b><br/>(A ► B ► C, need C, skip A and B)</p><p class="fragment"><b>parallelism</b><br/>(A, B, C, need all, run in parallel)</p></section></section><section><section><h3>State of the build</h3><h1 class="fragment">Grunt</h1><p class="fragment">just a task runner</p><p class="fragment">very verbose</p><p class="fragment embox roll-in">build files get huge quickly</p></section><section><h3>State of the build</h3><h1 class="fragment">Gulp</h1><p class="fragment">A bit more pleasant</p><p class="fragment">Streams are interesting</p><p class="fragment">If you have multi-file operations you end up fighting it badly</p><p class="fragment embox roll-in">Why do I have to write code in a specific language?</p></section><section><h3>State of the build</h3><h1 class="fragment">Broccoli</h1><p class="fragment">Brilliant concept</p><p class="fragment">So-and-so execution</p><p class="fragment"><em>sometimes all those temporary trees get in your way</em></p><p class="fragment embox roll-in">Why do I have to write code in a specific language?</p></section><section><h3>State of the build</h3><h1 class="fragment">Other tools</h1><p class="fragment"><b>Webpack </b>(specific use, fast only when hot)</p><p class="fragment"><b>Jake </b>(mostly like make)</p><p class="fragment"><b>Gradle </b>(you must know Groovy)</p><p class="fragment"><b>Blaze </b>(more about this later)</p><p class="fragment embox roll-in">Why do I have to write code in a specific language?</p></section></section><section><section><h3>Wishlist</h3><h1 class="fragment">Builds need to be...</h1><p class="fragment">deterministic</p><p class="fragment">reliable</p><p class="fragment">fast</p></section><section><h1>Traditionally...</h1><p class="fragment">Builds happen in a build environment</p><p class="fragment">The environment is a file tree</p><p class="fragment">Each build step <b>mutates</b> the file tree</p><p class="fragment"><em>How do you <b>reliably</b> detect if the build environment contains the proper result of a build step?</em></p><p class="fragment embox roll-in">You don't...</p></section><section><h3>Dependency tracking howto</h3><h1 class="fragment">File system based</h1><p class="fragment embox roll-in">You use the file system and check the mtime of input and output files<br/>(Jake, Make...)</p><p class="fragment"><em>(can get cumbersome)</em></p></section><section><h3>Dependency tracking howto</h3><h1 class="fragment">Internally tracked</h1><p class="fragment embox roll-in">The build system has an internal graph that carries the build artifacts<br/><em>(Gulp, WebPack...)</em></p><p class="fragment">Fast when the build system stays running<br/>(like while watching)</p></section></section><section><section><h1>A better way</h1><p class="fragment">Track <b>contents </b>and not <em>mtime</em>!</p><p class="fragment">Just like Git does</p><p class="fragment">...and just like Bazel does...</p></section><section><h1>An even better way</h1><p class="fragment">Store everything in a content addressable file system</p><p class="fragment"><em>(Git is a content addressable <b>database</b>)</em></p><p class="fragment">Use this file system as environment for build steps</p></section><section><h1>One step further</h1><p class="fragment">Isolate each build step in a container</p><p class="fragment">Expose the inputs as a read only tree</p><p class="fragment">Capture the output and snapshot it in the content addressable storage</p><p class="fragment">Cache every computation!</p></section></section><section><section><h1>The FFTT Choice</h1><p class="fragment">Fast</p><p class="fragment">Correct</p><p class="fragment"><b>Pick two!</b></p><p class="fragment"><em>(just like Bazel)</em></p></section><section><h2 class="fragment">Build Systems</h2><p class="fragment"><em>meet</em><br/>-</p><h2 class="fragment">Functional Programming</h2></section><section><h1>Functional Programming</h1><p class="fragment">Immutable, copy on write data structures</p><p class="fragment"><em>(with structural sharing)</em></p><p class="fragment">Memoization of function results</p></section><section><h1>Code or Configuration?</h1><p class="fragment">Both, but each where appropriate</p><p class="fragment">The build graph is declarative and functional</p><p class="fragment">Each build step is imperative but confined inside its container</p><p class="fragment embox roll-in">Programming language independence!</p></section></section><section><h2>Let's see</h2><h1>how it looks</h1></section><section><section><h3>One more step further...</h3><p class="fragment">-</p><h2 class="fragment">Build Systems</h2><p class="fragment"><em>meet</em><br/>-</p><h2 class="fragment">Continuous Integration</h2></section><section><p class="fragment">A CI system is a build system...</p><p class="fragment"><em>...with its own configuration language!</em></p><p class="fragment">The dependency graph description is usually too verbose to be practical</p><p class="fragment">Tipically only one or two developers in a team know how to work on it</p><p class="fragment embox roll-in"><em>Nobody wants to learn one more build system</em></p></section><section><h1>A modular CI system</h1><p class="fragment">FFTT performs builds</p><p class="fragment">Something else detects changes in the source and invokes builds</p><p class="fragment">This "something else" might watch a remote git repository...</p><p class="fragment"><em>...builds could trigger deployments...</em></p><p class="fragment">Add a web view of the content addressable store...</p></section><section><h1>Fast deployments</h1><p class="fragment">Why docker builds are slow</p><p class="fragment">Use the FFTT repo as a read only volume</p><p class="fragment">Deploy containers mounting that volume</p><p class="fragment"><em>(let them access that volume over NFS or a clustering file system like GlusterFS)</em></p><p class="fragment embox roll-in">No need to wait for a rebuild, ever!</p></section><section><h2>Parallel, distributed builds</h2><p class="fragment">A side effect of the pure functional nature of FFTT</p><p class="fragment">Actually, the <em>simplest</em> way to implement it is naturally parallel!</p><p class="fragment">Using docker swarm (or maybe kubernetes) as container runner the builds would be distributed</p></section></section><section><section><h1>Under the hood</h1><p class="fragment">The repo, and the linking issue</p><p class="fragment">The exposed file system and fuse</p><p class="fragment">The repo, as it could be</p><p class="fragment">How Javascript has been used</p></section><section><h1>Todo list</h1><p class="fragment">Atomic operations on the repo</p><p class="fragment">Garbage collection</p><p class="fragment">Fuse view of the repo</p><p class="fragment">Explicit tagging</p><p class="fragment">Repo transfer network protocol</p><p class="fragment">Repo web browser</p><p class="fragment embox roll-in">Take Over the World!</p></section></section><section><section><h1>Related Work</h1><p class="fragment"><a href="https://git-scm.com">git</a></p><p class="fragment"><a href="http://live.gnome.org/OSTree">ostree</a></p><p class="fragment"><a href="https://www.docker.com">docker</a></p><p class="fragment"><a href="http://bazel.io">bazel</a></p></section><section><h1>Wrapping up</h1><p class="fragment">Even if you will not use FFTT, I hope you learned something about build tools</p><p class="fragment"><em>Maybe you'll all switch to Bazel...</em></p><p class="fragment embox roll-in">If you <b>did</b> like it, please plan to <b>contribute</b>!</p></section></section><section><h1>That's All, Folks</h1><p>code, docs and slides are on github</p><p>twitter: @M_a_s_s_i, #metascript</p><h2>Thanks for following!</h2></section>    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme || "default", // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || "default" || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+</body>
+</html>
+        
