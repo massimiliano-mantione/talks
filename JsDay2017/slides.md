@@ -30,9 +30,27 @@ Serialization Frameworks
 
 Object Oriented Practices
 Abstraction and Inheritance
-Virtual Methods
+Use of Virtual Methods
 Encapsulation
 Information Hiding
+
+
+
+A Step Back
+Who invented this?
+Well...
+
+Actually I made up the term "object-oriented", and I can tell you I did not have C++ in mind.
+Alan Kay
+What did he have in mind?
+
+Ahead of His Time
+Alan Kay envisioned objects like cells
+Isolated and Autonomous
+No way to "get into" each other
+Communicate through message passing
+
+
 
 What You Don't Notice
 Model state with classes
@@ -49,9 +67,9 @@ Keep them in local variables
 
 Another basic assumption
 Everything is synchronous by default
-Method calls
-Argument passing
-Object creation
+- Method calls
+- Argument passing
+- Object creation
 
 So What?
 All the above are common practices
@@ -63,19 +81,11 @@ What's the problem?
 At the time...
 ...I believed this!
 
-A Step Back
-Who invented this?
-Well...
 
-Actually I made up the term "object-oriented", and I can tell you I did not have C++ in mind.
-Alan Kay
-What did he have in mind?
 
-Ahead of His Time
-Alan Kay envisioned objects like cells
-Isolated and Autonomous
-No way to "get into" each other
-Communicate through message passing
+
+
+
 
 Fast Forward: S.O.L.I.D.
 Robert C. Martin (Uncle Bob) ~2003
