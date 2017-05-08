@@ -12,6 +12,7 @@ import {
   Cite,
   ListItem,
   List,
+  CodePane,
   Layout,
   Fit,
   Fill,
@@ -33,10 +34,7 @@ const images = {
   alan: require('../assets/alan-kay.jpg'),
   joe: require('../assets/joe-armstrong.jpg'),
   michael: require('../assets/michael-feathers.jpg'),
-  city: require('../assets/city.jpg'),
-  kat: require('../assets/kat.png'),
-  logo: require('../assets/formidable-logo.svg'),
-  markdown: require('../assets/markdown.png')
+  jsday: require('../assets/jsday.png')
 }
 
 preloader(images)
@@ -45,7 +43,7 @@ const theme = createTheme({
   primary: 'white',
   secondary: '#1F2022',
   tertiary: '#03A9FC',
-  quartenary: '#CECECE'
+  quartenary: '#4E4E4E'
 }, {
   primary: 'Montserrat',
   secondary: 'Helvetica'
@@ -57,7 +55,8 @@ const slideZoom = (children) => {
 const slide = (children) => {
   return <Slide transition={['fade']} bgColor="secondary" textColor="primary">{children}</Slide>
 }
-const title = (text, p1, p2) => {
+
+const titleSetCaps = (text, caps, p1, p2) => {
   let fit = true
   let size = 2
   for (const p of [p1, p2]) {
@@ -67,17 +66,33 @@ const title = (text, p1, p2) => {
       size = p
     }
   }
-  return <Heading size={size} fit={fit} caps lineHeight={1} textColor="primary">{text}</Heading>
+  return <Heading size={size} fit={fit} caps={caps} lineHeight={1.2} textColor="primary">{text}</Heading>
 }
+const title = (text, p1, p2) => {
+  return titleSetCaps(text, true, p1, p2)
+}
+const titleNoCaps = (text, p1, p2) => {
+  return titleSetCaps(text, false, p1, p2)
+}
+
 const line = (props, children) => {
   if (typeof (props) !== 'object') {
     children = props
     props = {}
   }
+  if (props.lh !== undefined) {
+    props.lineHeight = props.lh
+    delete props.lh
+  }
   const p = {
     italic: false,
     bold: false,
     size: 5,
+    caps: false,
+    fit: false,
+    lineSize: 1.3,
+    padding: 0,
+    margin: '0.3em',
     textColor: 'primary'
   }
   Object.assign(p, props)
@@ -86,6 +101,11 @@ const line = (props, children) => {
       bold={p.bold}
       textSize={p.textSize}
       size={p.size}
+      lineHeight={p.lineHeight}
+      padding={p.padding}
+      margin={p.margin}
+      caps={p.caps}
+      fit={p.fit}
       textColor={p.textColor}
     >
       {children}
@@ -109,7 +129,11 @@ const quote = (text, cite) => {
 const quoteImage = (text, cite, image) => {
   return (<Layout>
     <Fit>
-      <Image src={image.replace('/', '')} width="15vw"/>
+      <div style={{ display: 'flex', heigth: '100%' }}>
+        <div style={{ display: 'inline-block', alignSelf: 'center', verticalAlign: 'middle' }}>
+          <Image src={image.replace('/', '')} width="15vw" heigth="auto" style={{ display: 'inline-block', alignItems: 'center' }}/>
+        </div>
+      </div>
     </Fit>
     <Fill>
       {quote(text, cite)}
@@ -118,7 +142,11 @@ const quoteImage = (text, cite, image) => {
 }
 
 const codeBlock = (text) => {
-  return line(text)
+  return <CodePane textSize="0.7em" lang="jsx">{text}</CodePane>
+}
+
+const logo = () => {
+  return <Image src={images.jsday.replace('/', '')} width="20vw"/>
 }
 
 const slides = () => {
@@ -129,14 +157,34 @@ const slides = () => {
       title('object oriented designs')
     ]),
     slideZoom([
-      title('START'),
-      line('starting')
+      logo(),
+      titleNoCaps('Verona, May 10 2017', false, 6),
+      title('The danger of', false, 4),
+      title('object oriented designs', false, 4),
+      titleNoCaps('Massimiliano Mantione', false, 6),
+      titleNoCaps('@M_a_s_s_i', false, 6)
     ]),
+    slideZoom([
+      title('Things I worked on'),
+      line('The Mono JIT Compiler'),
+      line('The Unity Game Engine'),
+      line('The V8 Team in Google'),
+      lineBold('Now CTO and Full Stack developer at Hyperfair'),
+      lineEm('(Virtual Reality Platform)')
+    ]),
+
     slide([
       title('Strange talk title'),
       lineBold('Why danger?'),
-      line('What\'s wrong with Object Oriented software?'),
+      line({ margin: '0.6em' }, 'What\'s wrong with Object Oriented software?'),
       lineEm('(or languages)')
+    ]),
+    slide([
+      title('Short version of the talk'),
+      line('Object Oriented principles are ok'),
+      lineEm('Mainstream OO programming languages are not'),
+      line('(we mostly misuse them)'),
+      lineBold('There is a way out!')
     ]),
 
     slide([
@@ -241,11 +289,6 @@ const slides = () => {
     ]),
 
     slide([
-      title('The full quote'),
-      quoteImage('I think the lack of reusability comes in object-oriented languages, not functional languages. Because the problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them. You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe)
-    ]),
-
-    slide([
       title('How does'),
       title('this', false, 4),
       title('happen?')
@@ -273,11 +316,11 @@ const slides = () => {
 
     slide([
       title('You break it up'),
-      lineBold('But each aspect needs references to the others!')
+      lineBold('But each helper class needs references to the others!')
     ]),
 
     slide([
-      title('Each aspect is...'),
+      title('Each helper class is...'),
       codeBlock(`class PersonAspectX {
   // Needed becuse aspect X
   // depends on Person :-/
@@ -297,7 +340,7 @@ const slides = () => {
     ]),
 
     slide([
-      title('Now you see...'),
+      title('Now you see why...'),
       quoteImage('You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe)
     ]),
 
@@ -308,6 +351,11 @@ const slides = () => {
       lineEm('Mixins can help, but...'),
       lineEm('...methods become bound to mixins!'),
       lineBold('In general, reusing a method on a different class is hard')
+    ]),
+
+    slide([
+      title('Lack of reusability'),
+      quoteImage('...the problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them...', 'Joe Armstrong', images.joe)
     ]),
 
     slide([
@@ -351,7 +399,7 @@ const slides = () => {
     ]),
 
     slide([
-      title('Neat Code'),
+      title('Neat Code!'),
       codeBlock(`let p : Person = pickPerson();
 // No need to know gender :-)
 let gifts = p.chooseGifts();`)
@@ -361,7 +409,7 @@ let gifts = p.chooseGifts();`)
       title('Now Tell Me...'),
       line('...what happens if somebody'),
       lineEm('(while the program is running)'),
-      lineBold('changes sex?')
+      line({ caps: true, fit: true }, 'changes sex?')
     ]),
 
     slide([
@@ -373,7 +421,7 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slide([
-      title('The new operator'),
+      title('The constructor'),
       line('Every piece of state must be created invoking the appropriate constructor'),
       line('Transmitting state to other environments requires serialization'),
       line('Recreating state requires deserialization'),
@@ -383,14 +431,14 @@ let gifts = p.chooseGifts();`)
     slide([
       title('Can we do better?'),
       lineEm('Yes, we can'),
-      lineBold('Just don\'t use classes top model state!')
+      lineBold('Just don\'t use classes to model state!')
     ]),
 
     slide([
       title('I was kidding :-)'),
-      lineEm('but not do much'),
-      line('what I mean was'),
-      lineBold('Apply Functional Programming'),
+      lineEm('no, I was not'),
+      line({ lh: 1.5 }, 'what I meant was'),
+      line({ caps: true, fit: true, bold: true }, 'Apply Functional Programming')
     ]),
 
     slide([
@@ -416,7 +464,7 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slide([
-      title('S.O.L.I.D.'),
+      title('S.O.L.I.D.', false, 2),
       lineEm('Robert C. Martin (Uncle Bob) ~2003'),
       line('S – Single-responsiblity principle'),
       line('O – Open-closed principle'),
@@ -485,7 +533,13 @@ let gifts = p.chooseGifts();`)
 export default class Presentation extends React.Component {
   render () {
     return (
-      <Deck transition={['zoom', 'slide']} transitionDuration={500} theme={theme}>
+      <Deck
+        transition={['zoom', 'slide']}
+        transitionDuration={500}
+        theme={theme}
+        progress="bar"
+        controls="false"
+      >
         {slides()}
       </Deck>
     )
