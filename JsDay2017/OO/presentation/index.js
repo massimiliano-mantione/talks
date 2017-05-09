@@ -187,7 +187,7 @@ const slides = () => {
       title('Short version of the talk'),
       line('Object Oriented principles are ok'),
       lineEm('Mainstream OO programming languages are not'),
-      line('(we mostly misuse them)'),
+      line('(and we mostly misuse them)'),
       lineBold('There is a way out!')
     ]),
 

@@ -19,7 +19,7 @@ Ok, how do I know what needs fixing?
 You look at your code, understand it and identify the crux of your problem :-)
 
 Problem: find 25000 prime numbers
-For x = 1 to infinity:
+for x = 1 to infinity:
 if x not divisible by any member of an initially empty list of primes,
 add x to the list until we have 25000 elements
 
@@ -207,11 +207,11 @@ Don't store non-numeric values (objects) in numeric arrays
 Fast or Optimizing?
 "Full" compiler can generate good code for any JavaScript
 Optimizing compiler produces great code for most JavaScript
-  
+
 "Full" Compiler Starts Executing Code ASAP
 Quickly generates good but not great JIT code
 Assumes (almost) nothing about types at compilation time
-  
+
 
 Inline Caches (ICs)
 Handle types efficiently in fullgen
@@ -263,8 +263,7 @@ add("a", "b");  // + in add becomes polymorphic
 Avoid the Speed Trap!
 Prefer monomorphic over polymorphic wherever possible
 
-Redux issues
-https://medium.com/@bmeurer/surprising-polymorphism-in-react-applications-63015b50abc
+Redux issues (https://medium.com/@bmeurer/surprising-polymorphism-in-react-applications-63015b50abc)
 
 
 The Optimizing Compiler
@@ -306,7 +305,8 @@ Optimizing compiler "bails-out" on functions with try {} catch {} blocks
 
 
 Aaarg... deoptimization!
-Optimizations are speculative Usually, they pay off
+Optimizations are speculative
+Usually, they pay off
 
 Deoptimization:
 throws away optimized code
@@ -324,7 +324,7 @@ Know your tools
 Logging what gets optimized: --trace-opt
 How to find bailouts: --trace-bailout
 Detecting deoptimizations: --trace-deopt
-Using the profiler: --ll-prof and tick-processor
+Using the profiler: --prof and --prof-process (nodejs)
 Passing V8 options to Chrome: --js-flags="--trace-opt --trace-deopt --trace-bailout"
   
 

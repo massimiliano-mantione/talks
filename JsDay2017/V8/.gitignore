@@ -4,5 +4,6 @@ npm-debug.log
 dist
 .vscode
 code/grid/grid
+code/grid/*.log
 code/primes/primes
-
+code/primes/*.log
