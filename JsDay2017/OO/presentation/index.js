@@ -34,6 +34,7 @@ const images = {
   alan: require('../assets/alan-kay.jpg'),
   joe: require('../assets/joe-armstrong.jpg'),
   michael: require('../assets/michael-feathers.jpg'),
+  qrCode: require('../assets/jsday-2017-oo.png'),
   jsday: require('../assets/jsday.png')
 }
 
@@ -76,7 +77,7 @@ const titleNoCaps = (text, p1, p2) => {
 }
 
 const line = (props, children) => {
-  if (typeof (props) !== 'object') {
+  if (children === undefined) {
     children = props
     props = {}
   }
@@ -147,6 +148,9 @@ const codeBlock = (text) => {
 
 const logo = () => {
   return <Image src={images.jsday.replace('/', '')} width="20vw"/>
+}
+const talkQrCode = () => {
+  return <Image src={images.qrCode.replace('/', '')} width="20vw"/>
 }
 
 const slides = () => {
@@ -523,9 +527,14 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slideZoom([
-      title('Done'),
-      title('and', false, 4),
-      title('thank you')
+      title('That\'s all...', false, 5),
+      title('Questions?')
+    ]),
+    slideZoom([
+      title('Rate Talk on JoindIn', false, 4),
+      talkQrCode(),
+      titleNoCaps('https://joind.in/talk/7a59d', false, 6),
+      title('Thank You!')
     ])
   ]
 }

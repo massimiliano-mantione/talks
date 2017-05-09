@@ -31,9 +31,12 @@ require('normalize.css')
 require('spectacle/lib/themes/default/index.css')
 
 const images = {
-  alan: require('../assets/alan-kay.jpg'),
-  joe: require('../assets/joe-armstrong.jpg'),
-  michael: require('../assets/michael-feathers.jpg'),
+  v8oldPipeline: require('../assets/v8-old-pipeline.png'),
+  v8newPipeline: require('../assets/v8-new-pipeline.png'),
+  v8turbofanPipeline: require('../assets/v8-turbofan-pipeline.png'),
+  v8performanceProfiles: require('../assets/v8-performance-profiles.png'),
+  speedtrap: require('../assets/speedtrap.jpg'),
+  qrCode: require('../assets/jsday-2017-v8.png'),
   jsday: require('../assets/jsday.png')
 }
 
@@ -42,7 +45,7 @@ preloader(images)
 const theme = createTheme({
   primary: 'white',
   secondary: '#1F2022',
-  tertiary: '#03A9FC',
+  tertiary: '#D01010',
   quartenary: '#4E4E4E'
 }, {
   primary: 'Montserrat',
@@ -54,6 +57,9 @@ const slideZoom = (children) => {
 }
 const slide = (children) => {
   return <Slide transition={['fade']} bgColor="secondary" textColor="primary">{children}</Slide>
+}
+const slideTrap = (children) => {
+  return <Slide transition={['zoom', 'slide']} bgImage={images.speedtrap.replace("/", "")} textColor="primary">{children}</Slide>
 }
 
 const titleSetCaps = (text, caps, p1, p2) => {
@@ -74,9 +80,12 @@ const title = (text, p1, p2) => {
 const titleNoCaps = (text, p1, p2) => {
   return titleSetCaps(text, false, p1, p2)
 }
+const titleTrap = (text) => {
+  return <Heading size={2} fit caps lineHeight={1.2} textColor="tertiary">{text}</Heading>
+}
 
 const line = (props, children) => {
-  if (typeof (props) !== 'object') {
+  if (children === undefined) {
     children = props
     props = {}
   }
@@ -118,6 +127,9 @@ const lineEm = (children) => {
 const lineBold = (children) => {
   return line({ bold: true }, children)
 }
+const lineTrap = (children) => {
+  return line({ bold: true, textColor: 'tertiary' }, children)
+}
 
 const quote = (text, cite) => {
   return (<BlockQuote>
@@ -141,26 +153,33 @@ const quoteImage = (text, cite, image) => {
   </Layout>)
 }
 
-const codeBlock = (text) => {
-  return <CodePane textSize="0.7em" lang="jsx">{text}</CodePane>
+const codeBlock = (text, size = '0.7em') => {
+  return <CodePane textSize={size} lang="jsx">{text}</CodePane>
+}
+
+const image = (name, size) => {
+  return <Image src={name.replace('/', '')} width={size}/>
 }
 
 const logo = () => {
-  return <Image src={images.jsday.replace('/', '')} width="20vw"/>
+  return image(images.jsday, '20vw')
+}
+const talkQrCode = () => {
+  return image(images.qrCode, '20vw')
 }
 
 const slides = () => {
   return [
     slideZoom([
-      title('The danger'),
-      title('of', false, 4),
-      title('object oriented designs')
+      title('HOW MUCH PERFORMANCE'),
+      title('CAN YOU GET', false, 4),
+      title('OUT OF JAVASCRIPT?')
     ]),
     slideZoom([
       logo(),
       titleNoCaps('Verona, May 10 2017', false, 6),
-      title('The danger of', false, 4),
-      title('object oriented designs', false, 4),
+      title('HOW MUCH PERFORMANCE CAN YOU GET', false, 5),
+      title('OUT OF JAVASCRIPT?', false, 4),
       titleNoCaps('Massimiliano Mantione', false, 6),
       titleNoCaps('@M_a_s_s_i', false, 6)
     ]),
@@ -173,11 +192,10 @@ const slides = () => {
       lineEm('(Virtual Reality Platform)')
     ]),
 
-    slide([
-      title('Strange talk title'),
-      lineBold('Why danger?'),
-      line({ margin: '0.6em' }, 'What\'s wrong with Object Oriented software?'),
-      lineEm('(or languages)')
+    slideTrap([
+      titleTrap('Avoid the speed trap'),
+      lineTrap('Why danger?'),
+      lineTrap('Why not?')
     ]),
     slide([
       title('Short version of the talk'),
@@ -230,11 +248,6 @@ const slides = () => {
     ]),
 
     slide([
-      quoteImage('Actually I made up the term "object-oriented", and I can tell you I did not have C++ in mind.', 'Alan Kay', images.alan),
-      lineEm('What did he have in mind?')
-    ]),
-
-    slide([
       title('Ahead of His Time'),
       line('Alan Kay envisioned objects like cells'),
       line('Isolated and Autonomous'),
@@ -281,11 +294,6 @@ const slides = () => {
       lineEm('(reusability through inheritance)'),
       line('The new operator'),
       lineEm('([de]serialization)')
-    ]),
-
-    slide([
-      title('Dependencies'),
-      quoteImage('You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe)
     ]),
 
     slide([
@@ -340,22 +348,12 @@ const slides = () => {
     ]),
 
     slide([
-      title('Now you see why...'),
-      quoteImage('You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe)
-    ]),
-
-    slide([
       title('Code reuse'),
       line('Methods are bound to classes'),
       line('Reuse requires inheritance'),
       lineEm('Mixins can help, but...'),
       lineEm('...methods become bound to mixins!'),
       lineBold('In general, reusing a method on a different class is hard')
-    ]),
-
-    slide([
-      title('Lack of reusability'),
-      quoteImage('...the problem with object-oriented languages is they’ve got all this implicit environment that they carry around with them...', 'Joe Armstrong', images.joe)
     ]),
 
     slide([
@@ -497,12 +495,6 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slide([
-      title('Let\'s compare OO and FP'),
-      quoteImage('OO makes code understandable by encapsulating moving parts. FP makes code understandable by minimizing moving parts.', 'Michael Feathers', images.michael),
-      lineEm('Working Effectively with Legacy Code (Prentice Hall, 2004)')
-    ]),
-
-    slide([
       title('The real solution'),
       line('Functional in the small'),
       line('OO in the large')
@@ -523,9 +515,14 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slideZoom([
-      title('Done'),
-      title('and', false, 4),
-      title('thank you')
+      title('That\'s all...', false, 5),
+      title('Questions?')
+    ]),
+    slideZoom([
+      title('Rate Talk on JoindIn', false, 4),
+      talkQrCode(),
+      titleNoCaps('https://joind.in/talk/0a58b', false, 6),
+      title('Thank You!')
     ])
   ]
 }
