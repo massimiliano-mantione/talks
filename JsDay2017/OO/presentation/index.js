@@ -541,15 +541,30 @@ let gifts = p.chooseGifts();`)
 
     slide([
       title('The real solution'),
-      line('Functional in the small'),
-      line('OO in the large')
+      lineBold('Functional in the small'),
+      lineBold('OO in the large')
     ]),
 
     slide([
-      title('Javascript OO systems'),
+      title('Segregating Objects has a Cost'),
+      line('Let\'s do it coarsely'),
+      line('Let them interact with actual messages'),
+      lineEm('possibly asynchronous'),
+      line('Inside, minimaze moving parts with FP')
+    ]),
+
+    slide([
+      title('Let\'s spot "OO" systems'),
+      line('I mean systems that Alan Kay would consider Object Oriented'),
+      line('Not necessarily systems built with classes'),
+      lineEm('definitely not "C++ style" OO systems!')
+    ]),
+
+    slide([
+      title('Javascript "OO" systems'),
       line('A pipeline of Observables'),
-      line('CSP in Javascript (when used like Erlang actors)'),
-      line('The separation of state, side effects and render in Redux'),
+      line('CSP (when used like Erlang actors)'),
+      line('The separation of state, side effects and render in Redux')
     ]),
 
     slide([
@@ -557,6 +572,36 @@ let gifts = p.chooseGifts();`)
       line('The Seneca framework'),
       line('More generally, a web of microservices'),
       lineEm('Let\'s learn from Erlang...')
+    ]),
+
+    slide([
+      title('TAKEAWAY'),
+      lineBold('Be critical with the language you use'),
+      line('If it has a feature, by default don\'t use it'),
+      line('Use it only when you see that it makes your code better'),
+      lineEm('and you see it does not cause problems!')
+    ]),
+    slide([
+      title('TAKEAWAY'),
+      lineBold('Learn lots of other languages'),
+      lineEm('it will help you to think differently'),
+      line('Closure, Erlang'),
+      line('Go, Rust'),
+      line('Reason, Haskell')
+    ]),
+    slide([
+      title('TAKEAWAY'),
+      lineBold('Apply the lessons you learned'),
+      lineEm('even if you will not change language!')
+    ]),
+
+    slide([
+      title('What happened to me'),
+      line('I almost don\'t write classes anymore'),
+      lineEm('when I do, instances are immutable'),
+      line('I keep the number of references to mutable data low'),
+      lineEm('ideally one per process'),
+      lineEm('(at most a handful)')
     ]),
 
     slideZoom([
