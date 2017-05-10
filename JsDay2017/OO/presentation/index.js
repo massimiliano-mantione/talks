@@ -180,7 +180,7 @@ const slides = () => {
     slide([
       title('Strange talk title'),
       lineBold('Why danger?'),
-      line({ margin: '0.6em' }, 'What\'s wrong with Object Oriented software?'),
+      line({ margin: '0.6em' }, 'What\'s wrong with Object Oriented principles?'),
       lineEm('(or languages)')
     ]),
     slide([
@@ -220,30 +220,23 @@ const slides = () => {
 
     slide([
       title('Object Oriented Practices'),
-      line('Abstraction and Inheritance'),
+      line('Abstraction, Inheritance, Polymorphism'),
       line('Use of Virtual Methods'),
-      line('Hide internal mutable state...'),
-      line('(Encapsulation - Information Hiding)'),
-      lineBold('...but use direct object references!')
+      line('Hiding internal mutable state'),
+      lineEm('(Encapsulation - Information Hiding)')
     ]),
 
     slide([
-      title('A Step Back'),
-      lineBold('Who invented this?'),
-      lineEm('Well...')
+      title('How do we write'),
+      title('OO code?')
     ]),
 
     slide([
-      quoteImage('Actually I made up the term "object-oriented", and I can tell you I did not have C++ in mind.', 'Alan Kay', images.alan),
-      lineEm('What did he have in mind?')
-    ]),
-
-    slide([
-      title('Ahead of His Time'),
-      line('Alan Kay envisioned objects like cells'),
-      line('Isolated and Autonomous'),
-      line('No way to "get into" each other'),
-      line('Communicate through message passing')
+      title('We are not critical'),
+      line('We take language features'),
+      lineBold('and just use them'),
+      lineEm('if a feature is there...'),
+      lineEm('...it must be for our own good :-)')
     ]),
 
     slide([
@@ -260,7 +253,8 @@ const slides = () => {
       lineBold('Object References!'),
       line('Store them inside other objects'),
       line('Pass them as method arguments'),
-      line('Keep them in local variables')
+      line('Keep them in local variables'),
+      lineEm('be sure to depend on them!')
     ]),
 
     slide([
@@ -283,7 +277,7 @@ const slides = () => {
       lineEm('(dependency injection)'),
       line('Code bound to objects'),
       lineEm('(reusability through inheritance)'),
-      line('The new operator'),
+      line('Depending on constructors'),
       lineEm('([de]serialization)')
     ]),
 
@@ -344,8 +338,17 @@ const slides = () => {
     ]),
 
     slide([
-      title('Now you see why...'),
-      quoteImage('You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe)
+      title('Object References'),
+      lineEm('especially references to mutable objects'),
+      line('large classes are bad because of implicit internal dependencies'),
+      line('small classes need more references to other classes, which cause more dependencies')
+    ]),
+
+    slide([
+      title('Now you see how'),
+      lineEm('...a banana...'),
+      lineEm('...requires a gorilla...'),
+      lineEm('...that requires a jungle...')
     ]),
 
     slide([
@@ -355,6 +358,14 @@ const slides = () => {
       lineEm('Mixins can help, but...'),
       lineEm('...methods become bound to mixins!'),
       lineBold('In general, reusing a method on a different class is hard')
+    ]),
+
+    slide([
+      title('Another Lose-Lose Dilemma'),
+      lineEm('you want to reuse a method'),
+      lineBold('you depend on the whole class that provides it'),
+      line('either you inherit from it'),
+      line('or you keep a reference to an instance')
     ]),
 
     slide([
@@ -388,7 +399,7 @@ const slides = () => {
       title('Concrete Class'),
       codeBlock(`class Man extends Person {
   chooseGifts(): Array<Gift> {
-    return ['sexy underwear'];
+    return ['football match ticket'];
   }
 }`)
     ]),
@@ -397,7 +408,7 @@ const slides = () => {
       title('The Other Concrete Class'),
       codeBlock(`class Woman extends Person {
   chooseGifts(): Array<Gift> {
-    return ['romantic book'];
+    return ['pair of shoes'];
   }
 }`)
     ]),
@@ -410,8 +421,8 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slide([
-      title('Now Tell Me...'),
-      line('...what happens if somebody'),
+      title('Now Tell Me'),
+      line('what happens if somebody'),
       lineEm('(while the program is running)'),
       line({ caps: true, fit: true }, 'changes sex?')
     ]),
@@ -444,6 +455,28 @@ let gifts = p.chooseGifts();`)
       line({ lh: 1.5 }, 'what I meant was'),
       line({ caps: true, fit: true, bold: true }, 'Apply Functional Programming')
     ]),
+
+
+    slide([
+      title('A Step Back'),
+      lineBold('Who invented OOP?'),
+      lineEm('Well...')
+    ]),
+
+    slide([
+      quoteImage('Actually I made up the term "object-oriented", and I can tell you I did not have C++ in mind.', 'Alan Kay', images.alan),
+      lineEm('What did he have in mind?')
+    ]),
+
+    slide([
+      title('Ahead of His Time'),
+      line('Alan Kay envisioned objects like cells'),
+      line('Isolated and Autonomous'),
+      line('No way to "get into" each other'),
+      line('Communicate through message passing')
+    ]),
+
+
 
     slide([
       title('Functional Approach'),
@@ -496,7 +529,7 @@ let gifts = p.chooseGifts();`)
       title('Obsession with performance'),
       line('C++ promised "zero cost abstractions"'),
       line('Property access and virtual method call...'),
-      line('...cost 1 single machine instruction cost (x86)'),
+      line('...cost 1 single machine instruction (x86)'),
       lineEm('No dynamic system can compete with that')
     ]),
 
