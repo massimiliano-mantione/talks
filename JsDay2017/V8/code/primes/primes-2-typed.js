@@ -27,5 +27,8 @@ function main() {
   console.log(p.getPrime(p.getPrimeCount()-1));
 }
 
+var start = Date.now();
 main();
+var end = Date.now();
+console.log("Elapsed: " + (end - start));
 
