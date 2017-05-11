@@ -190,6 +190,13 @@ const slides = () => {
       line('(and we mostly misuse them)'),
       lineBold('There is a way out!')
     ]),
+    slide([
+      title('Why am I doing talk?'),
+      lineEm('I did the jouney myself'),
+      line('I started with C++, then Java'),
+      line('I was always thinking in terms of classes'),
+      lineBold('It is taking me decades to think differently!')
+    ]),
 
     slide([
       title('Think About Object Oriented'),
