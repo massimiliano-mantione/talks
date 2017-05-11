@@ -465,6 +465,39 @@ let gifts = p.chooseGifts();`)
 
 
     slide([
+      title('Functional Approach'),
+      line('Model state with plain data structures'),
+      lineEm('(preferably immutable)'),
+      line('Write every "method" as a function'),
+      lineEm('(possibly pure)')
+    ]),
+
+    slide([
+      title('Functional Approach'),
+      line('Dependencies are minimal'),
+      line('Control flow becomes explicit'),
+      line('[de]serialization becomes trivial'),
+      line('Testing is a breeze')
+    ]),
+
+
+    slide([
+      title('Is OO fundamentally bad?'),
+      lineBold('No, it\'s not'),
+      lineEm('The principles are S.O.L.I.D.')
+    ]),
+
+    slide([
+      title('S.O.L.I.D.', false, 2),
+      lineEm('Robert C. Martin (Uncle Bob) ~2003'),
+      line('S – Single-responsiblity principle'),
+      line('O – Open-closed principle'),
+      line('L – Liskov substitution principle'),
+      line('I – Interface segregation principle'),
+      line('D – Dependency Inversion Principle')
+    ]),
+
+    slide([
       title('A Step Back'),
       lineBold('Who invented OOP?'),
       lineEm('Well...')
@@ -481,40 +514,6 @@ let gifts = p.chooseGifts();`)
       line('Isolated and Autonomous'),
       line('No way to "get into" each other'),
       line('Communicate through message passing')
-    ]),
-
-
-
-    slide([
-      title('Functional Approach'),
-      line('Model state with plain data structures'),
-      lineEm('(preferably immutable)'),
-      line('Write every "method" as a function'),
-      lineEm('(possibly pure)')
-    ]),
-
-    slide([
-      title('Functional Approach'),
-      line('Dependencies are minimal'),
-      line('Control flow becomes explicit'),
-      line('[de]serialization becomes trivial'),
-      line('Testing is a breeze')
-    ]),
-
-    slide([
-      title('Is OO fundamentally bad?'),
-      lineBold('No, it\'s not'),
-      lineEm('The principles are S.O.L.I.D.')
-    ]),
-
-    slide([
-      title('S.O.L.I.D.', false, 2),
-      lineEm('Robert C. Martin (Uncle Bob) ~2003'),
-      line('S – Single-responsiblity principle'),
-      line('O – Open-closed principle'),
-      line('L – Liskov substitution principle'),
-      line('I – Interface segregation principle'),
-      line('D – Dependency Inversion Principle')
     ]),
 
     slide([
