@@ -6,12 +6,12 @@ node --prof-process isolate-0x27a2650-v8.log | less
 pause
 echo code patch
 pause
-diff primes-0.js primes-1-no-out-of-bounds.js
+diff primes-0.js primes-1-fixed.js
 pause
-vim primes-1-no-out-of-bounds.js
+vim primes-1-fixed.js
 pause
-echo node primes-1-no-out-of-bounds.js
-node primes-1-no-out-of-bounds.js
+echo node primes-1-fixed.js
+node primes-1-fixed.js
 pause
 echo proper profile data
 pause
@@ -21,8 +21,8 @@ echo ./primes
 g++ primes.cc -o primes
 ./primes
 pause
-echo node primes-1-no-out-of-bounds.js
-node primes-1-no-out-of-bounds.js
+echo node primes-1-fixed.js
+node primes-1-fixed.js
 pause
 echo 1365 / 1440
 bc -l <<< "scale=2; 1365 / 1440.394000"
@@ -56,4 +56,18 @@ echo ./primes
 pause
 echo 1099 / 854
 bc -l <<< "scale=2; 1099 / 854"
+pause
+echo typed arrays
+echo node primes-2-typed.js
+node primes-2-typed.js
+pause
+echo fix the algorithm
+pause
+diff primes-1-fixed.js primes-3-sqrt.js
+pause
+echo node primes-3-sqrt.js
+node primes-3-sqrt.js
+pause
+echo 155 / 6557
+bc -l <<< "scale=3; 155 / 6557"
 pause
