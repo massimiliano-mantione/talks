@@ -2,10 +2,10 @@
 var size = 2000;
 var i, j;
 
-var grid = new Array();
+var grid = new Array(size);
 grid.size = size;
 for (i = 0; i < size; i++) {
-  grid[i] = new Array();
+  grid[i] = new Array(size);
 }
 
 grid.fix = function(value) {
@@ -18,6 +18,8 @@ grid.getCell = function(x, y) {
 grid.setCell = function(x, y, value) {
   this[this.fix(x)][this.fix(y)] = value;
 }
+
+var start = Date.now();
 
 for (i = 0; i < size; i++) {
   for (j = 0; j < size; j++) {
@@ -43,4 +45,7 @@ for (i = 0; i < size; i++) {
     grid.getCell(i, j).connect(grid);
   }
 }
+
+var end = Date.now();
+console.log("Elapsed: " + (end - start));
 

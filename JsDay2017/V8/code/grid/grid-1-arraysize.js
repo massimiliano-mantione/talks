@@ -19,6 +19,8 @@ grid.setCell = function(x, y, value) {
   this[this.fix(x)][this.fix(y)] = value;
 }
 
+var start = Date.now();
+
 for (i = 0; i < size; i++) {
   for (j = 0; j < size; j++) {
     grid.setCell(i, j, {
@@ -40,3 +42,5 @@ for (i = 0; i < size; i++) {
   }
 }
 
+var end = Date.now();
+console.log("Elapsed: " + (end - start));
