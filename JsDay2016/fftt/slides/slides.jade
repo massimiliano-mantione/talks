@@ -1,0 +1,328 @@
+link(rel="stylesheet", href="assets/style.css")
+link(rel="stylesheet", href="assets/highlight.css")
+script(src="assets/highlight.min.css")
+
+section
+  div.logo
+    img(src='assets/jsday.png', alt='logo')
+  p -
+  h1 FFTT
+  h3 A Modern Build tool
+  p.dateStyle May 12 2015, Verona
+  p Massimiliano Mantione
+
+section
+  section
+    h1 About Myself
+    h2.fragment An enthusiast software engineer
+    p.fragment Passionate about languages and compilers
+    p.fragment.roll-in <b>Worked in the V8 team in Google</b>
+    p.fragment Overall, worked on JIT compilers for +7 years
+    p.fragment
+      | Now working on scalable, fault tolerant,
+      br
+      | web facing distributed systems...
+    p.fragment
+      em ...serving vitual reality on the web!
+
+  section
+    h1 Javascript and me
+    p.fragment I started as a Javascript hater
+    blockquote.fragment.embox.roll-in
+      | When I sow Javascript for the 1st time (in 1995)
+      | I vowed that I would never touch such an abomination,
+      | even with a 10 feet pole
+    p.fragment Eventually, I changed my mind, but...
+    p.fragment
+      em Let's change subject!
+
+section
+  section
+    h3 What are we talking about?
+    h1.fragment Build Tools!
+    p.fragment
+      em Why?
+    p.fragment.embox.roll-in
+      em
+        | I tried several, and
+        br
+        | I was not happy...
+
+  section
+    h1 What's the problem?
+    p.fragment Simple is good
+    p.fragment Everybody starts with a few scripts
+    p.fragment
+      | The project 
+      em grows
+      | , the scripts get 
+      b slow...
+    p.fragment.embox.roll-in
+      | Dependency tracking is 
+      em the
+      |  needed feature
+    p.fragment
+      em (performing build steps in parallel also helps)
+
+  section
+    h1 The recipe for speed
+    p.fragment
+      b independency
+      br
+      | (A, B, C, need A, skip B and C)
+    p.fragment
+      b dependency
+      br
+      | (A ► B ► C, need C, skip A and B)
+    p.fragment
+      b parallelism
+      br
+      | (A, B, C, need all, run in parallel)
+
+section
+  section
+    h3 State of the build
+    h1.fragment Grunt
+    p.fragment just a task runner
+    p.fragment very verbose
+    p.fragment.embox.roll-in build files get huge quickly
+
+  section
+    h3 State of the build
+    h1.fragment Gulp
+    p.fragment A bit more pleasant
+    p.fragment Streams are interesting
+    p.fragment If you have multi-file operations you end up fighting it badly
+    p.fragment.embox.roll-in Why do I have to write code in a specific language?
+
+  section
+    h3 State of the build
+    h1.fragment Broccoli
+    p.fragment Brilliant concept
+    p.fragment So-and-so execution
+    p.fragment
+      em sometimes all those temporary trees get in your way
+    p.fragment.embox.roll-in Why do I have to write code in a specific language?
+
+  section
+    h3 State of the build
+    h1.fragment Other tools
+    p.fragment
+      b Webpack 
+      | (specific use, fast only when hot)
+    p.fragment
+      b Jake 
+      | (mostly like make)
+    p.fragment
+      b Gradle 
+      | (you must know Groovy)
+    p.fragment
+      b Blaze 
+      | (more about this later)
+    p.fragment.embox.roll-in Why do I have to write code in a specific language?
+
+section
+  section
+    h3 Wishlist
+    h1.fragment Builds need to be...
+    p.fragment deterministic
+    p.fragment reliable
+    p.fragment fast
+
+  section
+    h1 Traditionally...
+    p.fragment Builds happen in a build environment
+    p.fragment The environment is a file tree
+    p.fragment
+      | Each build step 
+      b mutates
+      |  the file tree
+    p.fragment
+      em
+        | How do you 
+        b reliably
+        |  detect if the build environment contains the proper result of a build step?
+    p.fragment.embox.roll-in You don't...
+
+  section
+    h3 Dependency tracking howto
+    h1.fragment File system based
+    p.fragment.embox.roll-in
+      | You use the file system and check the mtime of input and output files
+      br
+      | (Jake, Make...)
+    p.fragment
+      em (can get cumbersome)
+
+  section
+    h3 Dependency tracking howto
+    h1.fragment Internally tracked
+    p.fragment.embox.roll-in
+      | The build system has an internal graph that carries the build artifacts
+      br
+      em (Gulp, WebPack...)
+    p.fragment
+      | Fast when the build system stays running
+      br 
+      | (like while watching)
+
+section
+  section
+    h1 A better way
+    p.fragment
+      | Track 
+      b contents 
+      | and not 
+      em mtime
+      | !
+    p.fragment Just like Git does
+    p.fragment ...and just like Bazel does...
+
+  section
+    h1 An even better way
+    p.fragment Store everything in a content addressable file system
+    p.fragment
+      em
+        | (Git is a content addressable 
+        b database
+        | )
+    p.fragment Use this file system as environment for build steps
+
+  section
+    h1 One step further
+    p.fragment Isolate each build step in a container
+    p.fragment Expose the inputs as a read only tree
+    p.fragment Capture the output and snapshot it in the content addressable storage
+    p.fragment Cache every computation!
+
+
+section
+  section
+    h1 The FFTT Choice
+    p.fragment Fast
+    p.fragment Correct
+    p.fragment
+      b Pick two!
+    p.fragment
+      em (just like Bazel)
+
+  section
+    h2.fragment Build Systems
+    p.fragment
+      em meet
+      br
+      | -
+    h2.fragment Functional Programming
+
+  section
+    h1 Functional Programming
+    p.fragment Immutable, copy on write data structures
+    p.fragment
+      em (with structural sharing)
+    p.fragment Memoization of function results
+
+  section
+    h1 Code or Configuration?
+    p.fragment Both, but each where appropriate
+    p.fragment The build graph is declarative and functional
+    p.fragment Each build step is imperative but confined inside its container
+    p.fragment.embox.roll-in Programming language independence!
+
+section
+  h2 Let's see
+  h1 how it looks
+
+section
+  section
+    h3 One more step further...
+    p.fragment -
+    h2.fragment Build Systems
+    p.fragment
+      em meet
+      br
+      | -
+    h2.fragment Continuous Integration
+
+  section
+    p.fragment A CI system is a build system...
+    p.fragment
+      em ...with its own configuration language!
+    p.fragment The dependency graph description is usually too verbose to be practical
+    p.fragment Tipically only one or two developers in a team know how to work on it
+    p.fragment.embox.roll-in
+      em Nobody wants to learn one more build system
+
+  section
+    h1 A modular CI system
+    p.fragment FFTT performs builds
+    p.fragment Something else detects changes in the source and invokes builds
+    p.fragment This "something else" might watch a remote git repository...
+    p.fragment
+      em ...builds could trigger deployments...
+    p.fragment Add a web view of the content addressable store...
+
+  section
+    h1 Fast deployments
+    p.fragment Why docker builds are slow
+    p.fragment Use the FFTT repo as a read only volume
+    p.fragment Deploy containers mounting that volume
+    p.fragment
+      em (let them access that volume over NFS or a clustering file system like GlusterFS)
+    p.fragment.embox.roll-in No need to wait for a rebuild, ever!
+
+  section
+    h2 Parallel, distributed builds
+    p.fragment A side effect of the pure functional nature of FFTT
+    p.fragment
+      | Actually, the 
+      em simplest
+      |  way to implement it is naturally parallel!
+    p.fragment Using docker swarm (or maybe kubernetes) as container runner the builds would be distributed
+
+section
+  section
+    h1 Under the hood
+    p.fragment The repo, and the linking issue
+    p.fragment The exposed file system and fuse
+    p.fragment The repo, as it could be
+    p.fragment How Javascript has been used
+
+  section
+    h1 Todo list
+    p.fragment Atomic operations on the repo
+    p.fragment Garbage collection
+    p.fragment Fuse view of the repo
+    p.fragment Explicit tagging
+    p.fragment Repo transfer network protocol
+    p.fragment Repo web browser
+    p.fragment.embox.roll-in Take Over the World!
+
+section
+  section
+    h1 Related Work
+    p.fragment
+      a(href='https://git-scm.com') git
+    p.fragment
+      a(href='http://live.gnome.org/OSTree') ostree
+    p.fragment
+      a(href='https://www.docker.com') docker
+    p.fragment
+      a(href='http://bazel.io') bazel
+
+  section
+    h1 Wrapping up
+    p.fragment Even if you will not use FFTT, I hope you learned something about build tools
+    p.fragment
+      em Maybe you'll all switch to Bazel...
+    p.fragment.embox.roll-in
+      | If you 
+      b did
+      |  like it, please plan to 
+      b contribute
+      | !
+
+section
+  h1 That's All, Folks
+  p code, docs and slides are on github
+  p twitter: @M_a_s_s_i, #metascript
+  h2 Thanks for following!

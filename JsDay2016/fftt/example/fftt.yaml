@@ -1,0 +1,43 @@
+# Default task
+- default: hello
+
+# Env config
+- dirs:
+    out: /out
+
+# Hello!
+- id: hello
+  in: {source: source}
+  run:
+    img: ubuntu:16.04
+    cmd: ['bash', '-c', 'echo Hello FFTT!']
+
+# Grep aaa
+- id: grep-aaa
+  in: {source: source}
+  run:
+    img: ubuntu:16.04
+    cmd: ['bash', '-c', 'grep aaa in/* > out/aaa.txt']
+
+# Grep x aaa
+- id: grep-x-aaa
+  in: {source: source}
+  run:
+    img: ubuntu:16.04
+    cmd: ['bash', '-c', 'grep aaa in/x*.txt > out/x-aaa.txt']
+
+# Join aaa
+- id: join-aaa
+  in:
+    - id: grep-aaa
+    - id: grep-x-aaa
+  run:
+    img: ubuntu:16.04
+    cmd: ['bash', '-c', 'cp -a in/* out/']
+
+# Fail (input is read only)
+- id: fail
+  in: {source: source}
+  run:
+    img: ubuntu:16.04
+    cmd: ['bash', '-c', 'rm in/*']
