@@ -369,18 +369,18 @@ const slides = () => {
     ]),
     slide([
       title('The solution'),
-      lineBold('Make rendering and reconciliation asynchronous')
+      lineBold('Make reconciliation asynchronous')
     ]),
     slide([
-      title('Async Rendering'),
-      line('Each "atomic batch" of rendering runs in a "fiber"'),
+      title('Async Reconciliation'),
+      line('Each "atomic batch" that updates the DOM runs in a "fiber"'),
       line('React has a "scheduler" that can run fibers one at a time'),
       line('Rendering the whole Virtual DOM can span several frames')
     ]),
     slide([
       title('Async Reconciliation'),
       line('Applying a batch of rendering means reconciling its virtual DOM section with the real DOM'),
-      line('Each batch is atomic (it must be)...'),
+      line('The commit of each batch is atomic (it must be)...'),
       lineBold('...but the whole process is not!'),
       lineEm('Let\'s see')
     ]),
@@ -412,10 +412,9 @@ const slides = () => {
   "react": "preact-compat",
   "react-dom": "preact-compat"
 }`),
-line('just put this in WebPack config'),
-lineEm('if you are shy about it...')
+      line('just put this in WebPack config'),
+      lineEm('if you are shy about it...')
     ]),
-    
 
     slide([
       title('A final thought', false, 2),
