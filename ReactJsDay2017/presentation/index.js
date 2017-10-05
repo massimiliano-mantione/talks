@@ -32,8 +32,8 @@ require('spectacle/lib/themes/default/index.css')
 
 const images = {
   react: require('../assets/react-logo.svg'),
-  preact: require('../assets/preact-logo.jpg'),
-  inferno: require('../assets/infernojs-logo.jpg'),
+  preact: require('../assets/preact-logo.png'),
+  inferno: require('../assets/infernojs-logo.png'),
   richHarris: require('../assets/rich-harris.jpg'),
   danAbramov: require('../assets/dan-abramov.jpg')
 }
@@ -181,10 +181,10 @@ const slides = () => {
 
     slide([
       title('Strange talk title'),
-      lineBold('What should quack like react?'),
+      lineEm('What should quack like react?'),
       line('We are talking about React.js alternatives'),
       line('Specifically, API-compatible implementations'),
-      lineEm('(Yes, there are such things!)')
+      lineBold('Yes, there are such things!')
     ]),
     slide([
       title('To make it clear'),
@@ -277,14 +277,15 @@ const slides = () => {
       line('Written to be fast'),
       line('Focused on performance'),
       lineEm('besides...'),
-      lineBold('...did I mention speed?')
+      lineBold('...did I mention SPEED?')
     ]),
     slide([
-      title('How Did He Make It Fast?'),
+      title('How Did He Do It?'),
+      lineEm('(I mean Dominic Gannaway)'),
       line('Persistency and Cleverness'),
       line('Good knowledge of JS VMs'),
       line('Scientific application of this knowledge'),
-      lineEm('(try, experiment, measure, retry)')
+      lineBold('try, experiment, measure, retry')
     ]),
     slide([
       title('Inferno vs React'),
@@ -356,7 +357,8 @@ const slides = () => {
     slide([
       title('Neither size nor raw speed'),
       line('Inferno is faster, but not orders of magnitude faster'),
-      lineBold('What if you application becomes orders of magnitudes more complex?')
+      lineEm('...but...'),
+      lineBold('What if you application became orders of magnitudes more complex?')
     ]),
     slide([
       title('Rendering and Reconciling'),
@@ -377,7 +379,7 @@ const slides = () => {
     ]),
     slide([
       title('Async Reconciliation'),
-      line('Applying a batch of rendering means reconciling its vDOM section with the real DOM'),
+      line('Applying a batch of rendering means reconciling its virtual DOM section with the real DOM'),
       line('Each batch is atomic (it must be)...'),
       lineBold('...but the whole process is not!'),
       lineEm('Let\'s see')
