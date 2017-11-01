@@ -6,4 +6,5 @@ code/grid/grid
 code/grid/*.log
 code/primes/primes
 code/primes/*.log
+code/emsdk-portable
 dist
