@@ -355,7 +355,7 @@ int main() {
 
     slide([
       title('Ok, we did it, now we know...'),
-      line('C++ is about 5 times faster than JavaScript'),
+      line('C++ is almost 4 times faster than JavaScript'),
       lineEm('I guess that\'s not so bad, right?'),
       lineBold('Of course it is SO BAD!')
     ]),
@@ -371,7 +371,6 @@ int main() {
       line('3x?'),
       line('30x?'),
       line('300x?'),
-      line('3000x?'),
       lineEm('How do we know?')
     ]),
 
@@ -520,7 +519,7 @@ var a = [77, 88, 0.5, true];`)
     ]),
 
     slide([
-      title('Inline Caches (ICs)'),
+      title('Inline Caches (IC)'),
       line('Handle types efficiently in ignition'),
       line('Type-dependent code for every operation'),
       line('Validate type assumptions first, then do work'),
@@ -676,12 +675,6 @@ idiv esi`, '0.5em')
     slideZoom([
       title('That\'s all...', false, 5),
       title('Questions?')
-    ]),
-    slideZoom([
-      title('Rate Talk on JoindIn', false, 4),
-      talkQrCode(),
-      titleNoCaps('https://joind.in/talk/0a58b', false, 6),
-      title('Thank You!')
     ])
   ]
 }
