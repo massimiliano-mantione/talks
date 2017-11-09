@@ -1,4 +1,5 @@
 #!/bin/bash
+alias emcc=/SSD/massi/talks/Codemotion2017/code/emsdk-portable/emscripten/1.37.22/emcc
 vim grid-1-arraysize.js
 pause
 echo node grid-1-arraysize.js
