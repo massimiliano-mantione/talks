@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf dist",
+    "render": "spectacle-renderer",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js",
     "lint": "eslint --ext .js,.jsx .",
     "deploy": "npm run clean & npm run build && surge -p .",
@@ -16,7 +17,8 @@
     "normalize.css": "3.0.3",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "spectacle": "^2.0.0"
+    "spectacle": "^2.0.0",
+    "spectacle-renderer": "0.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
