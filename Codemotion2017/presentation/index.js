@@ -136,7 +136,7 @@ const line = (props, children) => {
     textColor: 'primary'
   }
   Object.assign(p, props)
-  return (<Appear>
+  return (
     <Text italic={p.italic}
       bold={p.bold}
       textSize={p.textSize}
@@ -150,7 +150,7 @@ const line = (props, children) => {
     >
       {children}
     </Text>
-  </Appear>)
+  )
 }
 const lineEm = (children) => {
   return line({ italic: true }, children)
