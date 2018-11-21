@@ -408,6 +408,12 @@ const slides = () => {
     ]),
 
     slide([
+      title('Let\'s turn page'),
+      line('Until now I have told you stories'),
+      lineEm('but...')
+    ]),
+
+    slide([
       title('What about Rust?'),
       line('I mean, is Rust helping at all?'),
       lineBold('TL;DR; Yes, it does.'),
@@ -513,15 +519,22 @@ act(c: Cmd) -> Cmd`)
     ]),
 
     slide([
+      title('Remember the mbot?'),
+      line('Reading Ultrasound takes time'),
+      lineEm('Could we spend that time doing something else?'),
+      lineBold('Yes, if we detect the impulse through an interrupt!')
+    ]),
+
+    slide([
       title('RTFM magic'),
       line('Uses the Rust type system'),
       lineEm('(and "phantom" markers)'),
       lineBold('to prove that access to shared resources is safe'),
-      line('AFAIK only Cortex-M')
+      line('AFAIK only ARM Cortex-M')
     ]),
 
     slide([
-      title('Cortex-M'),
+      title('ARM Cortex-M'),
       line('Is where the real action is'),
       line('You should seriously consider it'),
       line('Rust support is first class'),
