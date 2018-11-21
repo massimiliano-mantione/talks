@@ -31,7 +31,8 @@ require('normalize.css')
 require('spectacle/lib/themes/default/index.css')
 
 const images = {
-  logo: require('../assets/RustFestLogo.svg')
+  logo: require('../assets/RustFestLogo.svg'),
+  team: require('../assets/polonia2018.jpg')
 }
 
 preloader(images)
@@ -145,6 +146,12 @@ const codeBlock = (text) => {
 const logo = () => {
   return <Image src={images.logo.replace('/', '')} width="10vw"/>
 }
+const team = () => {
+  return <Image src={images.team.replace('/', '')} width="60vw"/>
+}
+const latency = () => {
+  return <video src={'assets/Latency-tester.mp4'} width="800px" autoPlay="true" loop="true"/>
+}
 
 const slides = () => {
   return [
@@ -191,7 +198,20 @@ const slides = () => {
     ]),
 
     slide([
-      title('Lego Robots'),
+      title('Some perspective'),
+      line('Hobby projects, mostly Lego'),
+      lineEm('For competitions'),
+      lineBold('Sumo'),
+      lineBold('Line Follower')
+    ]),
+
+    slide([
+      title('We are a team!'),
+      team()
+    ]),
+
+    slide([
+      title('Our First Lego Robot'),
       line('Opereting system: Ev3Dev'),
       line('First language: nodejs'),
       line('Next one: python'),
@@ -208,7 +228,7 @@ const slides = () => {
 
     slide([
       title('Latency test'),
-      lineEm('See video...'),
+      latency(),
       lineBold('We got 50ms latency spikes!')
     ]),
 
