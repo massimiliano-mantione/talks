@@ -156,6 +156,7 @@ const slides = () => {
       titleNoCaps('Massimiliano Mantione', false, 6),
       titleNoCaps('@M_a_s_s_i', false, 6)
     ]),
+
     slideZoom([
       title('Things I worked on'),
       line('The Mono JIT Compiler'),
@@ -165,28 +166,28 @@ const slides = () => {
       lineEm('(Virtual Reality on the Web)')
     ]),
 
-
     slide([
-      title('This Talk'),
+      title('Talk Roadmap'),
       line('A story (the path to Rust)'),
       line('A couple of examples'),
-      line('What\'s special about rust')
+      line('What\'s special about Rust')
     ]),
 
     slide([
       title('Me and Rust'),
       line('I liked its concepts, but I lacked time'),
       line('I feared the leaning curve'),
-      line('(borrow checker)'),
-      line('So I just watched it from a distance')
+      lineEm('(borrow checker)'),
+      lineBold('So I just watched it from a distance')
     ]),
 
     slide([
       title('Me and Robots'),
       line('I liked the idea, but I lacked time'),
       line('Then we sow a Lego Sumo event'),
-      line('(me and my son, he was 12)'),
-      line('It was love at first sight!')
+      lineEm('(me and my son, he was 12)'),
+      lineBold('It was love at first sight!'),
+      line('We started building one...')
     ]),
 
     slide([
@@ -200,42 +201,42 @@ const slides = () => {
     slide([
       title('Let there be latency'),
       line('...and there was latency'),
-      line('Doing things takes time'),
-      line('This can be significant'),
-      line('Robots did not react in time')
+      lineEm('Doing things takes time'),
+      lineEm('This can be significant'),
+      lineBold('Our robots did not react in time')
     ]),
 
     slide([
-      title('Latency tester'),
-      line('See video...'),
-      line('We got 50ms latency spikes!')
+      title('Latency test'),
+      lineEm('See video...'),
+      lineBold('We got 50ms latency spikes!')
     ]),
 
     slide([
       title('Hard Real Time?'),
-      line('...is not about performance'),
+      lineEm('...is not about performance'),
       line('It is about time-related correctness'),
-      line('Predictable latency')
+      lineBold('Predictable latency')
     ]),
 
     slide([
       title('Real Time Examples'),
       line('Car on a highway'),
-      line('[108 Km/h == 30 m/s]'),
-      line('100ms is 3m'),
+      lineEm('[108 Km/h == 30 m/s]'),
+      lineBold('100ms is 3m'),
       line('Line follower robot'),
-      line('[2 m/s]'),
-      line('10ms is 20mm')
+      lineEm('[2 m/s]'),
+      lineBold('10ms is 20mm')
     ]),
 
     slide([
       title('New OS: Ev3RT'),
       line('A small real time kernel'),
-      line('Sub ms max latencies!'),
-      line('Event loop at 10KHz!'),
-      line('Documented in Japanese'),
-      line('User code must be written in C'),
-      line('My son got sad...')
+      lineBold('Sub ms max latencies!'),
+      lineBold('Event loop at 10KHz!'),
+      lineEm('Documented in Japanese'),
+      lineEm('User code must be written in C'),
+      lineEm('My son got sad...')
     ]),
 
     slide([
@@ -251,8 +252,8 @@ const slides = () => {
       title('Baby steps'),
       line('Enter no-std land'),
       line('Use ARMv5 target'),
-      line('POC: a single rust file, compiled with rustc, replacing a single C object file'),
-      line('It works!')
+      lineEm('POC: a single rust file, compiled with rustc, replacing a single C object file'),
+      lineBold('It works!')
     ]),
 
     slide([
@@ -261,7 +262,7 @@ const slides = () => {
       line('Wrap syscalls with C functions'),
       line('Binary file format is tricky'),
       line('Reuse C SDK linker script'),
-      line('It starts working')
+      lineBold('It starts working')
     ]),
 
     slide([
@@ -269,19 +270,19 @@ const slides = () => {
       line('Files become too big'),
       line('Linker GC breaks the build'),
       line('Recompile libcore'),
-      line('Use xargo, then cargo xbuild')
+      line('Use xargo, then cargo xbuild'),
+      lineBold('Now it really works!')
     ]),
 
     slide([
-      title('Now it works'),
-      line('DEMO')
+      title('DEMO')
     ]),
 
     slide([
       title('Makeblock'),
       line('Next robot: use an available platform'),
-      line('MBot (by Makeblock)'),
-      line('Arduino inside (ATMega328)')
+      lineBold('MBot (by Makeblock)'),
+      lineEm('Arduino inside (ATMega328)')
     ]),
 
     slide([
@@ -297,21 +298,21 @@ const slides = () => {
       line('Use an Ubuntu container to build and run the compiler'),
       line('After 4 hours, and 10Gb...'),
       line('After configuring the libcore build...'),
-      line('I have a running hello world')
+      lineBold('I have a running hello world')
     ]),
 
     slide([
       title('A moving target'),
       line('I left it there for a while'),
       line('When I resumed my effort, a one year old repo had a 4 hours old push!'),
-      line('The new work looked useful')
+      lineEm('The new work looked useful')
     ]),
 
     slide([
       title('Cathing up'),
       line('Try to use the new code with my old Rust'),
-      line('It won\'t work'),
-      line('Let\'s rebuild the compiler!')
+      lineEm('It won\'t work'),
+      lineBold('Let\'s rebuild the compiler!')
     ]),
 
     slide([
@@ -320,23 +321,23 @@ const slides = () => {
       line('It can now compile libcore!'),
       line('I could not get xargo working...'),
       line('...but cargo xbuild was fine'),
-      line('"hello world" runs again!')
+      lineBold('"hello world" runs again!')
     ]),
 
     slide([
       title('Ecosystem issues'),
       line('Bare-metal instructions work'),
       line('Serials, timers and pins are usable'),
-      line('For anything else...'),
+      lineEm('For anything else...'),
     ]),
 
     slide([
       title('Robot Hardware'),
       line('Simple r/w on pins is easy'),
       line('With timers you get hardware PWM'),
-      line('(DC motors and servos)'),
+      lineEm('(DC motors and servos)'),
       line('UARTs (serial, SPI) you can talk to smart devices'),
-      line('However...')
+      lineBold('However...')
     ]),
 
     slide([
@@ -345,29 +346,29 @@ const slides = () => {
       line('(PWM and analog read)'),
       line('Ultrasound easy to do'),
       line('(measure response time on a pin)'),
-      line('Anything else is hard')
+      lineEm('Anything else is hard')
     ]),
 
     slide([
       title('BIT Banging!'),
       line('The RGB led works on a single pin'),
       line('with 800 nanosecond precision pulses'),
-      line('mainstream Arduino libraries:'),
-      line('a mess of macros and finely tuned inline assembly'),
+      lineEm('...mainstream Arduino libraries...'),
+      lineBold('a pile of macros and finely tuned inline assembly'),
       line('The line array is similar')
     ]),
 
     slide([
       title('Back to Rust'),
       line('Writing this in Rust is feasible'),
-      line('(like everything)'),
+      lineEm('(like everything)'),
       line('But it\'s tricky'),
-      line('I tried to reuse the C code')
+      lineBold('I tried to reuse the C code')
     ]),
 
     slide([
       title('Mix Rust and Arduino'),
-      line('Which should we put inside the other?'),
+      lineEm('Which should we put inside the other?'),
       line('Arduino sketch linking a Rust library?'),
       line('A Rust program linking the Arduino core?')
     ]),
@@ -376,7 +377,7 @@ const slides = () => {
       title('Rust inside Arduino'),
       line('Doable in principle'),
       line('Linking fails because of missing symbols'),
-      line('It seems that the a static lib crate is not "compatible" with the Arduino world')
+      lineEm('It seems that the a static lib crate is not "compatible" with the Arduino world')
     ]),
 
     slide([
@@ -392,32 +393,32 @@ const slides = () => {
       line('Make sure all required symbols are exported'),
       codeBlock(`extern "C" __attribute__((externally_visible, used))`),
       line('Include all needed libraries'),
-      line('It works!'),
-      line('Until it breaks...')
+      lineBold('It works!'),
+      lineEm('Until it breaks...')
     ]),
 
     slide([
       title('My thoughts'),
-      line('Rust *does* work on AVR'),
+      lineBold('Rust does work on AVR'),
       line('It is still painful to use'),
       line('The ecosystem is totally missing'),
       line('C integration is useful but tricky'),
-      line('Probably mine was just bad timing'),
-      line('Let\'s see when it will be merged!')
+      lineEm('Probably mine was just bad timing'),
+      lineBold('Let\'s see when it will be merged!')
     ]),
 
     slide([
       title('What about Rust?'),
       line('I mean, is Rust helping at all?'),
-      line('TL;DR; Yes, it does.'),
-      line('Longer answer: it depends on how your robot code is done')
+      lineBold('TL;DR; Yes, it does.'),
+      lineEm('Longer answer: it depends on how your robot code is done')
     ]),
 
     slide([
       title('The Megaloop'),
       line('Simplest possible approach'),
-      line('(it\'s what Arduino encourages)'),
-      line('A big "read -> think -> act" loop')
+      lineEm('(it\'s what Arduino encourages)'),
+      lineBold('A big "read -> think -> act" loop')
     ]),
 
     slide([
@@ -460,14 +461,14 @@ act(c: Cmd) -> Cmd`)
     slide([
       title('Smile!'),
       line('All these styles are fine'),
-      line('The borrow checker...'),
-      line('...is helping anyway!')
+      lineEm('The borrow checker...'),
+      lineBold('...is helping either way!')
     ]),
 
     slide([
       title('Realistically'),
       line('think can be complex'),
-      line('it must be modularized')
+      lineBold('it must be modularized')
     ]),
 
     slide([
@@ -475,46 +476,47 @@ act(c: Cmd) -> Cmd`)
       line('a match calling sub-functions'),
       line('a function pointer (part of the state)'),
       line('we can have many sub-loops'),
-      line('(maybe macros could help?)')
+      lineEm('(maybe macros could help?)')
     ]),
 
     slide([
       title('Smile!'),
       line('The Rust type system helps'),
       line('State can be an enum'),
-      line('This is way better than C(++)!')
+      lineEm('with exhaustive pattern matching'),
+      lineBold('This is way better than C(++)!')
     ]),
 
     slide([
       title('Are we done?'),
       line('Not really'),
       line('We still have a single megaloop'),
-      line('The response time (latency) is constrained by the loop complexity'),
-      line('All the complexity is inside a single function')
+      lineEm('The response time (latency) is constrained by the loop complexity'),
+      lineBold('All the complexity is inside a single function')
     ]),
 
     slide([
       title('Can we do better?'),
       line('We would need a multitasking system'),
       line('However, this means a scheduler'),
-      line('Particularly, a real time scheduler'),
-      line('Not "bare-metal" anymore...')
+      lineBold('Particularly, a real time scheduler'),
+      lineEm('Not "bare-metal" anymore...')
     ]),
 
     slide([
       title('Enter RTFM'),
-      line('Thanks to Jorge Aparicio'),
+      lineEm('Thanks to Jorge Aparicio'),
       line('A hardware scheduler'),
       line('Interrupt driven'),
       line('Sub-microsecond overhead'),
-      line('...with fearless concurrency!')
+      lineBold('...with fearless concurrency!')
     ]),
 
     slide([
       title('RTFM magic'),
       line('Uses the Rust type system'),
-      line('(and "phantom" markers)'),
-      line('to prove that access to shared resources is safe'),
+      lineEm('(and "phantom" markers)'),
+      lineBold('to prove that access to shared resources is safe'),
       line('AFAIK only Cortex-M')
     ]),
 
@@ -524,7 +526,7 @@ act(c: Cmd) -> Cmd`)
       line('You should seriously consider it'),
       line('Rust support is first class'),
       line('You don\'t even need another linker'),
-      line('Maybe start with bobbin?')
+      lineEm('Maybe start with bobbin?')
     ]),
 
     slide([
@@ -536,7 +538,13 @@ act(c: Cmd) -> Cmd`)
       line('Or stick to soft real time')
     ]),
 
-
+    slide([
+      title('Sum it Up'),
+      line('Rust on robots is great'),
+      lineEm('It even runs on Lego bricks!'),
+      line('The language performs at least as well as C'),
+      lineBold('The abstractions you can build are way better!')
+    ]),
 
     slideZoom([
       title('That\'s all...', false, 5),
