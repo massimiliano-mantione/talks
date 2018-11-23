@@ -149,8 +149,8 @@ const logo = () => {
 const team = () => {
   return <Image src={images.team.replace('/', '')} width="60vw"/>
 }
-const latency = () => {
-  return <video src={'assets/Latency-tester.mp4'} width="800px" autoPlay="true" loop="true"/>
+const video = (file, width) => {
+  return <video src={'assets/' + file} width={width} autoPlay="true" loop="true"/>
 }
 
 const slides = () => {
@@ -175,9 +175,9 @@ const slides = () => {
 
     slide([
       title('Talk Roadmap'),
-      line('A story (the path to Rust)'),
+      line('A story (my path to Rust on robots)'),
       line('A couple of examples'),
-      line('What\'s special about Rust')
+      line('What\'s special about Rust on Robots')
     ]),
 
     slide([
@@ -206,6 +206,16 @@ const slides = () => {
     ]),
 
     slide([
+      title('Sumo', false),
+      video('sumo.mp4', '800px')
+    ]),
+
+    slide([
+      title('Line Follower', false),
+      video('line-follower.mp4', '300px')
+    ]),
+
+    slide([
       title('We are a team!'),
       team()
     ]),
@@ -228,7 +238,7 @@ const slides = () => {
 
     slide([
       title('Latency test'),
-      latency(),
+      video('Latency-tester.mp4', "800px"),
       lineBold('We got 50ms latency spikes!')
     ]),
 
@@ -241,12 +251,20 @@ const slides = () => {
 
     slide([
       title('Real Time Examples'),
-      line('Car on a highway'),
+      line('Self driving car on a highway'),
       lineEm('[108 Km/h == 30 m/s]'),
       lineBold('100ms is 3m'),
       line('Line follower robot'),
       lineEm('[2 m/s]'),
       lineBold('10ms is 20mm')
+    ]),
+
+    slide([
+      title('The root of the problem'),
+      line('was not the language'),
+      lineBold('It was the OS'),
+      lineEm('Linux without PREEMPT_RT'),
+      lineEm('ARMv5 cache addressing')
     ]),
 
     slide([
@@ -279,45 +297,46 @@ const slides = () => {
     slide([
       title('Integrate with Ev3RT'),
       line('No simple syscall ABI'),
-      line('Wrap syscalls with C functions'),
+      lineEm('Wrap syscalls with C functions'),
       line('Binary file format is tricky'),
-      line('Reuse C SDK linker script'),
-      lineBold('It starts working')
+      lineEm('Reuse C SDK linker script'),
+      lineBold('Compile my app crate to a static lib used by an Ev3RT C app')
     ]),
 
     slide([
-      title('More troubles'),
-      line('Files become too big'),
-      line('Linker GC breaks the build'),
+      title('It started working, but...'),
+      line('Linked files became too big'),
+      lineEm('Linker GC breaks the build'),
       line('Recompile libcore'),
-      line('Use xargo, then cargo xbuild'),
-      lineBold('Now it really works!')
+      lineEm('Use xargo'),
+      lineBold('Then cargo xbuild...')
     ]),
 
     slide([
-      title('DEMO')
+      title('IT WORKS!')
     ]),
 
     slide([
       title('Makeblock'),
       line('Next robot: use an available platform'),
       lineBold('MBot (by Makeblock)'),
-      lineEm('Arduino inside (ATMega328)')
+      line('Arduino inside (ATMega328)'),
+      lineEm('Spoiler alert: this story does not have a fully happy ending')
     ]),
 
     slide([
       title('Rust on AVR'),
       line('A lot of hurdles'),
       line('Must build a Rust fork'),
-      line('Using a forked LLVM'),
-      line('The LLVM build failed on my Fedora environment')
+      lineEm('which uses a forked LLVM'),
+      lineBold('The LLVM build failed on my Fedora environment')
     ]),
 
     slide([
       title('A more stable environment'),
       line('Use an Ubuntu container to build and run the compiler'),
       line('After 4 hours, and 10Gb...'),
-      line('After configuring the libcore build...'),
+      line('After fighting with the libcore build...'),
       lineBold('I have a running hello world')
     ]),
 
@@ -339,8 +358,9 @@ const slides = () => {
       title('Bleeding Edge avr-rust'),
       line('Compiler builds out of the box'),
       line('It can now compile libcore!'),
+      lineEm('(but you must build it yourself)'),
       line('I could not get xargo working...'),
-      line('...but cargo xbuild was fine'),
+      lineEm('(but cargo xbuild was fine)'),
       lineBold('"hello world" runs again!')
     ]),
 
@@ -356,24 +376,24 @@ const slides = () => {
       line('Simple r/w on pins is easy'),
       line('With timers you get hardware PWM'),
       lineEm('(DC motors and servos)'),
-      line('UARTs (serial, SPI) you can talk to smart devices'),
+      line('With UARTs (serial, SPI) you can talk to smart devices'),
       lineBold('However...')
     ]),
 
     slide([
       title('MBot hardware'),
       line('Motors and button are ok'),
-      line('(PWM and analog read)'),
+      lineEm('(PWM and analog read)'),
       line('Ultrasound easy to do'),
-      line('(measure response time on a pin)'),
-      lineEm('Anything else is hard')
+      lineEm('(measure response time on a pin)'),
+      lineBold('Anything else is hard')
     ]),
 
     slide([
       title('BIT Banging!'),
-      line('The RGB led works on a single pin'),
+      line('The RGB leds work on a single pin'),
       line('with 800 nanosecond precision pulses'),
-      lineEm('...mainstream Arduino libraries...'),
+      lineEm('mainstream Arduino library:'),
       lineBold('a pile of macros and finely tuned inline assembly'),
       line('The line array is similar')
     ]),
@@ -442,9 +462,9 @@ const slides = () => {
 
     slide([
       title('The Megaloop'),
+      lineBold('A big "read -> think -> act" loop'),
       line('Simplest possible approach'),
-      lineEm('(it\'s what Arduino encourages)'),
-      lineBold('A big "read -> think -> act" loop')
+      lineEm('(it\'s what Arduino encourages)')
     ]),
 
     slide([
@@ -462,25 +482,27 @@ act(Cmd)`)
     ]),
 
     slide([
-      title('Even worse'),
+      title('How it ends up'),
       codeBlock(`read(d: &mut Data)
 think(d: &Data, s: &mut State, c: &mut Cmd)
 act(c: &mut Cmd)`)
     ]),
 
     slide([
-      title('Rustic'),
-      codeBlock(`read(d: Data) -> Data
-think(d: &Data, s: State, c: Cmd) -> (State, Cmd)
-act(c: Cmd) -> Cmd`)
+      title('Object Oriented'),
+      codeBlock(`loop {
+    let data = reader.read();
+    let cmd = state.think(data);
+    actuator.act(cmd);
+}`)
     ]),
 
     slide([
-      title('Pseudocode'),
+      title('Functional Pseudocode'),
       codeBlock(`loop {
-    d = read(d);
-    (s, c) = think(&d, s, c);
-    c = act(c);
+    data = read(data);
+    (state, cmd) = think(&data, state, cmd);
+    cmd = act(cmd);
 }`)
     ]),
 
@@ -489,6 +511,14 @@ act(c: Cmd) -> Cmd`)
       line('All these styles are fine'),
       lineEm('The borrow checker...'),
       lineBold('...is helping either way!')
+    ]),
+
+    slide([
+      title('Rust gives you a choice'),
+      lineEm('either'),
+      lineBold('Purely functional code that performs as C-like memory sharing code'),
+      lineEm('or'),
+      lineBold('C-like memory sharing code as safe as purely functional code')
     ]),
 
     slide([
@@ -549,7 +579,7 @@ act(c: Cmd) -> Cmd`)
       title('RTFM magic'),
       line('Uses the Rust type system'),
       lineEm('(and "phantom" markers)'),
-      lineBold('to prove that access to shared resources is safe'),
+      lineBold('to prove that concurrent access to shared resources is safe'),
       line('AFAIK only ARM Cortex-M')
     ]),
 
