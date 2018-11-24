@@ -147,7 +147,7 @@ const logo = () => {
   return <Image src={images.logo.replace('/', '')} width="10vw"/>
 }
 const team = () => {
-  return <Image src={images.team.replace('/', '')} width="60vw"/>
+  return <Image src={images.team.replace('/', '')} width="40vw"/>
 }
 const video = (file, width) => {
   return <video src={'assets/' + file} width={width} autoPlay="true" loop="true"/>
