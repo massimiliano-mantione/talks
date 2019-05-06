@@ -31,17 +31,17 @@ JsDay 2019
 -> In the beginning...
 
 ^
--> lots of TCP/IP protocols
+-> a dark sea TCP/IP protocols
 
 ^
 -> *Telnet, FTP, SMTP, NTP, Gopher...*
 
 -------------------------------------------------
 
--> # Tim Berners-Lee
+-> # Enter Tim Berners-Lee
 
 ^
--> Let there be HTTP
+-> Let there be *HTTP*
 ^
 -> _and there was HTTP_
 
@@ -69,7 +69,7 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Brendan Eich
+-> # Enter Brendan Eich
 
 ^
 -> Let there be *Javascript*
@@ -90,7 +90,7 @@ JsDay 2019
 -> Nobody in his right mind would have said that it was good
 
 ^
--> But there Javascript was
+-> But Javascript we had
 ^
 -> ...for the centuries to come...
 
@@ -100,13 +100,17 @@ JsDay 2019
 
 ^
 -> Two weeks from conception to implementation
+^
+-> should this be explained by
 
 ^
 -> Creationism or Evolutionism?
+^
+-> A Bit of Both
 
 -------------------------------------------------
 
--> # Javascript Evolution
+-> # The Javascript Accident
 
 ^
 - September 1995: Netscape Navigator 2.0
@@ -117,6 +121,10 @@ JsDay 2019
 - Netscape browser version 2.0B3
 ^
   (Javascript)
+
+-------------------------------------------------
+
+-> # The Deviation
 
 ^
 - August 1996: Internet Explorer 3.0
@@ -218,6 +226,11 @@ JsDay 2019
 
 -------------------------------------------------
 
+-> # An amazing evolution
+^
+-> but
+
+^
 -> _Has it been_
 
 ^
@@ -252,7 +265,7 @@ JsDay 2019
 
 -------------------------------------------------
 
--> What was the point?
+-> *What was the point?*
 
 -------------------------------------------------
 
@@ -299,10 +312,13 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Are we done yet?
+-> # Now Javascript has all of this
 
 ^
--> Not really...
+_Are we done yet?_
+
+^
+-> *Not really...*
 
 -------------------------------------------------
 
@@ -316,6 +332,67 @@ JsDay 2019
 
 -------------------------------------------------
 
+-> Running C++ code
+
+^
+-> inside a web page
+
+^
+-> *WHY?*
+
+^
+Code Reuse and Raw Performance!
+
+-------------------------------------------------
+
+-> # An Initial Attempt
+
+^
+-> NaCl
+
+^
+-> PNaCl
+-> _(portable NaCl)_
+
+-------------------------------------------------
+
+-> _What went wrong?_
+
+-------------------------------------------------
+
+-> # Enter Asm.JS <-
+
+^
+-> (March 2013) <-
+
+^
+-> Was it better? <-
+
+^
+-> _Yes, and No_ <-
+
+^
+-> *But it was evolutionary* <-
+
+-------------------------------------------------
+
+-> # It evolved into WASM
+
+^
+-> Linear memory region
+^
+-> A CPU-like instruction set
+^
+-> Ideal target for any compiled language
+
+^
+-> *Rust is becoming an ideal choice*
+
+-------------------------------------------------
+
+-> # A tale of
+
+^
 -> _Pure JS_
 
 ^
@@ -345,6 +422,9 @@ JsDay 2019
 
 -------------------------------------------------
 
+-> # An amazing exchange of posts
+
+^
 -> [Oxidizing Source Maps with Rust and WebAssembly]("https://hacks.mozilla.org/2018/01/oxidizing-source-maps-with-rust-and-webassembly")
 
 ^
@@ -355,45 +435,7 @@ JsDay 2019
 
 -------------------------------------------------
 
--> Running C++ code
-
-^
--> inside a web page
-
--------------------------------------------------
-
--> # Remember Web Plugins?
-
-^
--> NaCl
-
-^
--> PNaCl
--> _(portable NaCl)_
-
--------------------------------------------------
-
--> _What went wrong?_
-
--------------------------------------------------
-
--> # Asm.JS
-
-^
--> (March 2013)
-
-^
--> Was it better?
-
-^
--> __Yes, and No__
-
-^
--> *But it was evolutionary*
-
--------------------------------------------------
-
--> WASM
+-> Wasm in the Web
 
 ^
 -> Is getting more and more traction
@@ -402,7 +444,34 @@ JsDay 2019
 -> Lots of use cases inside the web
 
 ^
--> _And outside!_
+-> *3D rendering, DNA sequencing previews,*
+-> *Audio Analysis, Developer Tools*
+-> *and anything CPU intensive*
+
+
+-------------------------------------------------
+
+-> Use Cases Outside the Web
+
+^
+-> Wasm combines
+
+^
+-> Strong Sandboxing
+^
+-> Native CPU Power
+^
+-> Language independence
+
+-------------------------------------------------
+
+-> # A New trend?
+
+^
+-> *Before*: bring mainstream technologies to the web
+
+^
+-> *Now*: use web technologies in mainstream computing
 
 -------------------------------------------------
 
@@ -414,15 +483,8 @@ JsDay 2019
 ^
 -> Edge computing
 
--------------------------------------------------
-
--> # A New trend?
-
 ^
--> *Before*: bring mainstream technologies to the web
-
-^
--> *Now*: use web technologies in mainstream computing
+-> Serverless deployments
 
 -------------------------------------------------
 
