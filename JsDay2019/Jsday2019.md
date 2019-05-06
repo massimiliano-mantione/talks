@@ -28,7 +28,7 @@ JsDay 2019
 -> # Javascript History
 
 ^
--> In the beginning...
+-> In the beginning there was only...
 
 ^
 -> a dark sea TCP/IP protocols
@@ -90,7 +90,9 @@ JsDay 2019
 -> Nobody in his right mind would have said that it was good
 
 ^
--> But Javascript we had
+-> But Javascript he made
+^
+-> and Javascript we had
 ^
 -> ...for the centuries to come...
 
@@ -100,13 +102,15 @@ JsDay 2019
 
 ^
 -> Two weeks from conception to implementation
-^
--> should this be explained by
 
 ^
--> Creationism or Evolutionism?
+-> should this be explained by
 ^
--> A Bit of Both
+-> Creationism or Evolutionism?
+
+^
+-> _A Bit of Both_
+
 
 -------------------------------------------------
 
@@ -227,6 +231,9 @@ JsDay 2019
 -------------------------------------------------
 
 -> # An amazing evolution
+
+^
+-> from 1995 to 2019
 ^
 -> but
 
@@ -315,7 +322,7 @@ JsDay 2019
 -> # Now Javascript has all of this
 
 ^
-_Are we done yet?_
+-> _Are we done yet?_
 
 ^
 -> *Not really...*
@@ -341,7 +348,7 @@ _Are we done yet?_
 -> *WHY?*
 
 ^
-Code Reuse and Raw Performance!
+-> _Code Reuse and Raw Performance!_
 
 -------------------------------------------------
 
@@ -413,7 +420,7 @@ Code Reuse and Raw Performance!
 
 -> Nick Fitzgerald and Tom Tromey
 ^
--> reimplemented part of `source-map` in Rust
+-> reimplemented part of _source-map_ in Rust
 ^
 
 -> Vyacheslav Egorov
@@ -422,7 +429,7 @@ Code Reuse and Raw Performance!
 
 -------------------------------------------------
 
--> # An amazing exchange of posts
+-> An amazing exchange of posts
 
 ^
 -> [Oxidizing Source Maps with Rust and WebAssembly]("https://hacks.mozilla.org/2018/01/oxidizing-source-maps-with-rust-and-webassembly")
@@ -441,7 +448,7 @@ Code Reuse and Raw Performance!
 -> Is getting more and more traction
 
 ^
--> Lots of use cases inside the web
+-> _lots of use cases_
 
 ^
 -> *3D rendering, DNA sequencing previews,*
@@ -478,13 +485,13 @@ Code Reuse and Raw Performance!
 -> # Wasm in the wild
 
 ^
+-> Serverless deployments
+
+^
 -> Blockchain
 
 ^
 -> Edge computing
-
-^
--> Serverless deployments
 
 -------------------------------------------------
 
