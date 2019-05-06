@@ -12,11 +12,11 @@ JsDay 2019
 -> # Things I worked on
 
 ^
--> The Mono JIT Compiler
+-> The V8 Team in Google
 ^
 -> The Unity Game Engine
 ^
--> The V8 Team in Google
+-> The Mono JIT Compiler
 
 ^
 -> *_Now CTO and Full Stack developer at Hyperfair_*
