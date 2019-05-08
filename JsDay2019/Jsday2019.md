@@ -711,6 +711,19 @@ JsDay 2019
 
 -------------------------------------------------
 
+-> Mixing _Wasm_ and _Javascript_
+
+^
+-> should be *seamless*
+
+^
+-> then Wasm could *reuse* any JS module
+
+^
+-> there would be no *need* to *rewrite* them!
+
+-------------------------------------------------
+
 -> # The web
 
 ^
