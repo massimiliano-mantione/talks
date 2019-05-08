@@ -85,13 +85,14 @@ JsDay 2019
 -> # And he saw that it was Good
 
 ^
--> Then developers Came
+-> _Web 1.0_
 
+^
+-> Then Developers Came
 ^
 -> The Web Needed Life
-
 ^
--> web pages needed to be active
+-> web *pages* needed to be *active*
 
 -------------------------------------------------
 
@@ -114,6 +115,10 @@ JsDay 2019
 
 ^
 -> Nobody in his right mind would have said that it was good
+^
+-> Javascript had *good* ideas
+^
+-> but it was *inconsistent* and *limited*
 
 ^
 -> But Javascript he made
@@ -121,6 +126,9 @@ JsDay 2019
 -> and Javascript we had
 ^
 -> ...for the centuries to come...
+
+^
+-> _Web 2.0_
 
 -------------------------------------------------
 
@@ -207,7 +215,7 @@ JsDay 2019
 
 -> ...the war was still ongoing...
 ^
--> ...life for developers was miserable...
+-> ...life for web developers was miserable...
 
 ^
 -> # The Saviours
@@ -233,6 +241,8 @@ JsDay 2019
 -> JSON support
 ^
 -> Better reflection on object properties
+^
+-> _
 
 -------------------------------------------------
 
@@ -251,6 +261,8 @@ JsDay 2019
 -> let, const, string templates
 ^
 -> Proxies and reflection
+^
+-> _
 
 -------------------------------------------------
 
@@ -266,6 +278,8 @@ JsDay 2019
 -> Rest/spread operators (...)
 ^
 -> asynchronous iteration
+^
+-> _
 
 -------------------------------------------------
 
@@ -291,20 +305,22 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Remember...
+-> # A Parallel Story
 
 ^
--> Java applets?
+-> Java applets
 ^
--> Flash and Actionscript?
+-> Flash and Actionscript
 ^
--> Browser Plugins?
+-> Browser Plugins
 ^
--> Coffeescript?
+-> Coffeescript
 ^
--> Silveright?
+-> Silveright
 ^
--> Typescript?
+-> Typescript
+^
+-> _
 
 -------------------------------------------------
 
@@ -351,7 +367,7 @@ JsDay 2019
 ^
 -> Parallel computing
 ^
--> (Service and Web Workers)
+-> (Service Workers and Web Workers)
 
 -------------------------------------------------
 
@@ -456,7 +472,7 @@ JsDay 2019
 
 -> Remember the
 
--> source-map
+-> _source-map_
 
 -> story?
 
@@ -499,7 +515,7 @@ JsDay 2019
 -> # What do you need...
 
 ^
--> ...to write *high performence* code _in JS_?
+-> ...to write *high performance* code _in JS_?
 
 ^
 -> ...well...
@@ -509,10 +525,12 @@ JsDay 2019
 -> # What do you need...
 
 ^
--> ...to write *high performence* code?
+-> ...to write *high performance* code?
 
 ^
 -> let's say _"performance skills"_
+^
+-> (understanding *CPUs*, *RAM*, *caches*, *profilers*...)
 
 -------------------------------------------------
 
@@ -527,6 +545,8 @@ JsDay 2019
 -> occasionally fight the _GC_
 ^
 -> maybe fight the _Web APIs_ as well...
+^
+-> _
 
 -------------------------------------------------
 
@@ -617,6 +637,8 @@ JsDay 2019
 
 ^
 -> for *front* end _and_ *back* end
+^
+-> _
 
 -------------------------------------------------
 
@@ -628,12 +650,64 @@ JsDay 2019
 ^
 -> but *wider*
 ^
--> and with *better engineering*
+-> with *better engineering*
+^
+-> and  _*polyglot*_!
 
 ^
 -> (anyref proposal)
 ^
 -> (type safe, _direct_ browser API calls)
+
+-------------------------------------------------
+
+-> Should Wasm _replace_ Javascript?
+
+^
+-> *of course not*
+
+^
+-> Should Wasm be _allowed_ to replace Javascript?
+
+^
+-> _yes, absolutely_
+
+^
+-> ...otherwise...
+
+^
+-> _it will be *forced* to replace Javascript!_
+
+-------------------------------------------------
+
+-> # Interoperability
+
+^
+-> Right now there's a _wall_ between Wasm and Javascript
+
+^
+-> Javascript cannot share _objects_ with Wasm
+^
+-> only _primitive values_ can freely cross the wall
+^
+-> (also _functions_ but in a suboptimal way)
+
+^
+-> lots of *boilerplate code* is needed to build a bridge
+^
+-> (even if _bindgen_ helps a _lot_)
+
+-------------------------------------------------
+
+-> Wasm modules are
+
+-> *bubbles*
+
+-> in a _Javascript_ world
+
+-------------------------------------------------
+
+-> ...consider string handling...
 
 -------------------------------------------------
 
