@@ -9,7 +9,8 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Things I worked on
+-> # About me:
+-> # things I worked on
 
 ^
 -> The V8 Team in Google
@@ -22,6 +23,31 @@ JsDay 2019
 -> *_Now CTO and Full Stack developer at Hyperfair_*
 ^
 -> *Virtual Reality on the Web*
+
+-------------------------------------------------
+
+-> # About this talk
+
+^
+-> _The Polyglot Web_
+
+^
+-> *What does it mean?*
+
+-------------------------------------------------
+
+-> # The Web has Javascript
+
+^
+-> Javascript is the language of the web
+
+^
+-> it _always_ has been, and _always_ will be
+
+^
+-> *Or not?*
+^
+-> _Let's time travel!_
 
 -------------------------------------------------
 
@@ -38,7 +64,7 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Enter Tim Berners-Lee
+-> # Then Tim Berners-Lee Came
 
 ^
 -> Let there be *HTTP*
@@ -65,11 +91,11 @@ JsDay 2019
 -> The Web Needed Life
 
 ^
--> Pages needed to be active
+-> web pages needed to be active
 
 -------------------------------------------------
 
--> # Enter Brendan Eich
+-> # Then Brendan Eich Came
 
 ^
 -> Let there be *Javascript*
@@ -84,7 +110,7 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Well...
+-> # IMHO
 
 ^
 -> Nobody in his right mind would have said that it was good
@@ -101,59 +127,64 @@ JsDay 2019
 -> # A bit of Philosophy
 
 ^
--> Two weeks from conception to implementation
+-> Javascript:
+-> two weeks from conception to implementation
 
 ^
 -> should this be explained by
 ^
--> Creationism or Evolutionism?
+-> *Creationism* or *Evolutionism*?
 
 ^
 -> _A Bit of Both_
-
+^
+-> A few *accidents*, and lots of *hard work*
 
 -------------------------------------------------
 
 -> # The Javascript Accident
 
 ^
-- September 1995: Netscape Navigator 2.0
+-> September 1995: Netscape Navigator 2.0
 ^
-  (Mocha or Livescript)
+-> (Mocha or Livescript)
 
 ^
-- Netscape browser version 2.0B3
+-> Netscape browser version 2.0B3
 ^
-  (Javascript)
+-> (Javascript)
 
 -------------------------------------------------
 
 -> # The Deviation
 
 ^
-- August 1996: Internet Explorer 3.0
+-> August 1996: Internet Explorer 3.0
 ^
-  (JScript)
+-> (JScript)
 
 -------------------------------------------------
 
 -> # Browser Wars
 
 ^
+-> _Microsoft_ vs _Netscape_
+
+^
 -> Enter ECMAScript
 
 ^
-- November 1996: first submission to ECMA by Netscape
+-> November 1996: first submission to ECMA by Netscape
 ^
-- June 1997, Version 1: First edition
+-> June 1997, Version 1: First edition
 ^
-- June 1998, Version 2: Align with ISO/IEC 16262
+-> June 1998, Version 2: Align with ISO/IEC 16262
 
 -------------------------------------------------
 
 -> # December 1999: ECMAScript 3
-^
 
+^
 -> Regular expressions
 ^
 -> Better string handling
@@ -169,8 +200,16 @@ JsDay 2019
 ^
 -> *Mission Impossible*
 
+^
+-> Too much _"design by committee"_
+
 -------------------------------------------------
 
+-> ...the war was still ongoing...
+^
+-> ...life for developers was miserable...
+
+^
 -> # The Saviours
 
 ^
@@ -245,30 +284,27 @@ JsDay 2019
 
 -------------------------------------------------
 
--> _*No, it never was*_
+-> _*No, and it never was*_
 
 ^
 -> _Developers always wanted more_
 
 -------------------------------------------------
 
--> Remember Java applets?
+-> # Remember...
 
--------------------------------------------------
-
+^
+-> Java applets?
+^
 -> Flash and Actionscript?
-
--------------------------------------------------
-
--> Coffeescript?
-
--------------------------------------------------
-
--> Silveright?
-
--------------------------------------------------
-
+^
 -> Browser Plugins?
+^
+-> Coffeescript?
+^
+-> Silveright?
+^
+-> Typescript?
 
 -------------------------------------------------
 
@@ -289,13 +325,13 @@ JsDay 2019
 -> # Language features
 
 ^
--> Static typing
+-> Syntactic sugar
 ^
 -> Functional constructs
 ^
--> async await
+-> Static typing
 ^
--> Syntactic sugar
+-> Generators and async await
 
 ^
 -> *transpilers can do it*
@@ -305,21 +341,23 @@ JsDay 2019
 -> # API Power
 
 ^
-- Multimedia
+-> Multimedia
 ^
-  (WebGL, WebMedia)
+-> (WebGL, WebMedia)
 ^
-- Networking
+-> Networking
 ^
-  (WS, WebRTC)
+-> (WS, WebRTC)
 ^
-- Parallel computing
+-> Parallel computing
 ^
-  (Service and Web Workers)
+-> (Service and Web Workers)
 
 -------------------------------------------------
 
--> # Now Javascript has all of this
+-> ...now...
+^
+-> # Javascript has all of this
 
 ^
 -> _Are we done yet?_
@@ -329,13 +367,16 @@ JsDay 2019
 
 -------------------------------------------------
 
--> # Two more related issues
+-> # The Web has three more issues
+
+^
+-> Reusing existing C++ code
 
 ^
 -> Raw performance
 
 ^
--> Reusing existing C++ code
+-> Language independence
 
 -------------------------------------------------
 
@@ -364,6 +405,9 @@ JsDay 2019
 -------------------------------------------------
 
 -> _What went wrong?_
+
+^
+-> why aren't we using _NaCl_ now?
 
 -------------------------------------------------
 
@@ -442,6 +486,60 @@ JsDay 2019
 
 -------------------------------------------------
 
+-> # What does it mean?
+
+^
+-> _the key is_
+
+^
+-> *Speed Without Wizardry*
+
+-------------------------------------------------
+
+-> # What do you need...
+
+^
+-> ...to write *high performence* code _in JS_?
+
+^
+-> ...well...
+
+-------------------------------------------------
+
+-> # What do you need...
+
+^
+-> ...to write *high performence* code?
+
+^
+-> let's say _"performance skills"_
+
+-------------------------------------------------
+
+-> # If you target Javascript
+
+^
+-> you need *all* of that
+
+^
+-> and you need to understand _JS JITs_
+^
+-> occasionally fight the _GC_
+^
+-> maybe fight the _Web APIs_ as well...
+
+-------------------------------------------------
+
+-> # Wasm can help
+
+^
+-> the _key_ is
+
+^
+-> *Speed Without Wizardry*
+
+-------------------------------------------------
+
 -> Wasm in the Web
 
 ^
@@ -492,6 +590,50 @@ JsDay 2019
 
 ^
 -> Edge computing
+
+-------------------------------------------------
+
+-> # Why Would You Want
+
+^
+-> a *polyglot* web?
+
+-------------------------------------------------
+
+-> # Javascript
+
+^
+-> is *not* the *firts* language in computing history
+
+^
+-> hopefully it will *not* be the *last* one
+
+-------------------------------------------------
+
+-> # Javascript, browsers, and node
+
+^
+-> a _unified_ development platform
+
+^
+-> for *front* end _and_ *back* end
+
+-------------------------------------------------
+
+-> # The Wasm Perspective
+
+^
+-> the same _unified_ environent
+
+^
+-> but *wider*
+^
+-> and with *better engineering*
+
+^
+-> (anyref proposal)
+^
+-> (type safe, _direct_ browser API calls)
 
 -------------------------------------------------
 
