@@ -58,10 +58,10 @@ const slide = (children) => {
   return <Slide transition={['fade']} bgColor="secondary" textColor="primary">{children}</Slide>
 }
 const slideRustZoom = (children) => {
-  return <Slide transition={['zoom', 'slide']} bgImage={images.bg} textColor="primary">{children}</Slide>
+  return <Slide transition={['zoom', 'slide']} bgColor="secondary" bgImage={images.bg} textColor="primary">{children}</Slide>
 }
 const slideRust = (children) => {
-  return <Slide transition={['fade']} bgImage={images.bg} textColor="primary">{children}</Slide>
+  return <Slide transition={['fade']} bgColor="secondary" bgImage={images.bg} textColor="primary">{children}</Slide>
 }
 
 const titleSetCaps = (text, caps, p1, p2) => {
