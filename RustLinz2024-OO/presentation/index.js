@@ -35,7 +35,8 @@ const images = {
   joe: require('../assets/joe-armstrong.jpg'),
   michael: require('../assets/michael-feathers.jpg'),
   rich: require('../assets/rich-hickey.png'),
-  rust: require('../assets/rust-linz.png')
+  rust: require('../assets/rust-linz.png'),
+  bg: require('../assets/rust-bg.jpg')
 }
 
 preloader(images)
@@ -55,6 +56,12 @@ const slideZoom = (children) => {
 }
 const slide = (children) => {
   return <Slide transition={['fade']} bgColor="secondary" textColor="primary">{children}</Slide>
+}
+const slideRustZoom = (children) => {
+  return <Slide transition={['zoom', 'slide']} bgImage={images.bg} textColor="primary">{children}</Slide>
+}
+const slideRust = (children) => {
+  return <Slide transition={['fade']} bgImage={images.bg} textColor="primary">{children}</Slide>
 }
 
 const titleSetCaps = (text, caps, p1, p2) => {
@@ -156,7 +163,7 @@ const logo = () => {
 
 const slides = () => {
   return [
-    slideZoom([
+    slideRustZoom([
       title('today', false, 4)
     ]),
     slideZoom([
@@ -317,6 +324,9 @@ const slides = () => {
   // Needed becuse aspect X
   // depends on Person :-/
   person: Person
+  // Needed becuse aspect X
+  // depends on aspect Z :-/
+  aspectZ: PersonAspectZ
   propA: string
   propB: string
 }`)
@@ -339,12 +349,12 @@ const slides = () => {
       lineEm('...that requires a jungle...')
     ]),
 
-    slideZoom([
+    slideRustZoom([
       title('How Rust'),
       title('is Different')
     ]),
 
-    slide([
+    slideRust([
       title('Object References'),
       lineEm('especially references to mutable objects'),
       lineBold('are hard in Rust'),
@@ -435,7 +445,7 @@ let gifts = p.chooseGifts();`)
       lineEm('unpredictably')
     ]),
 
-    slideZoom([
+    slideRustZoom([
       title('How Rust'),
       title('is Different')
     ]),
@@ -459,7 +469,7 @@ let gifts = p.chooseGifts();`)
       line('Communicate through message passing')
     ]),
 
-    slide([
+    slideRust([
       title('Inheritance in Rust'),
       line('is only for pure interfaces'),
       lineEm('(traits)'),
@@ -469,7 +479,7 @@ let gifts = p.chooseGifts();`)
       lineEm('(it can only contain them)')
     ]),
 
-    slide([
+    slideRust([
       title('Virtual Dispatch in Rust'),
       codeBlock('Box::new(my_value) as Box<dyn MyTrait>'),
       line('produces a true opaque reference'),
@@ -490,7 +500,7 @@ let gifts = p.chooseGifts();`)
       line('Changing "class" to a piece of data is cumbersome')
     ]),
 
-    slideZoom([
+    slideRustZoom([
       title('How Rust'),
       title('is Different'),
       line('no "new" operator'),
@@ -542,12 +552,12 @@ let gifts = p.chooseGifts();`)
       lineBold('time and mutability mix badly'),
     ]),
 
-    slideZoom([
+    slideRustZoom([
       title('How Rust'),
       title('is Different')
     ]),
 
-    slide([
+    slideRust([
       title('Mutable State'),
       line('...is allowed in Rust...'),
       lineEm('but'),
@@ -585,13 +595,13 @@ let gifts = p.chooseGifts();`)
       lineEm('Working Effectively with Legacy Code (Prentice Hall, 2004)')
     ]),
 
-    slide([
+    slideRust([
       title('The real solution'),
       lineBold('Functional in the small'),
       lineBold('OO in the large')
     ]),
 
-    slide([
+    slideRust([
       title('In the Small'),
       lineEm('if a computation should happen instantly'),
       lineBold('usually inside an isolated component'),
@@ -601,7 +611,7 @@ let gifts = p.chooseGifts();`)
       line('and pure functions')
     ]),
 
-    slide([
+    slideRust([
       title('In the Large'),
       lineEm('if several tasks interact during time'),
       lineBold('each task has its own state'),
@@ -612,7 +622,7 @@ let gifts = p.chooseGifts();`)
       lineEm('async Rust shines at this')
     ]),
 
-    slide([
+    slideRust([
       title('Object Orientation'),
       lineEm('taking inspirations from'),
       lineEm('Erlang and Smalltalk'),
@@ -663,7 +673,7 @@ let gifts = p.chooseGifts();`)
       lineEm('even if you will not change language!')
     ]),
 
-    slideZoom([
+    slideRustZoom([
       title('That\'s all...', false, 5),
       title('Questions?')
     ]),
