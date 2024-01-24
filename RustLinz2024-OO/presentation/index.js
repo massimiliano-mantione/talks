@@ -35,8 +35,7 @@ const images = {
   joe: require('../assets/joe-armstrong.jpg'),
   michael: require('../assets/michael-feathers.jpg'),
   rich: require('../assets/rich-hickey.png'),
-  rust: require('../assets/rust-linz.png'),
-  bg: require('../assets/rust-bg.jpg')
+  rust: require('../assets/rust-linz.png')
 }
 
 preloader(images)
@@ -58,10 +57,10 @@ const slide = (children) => {
   return <Slide transition={['fade']} bgColor="secondary" textColor="primary">{children}</Slide>
 }
 const slideRustZoom = (children) => {
-  return <Slide transition={['zoom', 'slide']} bgColor="secondary" bgImage={images.bg} textColor="primary">{children}</Slide>
+  return <Slide transition={['zoom', 'slide']} bgColor="secondary" bgImage='https://massimiliano-mantione.github.io/talks/RustLinz2024-OO/assets/rust-bg.jpg' textColor="primary">{children}</Slide>
 }
 const slideRust = (children) => {
-  return <Slide transition={['fade']} bgColor="secondary" bgImage={images.bg} textColor="primary">{children}</Slide>
+  return <Slide transition={['fade']} bgColor="secondary" bgImage='https://massimiliano-mantione.github.io/talks/RustLinz2024-OO/assets/rust-bg.jpg' textColor="primary">{children}</Slide>
 }
 
 const titleSetCaps = (text, caps, p1, p2) => {
