@@ -327,7 +327,9 @@ const slides = () => {
       lineBold('large classes'),
       line('are bad because of implicit internal dependencies'),
       lineBold('small classes'),
-      line('introduce more references to other classes, which cause more dependencies')
+      line('introduce more references to other classes, which cause more dependencies'),
+      lineBold('truly independent classes'),
+      lineEm('are harder to design!')
     ]),
 
     slide([
@@ -348,7 +350,9 @@ const slides = () => {
       lineBold('are hard in Rust'),
       line('they are especially hard to store inside objects'),
       lineEm('mutual references are exceptionally hard'),
-      lineBold('dependencies are caused by references!')
+      lineBold('dependencies are caused by references'),
+      lineEm('making reference downsides explicit'),
+      lineEm('encourages independent components')
     ]),
 
     slideZoom([
@@ -529,11 +533,12 @@ let gifts = p.chooseGifts();`)
     slide([
       title('Another basic assumption'),
       title('of mainstream OOP languages'),
-      lineEm('everything is synchronous'),
-      line('Method calls'),
-      line('Argument passing'),
-      line('Object creation'),
-      line('Assignments'),
+      lineEm('everything happens'),
+      lineBold('on a global timeline'),
+      line('method calls'),
+      line('argument passing'),
+      line('object creation'),
+      line('assignments'),
       lineBold('time and mutability mix badly'),
     ]),
 
@@ -549,6 +554,12 @@ let gifts = p.chooseGifts();`)
       lineBold('it is not the default'),
       lineEm('and the borrow checker'),
       lineEm('steers you out of it')
+    ]),
+
+    slide([
+      title('OOP', false, 1),
+      title('vs', false, 8),
+      title('FP', false, 1)
     ]),
 
 
@@ -607,9 +618,27 @@ let gifts = p.chooseGifts();`)
       lineEm('Erlang and Smalltalk'),
       lineBold('each object is an actor'),
       line('with its own private state'),
-      line('it only interacts through messages'),
+      line('they only interact through messages'),
       lineEm('events can induce state changes, but'),
       lineBold('internal changes are purely functional')
+    ]),
+
+    slide([
+      title('Historical Considerations'),
+      lineEm('Why did we get C++?'),
+      line('In the \'80 computers were not so powerful'),
+      line('Proper OO requires totally decoupled "objects"'),
+      line('Think of them as independent, isolated processes'),
+      line('We were not ready to accept that')
+    ]),
+
+    slide([
+      title('Historical Considerations'),
+      lineEm('Obsession with performance'),
+      line('C++ promised "zero cost abstractions"'),
+      line('C++ property accesses and virtual method calls'),
+      line('cost 1 single machine instruction'),
+      lineEm('no dynamic system could compete with that')
     ]),
 
 
@@ -625,7 +654,7 @@ let gifts = p.chooseGifts();`)
       lineBold('Learn lots of other languages'),
       lineEm('it will help you to think differently'),
       line('Closure, Erlang'),
-      line('Go, Rust'),
+      line('Go, Swift, Rust'),
       line('Reason, Haskell')
     ]),
     slide([
