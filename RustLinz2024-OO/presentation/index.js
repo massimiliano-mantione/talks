@@ -274,7 +274,8 @@ const slides = () => {
 
     slideZoom([
       title('Dependencies'),
-      quoteImage('You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe)
+      quoteImage('You wanted a banana but what you got was a gorilla holding the banana and the entire jungle.', 'Joe Armstrong', images.joe),
+      lineEm('(creator of Erlang)')
     ]),
 
     slide([
@@ -318,7 +319,7 @@ const slides = () => {
     ]),
 
     slide([
-      title('Each helper class is...'),
+      title('But each helper class is...'),
       codeBlock(`class PersonAspectX {
   // Needed becuse aspect X
   // depends on Person :-/
@@ -361,7 +362,7 @@ const slides = () => {
       lineEm('mutual references are exceptionally hard'),
       lineBold('dependencies are caused by references'),
       lineEm('making reference downsides explicit'),
-      lineEm('encourages independent components')
+      lineBold('encourages independent components')
     ]),
 
     slideZoom([
@@ -441,7 +442,7 @@ let gifts = p.chooseGifts();`)
       line('What we got'),
       line('is code hard to use'),
       line('when requirements change'),
-      lineEm('unpredictably')
+      lineEm('in a way we did not foresee')
     ]),
 
     slideRustZoom([
@@ -457,7 +458,8 @@ let gifts = p.chooseGifts();`)
 
     slide([
       quoteImage('Actually I made up the term "object-oriented", and I can tell you I did not have C++ in mind.', 'Alan Kay', images.alan),
-      lineEm('What did he have in mind?')
+      lineEm('(creator of Smalltalk)'),
+      line('What did he have in mind?')
     ]),
 
     slide([
@@ -474,7 +476,7 @@ let gifts = p.chooseGifts();`)
       lineEm('(traits)'),
       lineBold('a type (a struct)'),
       line('cannot inherit'),
-      lineBold('properties that hold state'),
+      lineBold('from other types'),
       lineEm('(it can only contain them)')
     ]),
 
@@ -527,7 +529,7 @@ let gifts = p.chooseGifts();`)
 
     slide([
       quoteImage('[OOP] ...is actually Place Oriented Programming', 'Rich Hickey', images.rich),
-      titleNoCaps('(creator of Clojure)', false, 10)
+      lineEm('(creator of Clojure)')
     ]),
 
     slide([
@@ -582,7 +584,7 @@ let gifts = p.chooseGifts();`)
 
     slide([
       title('Functional Approach'),
-      line('Dependencies are minimal'),
+      line('Dependencies are stateless'),
       line('Control flow becomes explicit'),
       line('[de]serialization becomes trivial'),
       line('Testing is a breeze')
@@ -595,14 +597,14 @@ let gifts = p.chooseGifts();`)
     ]),
 
     slideRust([
-      title('The real solution'),
+      title('A Good Practice'),
       lineBold('Functional in the small'),
       lineBold('OO in the large')
     ]),
 
     slideRust([
       title('In the Small'),
-      lineEm('if a computation should happen instantly'),
+      lineEm('...if a computation should happen instantly...'),
       lineBold('usually inside an isolated component'),
       lineBold('with stateless dependencies'),
       line('implement it in functional style'),
@@ -612,7 +614,7 @@ let gifts = p.chooseGifts();`)
 
     slideRust([
       title('In the Large'),
-      lineEm('if several tasks interact during time'),
+      lineEm('...if several tasks interact during time...'),
       lineBold('each task has its own state'),
       lineBold('event ordering can be cahotic'),
       line('go for the actor model'),
@@ -650,6 +652,32 @@ let gifts = p.chooseGifts();`)
       lineEm('no dynamic system could compete with that')
     ]),
 
+    slideRustZoom([
+      title('How Rust'),
+      title('is Different')
+    ]),
+
+    slideRust([
+      title('Programming'),
+      lineEm('is the art'),
+      lineEm('of finding the program'),
+      lineEm('that solves a given problem'),
+      lineEm('among the space'),
+      lineEm('of all possible programs')
+    ]),
+
+    slideRust([
+      title('Programming Languages'),
+      lineBold('low level'),
+      lineEm('every program (correct or incorrect)'),
+      lineEm('is easy to write'),
+      lineBold('mainstream OOP'),
+      lineEm('correct (but badly designed) programs'),
+      lineEm('are easy to write'),
+      lineBold('RUST'),
+      lineEm('correct and well designed programs'),
+      lineEm('are easy to write')
+    ]),
 
     slide([
       title('TAKEAWAY'),
