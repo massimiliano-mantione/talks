@@ -22,7 +22,7 @@
 ^
 -> Robot logic
 ^
--> Real Time Software
+-> Closing thoughts
 ^
 -> Let's have fun!
 
@@ -58,7 +58,7 @@
 -> A look at the robot
 -> Software architecture
 -> Robot logic
--> Real Time Software
+-> Closing thoughts
 -> Let's have fun!
 
 -------------------------------------------------
@@ -91,7 +91,7 @@
 -> ✰ *A look at the robot* ✰
 -> Software architecture
 -> Robot logic
--> Real Time Software
+-> Closing thoughts
 -> Let's have fun!
 
 
@@ -114,7 +114,7 @@
 -> A look at the robot
 -> ✰ *Software architecture* ✰
 -> Robot logic
--> Real Time Software
+-> Closing thoughts
 -> Let's have fun!
 
 -------------------------------------------------
@@ -477,7 +477,7 @@
 -> A look at the robot
 -> Software architecture
 -> ✰ *Robot logic* ✰
--> Real Time Software
+-> Closing thoughts
 -> Let's have fun!
 
 -------------------------------------------------
@@ -541,7 +541,7 @@
 -> A look at the robot
 -> Software architecture
 -> Robot logic
--> ✰ *Real Time Software* ✰
+-> ✰ *Closing thoughts* ✰
 -> Let's have fun!
 
 -------------------------------------------------
@@ -625,7 +625,7 @@
 -> A look at the robot
 -> Software architecture
 -> Robot logic
--> Real Time Software
+-> Closing thoughts
 -> ✰ *Let's have fun!* ✰
 
 -------------------------------------------------
