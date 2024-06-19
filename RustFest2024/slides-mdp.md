@@ -18,9 +18,11 @@
 ^
 -> A look at the robot
 ^
--> Software Architecture
+-> Software architecture
 ^
 -> Robot logic
+^
+-> Real Time Software
 ^
 -> Let's have fun!
 
@@ -54,8 +56,9 @@
 -> Who am I?
 -> ✰ *What is this Folkrace?* ✰
 -> A look at the robot
--> Software Architecture
+-> Software architecture
 -> Robot logic
+-> Real Time Software
 -> Let's have fun!
 
 -------------------------------------------------
@@ -86,8 +89,9 @@
 -> Who am I?
 -> What is this Folkrace?
 -> ✰ *A look at the robot* ✰
--> Software Architecture
+-> Software architecture
 -> Robot logic
+-> Real Time Software
 -> Let's have fun!
 
 
@@ -108,8 +112,9 @@
 -> Who am I?
 -> What is this Folkrace?
 -> A look at the robot
--> ✰ *Software Architecture* ✰
+-> ✰ *Software architecture* ✰
 -> Robot logic
+-> Real Time Software
 -> Let's have fun!
 
 -------------------------------------------------
@@ -132,6 +137,8 @@
 1️⃣  *UART* telemetry interface (ESP32-C3)
 ^
 1️⃣  *SPI*  display (ST7789V)
+^
+1️⃣  *USB*  logs and programming
 
 ^
 -> 👀 *so many?* 👀
@@ -151,6 +158,9 @@
         think_about_it();
         set_output();
     }
+
+^
+-> this is _supposed_ to be *fast*
 
 -------------------------------------------------
 
@@ -200,7 +210,8 @@
 
 ^
 -> _control flow_ becomes
--> a *state machine*
+-> an _interrupt driven_
+-> *state machine*
 
 
 -------------------------------------------------
@@ -246,7 +257,12 @@
 
 -------------------------------------------------
 
--> # Multiple Event Loops!
+-> # Multiple Logical Event Loops!
+
+^
+-> you can have
+-> one _logical_ event _loop_
+-> in *each* *task*!
 
 ^
 -> you should connect _tasks_ with *channels*
@@ -254,10 +270,25 @@
 ^
 -> (data in channels should be `copy`)
 
+-------------------------------------------------
+
+-> # Signal Channels
+
 ^
--> you can have
--> one _logical_ event _loop_
--> in *each* *task*!
+-> I like _single slot_ channels ( `Signal`\s )
+
+^
+-> They can be *global*
+-> (they use _interior_ mutability)
+-> `pub static CHAN: Signal::<...> = Signal::new();`
+
+^
+-> you post *new* values without `.await`\ing:
+-> `CHAN.signal(value);`
+
+^ 
+-> you wait for values *asynchronously*:
+-> `let value = CHAN.wait().await;`
 
 -------------------------------------------------
 
@@ -273,26 +304,27 @@
     }
 
 ^
--> I use _single slot_ channels ( `Signal`\s )
+-> You can have _different_ tasks for _different_ sensors!
 
 ^
--> You can have _different_ tasks for _different_ sensors!
+-> 😄 and they run *concurrently* 😄
 
 -------------------------------------------------
 
--> # Execute Commands
+-> # Execute Actions
 
-    pub static CMDS: Signal = Signal::new();
+    pub static ACTIONS: Signal = Signal::new();
     
     async commands_task(m: Motors) {
         loop {
-            let cmd = CMDS.wait().await;
-            m.apply(cmd);
+            let act = ACTIONS.wait().await;
+            m.apply(act);
         }
     }
 
 ^
--> channels awake on new messages
+-> this is a _clean_ and _powerful_ way to
+-> trigger *events* from _different_ code locations
 
 -------------------------------------------------
 
@@ -311,30 +343,11 @@
 
 ^
 -> `apply_logic` should be "fast"
--> (whatever that means)
+-> (whatever that means, more on this later)
 
 -------------------------------------------------
 
--> # Robot Tasks
-
-^
--> *input* tasks
--> lasers, rgb, imu, buttons
-
-^
--> *output* tasks
--> motors, display
-
-^
--> *misc* tasks
--> logger, trace, telemetry
-
-^
--> plus, a _main_ task for *logic*
-
--------------------------------------------------
-
--> # Channels
+-> # Robot Channels
 
 ^
 -> *laser* readings
@@ -343,13 +356,13 @@
 ^
 -> *rgb* readings
 ^
--> *telemetry* logs
+-> *telemetry* data
 ^
 -> *tracing* data
 ^
--> *motor* commands
+-> *motor* actions
 ^
--> *admin* commands
+-> *user* commands
 ^
 -> *visual* (GUI) state
 
@@ -358,33 +371,33 @@
 
 -------------------------------------------------
 
--> # Tasks Roles: Input
+-> # Robot Tasks: Input
 
 ^
 -> _lasers_, _rgb_, _imu_
 -> write to their *readings* channels
 
 ^
--> _buttons_ send *admin* commands
+-> _buttons_ sends *user* commands
 
 -------------------------------------------------
 
--> # Tasks Roles: Output
+-> # Robot Tasks: Output
 
 ^
--> _motors_ execute *action* commands
+-> _motors_ execute *action*\s
 
 ^
 -> _display_ renders *visual* (GUI) state
 
 -------------------------------------------------
 
--> # Tasks Roles: Misc
+-> # Robot Tasks: Misc
 
 ^
 -> _telemetry_
 -> consumes *data* messages
--> produces *admin* messages
+-> produces *user* commands
 
 ^
 -> _tracing_
@@ -396,23 +409,43 @@
 -> when triggered by a *command*
 -> dumps tracing *messages* to _logs_
 
+^
+-> Embassy provides a _log_ task
+
 -------------------------------------------------
 
--> # Tasks Roles: Main
+-> # Robot Tasks: Main
 
 ^
--> generally reads all sensors
+-> generally reads input channels
 ^
 -> and produces all outputs
 
 ^
 -> it looks like an
 -> "Arduino style" event loop
--> with sub-functions
+^
+-> with _composable_
+-> *sub-functions*
 
 ^
 -> but it is *async*
 -> and uses *channels*
+
+-------------------------------------------------
+
+-> # Tasks Summary
+
+-> *input* tasks
+-> lasers, rgb, imu, buttons
+
+-> *output* tasks
+-> motors, display
+
+-> *misc* tasks
+-> logger, trace, telemetry
+
+-> plus, a _main_ task for *logic*
 
 -------------------------------------------------
 
@@ -430,6 +463,10 @@
 ^
 -> 💡 update the *UI* on the _second core_! 💡
 
+^
+-> (I could have used a _second_ Embassy *runtime*\)
+-> (with *lower proprity* on the _same_ core)
+
 
 -------------------------------------------------
 
@@ -438,8 +475,9 @@
 -> Who am I?
 -> What is this Folkrace?
 -> A look at the robot
--> Software Architecture
+-> Software architecture
 -> ✰ *Robot logic* ✰
+-> Real Time Software
 -> Let's have fun!
 
 -------------------------------------------------
@@ -494,6 +532,89 @@
 ^
 -> Bridge Slope
 
+-------------------------------------------------
+
+-> # Presentation Progress
+
+-> Who am I?
+-> What is this Folkrace?
+-> A look at the robot
+-> Software architecture
+-> Robot logic
+-> ✰ *Real Time Software* ✰
+-> Let's have fun!
+
+-------------------------------------------------
+
+-> # Real Time Software
+
+^
+-> how _fast_ is fast *enough*?
+
+^
+-> it is *not* as _fast_ as *possible*,
+^
+-> it is _fast_ as *needed*!
+
+^
+-> you should have _latency_ *goals*
+-> and *measure* against them
+
+^
+-> in _this_ robot, latencies are *a few ms*
+^
+-> a _single_ machine instruction is *8ns*
+^
+-> copying _100 bytes_ is *irrelevant*
+
+-------------------------------------------------
+
+-> # Simple Advices
+
+^
+-> _measure_ loop periods
+^
+-> and *log* them!
+^
+-> (better off: *log* their *maximum*)
+
+^
+-> single-slot channels are *great*
+^
+-> put a _counter_ in each message
+^
+-> and _check_ that you did not *miss* any!
+
+^
+-> ...the obvious...
+^
+-> do _not_ *over*\optimize!
+
+-------------------------------------------------
+
+-> # Safety Considerations
+
+^
+-> are _global_ channels a *problem*?
+^
+-> 😄 *no*! 😄
+^
+-> (at least not for safety)
+
+^
+-> async Rust _might_ be *hard*...
+^
+-> but _embedded_ async rust
+-> is *extra simple*
+
+^
+-> _channels_ are *global*
+^
+-> _mutable_ variables are *local* to tasks
+^
+-> the borrow checker
+-> _never_ *yells* at you!
+
 
 -------------------------------------------------
 
@@ -502,9 +623,34 @@
 -> Who am I?
 -> What is this Folkrace?
 -> A look at the robot
--> Software Architecture
+-> Software architecture
 -> Robot logic
+-> Real Time Software
 -> ✰ *Let's have fun!* ✰
+
+-------------------------------------------------
+
+-> # Storytelling
+
+^
+-> *why* the _duct tape_?
+^
+-> *why* the _silver_ _colored_ parts?
+
+^
+-> _uneven_ track tiles with *8mm* steps
+^
+-> the _bumper_ support *broke* during tests
+^
+-> I redesigned it (*stronger*) and
+-> I had it *re-printed* in place
+
+^
+-> the bumper *attachment* broke during the _race_!
+
+^
+-> my _wheels_ were *perfect*,
+-> the _batteries_... *not so* much!
 
 -------------------------------------------------
 
