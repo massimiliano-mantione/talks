@@ -65,7 +65,6 @@
 ^
 -> *Let's see!*
 
-^
 -> ╔╦╗╔═╗  ╦  ╦╦╔╦╗╔═╗╔═╗
 ->  ║ ║ ║  ╚╗╔╝║ ║║║╣ ║ ║
 ->  ╩ ╚═╝   ╚╝ ╩═╩╝╚═╝╚═╝
@@ -120,7 +119,7 @@
 ^
 8️⃣  *I2C*  _(400Hz)_ distance sensors
 ^
-1️⃣  *I2C*  _(100Hz)_ color sensor
+1️⃣  *I2C*  _(650Hz)_ color sensor
 ^
 1️⃣  *UART* _(100Hz)_ IMU
 ^
@@ -147,27 +146,23 @@
 -> *Arduino style*
 
 ^
-```
-loop {
-    read_sensors();
-    think_about_it();
-    set_output();
-}
-```
+    loop {
+        read_sensors();
+        think_about_it();
+        set_output();
+    }
 
 -------------------------------------------------
 
 -> # Do you spot the issue?
 
 ^
-```
-read_sensors() {
-    read_one_sensor();
-    read_another();
-    read_one_more();
-    //...
-}
-```
+    read_sensors() {
+        read_one_sensor();
+        read_another();
+        read_one_more();
+        //...
+    }
 
 ^
 -> how *long* does it _take_?
@@ -177,10 +172,10 @@ read_sensors() {
 -> # What Are We Reading?
 
 ^
-8️⃣  *I2C*  _(400Hz)_ distance sensors
-1️⃣  *I2C*  _(100Hz)_ color sensor
-1️⃣  *UART* _(100Hz)_ IMU
-2️⃣  *PIN*  _(1ms latency)_ input buttons
+8️⃣  *I2C*  (  _2.5ms  period_ ) distance sensors
+1️⃣  *I2C*  (  _1.6ms  period_ ) color sensor
+1️⃣  *UART* ( _10.0ms  period_ ) IMU
+2️⃣  *PIN*  (  _1.0ms *latency*_ ) input buttons
 1️⃣  *UART* telemetry-config commands
 
 ^
@@ -224,14 +219,20 @@ read_sensors() {
 ^
 3️⃣  ... *profit!* 😄
 
+^
+-> Ok, more seriously...
+
 -------------------------------------------------
 
 -> # Embedded Async Rust
 
 ^
+-> *Embassy* provides an _async runtime_
+
+^
 -> tasks are *statically* allocated
 ^
--> (but started _dynamically_)
+-> (but _started_ *dynamically*)
 
 ^
 -> In `Future`\s, wakers can bind interrupts
@@ -262,17 +263,17 @@ read_sensors() {
 
 -> # Read Sensors
 
-```
-async read_sensors_task(s: Sensors, c: Sender) {
-    loop {
-        let value = s.read().await;
-        c.send(value);
+    pub static SENSORS: Signal = Signal::new();
+    
+    async read_sensors_task(s: Sensors) {
+        loop {
+            let value = s.read().await;
+            SENSORS.signal(value);
+        }
     }
-}
-```
 
 ^
--> I use _single slot_ channels
+-> I use _single slot_ channels ( `Signal`\s )
 
 ^
 -> You can have _different_ tasks for _different_ sensors!
@@ -281,14 +282,14 @@ async read_sensors_task(s: Sensors, c: Sender) {
 
 -> # Execute Commands
 
-```
-async commands_task(m: Motors, cmds: Receiver) {
-    loop {
-        let cmd = cmds.receive().await;
-        m.apply(cmd);
+    pub static CMDS: Signal = Signal::new();
+    
+    async commands_task(m: Motors) {
+        loop {
+            let cmd = CMDS.wait().await;
+            m.apply(cmd);
+        }
     }
-}
-```
 
 ^
 -> channels awake on new messages
@@ -297,15 +298,16 @@ async commands_task(m: Motors, cmds: Receiver) {
 
 -> # Implement Logic
 
-```
-async logic_task(sensors: Receiver, cmds: Sender) {
-    loop {
-        let value = sensors.receive().await;
-        let cmd = apply_logic(value);
-        cmds.send(value);
+    use sensors::SENSORS;
+    use commands::CMDS;
+    
+    async logic_task() {
+        loop {
+            let value = SENSORS.wait().await;
+            let cmd = apply_logic(value);
+            CMDS.signal(cmd);
+        }
     }
-}
-```
 
 ^
 -> `apply_logic` should be "fast"
@@ -313,7 +315,7 @@ async logic_task(sensors: Receiver, cmds: Sender) {
 
 -------------------------------------------------
 
--> # Tasks List
+-> # Robot Tasks
 
 ^
 -> *input* tasks
@@ -325,21 +327,21 @@ async logic_task(sensors: Receiver, cmds: Sender) {
 
 ^
 -> *misc* tasks
--> logger, trace, telemetry (esp32c3)
+-> logger, trace, telemetry
 
 ^
 -> plus, a _main_ task for *logic*
 
 -------------------------------------------------
 
--> # Channels List
+-> # Channels
 
 ^
 -> *laser* readings
 ^
--> *imu* data
+-> *imu* readings
 ^
--> *rgb* data
+-> *rgb* readings
 ^
 -> *telemetry* logs
 ^
@@ -360,7 +362,7 @@ async logic_task(sensors: Receiver, cmds: Sender) {
 
 ^
 -> _lasers_, _rgb_, _imu_
--> write to their *data* channels
+-> write to their *readings* channels
 
 ^
 -> _buttons_ send *admin* commands
@@ -388,8 +390,11 @@ async logic_task(sensors: Receiver, cmds: Sender) {
 -> _tracing_
 -> consumes *tracing* data
 ^
+-> *stores* it in a _ring buffer_
+-> (3000 events, about 6s)
+^
 -> when triggered by a *command*
--> logs *tracing* messages
+-> dumps tracing *messages* to _logs_
 
 -------------------------------------------------
 
@@ -411,7 +416,19 @@ async logic_task(sensors: Receiver, cmds: Sender) {
 
 -------------------------------------------------
 
--> CPU cores
+-> # CPU cores
+
+^
+-> the _problem_ is the *GUI*
+^
+-> _drawing_ screns takes many *CPU* cycles
+^
+-> the _graphic_ library is *syncronous*
+
+^
+-> _rp2040_ has *two* cores...
+^
+-> 💡 update the *UI* on the _second core_! 💡
 
 
 -------------------------------------------------
@@ -507,5 +524,4 @@ async logic_task(sensors: Receiver, cmds: Sender) {
 ->    ██║   ██╔══██║██╔══██║██║╚██╗██║██╔═██╗ ╚════██║╚═╝
 ->    ██║   ██║  ██║██║  ██║██║ ╚████║██║  ██╗███████║██╗
 ->    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝
-
 
