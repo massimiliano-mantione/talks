@@ -76,7 +76,6 @@
 
 -> # Our team
 
-^
 -> ╔╦╗╔═╗  ╔═╗╦╔═╗╔╦╗╦ ╦╦═╗╔═╗╔═╗
 ->  ║ ║ ║  ╠═╝║║   ║ ║ ║╠╦╝║╣ ╚═╗
 ->  ╩ ╚═╝  ╩  ╩╚═╝ ╩ ╚═╝╩╚═╚═╝╚═╝
@@ -99,7 +98,6 @@
 
 -> # A look at the robot
 
-^
 -> ╔╦╗╔═╗  ╔═╗╦╔═╗╔╦╗╦ ╦╦═╗╔═╗╔═╗
 ->  ║ ║ ║  ╠═╝║║   ║ ║ ║╠╦╝║╣ ╚═╗
 ->  ╩ ╚═╝  ╩  ╩╚═╝ ╩ ╚═╝╩╚═╚═╝╚═╝
@@ -186,7 +184,7 @@
 1️⃣  *I2C*  (  _1.6ms  period_ ) color sensor
 1️⃣  *UART* ( _10.0ms  period_ ) IMU
 2️⃣  *PIN*  (  _1.0ms *latency*_ ) input buttons
-1️⃣  *UART* telemetry-config commands
+1️⃣  *UART* user commands
 
 ^
 -> 🤔 *how* can it _work_? 🤔
@@ -206,10 +204,10 @@
 ^
 -> we have no *OS*
 ^
--> _completions_ are ⚡ *interrupts* ⚡
+-> read _completions_ are ⚡ *interrupts* ⚡
 
 ^
--> _control flow_ becomes
+-> linear _control flow_ becomes
 -> an _interrupt driven_
 -> *state machine*
 
@@ -275,7 +273,7 @@
 -> # Signal Channels
 
 ^
--> I like _single slot_ channels ( `Signal`\s )
+-> I used _single slot_ channels ( `Signal`\s )
 
 ^
 -> They can be *global*
@@ -331,13 +329,13 @@
 -> # Implement Logic
 
     use sensors::SENSORS;
-    use commands::CMDS;
+    use actions::ACT;
     
     async logic_task() {
         loop {
             let value = SENSORS.wait().await;
-            let cmd = apply_logic(value);
-            CMDS.signal(cmd);
+            let action = apply_logic(value);
+            ACT.signal(action);
         }
     }
 
@@ -378,7 +376,8 @@
 -> write to their *readings* channels
 
 ^
--> _buttons_ sends *user* commands
+-> _buttons_
+-> reads pins and sends *user* commands
 
 -------------------------------------------------
 
@@ -554,7 +553,7 @@
 ^
 -> it is *not* as _fast_ as *possible*,
 ^
--> it is _fast_ as *needed*!
+-> it is as _fast_ as *needed*!
 
 ^
 -> you should have _latency_ *goals*
@@ -642,8 +641,8 @@
 ^
 -> the _bumper_ support *broke* during tests
 ^
--> I redesigned it (*stronger*) and
--> I had it *re-printed* in place
+-> I redesigned it ( *stronger* ) and
+-> I had it *re-printed* on site
 
 ^
 -> the bumper *attachment* broke during the _race_!
