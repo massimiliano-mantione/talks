@@ -292,21 +292,85 @@ Alternative Approaches
 The Runner
 ---
 
+#### thanks to the exploratory phase
+##### there was Rust code to handle problems
 
+#### we could implement the orchestrator
+##### (we call it `runner`) in Rust
+
+#### it mimics the underlying
+##### algo process
+
+#### minimal changes for the
+##### Routing Engine
 
 -------
 
-Takeaway
+Technical Highlights
 ---
+
+##### the runner tries to stay out of the way
+##### it is a very thin wrapper for its child process
+##### almost zero CPU time (async, totally IO-bound)
+#### it is also nontrivial
+#### has several child processes, organized in stages
+#### parses several children stdout streams in real time
+#### merges children stdout events into a single event stream
+#### writes to the children stdins to control them
+#### collects all partial solutions from disk in real time
+#### relays the event stream in its own stdout
+
+-------
+
+So far, so good...
+---
+
+#### we have Rust code in production
+#### it is working flawlessly
+#### it is working flawlessly
+##### it is a success!
+
+#### then management comes
+#### knocking again
 
 -------
 
 We Need To Scale!
 ---
 
+##### wait, didn't we implement the runner for this?
+##### yes, but that was scaling up
+##### now we need to scale out!
+
+-------
+
+Actual Goals
+---
+
+dynamically provision commpute power
+(so we can afford more!)
+
+simplify deployments
+(now they mutate existing servers)
+
+allow more tests and experiments
+(now testing is too slow)
+(now live experiments are unfeasible)
+
 -------
 
 The Algo Service
+---
+
+remember the Routing Engine server architecture?
+
+the one with everything on every server?
+
+let's recap...
+
+-------
+
+Routing Engine Server (recap)
 ---
 
 <!-- column_layout: [1, 1, 1] -->
@@ -314,20 +378,78 @@ The Algo Service
 <!-- column: 0 -->
 
 ``` +no_margin
-XXX
+┌────────┐
+│  NGIX  │
+└────────┘
+```
+
+``` +no_margin
+┌╌╌╌╌╌╌╌╌┐
+┊   DB   ┊
+└╌╌╌╌╌╌╌╌┘
+```
+``` +no_margin
+┌╌╌╌╌╌╌╌╌┐
+┊ shared ┊
+┊   FS   ┊
+└╌╌╌╌╌╌╌╌┘
 ```
 
 <!-- column: 1 -->
 
 ``` +no_margin   
-XXX
+╔═════════╗
+║  Main   ║
+║ process ║
+║ (Java)  ║
+╚═════════╝
+```
+
+``` +no_margin   
+╔═══════════╗
+║   Algo    ║
+║ processes ║
+║  (C++)    ║
+╚═══════════╝
 ```
 
 <!-- column: 2 -->
 
 ```
-XXX
+┏━━━━━━━━┓
+┃  GIS   ┃
+┃ server ┃
+┃  (v1)  ┃
+┗━━━━━━━━┛
 ```
+```
+┏━━━━━━━━┓
+┃  GIS   ┃
+┃ server ┃
+┃  (v2)  ┃
+┗━━━━━━━━┛
+```
+
+
+
+-------
+
+Algo Service
+---
+
+to scale out
+
+we take the algo processes
+(the most compute intensive component)
+
+and we move them into an external service
+
+-------
+
+Algo Service Architecture
+---
+
+xxxxx
 
 -------
 🦄🌈🚙🚚🛻
