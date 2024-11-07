@@ -204,7 +204,7 @@ The Algorithm
 
 ##### **lots** of *features*
 
-##### 😔 *a jungle of linked lists* 😔
+##### 😕 *a jungle of linked lists* 😕
 
 -------
 
@@ -213,7 +213,7 @@ Technical Debt
 
 #### if _anything_ can be
 #### a *mutable shared global*
-##### 😕 **it is so** 😕
+##### 😔 **it is so** 😔
 
 ##### *zero* **unit** tests
 
@@ -344,18 +344,35 @@ We Need To Scale!
 
 -------
 
+Logistical Computations at Scale
+---
+
+at what scale?
+
+in production we solve 180k plans/day
+about 50k vehicles daily depend on it
+
+when testing we use a pool of 180k problems
+with the current infrastructure it takes a week
+
+we have a public demo environment
+but we want to diversify it
+
+-------
+
 Actual Goals
 ---
 
-dynamically provision commpute power
-(so we can afford more!)
+**dynamically provision commpute power**
+_so we can afford more!_
 
-simplify deployments
-(now they mutate existing servers)
+**simplify deployments**
+_now they mutate existing servers_
 
-allow more tests and experiments
-(now testing is too slow)
-(now live experiments are unfeasible)
+**allow more tests and experiments**
+_testing is too slow_
+_creating new deployments is expensive_
+_live experiments are unfeasible_
 
 -------
 
@@ -446,10 +463,93 @@ and we move them into an external service
 
 -------
 
+Algo Service Design Principles
+---
+
+󱃾 Kubernetes-based devops 󱃾
+
+󱕱 jobs are queued 󱕱
+
+ stateless components 
+
+externally provisioned
+ stateful services 
+
+ ...remember the 12 factors... 
+
+-------
+
 Algo Service Architecture
 ---
 
-xxxxx
+<!-- column_layout: [1, 1, 1] -->
+
+<!-- column: 0 -->
+
+``` +no_margin
+┌───────────┐
+│frontend 󰒍 │
+└───────────┘
+```
+
+``` +no_margin
+┌───────────┐
+└───────────┘
+```
+``` +no_margin
+┌───────────┐
+└───────────┘
+```
+``` +no_margin
+┌───────────┐
+└───────────┘
+```
+
+<!-- column: 1 -->
+
+``` +no_margin   
+╔══════════╗
+║  fast   ║
+║  store   ║
+║ (Redis)  ║
+╚══════════╝
+```
+
+``` +no_margin   
+╔══════════╗
+║  slow   ║
+║  store   ║
+║  (S3)    ║
+╚══════════╝
+```
+``` +no_margin   
+╔══════════╗
+║monitor  ║
+╚══════════╝
+```
+
+<!-- column: 2 -->
+
+```
+┏━━━━━━━━┓
+┃ worker ┃
+┃ node 󰒋 ┃
+┗━━━━━━━━┛
+```
+
+```
+┏━━━━━━━━┓
+┗━━━━━━━━┛
+```
+```
+┏━━━━━━━━┓
+┗━━━━━━━━┛
+```
+```
+┏━━━━━━━━┓
+┗━━━━━━━━┛
+```
+
 
 -------
 🦄🌈🚙🚚🛻
@@ -460,19 +560,11 @@ xxxxx
 
 🚙🚚🛻🌍
 
+k8 󱃾
+   󱕱
+mnt 
+wrk 󰒋
+log 
+frt 󰒍
 
 🤔😃😕😔😞🙂
-
-XXSS
-
-┌──────┐
-│      │
-└──────┘
-
-╔══════╗
-║      ║
-╚══════╝
-
-┏━━━━━━┓
-┃      ┃
-┗━━━━━━┛
