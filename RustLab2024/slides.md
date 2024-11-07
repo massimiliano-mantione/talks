@@ -27,6 +27,16 @@ Who am I
 
 -------
 
+Talk Outline
+---
+
+##### our own Rust project
+##### how it went
+##### why we did it
+##### how you can do it too
+
+-------
+
 My Worlplace Since Sep 2020
 ---
 
@@ -289,7 +299,7 @@ Alternative Approaches
 
 -------
 
-The Runner
+A New Component: The Runner
 ---
 
 #### thanks to the exploratory phase
@@ -301,7 +311,7 @@ The Runner
 #### it mimics the underlying
 ##### algo process
 
-#### minimal changes for the
+#### almost zero changes for the
 ##### Routing Engine
 
 -------
@@ -309,10 +319,10 @@ The Runner
 Technical Highlights
 ---
 
-##### the runner tries to stay out of the way
-##### it is a very thin wrapper for its child process
-##### almost zero CPU time (async, totally IO-bound)
-#### it is also nontrivial
+#### the runner tries to stay out of the way
+#### it is a very *thin* wrapper for its **child process**
+##### *almost zero* CPU time (async, **mostly** IO-bound)
+##### *it is also nontrivial*
 #### has several child processes, organized in stages
 #### parses several children stdout streams in real time
 #### merges children stdout events into a single event stream
@@ -325,65 +335,64 @@ Technical Highlights
 So far, so good...
 ---
 
-#### we have Rust code in production
-#### it is working flawlessly
-#### it is working flawlessly
-##### it is a success!
+#### we have 🦀 Rust 🦀 code in production
+#### *it is working flawlessly*
+#####  🥳🎉 it is a **success**! 🎉🥳
 
-#### then management comes
-#### knocking again
+#### *then management comes*
+#### ... 🛎  *knocking again* 🛎 ...
 
 -------
 
 We Need To Scale!
 ---
 
-##### wait, didn't we implement the runner for this?
-##### yes, but that was scaling up
-##### now we need to scale out!
+##### *wait*, didn't we implement the **runner** for this?
+##### **yes**, *but that was scaling up*
+##### **now** we need to **scale out**!
 
 -------
 
 Logistical Computations at Scale
 ---
 
-at what scale?
+##### *at what scale?*
 
-in production we solve 180k plans/day
-about 50k vehicles daily depend on it
+#### in *production* we solve **180k plans/day**
+##### about **50k** vehicles *daily* depend on it
 
-when testing we use a pool of 180k problems
-with the current infrastructure it takes a week
+#### when *testing* we use a pool of **180k problems**
+##### with the *current infrastructure* it takes **one week**
 
-we have a public demo environment
-but we want to diversify it
+#### we have **one** public **demo** environment
+##### but we *want* to **diversify** it
 
 -------
 
 Actual Goals
 ---
 
-**dynamically provision commpute power**
-_so we can afford more!_
+#### **dynamically provision commpute power**
+##### _so we can afford more!_
 
-**simplify deployments**
-_now they mutate existing servers_
+#### **simplify deployments**
+##### _now they mutate existing servers_
 
-**allow more tests and experiments**
-_testing is too slow_
-_creating new deployments is expensive_
-_live experiments are unfeasible_
+#### **allow more tests and experiments**
+#### _testing is too slow_
+#### _creating new deployments is expensive_
+#### _live experiments are unfeasible_
 
 -------
 
 The Algo Service
 ---
 
-remember the Routing Engine server architecture?
+##### remember the **Routing Engine** server architecture?
 
-the one with everything on every server?
+##### the one with **everything** on **every** server?
 
-let's recap...
+##### _let's recap..._
 
 -------
 
@@ -454,28 +463,28 @@ Routing Engine Server (recap)
 Algo Service
 ---
 
-to scale out
+##### to *scale* **out**
 
-we take the algo processes
-(the most compute intensive component)
+#### we take the algo **processes**
+##### (the most *compute* **intensive** component)
 
-and we move them into an external service
+##### *and we move them into an **external** service*
 
 -------
 
 Algo Service Design Principles
 ---
 
-󱃾 Kubernetes-based devops 󱃾
+##### 󱃾 Kubernetes-based devops 󱃾
 
-󱕱 jobs are queued 󱕱
+##### 󱕱 jobs are queued 󱕱
 
- stateless components 
+#####  stateless components 
 
-externally provisioned
- stateful services 
+#### externally provisioned
+#####  stateful services 
 
- ...remember the 12 factors... 
+#####  ...remember the 12 factors... 
 
 -------
 
@@ -550,21 +559,155 @@ Algo Service Architecture
 ┗━━━━━━━━┛
 ```
 
+-------
+
+How It Went
+---
+
+#### 🌈 overall, **perfectly** 🦄
+##### *issues were not due to Rust*
+
+#### S3 write throughput
+#### shared FS costs
+#### Redis IO operations
+##### skipping queues
+
+#### *but, also 🦀 is not only 🌈🦄*
 
 -------
-🦄🌈🚙🚚🛻
 
-💽💾💻🕋🖧🖥🖴🔗🖭
+🦀 Rust Issues 😕
+---
 
-🌍👁💡🗲
+#### 🤔 `async` Rust (*tokio*) can be **tricky** 🤔
+##### *mostly because of multithreading*
 
-🚙🚚🛻🌍
+#### **60k** LOC of *authored* code
+##### 😯 **800k** LOC of *dependencies*! 😯
 
-k8 󱃾
-   󱕱
-mnt 
-wrk 󰒋
-log 
-frt 󰒍
+#### ⏳ *CI* build times are **slow** ⏳
+##### *caching is mandatory*
 
-🤔😃😕😔😞🙂
+#### VS code + Rust analyzer
+##### ⏳ *struggle* at **startup** ⏳
+
+-------
+
+🦀 Rust Strenghts 💪
+---
+
+#### 🥱 **Rust** in *production* is **boring** 🥱
+#### 🔎🐛 *bugs* are **nowhere** to be found 🔎🐛
+##### 🤦 *except for analysis holes* 🤦
+
+#### ⭐ *performance* is **stellar** ⭐
+##### *resources* usage is **minimal**
+
+#### 🛡 *fearless* concurrency is **real** 🛡
+
+-------
+
+🦀 Why Rust ❓
+---
+
+#### the algo is **performance** critical
+##### *it is already implemented in C++*
+
+#### we needed to build **high level** code
+##### *...networking, protocols, APIs, persistence...*
+
+#### *Long term*, I wanted the algo team
+##### to work on the *whole codebase*
+
+#### Rust is very *good* at *both*
+##### **performance** and **high level**
+
+-------
+
+What About Management?
+---
+
+#### *or:*
+##### ❓ how did I get away with it ❓
+
+#### *suppose you want to*
+#### *introduce Rust*
+##### *in your workplace*
+
+#### **what does it take?**
+
+-------
+
+It Needs to Make Sense
+---
+
+#### Rust **strenghts** must be
+##### **relevant** to *your* project
+
+#### not just *mildly* relevant,
+##### but **enough** to **justify** the *hassle*
+
+#### **making sense** is **not enough**
+##### *...what you need is...*
+
+-------
+
+TRUST
+---
+
+<!-- jump_to_middle -->
+#### **management trusted me**
+
+-------
+
+Building Trust
+---
+
+#### how do you make so that
+##### your *managers* **trust** you?
+
+#### by doing *well* the **very** thing
+##### that you **hate** doing:
+
+##### 🔮 **predicting** the **future** 🔮
+
+-------
+
+Being Reliable
+---
+
+#### *when*, for **tens** of **times**,
+##### you say **this is going to happen**
+
+##### and *then* it **happens**
+
+#### **you are building trust**
+
+-------
+
+A Healthy Workplace
+---
+
+#### when you **trust** your
+##### *managers* and *coworkers*
+
+#### **and they trust you**
+##### **everything is fine**
+
+##### *if your workplace is not healthy*
+
+#### *technical issues* like using Rust
+##### should be the **least** of your **worries**
+
+-------
+
+Recap
+---
+
+##### 🦀 Rust is amazing 🎇
+##### 🛠  there are projects where it shines 🌞
+#### 🤝 you build trust 🤝
+##### 🔮 by being reliable 🔮
+##### 😃 a healthy workplace is important 😃
+#### 🙏 **thanks!** 🙏
+##### ❓ *questions?*  ❓
