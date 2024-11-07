@@ -16,13 +16,20 @@ Who am I
 
 <!-- pause -->
 ##### **a passionate software engineer**
+<!-- pause -->
 ##### *things I worked on*
+<!-- pause -->
 #### telecom switching stations
+<!-- pause -->
 #### JIT compilers
 #### (Mono project, then V8 in Google)
+<!-- pause -->
 #### gaming engines (Unity 3D)
+<!-- pause -->
 #### interactive, collaborative VR
-#### 🦀 distributed systems and blockchains 🦀
+<!-- pause -->
+##### 🦀 distributed systems and blockchains 🦀
+<!-- pause -->
 #### 🦀 operational research (vehicle routing) 🦀
 
 -------
@@ -30,9 +37,13 @@ Who am I
 Talk Outline
 ---
 
+<!-- pause -->
 ##### our own Rust project
+<!-- pause -->
 ##### how it went
+<!-- pause -->
 ##### why we did it
+<!-- pause -->
 ##### how you can do it too
 
 -------
@@ -41,12 +52,19 @@ My Worlplace Since Sep 2020
 ---
 
 ##### _1st, a bit of history_
+<!-- pause -->
 #### March 2009: Viamente
+<!-- pause -->
 #### 🚙 routing as a service
+<!-- pause -->
 #### 🚚 deliveries
+<!-- pause -->
 ##### 🛻 field services
+<!-- pause -->
 ##### two products
+<!-- pause -->
 #### 🔧 routing engine
+<!-- pause -->
 #### 💻 route manager
 
 -------
@@ -55,16 +73,18 @@ My Worlplace Since Sep 2020
 ---
 
 ##### _next bit of history_
-
+<!-- pause -->
 ##### **August 2012**: _WorkWave acquires Viamente_
-
+<!-- pause -->
 #### 🌍 Worldwide Growth 🌍
 ##### over time, lots of new features
-
-##### **January 2020**: _Global Pandemic_
-#### 💥 Explosive Growth 💥
+<!-- pause -->
+#### **January 2020**: _Global Pandemic_
+##### 💥 Explosive Growth 💥
+<!-- pause -->
 #### all _delivery_ customers
 ##### had **larger** problems
+<!-- pause -->
 #### 🤔 algo performance 🤔
 
 -------
@@ -82,26 +102,15 @@ Routing Engine Server
 <!-- column_layout: [1, 1, 1] -->
 
 <!-- column: 0 -->
-
+<!-- pause -->
 ``` +no_margin
 ┌────────┐
 │  NGIX  │
 └────────┘
 ```
 
-``` +no_margin
-┌╌╌╌╌╌╌╌╌┐
-┊   DB   ┊
-└╌╌╌╌╌╌╌╌┘
-```
-``` +no_margin
-┌╌╌╌╌╌╌╌╌┐
-┊ shared ┊
-┊   FS   ┊
-└╌╌╌╌╌╌╌╌┘
-```
-
 <!-- column: 1 -->
+<!-- pause -->
 
 ``` +no_margin   
 ╔═════════╗
@@ -111,15 +120,8 @@ Routing Engine Server
 ╚═════════╝
 ```
 
-``` +no_margin   
-╔═══════════╗
-║   Algo    ║
-║ processes ║
-║  (C++)    ║
-╚═══════════╝
-```
-
 <!-- column: 2 -->
+<!-- pause -->
 
 ```
 ┏━━━━━━━━┓
@@ -136,6 +138,42 @@ Routing Engine Server
 ┗━━━━━━━━┛
 ```
 
+<!-- column: 1 -->
+<!-- pause -->
+``` +no_margin   
+╔═════════╗
+║  Main   ║
+║ process ║
+║ (Java)  ║
+╚═════════╝
+```
+``` +no_margin   
+╔═══════════╗
+║   Algo    ║
+║ processes ║
+║  (C++)    ║
+╚═══════════╝
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+``` +no_margin
+┌────────┐
+│  NGIX  │
+└────────┘
+```
+``` +no_margin
+┌╌╌╌╌╌╌╌╌┐
+┊   DB   ┊
+└╌╌╌╌╌╌╌╌┘
+```
+``` +no_margin
+┌╌╌╌╌╌╌╌╌┐
+┊ shared ┊
+┊   FS   ┊
+└╌╌╌╌╌╌╌╌┘
+```
+
 -------
 
 Routing Engine Cluster
@@ -144,28 +182,16 @@ Routing Engine Cluster
 <!-- column_layout: [1, 1, 1] -->
 
 <!-- column: 0 -->
-
+<!-- pause -->
 ``` +no_margin
 ┌──────────┐
 │   load   │
 │ balancer │
 └──────────┘
 ```
-``` +no_margin
-┌────────┐
-│   DB   │
-└────────┘
-```
-``` +no_margin
-┌────────┐
-│ shared │
-│   FS   │
-└────────┘
-```
-
 
 <!-- column: 1 -->
-
+<!-- pause -->
 ``` +no_margin   
 ╔═════════╗
 ║  small  ║
@@ -184,7 +210,7 @@ Routing Engine Cluster
 ```
 
 <!-- column: 2 -->
-
+<!-- pause -->
 ``` +no_margin   
 ╔═════════╗
 ║  large  ║
@@ -200,20 +226,43 @@ Routing Engine Cluster
 ║         ║
 ╚═════════╝
 ```
+<!-- column: 0 -->
+<!-- pause -->
+``` +no_margin
+┌──────────┐
+│   load   │
+│ balancer │
+└──────────┘
+```
+``` +no_margin
+┌────────┐
+│   DB   │
+└────────┘
+```
+``` +no_margin
+┌────────┐
+│ shared │
+│   FS   │
+└────────┘
+```
 
 -------
 
 The Algorithm
 ---
 
+<!-- pause -->
 #### mostly written by an
 ##### **operational research** professor
 
+<!-- pause -->
 #### about 75k LOC of **C++**
 ##### *(mostly C with classes)*
 
+<!-- pause -->
 ##### **lots** of *features*
 
+<!-- pause -->
 ##### 😕 *a jungle of linked lists* 😕
 
 -------
@@ -221,32 +270,43 @@ The Algorithm
 Technical Debt
 ---
 
+<!-- pause -->
 #### if _anything_ can be
 #### a *mutable shared global*
 ##### 😔 **it is so** 😔
 
+<!-- pause -->
 ##### *zero* **unit** tests
 
+<!-- pause -->
 #### *lack* of properly
 ##### designed **abstractions**
 
+<!-- pause -->
 ##### *no* significant **refactorings**
 
+<!-- pause -->
+##### the *codebase* is **brittle**
 
 -------
 
 Performance Problems
 ---
 
+<!-- pause -->
 ##### *(handling larger problems)*
 
+<!-- pause -->
 #### the algo requires
 #### **full** edge **matrices**
+<!-- pause -->
 ##### (they grow *quadratically*)
 
+<!-- pause -->
 #### linked *lists* are
 ##### **not cache friendly**
 
+<!-- pause -->
 #### the **search** for
 #### inter-route **exchanges**
 ##### grows *quadratically*
@@ -254,19 +314,24 @@ Performance Problems
 
 -------
 
-OK, but... Rust?
+OK, this is C++: and Rust?
 ---
 
+<!-- pause -->
 #### initial *experiments*
 ##### analyzing **instances**
 
+<!-- pause -->
 #### *3 months* of data
 ##### about **0.5 TB**
 
+<!-- pause -->
 #### I needed *tools*
+<!-- pause -->
 #### and
 ##### they had to be **fast**
 
+<!-- pause -->
 #### 🦀
 
 -------
@@ -274,27 +339,35 @@ OK, but... Rust?
 We *Really* Need To Scale *Now*!
 ---
 
+<!-- pause -->
 ##### there was an **ongoing plan**
+<!-- pause -->
 ##### *splitting* large *problems*
+<!-- pause -->
 ##### *solving* the subpproblems
+<!-- pause -->
 ##### producing a *unified* solution
+<!-- pause -->
 ##### **the splitter was mostly done**
 
 -------
 
-Alternative Approaches
+How to Do It
 ---
 
+<!-- pause -->
 #### *minimal change*
-#### implement a **C++** solution
+#### implement a **C++** solver
 ##### orchestrator **in-process**
 
+<!-- pause -->
 #### *use Rust* with *minimal change*
-#### implement a **Rust** solution
+#### implement a **Rust** solver
 ##### orchestrator **in-process**
 
+<!-- pause -->
 #### *use Rust* with *minimal risk*
-#### implement a **Rust** solution
+#### implement a **Rust** solver
 ##### orchestrator **out-of-process**
 
 -------
@@ -302,15 +375,20 @@ Alternative Approaches
 A New Component: The Runner
 ---
 
+<!-- pause -->
 #### thanks to the exploratory phase
 ##### there was Rust code to handle problems
 
-#### we could implement the orchestrator
+<!-- pause -->
+#### we had a *head start* to
+#### implement the orchestrator
 ##### (we call it `runner`) in Rust
 
+<!-- pause -->
 #### it mimics the underlying
 ##### algo process
 
+<!-- pause -->
 #### almost zero changes for the
 ##### Routing Engine
 
@@ -319,26 +397,42 @@ A New Component: The Runner
 Technical Highlights
 ---
 
+<!-- pause -->
 #### the runner tries to stay out of the way
-#### it is a very *thin* wrapper for its **child process**
+<!-- pause -->
+#### it is a *very thin* wrapper for its **child process**
+<!-- pause -->
 ##### *almost zero* CPU time (async, **mostly** IO-bound)
+<!-- pause -->
 ##### *it is also nontrivial*
+<!-- pause -->
 #### has several child processes, organized in stages
+<!-- pause -->
 #### parses several children stdout streams in real time
+<!-- pause -->
 #### merges children stdout events into a single event stream
+<!-- pause -->
+#### exposes the event stream in its own stdout
+<!-- pause -->
 #### writes to the children stdins to control them
+<!-- pause -->
 #### collects all partial solutions from disk in real time
-#### relays the event stream in its own stdout
+<!-- pause -->
+#### handles all sort of errors and corner cases
 
 -------
 
 So far, so good...
 ---
 
+<!-- pause -->
 #### we have 🦀 Rust 🦀 code in production
+<!-- pause -->
 #### *it is working flawlessly*
+<!-- pause -->
 #####  🥳🎉 it is a **success**! 🎉🥳
 
+<!-- pause -->
 #### *then management comes*
 #### ... 🛎  *knocking again* 🛎 ...
 
@@ -347,8 +441,11 @@ So far, so good...
 We Need To Scale!
 ---
 
+<!-- pause -->
 ##### *wait*, didn't we implement the **runner** for this?
-##### **yes**, *but that was scaling up*
+<!-- pause -->
+##### **yes**, *but that was scaling* **up**
+<!-- pause -->
 ##### **now** we need to **scale out**!
 
 -------
@@ -356,14 +453,18 @@ We Need To Scale!
 Logistical Computations at Scale
 ---
 
+<!-- pause -->
 ##### *at what scale?*
 
+<!-- pause -->
 #### in *production* we solve **180k plans/day**
 ##### about **50k** vehicles *daily* depend on it
 
+<!-- pause -->
 #### when *testing* we use a pool of **180k problems**
 ##### with the *current infrastructure* it takes **one week**
 
+<!-- pause -->
 #### we have **one** public **demo** environment
 ##### but we *want* to **diversify** it
 
@@ -372,15 +473,21 @@ Logistical Computations at Scale
 Actual Goals
 ---
 
+<!-- pause -->
 #### **dynamically provision commpute power**
 ##### _so we can afford more!_
 
+<!-- pause -->
 #### **simplify deployments**
 ##### _now they mutate existing servers_
 
+<!-- pause -->
 #### **allow more tests and experiments**
+<!-- pause -->
 #### _testing is too slow_
+<!-- pause -->
 #### _creating new deployments is expensive_
+<!-- pause -->
 #### _live experiments are unfeasible_
 
 -------
@@ -388,10 +495,13 @@ Actual Goals
 The Algo Service
 ---
 
+<!-- pause -->
 ##### remember the **Routing Engine** server architecture?
 
+<!-- pause -->
 ##### the one with **everything** on **every** server?
 
+<!-- pause -->
 ##### _let's recap..._
 
 -------
@@ -463,11 +573,14 @@ Routing Engine Server (recap)
 Algo Service
 ---
 
+<!-- pause -->
 ##### to *scale* **out**
 
+<!-- pause -->
 #### we take the algo **processes**
 ##### (the most *compute* **intensive** component)
 
+<!-- pause -->
 ##### *and we move them into an **external** service*
 
 -------
@@ -475,16 +588,21 @@ Algo Service
 Algo Service Design Principles
 ---
 
+<!-- pause -->
 ##### 󱃾 Kubernetes-based devops 󱃾
 
+<!-- pause -->
 ##### 󱕱 jobs are queued 󱕱
 
+<!-- pause -->
 #####  stateless components 
 
+<!-- pause -->
 #### externally provisioned
 #####  stateful services 
 
-#####  ...remember the 12 factors... 
+<!-- pause -->
+#####  ...mostly the 12 factors... 
 
 -------
 
@@ -494,13 +612,14 @@ Algo Service Architecture
 <!-- column_layout: [1, 1, 1] -->
 
 <!-- column: 0 -->
-
+<!-- pause -->
 ``` +no_margin
 ┌───────────┐
 │frontend 󰒍 │
 └───────────┘
 ```
 
+<!-- pause -->
 ``` +no_margin
 ┌───────────┐
 └───────────┘
@@ -515,7 +634,7 @@ Algo Service Architecture
 ```
 
 <!-- column: 1 -->
-
+<!-- pause -->
 ``` +no_margin   
 ╔══════════╗
 ║  fast   ║
@@ -523,7 +642,47 @@ Algo Service Architecture
 ║ (Redis)  ║
 ╚══════════╝
 ```
+<!-- pause -->
+``` +no_margin   
+╔══════════╗
+║  slow   ║
+║  store   ║
+║  (S3)    ║
+╚══════════╝
+```
 
+<!-- column: 2 -->
+<!-- pause -->
+```
+┏━━━━━━━━┓
+┃ worker ┃
+┃ node 󰒋 ┃
+┗━━━━━━━━┛
+```
+
+<!-- pause -->
+```
+┏━━━━━━━━┓
+┗━━━━━━━━┛
+```
+```
+┏━━━━━━━━┓
+┗━━━━━━━━┛
+```
+```
+┏━━━━━━━━┓
+┗━━━━━━━━┛
+```
+
+<!-- column: 1 -->
+<!-- pause -->
+``` +no_margin   
+╔══════════╗
+║  fast   ║
+║  store   ║
+║ (Redis)  ║
+╚══════════╝
+```
 ``` +no_margin   
 ╔══════════╗
 ║  slow   ║
@@ -537,41 +696,25 @@ Algo Service Architecture
 ╚══════════╝
 ```
 
-<!-- column: 2 -->
-
-```
-┏━━━━━━━━┓
-┃ worker ┃
-┃ node 󰒋 ┃
-┗━━━━━━━━┛
-```
-
-```
-┏━━━━━━━━┓
-┗━━━━━━━━┛
-```
-```
-┏━━━━━━━━┓
-┗━━━━━━━━┛
-```
-```
-┏━━━━━━━━┓
-┗━━━━━━━━┛
-```
-
 -------
 
 How It Went
 ---
 
+<!-- pause -->
 #### 🌈 overall, **perfectly** 🦄
 ##### *issues were not due to Rust*
 
+<!-- pause -->
 #### S3 write throughput
+<!-- pause -->
 #### shared FS costs
+<!-- pause -->
 #### Redis IO operations
+<!-- pause -->
 ##### skipping queues
 
+<!-- pause -->
 #### *but, also 🦀 is not only 🌈🦄*
 
 -------
@@ -579,15 +722,19 @@ How It Went
 🦀 Rust Issues 😕
 ---
 
+<!-- pause -->
 #### 🤔 `async` Rust (*tokio*) can be **tricky** 🤔
 ##### *mostly because of multithreading*
 
+<!-- pause -->
 #### **60k** LOC of *authored* code
 ##### 😯 **800k** LOC of *dependencies*! 😯
 
+<!-- pause -->
 #### ⏳ *CI* build times are **slow** ⏳
 ##### *caching is mandatory*
 
+<!-- pause -->
 #### VS code + Rust analyzer
 ##### ⏳ *struggle* at **startup** ⏳
 
@@ -596,13 +743,19 @@ How It Went
 🦀 Rust Strenghts 💪
 ---
 
+<!-- pause -->
 #### 🥱 **Rust** in *production* is **boring** 🥱
+<!-- pause -->
 #### 🔎🐛 *bugs* are **nowhere** to be found 🔎🐛
+<!-- pause -->
 ##### 🤦 *except for analysis holes* 🤦
 
+<!-- pause -->
 #### ⭐ *performance* is **stellar** ⭐
-##### *resources* usage is **minimal**
+<!-- pause -->
+#####  *resources* usage is **minimal** 
 
+<!-- pause -->
 #### 🛡 *fearless* concurrency is **real** 🛡
 
 -------
@@ -610,30 +763,38 @@ How It Went
 🦀 Why Rust ❓
 ---
 
+<!-- pause -->
 #### the algo is **performance** critical
 ##### *it is already implemented in C++*
 
+<!-- pause -->
 #### we needed to build **high level** code
 ##### *...networking, protocols, APIs, persistence...*
 
+<!-- pause -->
 #### *Long term*, I wanted the algo team
 ##### to work on the *whole codebase*
 
+<!-- pause -->
 #### Rust is very *good* at *both*
-##### **performance** and **high level**
+##### **high performance** and **high level**
 
 -------
 
 What About Management?
 ---
 
+<!-- pause -->
 #### *or:*
+<!-- pause -->
 ##### ❓ how did I get away with it ❓
 
+<!-- pause -->
 #### *suppose you want to*
 #### *introduce Rust*
 ##### *in your workplace*
 
+<!-- pause -->
 #### **what does it take?**
 
 -------
@@ -641,13 +802,17 @@ What About Management?
 It Needs to Make Sense
 ---
 
+<!-- pause -->
 #### Rust **strenghts** must be
 ##### **relevant** to *your* project
 
+<!-- pause -->
 #### not just *mildly* relevant,
 ##### but **enough** to **justify** the *hassle*
 
+<!-- pause -->
 #### **making sense** is **not enough**
+<!-- pause -->
 ##### *...what you need is...*
 
 -------
@@ -655,6 +820,7 @@ It Needs to Make Sense
 TRUST
 ---
 
+<!-- pause -->
 <!-- jump_to_middle -->
 #### **management trusted me**
 
@@ -663,12 +829,15 @@ TRUST
 Building Trust
 ---
 
+<!-- pause -->
 #### how do you make so that
 ##### your *managers* **trust** you?
 
+<!-- pause -->
 #### by doing *well* the **very** thing
 ##### that you **hate** doing:
 
+<!-- pause -->
 ##### 🔮 **predicting** the **future** 🔮
 
 -------
@@ -676,11 +845,14 @@ Building Trust
 Being Reliable
 ---
 
+<!-- pause -->
 #### *when*, for **tens** of **times**,
 ##### you say **this is going to happen**
 
+<!-- pause -->
 ##### and *then* it **happens**
 
+<!-- pause -->
 #### **you are building trust**
 
 -------
@@ -688,14 +860,19 @@ Being Reliable
 A Healthy Workplace
 ---
 
+<!-- pause -->
 #### when you **trust** your
 ##### *managers* and *coworkers*
 
+<!-- pause -->
 #### **and they trust you**
+<!-- pause -->
 ##### **everything is fine**
 
+<!-- pause -->
 ##### *if your workplace is not healthy*
 
+<!-- pause -->
 #### *technical issues* like using Rust
 ##### should be the **least** of your **worries**
 
@@ -704,10 +881,16 @@ A Healthy Workplace
 Recap
 ---
 
+<!-- pause -->
 ##### 🦀 Rust is amazing 🎇
+<!-- pause -->
 ##### 🛠  there are projects where it shines 🌞
+<!-- pause -->
 #### 🤝 you build trust 🤝
 ##### 🔮 by being reliable 🔮
+<!-- pause -->
 ##### 😃 a healthy workplace is important 😃
+<!-- pause -->
 #### 🙏 **thanks!** 🙏
+<!-- pause -->
 ##### ❓ *questions?*  ❓
