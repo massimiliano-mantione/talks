@@ -89,8 +89,25 @@ My Worlplace Since Sep 2020
 
 -------
 
+This is Where I start
+---
+
+<!-- pause -->
+##### I was hired as an algorithm engineer
+
+<!-- pause -->
+##### to fix performance issues
+
+<!-- pause -->
+##### make the system scale
+
+<!-- pause -->
+##### and yes, implement new features
+
+-------
+
 <!-- jump_to_middle -->
-Overall Architecture
+Routing Engine Architecture
 ---
 
 
@@ -318,8 +335,8 @@ OK, this is C++: and Rust?
 ---
 
 <!-- pause -->
-#### initial *experiments*
-##### analyzing **instances**
+#### my initial *experiments*:
+##### analyzing **problems**
 
 <!-- pause -->
 #### *3 months* of data
@@ -352,21 +369,179 @@ We *Really* Need To Scale *Now*!
 
 -------
 
-How to Do It
+How the Splitter Works
+---
+
+<!-- column_layout: [2, 3] -->
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a large problem
+
+<!-- column: 1 -->
+
+``` +no_margin
+              🏠                🏠
+   🏠     🏠            🏠
+        🏠           🏠
+     🏠                     🏠
+                     🏠
+              🚚  🚚    🏠
+                🏭                
+              🚚  🚚        🏠
+        🏠           🏠
+   🏠     🏠            🏠
+                              🏠
+      🏠      🏠           🏠
+  🏠                            🏠
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a large problem
+#### we split it
+
+<!-- column: 1 -->
+
+``` +no_margin
+              🏠 ┊              🏠
+   🏠     🏠     ┊      🏠
+        🏠       ┊   🏠
+     🏠          ┊          🏠
+                 ┊   🏠
+              🚚 ┊🚚    🏠
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌🏭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+              🚚 ┊🚚        🏠
+        🏠       ┊   🏠
+   🏠     🏠     ┊      🏠
+                 ┊            🏠
+      🏠      🏠 ┊         🏠
+  🏠             ┊              🏠
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a large problem
+#### we split it
+#### we solve subproblems
+
+<!-- column: 1 -->
+
+``` +no_margin
+           ┏━━🏠 ┊              🏠
+   🏠━━━┓ 🏠     ┊      🏠
+    ┃   🏠━┛     ┊   🏠
+    ┗🏠          ┊          🏠
+      ┃          ┊   🏠
+      ┗━━━━━━━🚚 ┊🚚    🏠
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌🏭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+              🚚 ┊🚚        🏠
+        🏠       ┊   🏠
+   🏠     🏠     ┊      🏠    
+                 ┊            🏠
+      🏠      🏠 ┊         🏠
+  🏠             ┊              🏠
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a large problem
+#### we split it
+#### we solve subproblems
+#### one at a time
+
+<!-- column: 1 -->
+
+``` +no_margin
+           ┏━━🏠 ┊           ┏━━🏠
+   🏠━━━┓ 🏠     ┊    ┏━🏠   ┃
+    ┃   🏠━┛     ┊   🏠  ┃   ┃
+    ┗🏠          ┊    ┃  ┗━━🏠
+      ┃          ┊   🏠━┓
+      ┗━━━━━━━🚚 ┊🚚━━━━🏠
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌🏭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+              🚚 ┊🚚        🏠
+        🏠       ┊   🏠
+   🏠     🏠     ┊      🏠    
+                 ┊            🏠
+      🏠      🏠 ┊         🏠
+  🏠             ┊              🏠
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a large problem
+#### we split it
+#### we solve subproblems
+#### one at a time
+##### possibly in parallel
+
+<!-- column: 1 -->
+
+``` +no_margin
+           ┏━━🏠 ┊           ┏━━🏠
+   🏠━━━┓ 🏠     ┊    ┏━🏠   ┃
+    ┃   🏠━┛     ┊   🏠  ┃   ┃
+    ┗🏠          ┊    ┃  ┗━━🏠
+      ┃          ┊   🏠━┓
+      ┗━━━━━━━🚚 ┊🚚━━━━🏠
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌🏭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+              🚚 ┊🚚━┓      🏠
+    ┏━━━🏠━━━━┛  ┊   🏠      ┃
+   🏠━━━━━🏠━━┓  ┊    ┗━🏠   ┃
+              ┃  ┊       ┃   ┗🏠┓
+   ┏━━🏠━━━━━━🏠 ┊       ┗━🏠   ┃
+  🏠             ┊          ┗━━━🏠
+```
+<!-- column: 0 -->
+<!-- pause -->
+#### a large problem
+#### we split it
+#### we solve subproblems
+#### one at a time
+##### possibly in parallel
+
+#### **then we merge**
+##### **the results**
+
+<!-- column: 1 -->
+
+``` +no_margin
+           ┏━━🏠             ┏━━🏠
+   🏠━━━┓ 🏠          ┏━🏠   ┃
+    ┃   🏠━┛         🏠  ┃   ┃
+    ┗🏠               ┃  ┗━━🏠
+      ┃              🏠━┓
+      ┗━━━━━━━🚚  🚚━━━━🏠
+                🏭
+              🚚  🚚━┓      🏠
+    ┏━━━🏠━━━━┛      🏠      ┃
+   🏠━━━━━🏠━━┓       ┗━🏠   ┃
+              ┃          ┃   ┗🏠┓
+   ┏━━🏠━━━━━━🏠         ┗━🏠   ┃
+  🏠                        ┗━━━🏠
+```
+
+-------
+
+Different Implementation Approaches
 ---
 
 <!-- pause -->
 #### *minimal change*
+<!-- pause -->
 #### implement a **C++** solver
 ##### orchestrator **in-process**
 
 <!-- pause -->
-#### *use Rust* with *minimal change*
+#### use **Rust** with *minimal change*
+<!-- pause -->
 #### implement a **Rust** solver
 ##### orchestrator **in-process**
 
 <!-- pause -->
-#### *use Rust* with *minimal risk*
+#### use *Rust* with **minimal risk**
+<!-- pause -->
 #### implement a **Rust** solver
 ##### orchestrator **out-of-process**
 
@@ -377,12 +552,12 @@ A New Component: The Runner
 
 <!-- pause -->
 #### thanks to the exploratory phase
-##### there was Rust code to handle problems
+##### there was **Rust code** to handle **problems**
 
 <!-- pause -->
 #### we had a *head start* to
 #### implement the orchestrator
-##### (we call it `runner`) in Rust
+##### (we call it `runner`) in **Rust**
 
 <!-- pause -->
 #### it mimics the underlying
@@ -447,6 +622,231 @@ We Need To Scale!
 ##### **yes**, *but that was scaling* **up**
 <!-- pause -->
 ##### **now** we need to **scale out**!
+
+-------
+
+Scaling Up
+---
+
+<!-- column_layout: [4, 2, 1] -->
+
+<!-- column: 0 -->
+<!-- pause -->
+#### you have a **small** problem
+<!-- pause -->
+##### you use a **small** machine
+
+<!-- column: 1 -->
+
+```
+
+
+
+
+
+
+
+┏━━━━━━━━━┓
+┃     o o ┃
+┃ ━━━━━━━ ┃
+┗━━━━━━━━━┛
+```
+
+<!-- column: 0 -->
+
+<!-- pause -->
+#### you have a small problem
+##### you use a small machine
+
+#### you have a **bigger** problem
+<!-- pause -->
+##### you use a **bigger** machine
+
+
+<!-- column: 1 -->
+
+```
+
+
+
+
+┏━━━━━━━━━┓
+┃     o o ┃
+┃     o o ┃
+┃         ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┗━━━━━━━━━┛
+```
+
+<!-- column: 0 -->
+
+<!-- pause -->
+#### you have a small problem
+##### you use a small machine
+
+#### you have a **bigger** problem
+##### you use a **bigger** machine
+
+##### *...and so on...*
+
+<!-- column: 1 -->
+
+```
+
+
+┏━━━━━━━━━┓
+┃     o o ┃
+┃     o o ┃
+┃         ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┗━━━━━━━━━┛
+```
+
+<!-- column: 0 -->
+
+<!-- pause -->
+#### you have a small problem
+##### you use a small machine
+
+#### you have a **bigger** problem
+##### you use a **bigger** machine
+
+##### *...and so on...*
+
+<!-- column: 1 -->
+
+```
+┏━━━━━━━━━┓
+┃     o o ┃
+┃     o o ┃
+┃         ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┃ ━━━━━━━ ┃
+┗━━━━━━━━━┛
+```
+
+-------
+
+Scaling Out
+---
+
+<!-- column_layout: [3, 2, 2, 2] -->
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a **few** problems
+<!-- pause -->
+##### a **few** machines
+
+<!-- column: 1 -->
+
+```
+
+
+
+
+
+
+
+
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a **few** problems
+##### a **few** machines
+
+#### **more** problems
+<!-- pause -->
+#### **more** machines
+
+<!-- column: 1 -->
+
+```
+
+
+
+
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+```
+
+<!-- column: 0 -->
+<!-- pause -->
+#### a **few** problems
+##### a **few** machines
+
+#### **more** problems
+#### **more** machines
+
+<!-- column: 1 -->
+
+```
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+```
+
+<!-- column: 2 -->
+<!-- pause -->
+```
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+```
+
+<!-- column: 3 -->
+<!-- pause -->
+```
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+┏━━━━━━━┓
+┃    oo ┃
+┃ ━━━━━ ┃
+┗━━━━━━━┛
+```
 
 -------
 
