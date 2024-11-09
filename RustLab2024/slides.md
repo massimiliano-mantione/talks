@@ -857,15 +857,20 @@ Logistical Computations at Scale
 ##### *at what scale?*
 
 <!-- pause -->
-#### in *production* we solve **180k plans/day**
-##### about **50k** vehicles *daily* depend on it
+#### in *production* we have **220k requests/day**
+<!-- pause -->
+#### for a *total* of **800k computations/day**
+<!-- pause -->
+##### about **40k** vehicles *worldwide* depend on it
 
 <!-- pause -->
 #### when *testing* we use a pool of **180k problems**
+<!-- pause -->
 ##### with the *current infrastructure* it takes **one week**
 
 <!-- pause -->
 #### we have **one** public **demo** environment
+<!-- pause -->
 ##### but we *want* to **diversify** it
 
 -------
@@ -1108,18 +1113,61 @@ How It Went
 <!-- pause -->
 #### S3 write throughput
 <!-- pause -->
-#### shared FS costs
+#### shared FS performance
 <!-- pause -->
 #### Redis IO operations
 <!-- pause -->
-##### skipping queues
+##### latency, and skipping queues
+
+-------
+
+Ongoing Work
+---
+
+<!-- pause -->
+#### we have a *new* algorithm *strategy*:
+##### **compact mode**
+
+<!-- pause -->
+#### a **Rust** component *pre-processes* the input
+##### inserting **compactness hints**
+
+<!-- pause -->
+#### we decided to *implement* this
+#### *outside* of the **C++** codebase
+<!-- pause -->
+#### because working *inside* it
+##### is more **error-prone**
 
 -------
 
 Future Plans
 ---
 
-#### (TODO: write about future plans here)
+<!-- pause -->
+<!-- jump_to_middle -->
+##### *...apart from **matrices** processing...*
+
+-------
+
+Future Plans
+---
+
+<!-- pause -->
+#### we intend to *reimplement*
+#### **inter**-vehicle route **permutation** steps
+
+<!-- pause -->
+#### we have *enough* Rust building blocks
+##### that doing it in **Rust** is **feasible**
+
+<!-- pause -->
+#### at that point the **C++** algorithm
+#### would *only* operate on
+##### **single-vehicle** problems
+
+<!-- pause -->
+##### 🦀 can you *guess* what happens *next*? 🦀
 
 -------
 
@@ -1163,8 +1211,8 @@ where
 ##### *do `F` and `F::Output` need to live **forever**?*
 
 <!-- pause -->
-#### can you *tell* the *difference*
-#### between `static` and `'static`?
+#### can you *tell* the *difference* between
+#### `static`, `&'static` and `T: 'static`?
 
 -------
 
@@ -1301,7 +1349,32 @@ Being Reliable
 ##### and *then* it **happens**
 
 <!-- pause -->
-#### **you are building trust**
+##### **you are building trust**
+
+<!-- pause -->
+#### *building trust* is a *process*
+<!-- pause -->
+#### it **happens** over **time**
+
+-------
+
+Before Someone Misunderstands Me
+---
+
+<!-- pause -->
+##### `reliable <= perfect`
+
+<!-- pause -->
+##### *being unreliable is **OK***
+
+<!-- pause -->
+#### making *somebody* feel **bad**
+#### *because* they are *not* reliable
+##### **is not OK**
+
+<!-- pause -->
+#### *which is a corollary of*
+##### **spread love to everyone**
 
 -------
 
