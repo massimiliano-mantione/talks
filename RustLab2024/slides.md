@@ -530,19 +530,19 @@ Different Implementation Approaches
 <!-- pause -->
 #### *minimal change*
 <!-- pause -->
-#### implement a **C++** solver
+#### **C++** solver
 ##### orchestrator **in-process**
 
 <!-- pause -->
 #### use **Rust** with *minimal change*
 <!-- pause -->
-#### implement a **Rust** solver
+#### **Rust** solver
 ##### orchestrator **in-process**
 
 <!-- pause -->
 #### use *Rust* with **minimal risk**
 <!-- pause -->
-#### implement a **Rust** solver
+#### **Rust** solver
 ##### orchestrator **out-of-process**
 
 -------
@@ -892,7 +892,7 @@ Actual Goals
 
 -------
 
-The Algo Service
+Scaling Out: How?
 ---
 
 <!-- pause -->
@@ -1114,8 +1114,21 @@ How It Went
 <!-- pause -->
 ##### skipping queues
 
+-------
+
+Future Plans
+---
+
+#### (TODO: write about future plans here)
+
+-------
+
+Again, so far so good
+---
+
 <!-- pause -->
-#### *but, also 🦀 is not only 🌈🦄*
+<!-- jump_to_middle -->
+#### *but, 🦀 is not only 🌈🦄*
 
 -------
 
@@ -1123,6 +1136,41 @@ How It Went
 ---
 
 <!-- pause -->
+#### 🤔 `async` Rust (*tokio*) can be **tricky** 🤔
+##### *mostly because of multithreading*
+
+<!-- pause -->
+##### **an example?**
+-------
+
+A Digression on Async Rust
+---
+
+<!-- pause -->
+##### `spawn` in `tokio`
+
+<!-- pause -->
+```rust
+pub fn spawn<F>(future: F) -> JoinHandle<F::Output>
+where
+    F: Future + Send + 'static,
+    F::Output: Send + 'static,
+```
+<!-- pause -->
+##### *application:* **Redis** stream -> *channel* -> **tokio** stream
+
+<!-- pause -->
+##### *do `F` and `F::Output` need to live **forever**?*
+
+<!-- pause -->
+#### can you *tell* the *difference*
+#### between `static` and `'static`?
+
+-------
+
+🦀 Back to Rust Issues 😕
+---
+
 #### 🤔 `async` Rust (*tokio*) can be **tricky** 🤔
 ##### *mostly because of multithreading*
 
