@@ -1107,7 +1107,7 @@ How It Went
 ---
 
 <!-- pause -->
-#### 🌈 overall, **perfectly** 🦄
+#### 🌈 overall, **very well** 🦄
 ##### *issues were not due to Rust*
 
 <!-- pause -->
@@ -1365,15 +1365,18 @@ Before Someone Misunderstands Me
 ##### `reliable <= perfect`
 
 <!-- pause -->
-##### *being unreliable is **OK***
+##### *making mistakes is **OK***
+
+<!-- pause -->
+##### *thinking that someone is not reliable is **OK***
 
 <!-- pause -->
 #### making *somebody* feel **bad**
-#### *because* they are *not* reliable
+#### *because* they make *mistakes*
 ##### **is not OK**
 
 <!-- pause -->
-#### *which is a corollary of*
+#### *the above is a corollary of*
 ##### **spread love to everyone**
 
 -------
