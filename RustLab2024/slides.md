@@ -48,7 +48,7 @@ Talk Outline
 
 -------
 
-My Worlplace Since Sep 2020
+Workwave: My Worlplace Since Sep 2020
 ---
 
 ##### _1st, a bit of history_
@@ -69,7 +69,7 @@ My Worlplace Since Sep 2020
 
 -------
 
-My Worlplace Since Sep 2020
+Workwave: My Worlplace Since Sep 2020
 ---
 
 ##### _next bit of history_
@@ -85,7 +85,7 @@ My Worlplace Since Sep 2020
 #### all _delivery_ customers
 ##### had **larger** problems
 <!-- pause -->
-#### 🤔 algo performance 🤔
+#### 🤔 algorithm performance 🤔
 
 -------
 
@@ -353,7 +353,7 @@ OK, this is C++: and Rust?
 
 -------
 
-We *Really* Need To Scale *Now*!
+Management Calls: We *Really* Need To Scale *Now*!
 ---
 
 <!-- pause -->
@@ -361,7 +361,7 @@ We *Really* Need To Scale *Now*!
 <!-- pause -->
 ##### *splitting* large *problems*
 <!-- pause -->
-##### *solving* the subpproblems
+##### *solving* the *(smaller)* subpproblems
 <!-- pause -->
 ##### producing a *unified* solution
 <!-- pause -->
