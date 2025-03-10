@@ -1,25 +1,21 @@
 import { books } from './data'
+import { Effect } from 'effect'
 
 export type Book = { name: string; author: string; price: number }
 export type Order = { date: Date; items: OrderLine[] }
 export type OrderLine = { bookId: string; quantity: number }
 
-export type PlacedOrderResult =
-  | {
-      success: true
-      totalAmount: number
-    }
-  | {
-      success: false
-    }
+export type PlacedOrderSuccess = { success: true; totalAmount: number }
+export type PlacedOrderFailure = { success: false }
+export type PlacedOrderResult = PlacedOrderSuccess | PlacedOrderFailure
 
-export const placedOrderSuccess: (totalAmount: number) => PlacedOrderResult = (
+export const placedOrderSuccess: (totalAmount: number) => PlacedOrderSuccess = (
   totalAmount: number
 ) => ({
   success: true,
   totalAmount
 })
-export const placedOrderFailed: PlacedOrderResult = { success: false }
+export const placedOrderFailed: PlacedOrderFailure = { success: false }
 
 export type SyncProcessor = (orderId: string) => PlacedOrderResult
 export type AsyncProcessor = (orderId: string) => Promise<PlacedOrderResult>

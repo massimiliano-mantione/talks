@@ -1,7 +1,7 @@
 {
   "tasks": {
     "go": "deno run --unstable-sloppy-imports main.ts",
-    "all": "bash -c 'for C in sync syncfp syncfpn promise async cb cbasync fp fpchk fpn fpchkn; do deno run --unstable-sloppy-imports main.ts $C; done'",
+    "all": "bash -c 'for C in sync syncfp syncfpn synceff promise async cb cbasync fp fpchk fpn fpchkn; do deno run --unstable-sloppy-imports main.ts $C; done'",
     "dev": "deno run --unstable-sloppy-imports --watch main.ts"
   },
   "imports": {

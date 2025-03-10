@@ -1,22 +1,7 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@std/assert@1": "1.0.11",
-    "jsr:@std/internal@^1.0.5": "1.0.5",
-    "npm:effect@3.13.8": "3.13.8",
-    "npm:fp-ts@2.0.5": "2.0.5",
-    "npm:fp-ts@2.16.9": "2.16.9"
-  },
-  "jsr": {
-    "@std/assert@1.0.11": {
-      "integrity": "2461ef3c368fe88bc60e186e7744a93112f16fd110022e113a0849e94d1c83c1",
-      "dependencies": [
-        "jsr:@std/internal"
-      ]
-    },
-    "@std/internal@1.0.5": {
-      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
-    }
+    "npm:effect@3.13.8": "3.13.8"
   },
   "npm": {
     "@standard-schema/spec@1.0.0": {
@@ -35,12 +20,6 @@
         "pure-rand"
       ]
     },
-    "fp-ts@2.0.5": {
-      "integrity": "sha512-opI5r+rVlpZE7Rhk0YtqsrmxGkbIw0dRNqGca8FEAMMnjomXotG+R9QkLQg20onx7R8qhepAn4CCOP8usma/Xw=="
-    },
-    "fp-ts@2.16.9": {
-      "integrity": "sha512-+I2+FnVB+tVaxcYyQkHUq7ZdKScaBlX53A41mxQtpIccsfyv8PzdzP7fzp2AY832T4aoK6UZ5WRX/ebGd8uZuQ=="
-    },
     "pure-rand@6.1.0": {
       "integrity": "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="
     }
@@ -48,9 +27,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
-      "npm:effect@3.13.8",
-      "npm:fp-ts@2.0.5",
-      "npm:fp-ts@2.16.9"
+      "npm:effect@3.13.8"
     ]
   }
 }

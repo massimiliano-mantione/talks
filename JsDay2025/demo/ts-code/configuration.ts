@@ -9,6 +9,7 @@ import processorFpChecked from './processOrderFpChecked.ts'
 import processorFpNew from './processOrderFpNew.ts'
 import processorFpSyncNew from './processOrderFpSyncNew.ts'
 import processorFpCheckedNew from './processOrderFpCheckedNew.ts'
+import processorEffectSync from './processOrderEffectSync.ts'
 import { categorizedOrderIds } from './data.ts'
 import { SyncProcessor, AsyncProcessor } from './api.ts'
 
@@ -34,6 +35,7 @@ function getSyncProcessor(processorName: string): SyncProcessor | null {
   if (processorName === 'sync') return processorSync
   if (processorName === 'syncfp') return processorFpSync
   if (processorName === 'syncfpn') return processorFpSyncNew
+  if (processorName === 'synceff') return processorEffectSync
   return null
 }
 
