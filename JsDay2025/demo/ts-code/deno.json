@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "go": "deno run --unstable-sloppy-imports main.ts",
+    "all": "bash -c 'for C in sync syncfp syncfpn promise async cb cbasync fp fpchk fpn fpchkn; do deno run --unstable-sloppy-imports main.ts $C; done'",
+    "dev": "deno run --unstable-sloppy-imports --watch main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "effect": "npm:effect@3.13.8",
+    "fp-ts-old": "npm:fp-ts@2.0.5",
+    "fp-ts-new": "npm:fp-ts@2.16.9"
+  }
+}

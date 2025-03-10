@@ -1,0 +1,5 @@
+{
+  "warmup": 200000,
+  "epoch": 1000000,
+  "failureRate": 0.01
+}
