@@ -10,20 +10,35 @@ import {
   PlacedOrderSuccess
 } from './api'
 
-function bookService(bookId: string): Effect<Order,string> {
-  return Effect.sync(() => books[bookId] ? Effect.succeed(books[bookId]) : Effect.fail("book not found"))
-}
+const bookService = (bookId: string) =>
+  books[bookId] ? Effect.succeed(books[bookId]) : Effect.fail("book not found")
 
-function orderService(orderId: string): Effect<Order,string> {
-  return Effect.sync(() => orders[orderId] ? Effect.succeed(orders[orderId]) : Effect.fail("order not found"))
-}
+const orderService = (orderId: string) =>
+  orders[orderId] ? Effect.succeed(orders[orderId]) : Effect.fail("order not found")
+
 
 function validationService(order: Order): Effect<Order,string> {
   const r = validateOrder(order)
   return r.valid ? Effect.succeed(order) : Effect.fail(r.error)
 }
 
-function calculateAmountService(order: Order): Effect<number,string> {
+const calculateAmountService = (order: Order) =>
+  Effect.gen(function* (_) {
+    let total = 0;
+    for (let i = 0; i < order.items.length; i++) {
+      const item = order.items[i];
+      const book = yield* bookService(item.bookId);
+      if (book != null) {
+        total += item.quantity * book.price;
+      } else {
+        return yield* Effect.fail("Book not found: " + item.bookId);
+      }
+    }
+    return total;
+  });
+
+/*
+function calculateAmountServiceStreamed(order: Order): Effect<number,string> {
   return Stream.fromIterable(order.items).pipe(
     Stream.mapEffect(item => {
       return bookService(item.bookId).pipe(
@@ -33,15 +48,16 @@ function calculateAmountService(order: Order): Effect<number,string> {
     Stream.runFold(0, (a, b) => a + b)
   )
 }
+*/
 
-function placeOrderService(order: Order): Effect<PlacedOrderSuccess,string> {
-  return calculateAmountService(order).pipe(Effect.andThen(placedOrderSuccess))
-}
+const placeOrderService = (order: Order) =>
+  calculateAmountService(order).pipe(Effect.andThen(placedOrderSuccess))
 
 const processor: SyncProcessor = (orderId: string) => {
   return Effect.runSync(
-    orderService(orderId).pipe(
-      Effect.andThen(order => order),
+    pipe(
+      orderId,
+      orderService,
       Effect.andThen(validationService),
       Effect.andThen(placeOrderService),
       Effect.catchAll(e => Effect.succeed(placedOrderFailed))
