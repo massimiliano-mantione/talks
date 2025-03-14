@@ -1,0 +1,11 @@
+[package]
+name = "rust-code"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.40"
+futures = "0.3.31"
+#rustica = { version = "0.5.2", features = ["full"] }
+wasi-async-runtime = "0.1.2"
+itertools = "0.8.0"
