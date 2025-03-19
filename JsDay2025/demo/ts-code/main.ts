@@ -1,5 +1,11 @@
 import { argv } from 'node:process';
 import { get as getConfiguration, benchmark } from './configuration'
+import { checkOrdersData } from './data';
+
+if (!checkOrdersData()) {
+  console.log('Data is invalid')
+  throw new Error('Data is invalid')
+}
 
 const configuration = await getConfiguration(argv[2])
 const [timeInMs, result] = await benchmark(configuration)

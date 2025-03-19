@@ -121,13 +121,17 @@ export async function validateOrderCallback(order: Order, cb: (OrderValidationRe
 
 export function checkOrdersData(): boolean {
   for (let i = 0; i < validOrders.length; i++) {
-    if (validateOrderSync(orderWithKey(i, validOrders[i])).valid == false) {
+    const order = orderWithKey(i, validOrders[i])
+    const r = validateOrderSync(order)
+    if (r.valid == false) {
       return false
     }
   }
 
   for (let i = 0; i < invalidOrders.length; i++) {
-    if (validateOrderSync(orderWithKey(i, validOrders[i])).valid == true) {
+    const order = orderWithKey(i, invalidOrders[i])
+    const r = validateOrderSync(order)
+    if (r.valid == true) {
       return false
     }
   }
