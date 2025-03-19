@@ -1,6 +1,7 @@
-import { orders, books } from './data'
 import {
-  validateOrder,
+  getBookAsync,
+  getOrderAsync,
+  validateOrderAsync,
   Book,
   Order,
   AsyncProcessor,
@@ -9,27 +10,27 @@ import {
   placedOrderFailed,
 } from './api'
 
-async function bookService (bookId: string): Promise<Book|null> {
-  return books[bookId] ? books[bookId] : null
+async function bookService (key: number): Promise<Book|null> {
+  return await getBookAsync(key)
 }
 
-async function orderService (orderId: string): Promise<Order|null> {
-  return orders[orderId] ? orders[orderId] : null
+async function orderService (key: number): Promise<Order|null> {
+  return await getOrderAsync(key)
 }
 
 async function validationService(order: Order): Promise<OrderValidationResult> {
-  return validateOrder(order)
+  return await validateOrderAsync(order)
 }
 
 async function calculateAmountService(order: Order): Promise<number> {
   let total = 0
   for (let i = 0; i < order.items.length; i++) {
     const item = order.items[i]
-    const book = await bookService(item.bookId)
+    const book = await bookService(item.bookKey)
     if (book != null) {
       total += item.quantity * book.price
     } else {
-      throw new Error('Book not found: ' + item.bookId)
+      throw new Error('Book not found: ' + item.bookKey)
     }
   }
   return total
@@ -43,9 +44,9 @@ async function placeOrderService(order: Order): Promise<PlacedOrderResult> {
 }
 
 const processor: AsyncProcessor = async (
-  orderId: string
+  orderKey: number
 ): Promise<PlacedOrderResult> => {
-  const order = await orderService(orderId)
+  const order = await orderService(orderKey)
   if (order == null) {
     return {
       success: false

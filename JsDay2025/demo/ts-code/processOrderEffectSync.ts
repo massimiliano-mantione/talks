@@ -1,7 +1,8 @@
 import { Effect, Stream, pipe, Console } from 'effect'
-import { orders, books } from './data'
 import {
-  validateOrder,
+  getBookSync,
+  getOrderSync,
+  validateOrderSync,
   Order,
   SyncProcessor,
   Book,
@@ -10,15 +11,19 @@ import {
   PlacedOrderSuccess
 } from './api'
 
-const bookService = (bookId: string) =>
-  books[bookId] ? Effect.succeed(books[bookId]) : Effect.fail("book not found")
+function bookService(key: number): Effect<Order,string> {
+  const r = getBookSync(key)
+  return r ? Effect.succeed(r) : Effect.fail("book not found")
+}
 
-const orderService = (orderId: string) =>
-  orders[orderId] ? Effect.succeed(orders[orderId]) : Effect.fail("order not found")
+function orderService(key: number): Effect<Order,string> {
+  const r = getOrderSync(key)
+  return r ? Effect.succeed(r) : Effect.fail("order not found")
+}
 
 
 function validationService(order: Order): Effect<Order,string> {
-  const r = validateOrder(order)
+  const r = validateOrderSync(order)
   return r.valid ? Effect.succeed(order) : Effect.fail(r.error)
 }
 
@@ -27,11 +32,11 @@ const calculateAmountService = (order: Order) =>
     let total = 0;
     for (let i = 0; i < order.items.length; i++) {
       const item = order.items[i];
-      const book = yield* bookService(item.bookId);
+      const book = yield* bookService(item.bookKey);
       if (book != null) {
         total += item.quantity * book.price;
       } else {
-        return yield* Effect.fail("Book not found: " + item.bookId);
+        return yield* Effect.fail("Book not found: " + item.bookKey);
       }
     }
     return total;
@@ -53,10 +58,10 @@ function calculateAmountServiceStreamed(order: Order): Effect<number,string> {
 const placeOrderService = (order: Order) =>
   calculateAmountService(order).pipe(Effect.andThen(placedOrderSuccess))
 
-const processor: SyncProcessor = (orderId: string) => {
+const processor: SyncProcessor = (key: number) => {
   return Effect.runSync(
     pipe(
-      orderId,
+      key,
       orderService,
       Effect.andThen(validationService),
       Effect.andThen(placeOrderService),

@@ -2,9 +2,10 @@ import { pipe } from 'fp-ts-old/lib/pipeable.js'
 import { array } from 'fp-ts-old/lib/Array.js'
 import { Either, isLeft } from 'fp-ts-old/lib/Either.js'
 import { taskEither, chain, map } from 'fp-ts-old/lib/TaskEither.js'
-import { orders, books } from './data'
 import {
-  validateOrder,
+  getBookSync,
+  getOrderSync,
+  validateOrderSync,
   Order,
   AsyncProcessor,
   Book,
@@ -19,20 +20,22 @@ const evaluateEither = <T>(ma: Either<Error, T>) => {
   return ma.right
 }
 
-const bookService = (bookId: string) =>
-  books[bookId]
-    ? taskEither.of<Error, Book>(books[bookId])
-    : taskEither.throwError<Error, Book>(new Error(`Book not found: ${bookId}`))
+const bookService = (key: number) =>
+  getBookSync(key)
+    ? taskEither.of<Error, Book>(getBookSync(key))
+    : taskEither.throwError<Error, Book>(new Error(`Book not found: ${key}`))
 
-const orderService = (orderId: string) =>
-  orders[orderId]
-    ? taskEither.of<Error, Order>(orders[orderId])
+
+const orderService = (key: number) =>
+  getOrderSync(key)
+    ? taskEither.of<Error, Order>(getOrderSync(key))
     : taskEither.throwError<Error, Order>(
-        new Error(`Order not found: ${orderId}`)
+        new Error(`Order not found: ${key}`)
       )
 
+
 const validationService = (order: Order) => {
-  const r = validateOrder(order)
+  const r = validateOrderSync(order)
   if (r.valid) {
     return taskEither.of<Error, Order>(order)
   } else {
@@ -44,7 +47,7 @@ const calculateAmountService = (order: Order) => {
   return pipe(
     order.items.map(item =>
       pipe(
-        bookService(item.bookId),
+        bookService(item.bookKey),
         map(b => b.price * item.quantity)
       )
     ),
@@ -61,9 +64,9 @@ const placeOrderService = (order: Order) =>
     map(placedOrderSuccess)
   )
 
-const processor: AsyncProcessor = (orderId: string) =>
+const processor: AsyncProcessor = (key: number) =>
   pipe(
-    orderService(orderId),
+    orderService(key),
     chain(validationService),
     chain(placeOrderService)
   )()

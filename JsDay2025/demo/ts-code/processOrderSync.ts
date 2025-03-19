@@ -1,24 +1,20 @@
-import { orders, books } from './data'
-import { validateOrder, Order, SyncProcessor, PlacedOrderResult, placedOrderFailed } from './api'
+import { getBookSync, getOrderSync, validateOrderSync, Order, SyncProcessor, PlacedOrderResult, placedOrderFailed } from './api'
 
-const bookService = (bookId: string) => (books[bookId] ? books[bookId] : null)
+const bookService = getBookSync
 
-const orderService = (orderId: string) =>
-  orders[orderId] ? orders[orderId] : null
+const orderService = getOrderSync
 
-const validationService = (order: Order) => {
-  return validateOrder(order)
-}
+const validationService = validateOrderSync
 
 const calculateAmountService = (order: Order) => {
   let total = 0
   for (let i = 0; i < order.items.length; i++) {
     const item = order.items[i]
-    const book = bookService(item.bookId)
+    const book = bookService(item.bookKey)
     if (book != null) {
       total += item.quantity * book.price
     } else {
-      throw new Error('Book not found: ' + item.bookId)
+      throw new Error('Book not found: ' + item.bookKey)
     }
   }
   return total
@@ -32,8 +28,8 @@ const placeOrderService = (order: Order) => {
   }
 }
 
-const processor: SyncProcessor = (orderId: string): PlacedOrderResult => {
-  const order = orderService(orderId)
+const processor: SyncProcessor = (key: number): PlacedOrderResult => {
+  const order = orderService(key)
   if (order == null) {
     return {
       success: false

@@ -1,6 +1,8 @@
-import { orders, books } from './data'
 import {
-  validateOrder,
+  getBookSync,
+  getOrderSync,
+  validateOrderSync,
+  Book,
   Order,
   AsyncProcessor,
   PlacedOrderResult,
@@ -8,17 +10,23 @@ import {
   placedOrderSuccess
 } from './api'
 
-const bookService = (bookId: string) =>
-  books[bookId]
-    ? Promise.resolve(books[bookId])
-    : Promise.reject(new Error(`Book not found: ${bookId}`))
+function bookService(key: number): Promise<Book> {
+  const r = getBookSync(key);
+  return r
+    ? Promise.resolve(r)
+    : Promise.reject(new Error(`Book not found: ${key}`))
 
-const orderService = (orderId: string) =>
-  orders[orderId]
-    ? Promise.resolve(orders[orderId])
-    : Promise.reject(new Error(`Order not found: ${orderId}`))
-const validationService = (order: Order) => {
-  const r = validateOrder(order)
+}
+
+function orderService(key: number): Promise<Order> {
+  const r = getOrderSync(key);
+  return r
+    ? Promise.resolve(r)
+    : Promise.reject(new Error(`Order not found: ${key}`))
+}
+
+function validationService(order: Order): Promise<Order> {
+  const r = validateOrderSync(order)
   if (r.valid) {
     return Promise.resolve(order)
   } else {
@@ -30,7 +38,7 @@ const calculateAmountService = async (order: Order) => {
   let total = 0
   for (let i = 0; i < order.items.length; i++) {
     const item = order.items[i]
-    const book = await bookService(item.bookId)
+    const book = await bookService(item.bookKey)
     total += item.quantity * book.price
   }
   return total
@@ -40,9 +48,9 @@ const placeOrderService = (order: Order) =>
   calculateAmountService(order).then(placedOrderSuccess)
 
 const processor: AsyncProcessor = (
-  orderId: string
+  key:number
 ): Promise<PlacedOrderResult> => {
-  return orderService(orderId)
+  return orderService(key)
     .then(validationService)
     .then(placeOrderService)
     .catch(() => placedOrderFailed)

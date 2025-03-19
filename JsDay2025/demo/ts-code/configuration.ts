@@ -10,8 +10,8 @@ import processorFpNew from './processOrderFpNew.ts'
 import processorFpSyncNew from './processOrderFpSyncNew.ts'
 import processorFpCheckedNew from './processOrderFpCheckedNew.ts'
 import processorEffectSync from './processOrderEffectSync.ts'
-import { categorizedOrderIds } from './data.ts'
 import { SyncProcessor, AsyncProcessor } from './api.ts'
+import { validKey, invalidKey } from './data.ts'
 
 import config_file from "./params.json" with { type: "json" };
 const config = config_file as {
@@ -38,8 +38,6 @@ function getSyncProcessor(processorName: string): SyncProcessor | null {
   if (processorName === 'synceff') return processorEffectSync
   return null
 }
-
-export type BenchmarkIds = { ok: string[]; ko: string[] }
 
 export type SyncBenchmarkConfiguration = {
   isSync: true
@@ -99,22 +97,23 @@ export function syncRunner(
   processor: SyncProcessor,
   iterations: number,
   failure_rate: number,
-  ids: BenchmarkIds
 ): RunnerResult {
+  let baseKey = 0
   let ok_counter = 0
   let ko_counter = 0
   let total = 0.0
 
   while (ok_counter + ko_counter < iterations) {
-    let id = ''
+    let key = 0
     if (ok_counter > 0 && ko_counter / ok_counter < failure_rate) {
-      id = ids.ko[ko_counter % ids.ko.length]
+      key = invalidKey(baseKey)
       ko_counter += 1
     } else {
-      id = ids.ok[ok_counter % ids.ok.length]
+      key = validKey(baseKey)
       ok_counter += 1
     }
-    const r = processor(id)
+    const r = processor(key)
+    baseKey += 1
     total += r.success ? r.totalAmount : 0
   }
   return {
@@ -128,22 +127,22 @@ export async function asyncRunner(
   processor: AsyncProcessor,
   iterations: number,
   failure_rate: number,
-  ids: BenchmarkIds
 ): Promise<RunnerResult> {
+  let baseKey = 0
   let ok_counter = 0
   let ko_counter = 0
   let total = 0.0
 
   while (ok_counter + ko_counter < iterations) {
-    let id = ''
+    let key = 0
     if (ok_counter > 0 && ko_counter / ok_counter < failure_rate) {
-      id = ids.ko[ko_counter % ids.ko.length]
+      key = invalidKey(baseKey)
       ko_counter += 1
     } else {
-      id = ids.ok[ok_counter % ids.ok.length]
+      key = validKey(baseKey)
       ok_counter += 1
     }
-    const r = await processor(id)
+    const r = await processor(key)
     total += r.success ? r.totalAmount : 0
   }
   return {
@@ -161,14 +160,12 @@ export async function benchmark(
       config.processor,
       config.warmup,
       config.failureRate,
-      categorizedOrderIds
     )
     const start = new Date().getTime()
     let result = syncRunner(
       config.processor,
       config.epoch,
       config.failureRate,
-      categorizedOrderIds
     )
     const end = new Date().getTime()
     return [end - start, result]
@@ -177,14 +174,12 @@ export async function benchmark(
       config.processor,
       config.warmup,
       config.failureRate,
-      categorizedOrderIds
     )
     const start = new Date().getTime()
     let result = await asyncRunner(
       config.processor,
       config.epoch,
       config.failureRate,
-      categorizedOrderIds
     )
     const end = new Date().getTime()
     return [end - start, result]

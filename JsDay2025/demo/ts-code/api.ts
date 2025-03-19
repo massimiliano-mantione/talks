@@ -1,9 +1,30 @@
-import { books } from './data'
-import { Effect } from 'effect'
+import {
+  getBookSync,
+  getBookAsync,
+  getBookCallback,
+  getOrderSync,
+  getOrderAsync,
+  getOrderCallback,
+  validateOrderSync,
+  validateOrderAsync,
+  validateOrderCallback
+} from './data'
 
-export type Book = { name: string; author: string; price: number }
-export type Order = { date: Date; items: OrderLine[] }
-export type OrderLine = { bookId: string; quantity: number }
+export {
+  getBookSync,
+  getBookAsync,
+  getBookCallback,
+  getOrderSync,
+  getOrderAsync,
+  getOrderCallback,
+  validateOrderSync,
+  validateOrderAsync,
+  validateOrderCallback
+}
+
+export type Book = { key: number; name: string; author: string; price: number }
+export type Order = { key: number; date: Date; items: OrderLine[] }
+export type OrderLine = { bookKey: number; quantity: number }
 
 export type PlacedOrderSuccess = { success: true; totalAmount: number }
 export type PlacedOrderFailure = { success: false }
@@ -15,25 +36,27 @@ export const placedOrderSuccess: (totalAmount: number) => PlacedOrderSuccess = (
   success: true,
   totalAmount
 })
+
+export const placedOrderSuccessAsync: (totalAmount: number) => Promise<PlacedOrderSuccess> = (
+  totalAmount: number
+) => (
+  Promise.resolve({
+  success: true,
+  totalAmount
+}))
+
 export const placedOrderFailed: PlacedOrderFailure = { success: false }
 
-export type SyncProcessor = (orderId: string) => PlacedOrderResult
-export type AsyncProcessor = (orderId: string) => Promise<PlacedOrderResult>
+export type SyncProcessor = (orderKey: number) => PlacedOrderResult
+export type AsyncProcessor = (orderKey: number) => Promise<PlacedOrderResult>
 
-export type OrderNotValid = 'NoItems' | 'BookNotExists'
+export type OrderValidationProblem = 'NoItems' | 'BookNotExists'
+export type OrderValidationSuccess = { valid: true; order: Order }
+export type OrderValidationError = { valid: false; error: OrderValidationProblem }
 export type OrderValidationResult =
-  | { valid: true }
-  | { valid: false; error: OrderNotValid }
+  | OrderValidationSuccess
+  | OrderValidationError
 
-export function validateOrder(order: Order): OrderValidationResult {
-  const invalid = (error: OrderNotValid) => ({ valid: false, error })
-  if (order.items.length === 0) {
-    return invalid('NoItems')
+  export function validationError(problem: OrderValidationProblem): OrderValidationError {
+    return {valid: false, error: problem}
   }
-  for (let i = 0; i < order.items.length; i++) {
-    if (!books[order.items[i].bookId]) {
-      return invalid('BookNotExists')
-    }
-  }
-  return { valid: true }
-}

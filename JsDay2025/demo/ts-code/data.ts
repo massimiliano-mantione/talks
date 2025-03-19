@@ -1,62 +1,165 @@
-import { Book, Order, validateOrder } from './api'
-import { BenchmarkIds } from './configuration'
+import { Book, Order, OrderLine, OrderValidationResult, validationError } from './api'
 
-export const books: { [id: string]: Book } = {
-  1: {
+type StoredBook = { name: string; author: string; price: number }
+type StoredOrder = { date: Date; items: OrderLine[] }
+
+const books: StoredBook[] = [
+  {
     name: 'Positioning: The Battle for Your Mind',
     author: 'Al Reis',
     price: 12.98
   },
-  2: {
+  {
     name: 'Start With Why: How Great Leaders Inspire Everyone to Take Action',
     author: 'Simon Sinek',
     price: 11.51
   },
-  3: {
+  {
     name:
       'Pitch Anything: An Innovative Method for Presenting, Persuading, and Winning the Deal',
     author: 'Oren Klaff',
     price: 19.23
   }
+]
+
+export function getBookSync(key: number): Book|null {
+  let k = key - 1;
+  if (books[k]) {
+    return { key, ...books[k]}
+  } else {
+    return null
+  }
 }
 
-export const orders: { [id: string]: Order } = {
-  1: { date: new Date(), items: [] },
-  2: {
+export async function getBookAsync(key: number): Promise<Book|null> {
+  let k = key - 1;
+  if (books[k]) {
+    return { key, ...books[k]}
+  } else {
+    return null
+  }
+}
+
+export function getBookCallback(key: number, cb: (book: Book|null) => void) {
+  let k = key - 1;
+  if (books[k]) {
+    cb({ key, ...books[k]})
+  } else {
+    cb(null)
+  }
+}
+
+const validOrders: StoredOrder[] = [
+  {
     date: new Date(),
-    items: [{ bookId: '1', quantity: 10 }, { bookId: '3', quantity: 27 }]
+    items: [{ bookKey: 1, quantity: 10 }, { bookKey: 3, quantity: 27 }]
   },
-  3: {
+  {
     date: new Date(),
-    items: [{ bookId: '2', quantity: 7 }, { bookId: '3', quantity: 5 }]
+    items: [{ bookKey: 2, quantity: 7 }, { bookKey: 3, quantity: 5 }]
   },
-  4: {
+  {
     date: new Date(),
     items: [
-      { bookId: '3', quantity: 11 },
-      { bookId: '1', quantity: 23 },
-      { bookId: '2', quantity: 2 }
+      { bookKey: 3, quantity: 11 },
+      { bookKey: 1, quantity: 23 },
+      { bookKey: 2, quantity: 2 }
     ]
-  },
-  5: {
-    date: new Date(),
-    items: [{ bookId: '4', quantity: 3 }]
   }
+]
+
+const invalidOrders: StoredOrder[] = [
+  { date: new Date(), items: [] },
+  {
+    date: new Date(),
+    items: [{ bookKey: 4, quantity: 3 }]
+  }
+]
+
+function orderWithKey(key: number, data: StoredOrder): Order {
+  return {key, ...data}
 }
 
-function categorizeIds(): BenchmarkIds {
-  const ok: string[] = []
-  const ko: string[] = []
-
-  for (let id of Object.keys(orders)) {
-    const r = validateOrder(orders[id])
-    if (r.valid) {
-      ok.push(id)
-    } else {
-      ko.push(id)
+export function validateOrderSync(order: Order): OrderValidationResult {
+  if (order.items.length === 0) {
+    return validationError('NoItems')
+  }
+  for (let i = 0; i < order.items.length; i++) {
+    if (getBookSync(order.items[i].bookKey) == null) {
+      return validationError('BookNotExists')
     }
   }
-  return { ok, ko }
+  return { valid: true, order }
 }
 
-export const categorizedOrderIds: BenchmarkIds = categorizeIds()
+export async function validateOrderAsync(order: Order): Promise<OrderValidationResult> {
+  if (order.items.length === 0) {
+    return validationError('NoItems')
+  }
+  for (let i = 0; i < order.items.length; i++) {
+    if (getBookSync(order.items[i].bookKey) == null) {
+      return validationError('BookNotExists')
+    }
+  }
+  return { valid: true, order }
+}
+
+export async function validateOrderCallback(order: Order, cb: (OrderValidationResult) => void) {
+  if (order.items.length === 0) {
+    cb(validationError('NoItems'))
+    return
+  }
+  for (let i = 0; i < order.items.length; i++) {
+    if (getBookSync(order.items[i].bookKey) == null) {
+      cb(validationError('BookNotExists'))
+      return
+    }
+  }
+  cb({ valid: true, order })
+  return
+}
+
+export function checkOrdersData(): boolean {
+  for (let i = 0; i < validOrders.length; i++) {
+    if (validateOrderSync(orderWithKey(i, validOrders[i])).valid == false) {
+      return false
+    }
+  }
+
+  for (let i = 0; i < invalidOrders.length; i++) {
+    if (validateOrderSync(orderWithKey(i, validOrders[i])).valid == true) {
+      return false
+    }
+  }
+
+  return true
+}
+
+export function validKey(baseKey: number): number {
+  return baseKey * 2
+}
+
+export function invalidKey(baseKey: number): number {
+  return (baseKey * 2) + 1
+}
+
+function getOrder(key: number): Order {
+  let index = (key / 2) | 0;
+  if (key % 2 == 0) {
+    return orderWithKey(key, validOrders[index % validOrders.length])
+  } else {
+    return orderWithKey(key, invalidOrders[index % invalidOrders.length])
+  }
+}
+
+export function getOrderSync(key: number): Order {
+  return getOrder(key)
+}
+
+export async function getOrderAsync(key: number): Promise<Order> {
+  return getOrder(key)
+}
+
+export async function getOrderCallback(key: number, cb: (order: Order) => void) {
+  cb(getOrder(key))
+}

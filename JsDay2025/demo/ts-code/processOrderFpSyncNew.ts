@@ -1,8 +1,9 @@
 import { pipe } from 'fp-ts-new/lib/pipeable.js'
 import { Either, either, isRight, isLeft, chain, map } from 'fp-ts-new/lib/Either.js'
-import { orders, books } from './data'
 import {
-  validateOrder,
+  getBookSync,
+  getOrderSync,
+  validateOrderSync,
   Order,
   SyncProcessor,
   Book,
@@ -15,18 +16,23 @@ function handleResult(ma: Either<Error, PlacedOrderResult>): PlacedOrderResult {
   return isRight(ma) ? ma.right : placedOrderFailed
 }
 
-const bookService = (bookId: string) =>
-  books[bookId]
-    ? either.of<Error, Book>(books[bookId])
-    : either.throwError<Error, Book>(new Error(`Book not found: ${bookId}`))
+const bookService = (key: number) => {
+  const r = getBookSync(key)
+  return r
+    ? either.of<Error, Book>(r)
+    : either.throwError<Error, Book>(new Error(`Book not found: ${key}`))
 
-const orderService = (orderId: string) =>
-  orders[orderId]
-    ? either.of<Error, Order>(orders[orderId])
-    : either.throwError<Error, Order>(new Error(`Order not found: ${orderId}`))
+}
+
+const orderService = (key: number) => {
+  const r = getOrderSync(key)
+  return r
+    ? either.of<Error, Order>(r)
+    : either.throwError<Error, Order>(new Error(`Order not found: ${key}`))
+}
 
 const validationService = (order: Order) => {
-  const r = validateOrder(order)
+  const r = validateOrderSync(order)
   if (r.valid) {
     return either.of<Error, Order>(order)
   } else {
@@ -38,7 +44,7 @@ const calculateAmountService = (order: Order) =>
   order.items
     .map(item =>
       pipe(
-        bookService(item.bookId),
+        bookService(item.bookKey),
         map((b: Book) => b.price * item.quantity)
       )
     )
@@ -58,10 +64,10 @@ const placeOrderService = (order: Order) =>
     map(placedOrderSuccess)
   )
 
-const processor: SyncProcessor = (orderId: string) =>
+const processor: SyncProcessor = (key: number) =>
   handleResult(
     pipe(
-      orderService(orderId),
+      orderService(key),
       chain(validationService),
       chain(placeOrderService)
     )

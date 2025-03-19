@@ -1,7 +1,8 @@
 import { nextTick } from 'node:process';
-import { orders, books } from './data'
 import {
-  validateOrder,
+  getBookCallback,
+  getOrderCallback,
+  validateOrderCallback,
   Book,
   Order,
   AsyncProcessor,
@@ -9,16 +10,16 @@ import {
   PlacedOrderResult,
 } from './api'
 
-function bookService (bookId: string, cb: (res: Book|null) => void) {
-  nextTick(()=>cb(books[bookId] ? books[bookId] : null))
+function bookService (key: number, cb: (res: Book|null) => void) {
+  nextTick(()=>getBookCallback(key, cb))
 }
 
-function orderService (orderId: string, cb: (res: Order|null) => void) {
-  nextTick(()=>cb(orders[orderId] ? orders[orderId] : null))
+function orderService (key: number, cb: (res: Order|null) => void) {
+  nextTick(()=>getOrderCallback(key, cb))
 }
 
 function validationService(order: Order, cb: (res: OrderValidationResult) => void) {
-  nextTick(()=>cb(validateOrder(order)))
+  nextTick(()=>validateOrderCallback(order, cb))
 }
 
 function calculateAmountService(order: Order, cb: (res: number) => void) {
@@ -29,12 +30,12 @@ function calculateAmountService(order: Order, cb: (res: number) => void) {
   for (let i = 0; i < order.items.length; i++) {
     const item = order.items[i]
     requested += 1
-    bookService(item.bookId, (book) => {
+    bookService(item.bookKey, (book) => {
       resolved += 1
       if (book != null) {
         total += item.quantity * book.price
       } else {
-        throw new Error('Book not found: ' + item.bookId)
+        throw new Error('Book not found: ' + item.bookKey)
       }
       if (requested === target && resolved == requested) {
         nextTick(()=>cb(total))
@@ -53,10 +54,10 @@ function placeOrderService(order: Order, cb: (res: PlacedOrderResult) => void) {
 }
 
 const processor: AsyncProcessor = async (
-  orderId: string
+  key: number
 ): Promise<PlacedOrderResult> => {
   return new Promise((resolve) => {
-    orderService(orderId, (order) => {
+    orderService(key, (order) => {
       if (order != null) {
         validationService(order, (validated) => {
           if (validated.valid) {
