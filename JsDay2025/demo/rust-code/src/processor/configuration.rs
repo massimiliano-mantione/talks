@@ -10,8 +10,8 @@ use super::process_order_imperative_sync::{process_sync_direct, ImperativeProces
 use super::process_order_syncfp::{process_syncfp_direct, SyncFpProcessor};
 use std::future::Future;
 
-const WARMUP_COUNT: i32 = 200000;
-const EPOCH_COUNT: i32 = 10000000;
+const WARMUP_COUNT: i32 = 20000;
+const EPOCH_COUNT: i32 = 500000;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum AsyncProcessorKind {
