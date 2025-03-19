@@ -50,9 +50,9 @@ impl AsyncProcessor for FutureDynProcessor {
         Box::pin(async {
             order_service(order_id)
                 .await
-                .and_then_async(validation_service)
+                .chain(validation_service)
                 .await
-                .and_then_async(place_order_service)
+                .chain(place_order_service)
                 .await
         })
     }
@@ -68,9 +68,9 @@ pub fn process_future_dyn_direct(order_id: &'static String) -> impl Future<Outpu
     async {
         order_service(order_id)
             .await
-            .and_then_async(validation_service)
+            .chain(validation_service)
             .await
-            .and_then_async(place_order_service)
+            .chain(place_order_service)
             .await
     }
 }

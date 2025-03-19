@@ -58,7 +58,7 @@ async fn place_order_service(
     order
         .await
         .map(|o| ready(o))
-        .and_then_async(calculate_amount_service)
+        .chain(calculate_amount_service)
         .await
 }
 

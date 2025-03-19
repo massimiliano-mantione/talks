@@ -42,9 +42,9 @@ impl AsyncProcessor for FutureProcessor {
             order_service(order_id)
                 .await
                 .ok_or_else(|| OrderNotValid::BookNotExists)
-                .and_then_async(validation_service)
+                .chain(validation_service)
                 .await
-                .and_then_async(place_order_service)
+                .chain(place_order_service)
                 .await
                 .map(|result| result.amount)
         })
@@ -62,9 +62,9 @@ pub fn process_future_direct(order_id: &'static String) -> impl Future<Output = 
         order_service(order_id)
             .await
             .ok_or_else(|| OrderNotValid::BookNotExists)
-            .and_then_async(validation_service)
+            .chain(validation_service)
             .await
-            .and_then_async(place_order_service)
+            .chain(place_order_service)
             .await
             .map(|result| result.amount)
     }

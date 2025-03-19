@@ -100,25 +100,19 @@ pub fn validate_order(order: Order) -> ValidationResult {
 
 pub trait ExtResultFuture<IN, ERR> {
     #[allow(dead_code)]
-    async fn map_async<OUT>(self, f: impl AsyncFnOnce(IN) -> OUT) -> Result<OUT, ERR>;
-    async fn and_then_async<OUT>(
-        self,
-        f: impl AsyncFnOnce(IN) -> Result<OUT, ERR>,
-    ) -> Result<OUT, ERR>;
+    async fn map<OUT>(self, f: impl AsyncFnOnce(IN) -> OUT) -> Result<OUT, ERR>;
+    async fn chain<OUT>(self, f: impl AsyncFnOnce(IN) -> Result<OUT, ERR>) -> Result<OUT, ERR>;
 }
 
 impl<IN, ERR> ExtResultFuture<IN, ERR> for Result<IN, ERR> {
-    async fn map_async<OUT>(self, f: impl AsyncFnOnce(IN) -> OUT) -> Result<OUT, ERR> {
+    async fn map<OUT>(self, f: impl AsyncFnOnce(IN) -> OUT) -> Result<OUT, ERR> {
         match self {
             Ok(value) => Ok(f(value).await),
             Err(err) => Err(err),
         }
     }
 
-    async fn and_then_async<OUT>(
-        self,
-        f: impl AsyncFnOnce(IN) -> Result<OUT, ERR>,
-    ) -> Result<OUT, ERR> {
+    async fn chain<OUT>(self, f: impl AsyncFnOnce(IN) -> Result<OUT, ERR>) -> Result<OUT, ERR> {
         match self {
             Ok(value) => f(value).await,
             Err(err) => Err(err),
