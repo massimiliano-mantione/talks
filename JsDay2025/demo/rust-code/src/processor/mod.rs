@@ -15,6 +15,8 @@ mod process_order_imperative;
 mod process_order_imperative_sync;
 mod process_order_syncfp;
 
+pub use data::check_orders_data;
+
 fn report(
     kind: ProcessorKind,
     direct: bool,

@@ -1,5 +1,8 @@
 use super::api::*;
-use super::data::{get_book, get_order};
+use super::data::{
+    get_book_async as get_book, get_order_async as get_order,
+    validate_order_async as validate_order,
+};
 use std::future::{ready, Future};
 
 macro_rules! compose {
@@ -17,12 +20,12 @@ where
     move |x| g(f(x))
 }
 
-async fn book_service(id: &String) -> Option<Book> {
-    get_book(id)
+async fn book_service(key: usize) -> Option<Book> {
+    get_book(key).await
 }
 
-async fn order_service(id: &String) -> Option<Order> {
-    get_order(id)
+async fn order_service(key: usize) -> Option<Order> {
+    Some(get_order(key).await)
 }
 
 async fn validation_service(
@@ -30,7 +33,7 @@ async fn validation_service(
 ) -> Result<Order, OrderNotValid> {
     let order = order.await;
     match order {
-        Some(order) => Ok(order),
+        Some(order) => validate_order(order).await,
         None => Err(OrderNotValid::BookNotExists),
     }
 }
@@ -41,7 +44,7 @@ async fn calculate_amount_service(
     let order = order.await;
     let mut total = 0.0;
     for item in &order.items {
-        let book = book_service(&item.book_id).await;
+        let book = book_service(item.book_key).await;
         match book {
             Some(b) => {
                 total += item.quantity as f64 * b.price;
@@ -65,12 +68,12 @@ async fn place_order_service(
 pub struct ComposeProcessor {}
 
 impl AsyncProcessor for ComposeProcessor {
-    fn process(&self, order_id: &'static String) -> AsyncProcessResult {
+    fn process(&self, key: usize) -> AsyncProcessResult {
         Box::pin(compose!(
             order_service,
             validation_service,
             place_order_service
-        )(order_id))
+        )(key))
     }
 }
 
@@ -80,6 +83,6 @@ impl ComposeProcessor {
     }
 }
 
-pub fn process_compose_direct(order_id: &'static String) -> impl Future<Output = ProcessResult> {
-    compose!(order_service, validation_service, place_order_service)(order_id)
+pub fn process_compose_direct(key: usize) -> impl Future<Output = ProcessResult> {
+    compose!(order_service, validation_service, place_order_service)(key)
 }

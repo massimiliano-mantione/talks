@@ -11,5 +11,9 @@ pub fn timestamp() -> f64 {
 }
 
 fn main() {
+    if !processor::check_orders_data() {
+        println!("Invalid data");
+        return;
+    }
     run(&|message| println!("{}", message), &timestamp);
 }

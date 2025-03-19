@@ -1,5 +1,7 @@
 use super::api::*;
-use super::data::{get_book, get_order};
+use super::data::{
+    get_book_sync as get_book, get_order_sync as get_order, validate_order_sync as validate_order,
+};
 
 fn composer<T1: 'static, T2: 'static, E: 'static>(
     input: Result<T1, E>,
@@ -22,18 +24,15 @@ macro_rules! compose {
     };
 }
 
-fn book_service(id: &String) -> Result<Book, OrderNotValid> {
-    match get_book(id) {
+fn book_service(key: usize) -> Result<Book, OrderNotValid> {
+    match get_book(key) {
         Some(b) => Ok(b),
         None => Err(OrderNotValid::BookNotExists),
     }
 }
 
-fn order_service(id: &String) -> Result<Order, OrderNotValid> {
-    match get_order(id) {
-        Some(o) => Ok(o),
-        None => Err(OrderNotValid::BookNotExists),
-    }
+fn order_service(key: usize) -> Result<Order, OrderNotValid> {
+    Ok(get_order(key))
 }
 
 fn validation_service(order: Order) -> ValidationResult {
@@ -44,7 +43,7 @@ fn calculate_amount_service(order: Order) -> Result<f64, OrderNotValid> {
     order
         .items
         .iter()
-        .map(|line| (book_service(&line.book_id), line.quantity))
+        .map(|line| (book_service(line.book_key), line.quantity))
         .fold(Ok(0.0), |current, (order, quantity)| match current {
             Ok(amount) => match order {
                 Ok(book) => Ok(amount + quantity as f64 * book.price),
@@ -61,8 +60,8 @@ fn place_order_service(order: Order) -> Result<f64, OrderNotValid> {
 pub struct SyncFpProcessor {}
 
 impl SyncProcessor for SyncFpProcessor {
-    fn process(&self, order_id: &String) -> ProcessResult {
-        compose!(&validation_service, &place_order_service)(order_service(order_id))
+    fn process(&self, key: usize) -> ProcessResult {
+        compose!(&validation_service, &place_order_service)(order_service(key))
     }
 }
 
@@ -72,6 +71,6 @@ impl SyncFpProcessor {
     }
 }
 
-pub fn process_syncfp_direct(order_id: &String) -> ProcessResult {
-    compose!(&validation_service, &place_order_service)(order_service(order_id))
+pub fn process_syncfp_direct(key: usize) -> ProcessResult {
+    compose!(&validation_service, &place_order_service)(order_service(key))
 }
