@@ -97,7 +97,7 @@ export async function validateOrderAsync(order: Order): Promise<OrderValidationR
     return validationError('NoItems')
   }
   for (let i = 0; i < order.items.length; i++) {
-    if (getBookSync(order.items[i].bookKey) == null) {
+    if (await getBookAsync(order.items[i].bookKey) == null) {
       return validationError('BookNotExists')
     }
   }
