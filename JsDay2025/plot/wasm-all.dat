@@ -1,0 +1,26 @@
+set terminal png transparent size 1920,1080 lw 10 font arial 28
+set border lw 0.5 lc rgb "white"
+set key textcolor rgb "white"
+set grid xtics ytics linestyle "dashed" lw 0.2 lc rgb "white"
+set output "wasm-all.png"
+plot \
+  "-" using 2:xticlabels(1) with lines lt rgb "green" title "Rust (plain)", \
+  "-" using 2:xticlabels(1) with lines lt rgb "web-green" title "Rust (dyn)"
+Sync    0.456
+SyncFP  0.464
+Compose 0.560
+Imper   0.582
+Idiom   0.570
+Future  0.596
+FutureD 0.816
+FP      0.886
+e
+Sync    0.458
+SyncFP  0.468
+Compose 0.632
+Imper   0.670
+Idiom   0.632
+Future  0.680
+FutureD 0.854
+FP      0.934
+e

@@ -1,0 +1,20 @@
+set terminal png transparent size 1920,1080 lw 10 font arial 28
+set border lw 0.5 lc rgb "white"
+set key textcolor rgb "white"
+set grid xtics ytics linestyle "dashed" lw 0.2 lc rgb "white"
+set output "typescript-all.png"
+plot \
+  "-" using 2:xticlabels(1) with lines lt rgb "web-blue" title "Typescript"
+Sync    0.484
+SyncCB  0.840
+SyncFpO 0.954
+SyncFpN 2.830
+SyncEff 6.382
+CB      1.438
+Promise 1.294
+Async   1.998
+FpO     4.478
+FpChkO  4.576
+FpN     10.512
+FpChkN  11.226
+e
