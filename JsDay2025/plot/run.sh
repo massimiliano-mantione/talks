@@ -1,3 +1,2 @@
-gnuplot < typescript-all.dat
-gnuplot < rust-all.dat
-gnuplot < wasm-all.dat
+rm *.png
+for DAT in *.dat; do echo $DAT; gnuplot < $DAT; done

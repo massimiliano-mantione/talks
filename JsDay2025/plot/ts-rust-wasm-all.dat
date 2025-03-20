@@ -1,0 +1,81 @@
+set terminal png transparent size 1920,1080 lw 10 font arial 28
+set border lw 0.5 lc rgb "white"
+set key textcolor rgb "white"
+set grid xtics ytics linestyle "dashed" lw 0.2 lc rgb "white"
+set output "ts-rust-wasm-all.png"
+plot \
+  "-" using 2:xticlabels(1) with lines lt rgb "web-blue" title "Typescript", \
+  "-" using 2:xticlabels(1) with lines lt rgb "orange" title "Rust (dyn)", \
+  "-" using 2:xticlabels(1) with lines lt rgb "red" title "Rust (plain)", \
+  "-" using 2:xticlabels(1) with lines lt rgb "web-green" title "Rust (dyn)", \
+  "-" using 2:xticlabels(1) with lines lt rgb "green" title "Rust (plain)"
+Sync    0.484
+SyncCB  0.840
+SyncFpO 0.954
+SyncFpN 2.830
+CB      1.438
+Promise 1.294
+Async   1.998
+AsyncDy 1.998
+FpO     4.478
+FpChkO  4.576
+TsEff   6.382
+FpN     10.512
+FpChkN  11.226
+e
+Sync    0.240
+SyncCB  0.240
+SyncFpO 0.248
+SyncFpN 0.262
+CB      0.296
+Promise 0.298
+Async   0.332
+AsyncDy 0.418
+FpO     0.408
+FpChkO  0.408
+TsEff   0.396
+FpN     0.396
+FpChkN  0.396
+e
+Sync    0.238
+SyncCB  0.238
+SyncFpO 0.246
+SyncFpN 0.238
+CB      0.262
+Promise 0.272
+Async   0.288
+AsyncDy 0.390
+FpO     0.396
+FpChkO  0.396
+TsEff   0.396
+FpN     0.396
+FpChkN  0.396
+e
+Sync    0.458
+SyncCB  0.458
+SyncFpO 0.468
+SyncFpN 0.632
+CB      0.670
+Promise 0.632
+Async   0.680
+AsyncDy 0.854
+FpO     0.934
+FpChkO  0.934
+TsEff   0.886
+FpN     0.886
+FpChkN  0.886
+e
+Sync    0.456
+SyncCB  0.456
+SyncFpO 0.464
+SyncFpN 0.560
+CB      0.582
+Promise 0.570
+Async   0.596
+AsyncDy 0.816
+FpO     0.886
+FpChkO  0.886
+TsEff   0.886
+FpN     0.886
+FpChkN  0.886
+e

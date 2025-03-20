@@ -4,17 +4,8 @@ set key textcolor rgb "white"
 set grid xtics ytics linestyle "dashed" lw 0.2 lc rgb "white"
 set output "wasm-all.png"
 plot \
-  "-" using 2:xticlabels(1) with lines lt rgb "green" title "Rust (plain)", \
-  "-" using 2:xticlabels(1) with lines lt rgb "web-green" title "Rust (dyn)"
-Sync    0.456
-SyncFP  0.464
-Compose 0.560
-Imper   0.582
-Idiom   0.570
-Future  0.596
-FutureD 0.816
-FP      0.886
-e
+  "-" using 2:xticlabels(1) with lines lt rgb "web-green" title "Rust (dyn)", \
+  "-" using 2:xticlabels(1) with lines lt rgb "green" title "Rust (plain)"
 Sync    0.458
 SyncFP  0.468
 Compose 0.632
@@ -23,4 +14,15 @@ Idiom   0.632
 Future  0.680
 FutureD 0.854
 FP      0.934
+FP-chk  0.934
+e
+Sync    0.456
+SyncFP  0.464
+Compose 0.560
+Imper   0.582
+Idiom   0.570
+Future  0.596
+FutureD 0.816
+FP      0.886
+FP-chk  0.886
 e
