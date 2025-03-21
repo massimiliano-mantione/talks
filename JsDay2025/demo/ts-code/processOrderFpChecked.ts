@@ -34,15 +34,12 @@ const orderService = (key: number) =>
       )
 
 
-type ValidatedOrder = { validated: true } & Order
-function validated(order: Order): ValidatedOrder {
-  return { validated: true, ...order }
-}
+type ValidatedOrder = Order & {[symbol]: "Validated"}
 
 const validationService = (order: Order) => {
   const r = validateOrderSync(order)
   if (r.valid) {
-    return taskEither.of<Error, ValidatedOrder>(validated(order))
+    return taskEither.of<Error, ValidatedOrder>(order as ValidatedOrder)
   } else {
     return taskEither.throwError<Error, ValidatedOrder>(new Error(`${r.error}`))
   }
