@@ -8,12 +8,14 @@ mod configuration;
 mod data;
 mod process_order_compose;
 mod process_order_fp;
+mod process_order_fp_checked;
 mod process_order_future;
 mod process_order_futuredyn;
 mod process_order_idiomatic;
 mod process_order_imperative;
 mod process_order_imperative_sync;
 mod process_order_syncfp;
+mod process_order_syncfp_checked;
 
 pub use data::check_orders_data;
 
@@ -116,12 +118,14 @@ async fn main_async(print: &impl Fn(&str), timestamp: &impl Fn() -> f64) -> () {
     let mut cumulative_results = [
         BenchmarkResult::new(ProcessorKind::SyncKind(SyncProcessorKind::Imperative)),
         BenchmarkResult::new(ProcessorKind::SyncKind(SyncProcessorKind::Fp)),
+        BenchmarkResult::new(ProcessorKind::SyncKind(SyncProcessorKind::FpChecked)),
         BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::Compose)),
         BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::Imperative)),
         BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::Idiomatic)),
         BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::Future)),
         BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::FutureDyn)),
         BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::Fp)),
+        BenchmarkResult::new(ProcessorKind::AsyncKind(AsyncProcessorKind::FpChecked)),
     ];
 
     for n in 1..5 {

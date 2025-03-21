@@ -1,6 +1,8 @@
 use std::future::Future;
 use std::pin::Pin;
 
+use super::data::ValidatedOrder;
+
 #[derive(Clone)]
 pub struct Book {
     #[allow(dead_code)]
@@ -40,6 +42,7 @@ pub enum OrderNotValid {
 }
 
 pub type ValidationResult = Result<Order, OrderNotValid>;
+pub type ValidationResultChecked = Result<ValidatedOrder, OrderNotValid>;
 
 #[derive(Clone, Copy)]
 pub struct OrderSuccessful {

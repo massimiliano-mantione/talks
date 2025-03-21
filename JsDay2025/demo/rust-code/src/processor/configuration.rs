@@ -2,12 +2,14 @@ use super::api::*;
 use super::data::{invalid_key, valid_key};
 use super::process_order_compose::{process_compose_direct, ComposeProcessor};
 use super::process_order_fp::{process_fp_direct, FpProcessor};
+use super::process_order_fp_checked::{process_fp_checked_direct, FpCheckedProcessor};
 use super::process_order_future::{process_future_direct, FutureProcessor};
 use super::process_order_futuredyn::{process_future_dyn_direct, FutureDynProcessor};
 use super::process_order_idiomatic::{process_idiomatic_direct, IdiomaticProcessor};
 use super::process_order_imperative::{process_async_direct, ImperativeProcessorAsync};
 use super::process_order_imperative_sync::{process_sync_direct, ImperativeProcessorSync};
 use super::process_order_syncfp::{process_syncfp_direct, SyncFpProcessor};
+use super::process_order_syncfp_checked::{process_syncfp_checked_direct, SyncFpCheckedProcessor};
 use std::future::Future;
 
 const WARMUP_COUNT: i32 = 20000;
@@ -21,6 +23,7 @@ pub enum AsyncProcessorKind {
     FutureDyn,
     Compose,
     Fp,
+    FpChecked,
 }
 
 impl AsyncProcessorKind {
@@ -32,6 +35,7 @@ impl AsyncProcessorKind {
             AsyncProcessorKind::FutureDyn => FutureDynProcessor::processor(),
             AsyncProcessorKind::Compose => ComposeProcessor::processor(),
             AsyncProcessorKind::Fp => FpProcessor::processor(),
+            AsyncProcessorKind::FpChecked => FpCheckedProcessor::processor(),
         }
     }
 
@@ -43,6 +47,7 @@ impl AsyncProcessorKind {
             AsyncProcessorKind::FutureDyn => "futdyn",
             AsyncProcessorKind::Compose => "compose",
             AsyncProcessorKind::Fp => "fp",
+            AsyncProcessorKind::FpChecked => "fpc",
         }
     }
 }
@@ -51,6 +56,7 @@ impl AsyncProcessorKind {
 pub enum SyncProcessorKind {
     Imperative,
     Fp,
+    FpChecked,
 }
 
 impl SyncProcessorKind {
@@ -58,6 +64,7 @@ impl SyncProcessorKind {
         match self {
             SyncProcessorKind::Imperative => ImperativeProcessorSync::processor(),
             SyncProcessorKind::Fp => SyncFpProcessor::processor(),
+            SyncProcessorKind::FpChecked => SyncFpCheckedProcessor::processor(),
         }
     }
 
@@ -69,6 +76,9 @@ impl SyncProcessorKind {
             SyncProcessorKind::Fp => {
                 sync_runner_direct(&process_syncfp_direct, iterations, failure_rate)
             }
+            SyncProcessorKind::FpChecked => {
+                sync_runner_direct(&process_syncfp_checked_direct, iterations, failure_rate)
+            }
         }
     }
 
@@ -76,6 +86,7 @@ impl SyncProcessorKind {
         match self {
             SyncProcessorKind::Imperative => "sync",
             SyncProcessorKind::Fp => "syncfp",
+            SyncProcessorKind::FpChecked => "syncfpc",
         }
     }
 }
@@ -347,6 +358,14 @@ pub async fn benchmark_direct(
             AsyncProcessorKind::Fp => {
                 async_runner_direct(
                     &process_fp_direct,
+                    config.epoch as usize,
+                    config.failure_rate,
+                )
+                .await
+            }
+            AsyncProcessorKind::FpChecked => {
+                async_runner_direct(
+                    &process_fp_checked_direct,
                     config.epoch as usize,
                     config.failure_rate,
                 )

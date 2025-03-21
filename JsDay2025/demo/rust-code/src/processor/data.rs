@@ -1,4 +1,5 @@
 use super::api::*;
+use std::marker::PhantomData;
 use std::str::FromStr;
 use std::sync::LazyLock;
 
@@ -128,6 +129,34 @@ pub async fn validate_order_async(order: Order) -> ValidationResult {
         }
     }
     Ok(order)
+}
+
+struct Validated {}
+#[derive(Clone)]
+pub struct ValidatedOrder {
+    validated: PhantomData<Validated>,
+    #[allow(dead_code)]
+    pub key: usize,
+    #[allow(dead_code)]
+    pub date: chrono::NaiveDateTime,
+    pub items: Vec<OrderLine>,
+}
+
+pub fn validate_order_checked(order: Order) -> ValidationResultChecked {
+    if order.items.len() == 0 {
+        return Err(OrderNotValid::NoItems);
+    }
+    for item in &order.items {
+        if get_book_sync(item.book_key).is_none() {
+            return Err(OrderNotValid::BookNotExists);
+        }
+    }
+    Ok(ValidatedOrder {
+        validated: PhantomData,
+        key: order.key,
+        date: order.date,
+        items: order.items,
+    })
 }
 
 pub fn check_orders_data() -> bool {
