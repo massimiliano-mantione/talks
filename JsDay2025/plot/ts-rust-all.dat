@@ -30,10 +30,10 @@ Promise 0.298
 Async   0.332
 AsyncDy 0.418
 FpO     0.408
-FpChkO  0.408
-TsEff   0.396
-FpN     0.396
-FpChkN  0.396
+FpChkO  0.409
+TsEff   0.408
+FpN     0.408
+FpChkN  0.409
 e
 Sync    0.238
 SyncCB  0.238
@@ -44,8 +44,8 @@ Promise 0.272
 Async   0.288
 AsyncDy 0.390
 FpO     0.396
-FpChkO  0.396
+FpChkO  0.395
 TsEff   0.396
 FpN     0.396
-FpChkN  0.396
+FpChkN  0.395
 e

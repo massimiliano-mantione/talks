@@ -7,8 +7,8 @@ plot \
   "-" using 2:xticlabels(1) with lines lt rgb "web-blue" title "Typescript", \
   "-" using 2:xticlabels(1) with lines lt rgb "orange" title "Rust (dyn)", \
   "-" using 2:xticlabels(1) with lines lt rgb "red" title "Rust (plain)", \
-  "-" using 2:xticlabels(1) with lines lt rgb "web-green" title "Rust (dyn)", \
-  "-" using 2:xticlabels(1) with lines lt rgb "green" title "Rust (plain)"
+  "-" using 2:xticlabels(1) with lines lt rgb "web-green" title "WASM (dyn)", \
+  "-" using 2:xticlabels(1) with lines lt rgb "green" title "WASM (plain)"
 Sync    0.484
 SyncCB  0.840
 SyncFpO 0.954
@@ -32,10 +32,10 @@ Promise 0.298
 Async   0.332
 AsyncDy 0.418
 FpO     0.408
-FpChkO  0.408
-TsEff   0.396
-FpN     0.396
-FpChkN  0.396
+FpChkO  0.409
+TsEff   0.408
+FpN     0.408
+FpChkN  0.409
 e
 Sync    0.238
 SyncCB  0.238
@@ -46,10 +46,10 @@ Promise 0.272
 Async   0.288
 AsyncDy 0.390
 FpO     0.396
-FpChkO  0.396
+FpChkO  0.395
 TsEff   0.396
 FpN     0.396
-FpChkN  0.396
+FpChkN  0.395
 e
 Sync    0.458
 SyncCB  0.458
@@ -60,10 +60,10 @@ Promise 0.632
 Async   0.680
 AsyncDy 0.854
 FpO     0.934
-FpChkO  0.934
-TsEff   0.886
-FpN     0.886
-FpChkN  0.886
+FpChkO  0.935
+TsEff   0.934
+FpN     0.934
+FpChkN  0.935
 e
 Sync    0.456
 SyncCB  0.456
@@ -74,8 +74,8 @@ Promise 0.570
 Async   0.596
 AsyncDy 0.816
 FpO     0.886
-FpChkO  0.886
+FpChkO  0.885
 TsEff   0.886
 FpN     0.886
-FpChkN  0.886
+FpChkN  0.885
 e

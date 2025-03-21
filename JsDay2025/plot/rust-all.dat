@@ -8,21 +8,23 @@ plot \
   "-" using 2:xticlabels(1) with lines lt rgb "red" title "Rust (plain)"
 Sync    0.240
 SyncFP  0.248
+SyncFPc 0.250
 Compose 0.262
 Imper   0.296
 Idiom   0.298
 Future  0.332
 FutureD 0.418
 FP      0.408
-FP-chk  0.408
+FP-chk  0.409
 e
 Sync    0.238
 SyncFP  0.246
+SyncFPc 0.245
 Compose 0.238
 Imper   0.262
 Idiom   0.272
 Future  0.288
 FutureD 0.390
 FP      0.396
-FP-chk  0.396
+FP-chk  0.395
 e
