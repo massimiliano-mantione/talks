@@ -21,8 +21,8 @@ code:
   minimum_size: 0
   minimum_margin:
     fixed: 0
-  theme_name: base16-eighties.dark
-  background: false
+  theme_name: TwoDark
+  background: true
   padding:
     horizontal: 0
     vertical: 0
