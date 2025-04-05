@@ -273,7 +273,7 @@ Abstraction: **Typestate Pattern**
 ---
 
 <!-- pause -->
-##### consider this error handling logic:
+##### 🤔 consider this error handling logic: 🤔
 
 ```typescript
   const validationResult = await validationService(order)
@@ -284,14 +284,14 @@ Abstraction: **Typestate Pattern**
 ```
 
 <!-- pause -->
-##### isn't this brittle?
+##### ❓ isn't this brittle? ❓
 
 -------
 
 Abstraction: **Typestate Pattern**
 ---
 
-##### what if we didn't validate the order:
+##### 🤔 what if we didn't validate the order: 🤔
 
 ```typescript
   const validationResult = await validationService(order)
@@ -302,14 +302,14 @@ Abstraction: **Typestate Pattern**
 ```
 
 <!-- pause -->
-##### when would the error be caught?
+##### ❓ when would the error be caught? ❓
 
 -------
 
 Abstraction: **Typestate Pattern**
 ---
 
-##### if validation generated a validated order...
+##### if *validation* generated a **validated order**...
 
 ```typescript
   const order = await validationService(order)
@@ -320,14 +320,14 @@ Abstraction: **Typestate Pattern**
 ```
 
 <!-- pause -->
-##### ...and `placeOrderService` required it...
+##### ...and `placeOrderService` *required* it...
 
 -------
 
 Abstraction: **Typestate Pattern**
 ---
 
-##### ...then this code...
+##### ...then *this* code...
 
 ```typescript
   const order = await validationService(order)
@@ -338,7 +338,7 @@ Abstraction: **Typestate Pattern**
 ```
 
 <!-- pause -->
-##### ...would not even compile!
+##### 😃 **...would not even compile!** 😃
 
 -------
 
@@ -392,8 +392,8 @@ So Far, So Good
 ##### do they cost us anything?
 
 <!-- pause -->
-#### what does it mean, and
-##### how do we know?
+#### *what* does it **mean**, and
+##### *how* do we **know**?
 
 <!-- pause -->
 ##### let's **define** a few *terms*
@@ -403,7 +403,7 @@ So Far, So Good
 Definitions
 ---
 
-> **Abstraction:**
+> 💡 **Abstraction:**
 > A **single** *high level* construct that can replace **many** *low level* ones
 
 <!-- pause -->
@@ -416,7 +416,7 @@ Definitions
 Definitions
 ---
 
-> **Maintainability:**
+> 🔧 **Maintainability:**
 > How **easy** it is to *change* a piece of software **without** introducing *bugs*
 
 <!-- pause -->
@@ -430,11 +430,11 @@ Definitions
 ---
 
 <!-- pause -->
-> **Cognitive:**
+> 🧠 **Cognitive:**
 > related to something you know, from the Latin *cognosco* (I know), in turn from the Greek *gnόsis* (*γνώσις*, knowledge)
 
 <!-- pause -->
-> **Overhead:**
+> 🏋  **Overhead:**
 > and extra quantity, usually undesired
 
 <!-- pause -->
@@ -448,7 +448,7 @@ Definitions
 Software Performance
 ---
 
-> **Performance:**
+> 💪 **Performance:**
 > *efficiency* in using **resources** to obtain a given **result**
 
 <!-- pause -->
@@ -463,7 +463,7 @@ Software Performance
 Cost
 ---
 
-> **Cost:**
+> 💲**Cost:**
 > something you must *lose* to obtain a given *result*
 
 <!-- pause -->
@@ -480,11 +480,11 @@ Definitions
 
 ```
 
- 👉 Abstraction
- 👉 Maintainability
- 👉 Cognitive Overhead
- 👉 Performance
- 👉 Cost
+ 💡 Abstraction
+ 🔧 Maintainability
+ 🧠 Cognitive Overhead
+ 💪 Performance
+ 💲 Cost
 
 ```
 
@@ -585,10 +585,10 @@ Abstractions Effects
 ```
 
 <!-- pause -->
-##### cognitive overhead is tricky...
+##### 🧠 cognitive overhead is tricky... 🤔
 
 <!-- pause -->
-##### but we can measure performance!
+##### ⏰ but we can measure performance! 💪
 
 -------
 
@@ -612,17 +612,17 @@ Benchmark Rules
 
 <!-- pause -->
 #### process 100k orders
-##### (with a 20k warmup)
+##### *(with a 20k warmup)*
 
 <!-- pause -->
 #### inject a %5 failure rate
-##### (to test error handling code)
+##### *(to test error handling code)*
 
 <!-- pause -->
 ##### take the mean execution time *(μs)*
 
 <!-- pause -->
-##### (executed with deno 2.2.3)
+##### *(executed with deno 2.2.3)*
 
 -------
 
@@ -674,7 +674,7 @@ Typescript Abstractions
 
 ![](img/typescript-initial-3-ts-new.png)
 
-##### about **5x** *slowdown*
+##### 😮 about **5x** *slowdown* 😮
 
 -------
 
@@ -767,13 +767,13 @@ Does It Matter?
 ---
 
 <!-- pause -->
-##### as usual, *it depends*
+##### as **usual**, *it depends*
 
 <!-- pause -->
 ##### suppose this is server-side code
 
 <!-- pause -->
-##### ❓ would you want to choose between ❓
+##### ❓ *would you want to choose between* ❓
 <!-- pause -->
 #### 😃 maintaineble code 😃
 <!-- pause -->
@@ -785,16 +785,20 @@ Let's Check If This Is True!
 ---
 
 <!-- pause -->
-##### 🦀 Rust mplementation benchmark 🦀
+##### let's *verify* the **zero-cost** claim!
 
 <!-- pause -->
-##### fair adaptation of the Typescript code
+##### 🦀 **Rust benchmark** 🦀
+
+<!-- pause -->
+#### line by line *adaptation*
+##### of the **Typescript** code
 
 <!-- pause -->
 ##### same rules as before
 
 <!-- pause -->
-##### (built with Rust 1.85.1)
+##### *(built with Rust 1.85.1)*
 
 -------
 
@@ -861,14 +865,14 @@ Typescript *vs* Rust
 
 <!-- pause -->
 #### why is Typescript
-##### so much slower?
+##### 🤔 so much slower? 🤔
 
 <!-- pause -->
 #### can we investigate
-##### the cause?
+##### ❓ the cause? ❓
 
 <!-- pause -->
-##### yes, we can!
+##### 💡 yes, we can! 💡
 
 -------
 
@@ -957,14 +961,14 @@ Was This Fair?
 ---
 
 <!-- pause -->
-#### after all, Rust compiles
-##### to native code
+#### after all, *Rust* compiles
+##### to **native** code
 
 <!-- pause -->
-##### it cannot run in a browser
+##### it *cannot* run in a **browser**
 
 <!-- pause -->
-##### or can it?
+##### **or can it?**
 
 -------
 
@@ -972,15 +976,18 @@ Enter **`WASM`**
 ---
 
 <!-- pause -->
-##### Rust can compile to **WASM**
+##### Rust *can* compile to **WASM**
 
 <!-- pause -->
-##### it is like adding an abstraction
+##### it is like *adding* an **abstraction**
 
 <!-- pause -->
-#### from native code
+#### from **native** code
 <!-- pause -->
-##### to code that can run on any CPU
+##### to *code* that can *run* on **any CPU**
+
+<!-- pause -->
+##### *(code run with wasmtime 30.0.2)*
 
 -------
 
@@ -989,12 +996,16 @@ WASM Benchmarks
 
 ![image:width:100%](img/wasm-all.png)
 
+#### **WASM** abstraction cost: **2x** *slowdown*
+
 -------
 
 Full Rust Benchmarks
 ---
 
 ![image:width:100%](img/rust-wasm-all.png)
+
+#### **WASM** *vs* **native** cost: **1.9x** *to* **2.2x** *slowdown*
 
 -------
 
@@ -1062,26 +1073,5 @@ Full Benchmark Results
 
 <!-- pause -->
 ##### 🙏 **thanks!** 🙏
-<!-- pause -->
-##### ❓ *questions?*  ❓
-
-
--------
-
-
-Recap
----
-
-<!-- pause -->
-##### 🦀 Rust is amazing 🎇
-<!-- pause -->
-##### 🛠  there are projects where it shines 🌞
-<!-- pause -->
-#### 🤝 you build trust 🤝
-##### 🔮 by being reliable 🔮
-<!-- pause -->
-##### 😃 a healthy workplace is important 😃
-<!-- pause -->
-#### 🙏 **thanks!** 🙏
 <!-- pause -->
 ##### ❓ *questions?*  ❓
