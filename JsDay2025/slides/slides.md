@@ -1,5 +1,5 @@
 ---
-title: The Cost of Abstractiona
+title: The Cost of Abstractions
 event: JsDay
 location: Bologna
 date: April 7 2025
@@ -36,49 +36,67 @@ Who am I
 This Talk...
 ---
 
+<!-- pause -->
 #### ...actually already happened!
-#### TsConf 2019
-##### Desenzano
-##### I did it with Gianluca Carucci
-#### (but it was not recorded)
+<!-- pause -->
+#### *TsConf 2019*
+##### *Desenzano*
+<!-- pause -->
+##### I did it with **Gianluca Carucci**
+<!-- pause -->
+#### *(but it was not recorded)*
 
 -------
 
 What Actually happened
 ---
 
+<!-- pause -->
 ##### Gianluca:
+<!-- pause -->
 > Aren't these abstractions amazing?
 
+<!-- pause -->
 ##### Massi:
+<!-- pause -->
 > Ok, but how much do they cost?
 
-#### ...and then we started talking...
+<!-- pause -->
+#### *...and then we started talking...*
 
 -------
 
 Abstractions, the Simplistic Way
 ---
 
-#### using abstractions, we make
-##### software easier to understand
+<!-- pause -->
+#### using abstractions, we make software
+##### 💡 **easier** to **understand** 💡
 
-##### software has less bugs
+<!-- pause -->
+##### 🪳 software has **less bugs** 🪳
 
-##### software is more maintaineble
+<!-- pause -->
+##### 🔧 software is **more maintainable** 🔧
 
-##### let's use more abstractions...
+<!-- pause -->
+##### 🎇 let's use **more abstractions**... 🎇
 
-##### profit!
+<!-- pause -->
+##### 💲 *profit!* 💲
 
 -------
 
 TL;DR
 ---
 
+<!-- pause -->
 ##### It's
+<!-- pause -->
 ##### **Not**
+<!-- pause -->
 ##### *That*
+<!-- pause -->
 ##### **Simple!**
 
 -------
@@ -86,14 +104,17 @@ TL;DR
 An Example: **Library Order Workflow**
 ---
 
+<!-- pause -->
 #### get an order of books
-##### (la list of books and quantities)
+##### *(a list of books and quantities)*
 
+<!-- pause -->
 #### validate it
-##### (using an external service)
+##### *(using an external service)*
 
+<!-- pause -->
 #### place the order
-##### (compute its price first)
+##### *(compute its price first)*
 
 
 -------
@@ -101,12 +122,15 @@ An Example: **Library Order Workflow**
 Game Rules
 ---
 
-##### each operation is async
+<!-- pause -->
+##### each operation is `async`
 
-##### each operation can fail
+<!-- pause -->
+##### *each* operation can **fail**
 
-#### the workflow result is
-##### the order total cost
+<!-- pause -->
+#### the workflow *result* is
+##### the order **total cost**
 
 -------
 
@@ -132,6 +156,7 @@ Plain `async` TypeScript
 Abstraction: **Monadic Composition**
 ---
 
+<!-- pause -->
 ##### *did you notice those error handling blocks?*
 
 ```typescript
@@ -140,9 +165,11 @@ Abstraction: **Monadic Composition**
   }
 ```
 
+<!-- pause -->
 #### they are **repetitive** and get in the way
 ##### they are like **noise** hiding the main flow
 
+<!-- pause -->
 #### could we just **compose** the *main blocks* and
 ##### let the *composition* handle the **effects**?
 
@@ -245,6 +272,7 @@ Functional TypeScript (FP-TS)
 Abstraction: **Typestate Pattern**
 ---
 
+<!-- pause -->
 ##### consider this error handling logic:
 
 ```typescript
@@ -255,6 +283,7 @@ Abstraction: **Typestate Pattern**
   return await placeOrderService(order)
 ```
 
+<!-- pause -->
 ##### isn't this brittle?
 
 -------
@@ -272,6 +301,7 @@ Abstraction: **Typestate Pattern**
   return await placeOrderService(order)
 ```
 
+<!-- pause -->
 ##### when would the error be caught?
 
 -------
@@ -289,6 +319,7 @@ Abstraction: **Typestate Pattern**
   return await placeOrderService(order)
 ```
 
+<!-- pause -->
 ##### ...and `placeOrderService` required it...
 
 -------
@@ -306,6 +337,7 @@ Abstraction: **Typestate Pattern**
   return await placeOrderService(order)
 ```
 
+<!-- pause -->
 ##### ...would not even compile!
 
 -------
@@ -323,7 +355,9 @@ Checked TypeScript
     .catch(() => { success: false })
 ```
 
+<!-- pause -->
 ##### `validationService` returns a different type
+<!-- pause -->
 ##### `placeOrderService` only accepts that type
 
 -------
@@ -348,15 +382,20 @@ Checked TypeScript
 So Far, So Good
 ---
 
+<!-- pause -->
 ##### do abstractions look nice?
 
+<!-- pause -->
 ##### do they improve the code?
 
+<!-- pause -->
 ##### do they cost us anything?
 
+<!-- pause -->
 #### what does it mean, and
 ##### how do we know?
 
+<!-- pause -->
 ##### let's **define** a few *terms*
 
 -------
@@ -367,6 +406,7 @@ Definitions
 > **Abstraction:**
 > A **single** *high level* construct that can replace **many** *low level* ones
 
+<!-- pause -->
 ##### An uncontroversial example:
 #### structured programming
 #### (no `goto`s)
@@ -379,7 +419,9 @@ Definitions
 > **Maintainability:**
 > How **easy** it is to *change* a piece of software **without** introducing *bugs*
 
+<!-- pause -->
 ##### *correlated* to **clarity**
+<!-- pause -->
 ##### *negated* by **complexity**
 
 -------
@@ -387,12 +429,15 @@ Definitions
 Definitions
 ---
 
+<!-- pause -->
 > **Cognitive:**
 > related to something you know, from the Latin *cognosco* (I know), in turn from the Greek *gnόsis* (*γνώσις*, knowledge)
 
+<!-- pause -->
 > **Overhead:**
 > and extra quantity, usually undesired
 
+<!-- pause -->
 #### a *cognitive overhead* is
 #### something you **must** keep in your mind
 #### which you would rather
@@ -406,8 +451,11 @@ Software Performance
 > **Performance:**
 > *efficiency* in using **resources** to obtain a given **result**
 
+<!-- pause -->
 ##### software has a **better** performance if it:
+<!-- pause -->
 #### uses **less** *CPU time*
+<!-- pause -->
 #### uses **less** *memory*
 
 -------
@@ -418,8 +466,11 @@ Cost
 > **Cost:**
 > something you must *lose* to obtain a given *result*
 
+<!-- pause -->
 ##### usually **money**
+<!-- pause -->
 ##### but also **time**
+<!-- pause -->
 ##### *(which, as we know, is money)*
 
 -------
@@ -533,8 +584,10 @@ Abstractions Effects
  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
+<!-- pause -->
 ##### cognitive overhead is tricky...
 
+<!-- pause -->
 ##### but we can measure performance!
 
 -------
@@ -542,11 +595,14 @@ Abstractions Effects
 Measuring Performance
 ---
 
+<!-- pause -->
 #### we can **benchmark**
 ##### the *implementations*
 
+<!-- pause -->
 ##### record all execution times *(μs)*
 
+<!-- pause -->
 ##### and **plot** them!
 
 -------
@@ -554,14 +610,18 @@ Measuring Performance
 Benchmark Rules
 ---
 
+<!-- pause -->
 #### process 100k orders
 ##### (with a 20k warmup)
 
+<!-- pause -->
 #### inject a %5 failure rate
 ##### (to test error handling code)
 
+<!-- pause -->
 ##### take the mean execution time *(μs)*
 
+<!-- pause -->
 ##### (executed with deno 2.2.3)
 
 -------
@@ -569,10 +629,14 @@ Benchmark Rules
 Tested Implementations
 ---
 
+<!-- pause -->
 ##### plain **async**
+<!-- pause -->
 ##### **Effects** *(functional framework)*
+<!-- pause -->
 #### **FP-TS** *(2019)*
 ##### **FP-TS** *(2025)*
+<!-- pause -->
 #### **FP-TS** with typestate *(2019)*
 ##### **FP-TS** with typestate *(2025)*
 
@@ -583,7 +647,7 @@ Typescript Abstractions
 
 ![](img/typescript-initial.png)
 
-##### is it any fast?
+##### *is it any fast?*
 
 -------
 
@@ -626,14 +690,19 @@ The Typestate Pattern
 Benchmark Summmary
 ---
 
+<!-- pause -->
 ##### *abstractions* **do** have a **cost**
 
+<!-- pause -->
 ##### *does it matter?*
 
+<!-- pause -->
 ##### in a *front end*, likely **no**
 
+<!-- pause -->
 ##### in a *back end*, likely **yes**
 
+<!-- pause -->
 ##### *could they have* **zero cost** *?*
 
 -------
@@ -641,9 +710,11 @@ Benchmark Summmary
 Zero-Cost Abstractions
 ---
 
+<!-- pause -->
 #### there are languages that claim this
 ##### *(mostly C++, Rust, likely Zig...)*
 
+<!-- pause -->
 #### bot **what**
 ##### does it **mean**?
 
@@ -659,8 +730,10 @@ Zero-Cost Abstractions
 > What you do use, you couldn't hand code any better.
 > 🖋    *Stroustrup, 1994*
 
+<!-- pause -->
 ##### meaning:
 
+<!-- pause -->
 #### the abstractions are just as performant
 #### as if you had written the underlying code
 #### by hand
@@ -670,6 +743,7 @@ Zero-Cost Abstractions
 An Example: `filter map`
 ---
 
+<!-- pause -->
 #### *Javascript*
 
 ```javascript
@@ -678,6 +752,7 @@ const evenSquaredNumbers = numbers
     .map((num) => num * num);
 ```
 
+<!-- pause -->
 #### *Rust*
 
 ```rust
@@ -691,12 +766,17 @@ let even_squared_sumbers = numbers.into_iter()
 Does It Matter?
 ---
 
+<!-- pause -->
 ##### as usual, *it depends*
 
+<!-- pause -->
 ##### suppose this is server-side code
 
+<!-- pause -->
 ##### ❓ would you want to choose between ❓
+<!-- pause -->
 #### 😃 maintaineble code 😃
+<!-- pause -->
 #### 🤑 doubling your cloud bills 🤑
 
 -------
@@ -704,12 +784,16 @@ Does It Matter?
 Let's Check If This Is True!
 ---
 
+<!-- pause -->
 ##### 🦀 Rust mplementation benchmark 🦀
 
+<!-- pause -->
 ##### fair adaptation of the Typescript code
 
+<!-- pause -->
 ##### same rules as before
 
+<!-- pause -->
 ##### (built with Rust 1.85.1)
 
 -------
@@ -742,12 +826,15 @@ Rust with functional composition
 ---
 
 ```rust
-compose!
-    (&validation_service, &place_order_service)
-    (order_service(key))
+let workflow = compose!(
+    &validation_service, 
+    &place_order_service,
+    &order_service);
+workflow(order_key).await
 ```
 
-##### *(the code with **typestate pattern** is the same)*
+<!-- pause -->
+##### *(the code with **typestate pattern** is identical)*
 
 -------
 
@@ -772,12 +859,15 @@ Typescript *vs* Rust
 Typescript *vs* Rust
 ---
 
+<!-- pause -->
 #### why is Typescript
 ##### so much slower?
 
+<!-- pause -->
 #### can we investigate
 ##### the cause?
 
+<!-- pause -->
 ##### yes, we can!
 
 -------
@@ -866,11 +956,14 @@ Typescript *vs* Rust
 Was This Fair?
 ---
 
+<!-- pause -->
 #### after all, Rust compiles
 ##### to native code
 
+<!-- pause -->
 ##### it cannot run in a browser
 
+<!-- pause -->
 ##### or can it?
 
 -------
@@ -878,11 +971,15 @@ Was This Fair?
 Enter **`WASM`**
 ---
 
+<!-- pause -->
 ##### Rust can compile to **WASM**
 
+<!-- pause -->
 ##### it is like adding an abstraction
 
+<!-- pause -->
 #### from native code
+<!-- pause -->
 ##### to code that can run on any CPU
 
 -------
