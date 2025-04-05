@@ -43,8 +43,8 @@ execution_output:
 
 inline_code:
   colors:
-    foreground: "04de20"
-    background: "455045"
+    foreground: "61afef"
+    background: "282c34"
 
 intro_slide:
   title:

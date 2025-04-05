@@ -76,7 +76,11 @@ Abstractions, the Simplistic Way
 TL;DR
 ---
 
-##### It's **Not** *That* **Simple!**
+##### It's
+##### **Not**
+##### *That*
+##### **Simple!**
+
 -------
 
 An Example: **Library Order Workflow**
@@ -102,8 +106,7 @@ Game Rules
 ##### each operation can fail
 
 #### the workflow result is
-##### the order total amount
-
+##### the order total cost
 
 -------
 
@@ -129,7 +132,7 @@ Plain `async` TypeScript
 Abstraction: **Monadic Composition**
 ---
 
-##### did you notice those error handling blocks?
+##### *did you notice those error handling blocks?*
 
 ```typescript
   if (/* something wrong */) {
@@ -548,6 +551,21 @@ Measuring Performance
 
 -------
 
+Benchmark Rules
+---
+
+#### process 100k orders
+##### (with a 20k warmup)
+
+#### inject a %5 failure rate
+##### (to test error handling code)
+
+##### take the mean execution time *(μs)*
+
+##### (executed with deno 2.2.3)
+
+-------
+
 Tested Implementations
 ---
 
@@ -572,7 +590,7 @@ Typescript Abstractions
 `async` to `Effects` library
 ---
 
-![](img/typescript-initial.png)
+![](img/typescript-initial-1-effect.png)
 
 ##### about **3x** *slowdown*
 
@@ -581,7 +599,7 @@ Typescript Abstractions
 `async` to `FP-TS` library (2019 version)
 ---
 
-![](img/typescript-initial.png)
+![](img/typescript-initial-2-ts-old.png)
 
 ##### about **2x** *slowdown*
 
@@ -590,11 +608,369 @@ Typescript Abstractions
 `async` to `FP-TS` library (2025 version)
 ---
 
-![](img/typescript-initial.png)
+![](img/typescript-initial-3-ts-new.png)
 
 ##### about **5x** *slowdown*
 
 -------
+
+The Typestate Pattern
+---
+
+![](img/typescript-initial-4-ts-typestate.png)
+
+##### has no impact on performance
+
+-------
+
+Benchmark Summmary
+---
+
+##### *abstractions* **do** have a **cost**
+
+##### *does it matter?*
+
+##### in a *front end*, likely **no**
+
+##### in a *back end*, likely **yes**
+
+##### *could they have* **zero cost** *?*
+
+-------
+
+Zero-Cost Abstractions
+---
+
+#### there are languages that claim this
+##### *(mostly C++, Rust, likely Zig...)*
+
+#### bot **what**
+##### does it **mean**?
+
+-------
+
+Zero-Cost Abstractions
+---
+
+##### C++ Definition:
+
+> C++ implementations obey the zero-overhead principle:
+> What you don't use, you don't pay for. And further:
+> What you do use, you couldn't hand code any better.
+> 🖋    *Stroustrup, 1994*
+
+##### meaning:
+
+#### the abstractions are just as performant
+#### as if you had written the underlying code
+#### by hand
+
+-------
+
+An Example: `filter map`
+---
+
+#### *Javascript*
+
+```javascript
+const evenSquaredNumbers = numbers
+    .filter((num) => num % 2 === 0);
+    .map((num) => num * num);
+```
+
+#### *Rust*
+
+```rust
+let even_squared_sumbers = numbers.into_iter()
+    .filter(|&num| num % 2 == 0)
+    .map(|num| num * num)
+    .collect::<Vec<_>>();
+```
+-------
+
+Does It Matter?
+---
+
+##### as usual, *it depends*
+
+##### suppose this is server-side code
+
+##### ❓ would you want to choose between ❓
+#### 😃 maintaineble code 😃
+#### 🤑 doubling your cloud bills 🤑
+
+-------
+
+Let's Check If This Is True!
+---
+
+##### 🦀 Rust mplementation benchmark 🦀
+
+##### fair adaptation of the Typescript code
+
+##### same rules as before
+
+##### (built with Rust 1.85.1)
+
+-------
+
+Idiomatic `async` Rust
+---
+
+```rust
+let order = order_service(key).await;
+let validated = validation_service(order).await?;
+let amount = place_order_service(validated).await?.amount;
+```
+
+-------
+
+Rust with explicit `Future` code
+---
+
+```rust
+order_service(key).await
+    .ok_or_else(|| OrderNotValid::BookNotExists)
+    .map(validation_service).await
+    .map(place_order_service).await
+    .map(|result| result.amount)
+```
+
+-------
+
+Rust with functional composition
+---
+
+```rust
+compose!
+    (&validation_service, &place_order_service)
+    (order_service(key))
+```
+
+##### *(the code with **typestate pattern** is the same)*
+
+-------
+
+Rust Benchmark Result
+---
+
+![](img/rust-initial.png)
+
+##### about **1.4x** *slowdown*
+
+-------
+
+Typescript *vs* Rust
+---
+
+![](img/ts-r-initial.png)
+
+##### 😮 from **7x** to **27x** *slower* 😮
+
+-------
+
+Typescript *vs* Rust
+---
+
+#### why is Typescript
+##### so much slower?
+
+#### can we investigate
+##### the cause?
+
+##### yes, we can!
+
+-------
+
+Typescript Benchmarks
+---
+
+#### plain **synchronous** code
+#### *synchronous* code using **callbacks**
+#### *synchronous* code using **FP-TS** *(2019)*
+##### *synchronous* code using **FP-TS** *(2025)*
+
+#### *asynchronous* code using **callbacks**
+##### plain **async** code
+
+#### **Effects** *(functional framework)*
+#### **FP-TS** *(2019)*
+##### **FP-TS** *(2025)*
+#### **FP-TS** with typestate *(2019)*
+##### **FP-TS** with typestate *(2025)*
+
+
+-------
+
+Typescript Benchmarks
+---
+
+![image:width:100%](img/typescript-all.png)
+
+-------
+
+Typescript Benchmarks
+---
+
+![image:width:100%](img/typescript-all-sync-is-fast.png)
+
+-------
+
+Typescript Benchmarks
+---
+
+![image:width:100%](img/typescript-all-abstractions-are-slow.png)
+
+-------
+
+Typescript Benchmarks
+---
+
+![image:width:100%](img/typescript-all-nodejs-event-loop.png)
+
+-------
+
+Rust Benchmarks
+---
+
+#### plain **synchronous** code
+#### *synchronous* with **functional composition**
+#### *synchronous* with **functional composition** and **typestate**
+##### *synchronous* with **functional pipeline**
+
+#### *async* **imperative** code
+#### *async* **idiomatic** code
+##### *async* code using **`Future` API**
+
+#### *async* code using **`Future` Objects**
+#### *asynchronous* with **functional composition**
+##### *asynchronous* with **functional composition** and **typestate**
+
+
+-------
+
+Rust Benchmarks
+---
+
+![image:width:100%](img/rust-all-cost.png)
+
+-------
+
+Typescript *vs* Rust
+---
+
+![image:width:100%](img/ts-rust-all-bg.png)
+
+-------
+
+Was This Fair?
+---
+
+#### after all, Rust compiles
+##### to native code
+
+##### it cannot run in a browser
+
+##### or can it?
+
+-------
+
+Enter **`WASM`**
+---
+
+##### Rust can compile to **WASM**
+
+##### it is like adding an abstraction
+
+#### from native code
+##### to code that can run on any CPU
+
+-------
+
+WASM Benchmarks
+---
+
+![image:width:100%](img/wasm-all.png)
+
+-------
+
+Full Rust Benchmarks
+---
+
+![image:width:100%](img/rust-wasm-all.png)
+
+-------
+
+Full Benchmark Results
+---
+
+![image:width:100%](img/abstraction-space.png)
+
+-------
+
+![image:width:100%](img/abstraction-space-1.png)
+
+-------
+
+![image:width:100%](img/abstraction-space-2.png)
+
+-------
+
+![image:width:100%](img/abstraction-space-3.png)
+
+-------
+
+![image:width:100%](img/abstraction-space-4.png)
+
+-------
+
+![image:width:100%](img/tunnel-vision.png)
+
+-------
+
+![image:width:100%](img/tunnel-vision-1-language-bias.png)
+
+-------
+
+![image:width:100%](img/tunnel-vision-2-style-bias.png)
+
+-------
+
+![image:width:100%](img/tunnel-vision-3-nitpick-bias-1.png)
+
+-------
+
+![image:width:100%](img/tunnel-vision-4-nitpick-bias-2.png)
+
+-------
+
+![image:width:100%](img/ts-rust-wasm-all-context-0.png)
+
+-------
+
+![image:width:100%](img/ts-rust-wasm-all-context-1.png)
+
+-------
+
+![image:width:100%](img/ts-rust-wasm-all-context-2.png)
+
+-------
+
+![image:width:100%](img/ts-rust-wasm-all-context-3.png)
+
+-------
+
+😃 That's all folks! 😃
+---
+
+<!-- pause -->
+##### 🙏 **thanks!** 🙏
+<!-- pause -->
+##### ❓ *questions?*  ❓
+
+
+-------
+
 
 Recap
 ---
