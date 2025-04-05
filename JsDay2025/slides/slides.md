@@ -383,20 +383,20 @@ So Far, So Good
 ---
 
 <!-- pause -->
-##### do abstractions look nice?
+##### do *abstractions* look **nice**?
 
 <!-- pause -->
-##### do they improve the code?
+##### do they **improve** the code?
 
 <!-- pause -->
-##### do they cost us anything?
+##### do they **cost** us *anything*?
 
 <!-- pause -->
 #### *what* does it **mean**, and
 ##### *how* do we **know**?
 
 <!-- pause -->
-##### let's **define** a few *terms*
+##### *let's **define** a few terms*
 
 -------
 
@@ -546,7 +546,7 @@ Abstractions Effects
  ┃      Domain        ┃ Result ┃
  ┃━━━━━━━━━━━━━━━━━━━━┃━━━━━━━━┃
  ┃ Maintainability    ┃ 😀 ➕➕┃
- ┃ Cognitive Overhead ┃ 😐 ➖  ┃
+ ┃ Cognitive Overhead ┃ 😐 ➖➕┃
  ┃ Performance        ┃ 🤔     ┃
  ┃                    ┃        ┃
  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -562,23 +562,7 @@ Abstractions Effects
  ┃      Domain        ┃ Result ┃
  ┃━━━━━━━━━━━━━━━━━━━━┃━━━━━━━━┃
  ┃ Maintainability    ┃ 😀 ➕➕┃
- ┃ Cognitive Overhead ┃ 😐 ➖  ┃
- ┃ Performance        ┃ 🤔     ┃
- ┃ Overall Cost       ┃ ❓❓❓ ┃
- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-```
-
--------
-
-Abstractions Effects
----
-
-```
- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
- ┃      Domain        ┃ Result ┃
- ┃━━━━━━━━━━━━━━━━━━━━┃━━━━━━━━┃
- ┃ Maintainability    ┃ 😀 ➕➕┃
- ┃ Cognitive Overhead ┃ 😐 ➖  ┃
+ ┃ Cognitive Overhead ┃ 😐 ➖➕┃
  ┃ Performance        ┃ 🤔     ┃
  ┃ Overall Cost       ┃ ❓❓❓ ┃
  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -715,7 +699,7 @@ Zero-Cost Abstractions
 ##### *(mostly C++, Rust, likely Zig...)*
 
 <!-- pause -->
-#### bot **what**
+#### but **what**
 ##### does it **mean**?
 
 -------
@@ -773,9 +757,9 @@ Does It Matter?
 ##### suppose this is server-side code
 
 <!-- pause -->
-##### ❓ *would you want to choose between* ❓
+##### 🤔 *would you want to choose between* 🤔
 <!-- pause -->
-#### 😃 maintaineble code 😃
+#### 😃 maintainable code 😃
 <!-- pause -->
 #### 🤑 doubling your cloud bills 🤑
 
@@ -818,10 +802,10 @@ Rust with explicit `Future` code
 
 ```rust
 order_service(key).await
-    .ok_or_else(|| OrderNotValid::BookNotExists)
-    .map(validation_service).await
-    .map(place_order_service).await
-    .map(|result| result.amount)
+    .ok_or_else(|| Err(OrderNotValid::BookNotExists))
+    .and_then(validation_service).await
+    .and_then(place_order_service).await
+    .and_then(|result| result.amount)
 ```
 
 -------
