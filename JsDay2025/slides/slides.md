@@ -1082,3 +1082,6 @@ Back To Square One
 ##### 🙏 **thanks!** 🙏
 <!-- pause -->
 ##### ❓ *questions?*  ❓
+<!-- pause -->
+![image:width:30%](img/qrcode-feedback.png)
+#### 🖋  Please give feedback! 🎇
