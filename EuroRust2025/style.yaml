@@ -1,0 +1,131 @@
+---
+default:
+  margin:
+    percent: 8
+  colors:
+    foreground: "e6e6e6"
+    background: "040312"
+
+slide_title:
+  alignment: center
+  margin:
+    fixed: 1
+  padding_bottom: 1
+  padding_top: 1
+  colors:
+    foreground: "ee9322"
+  bold: true
+
+code:
+  alignment: center
+  minimum_size: 0
+  minimum_margin:
+    fixed: 0
+  theme_name: TwoDark
+  background: true
+  padding:
+    horizontal: 0
+    vertical: 0
+
+execution_output:
+  colors:
+    foreground: "e6e6e6"
+    background: "2d2d2d"
+  status:
+    running:
+      foreground: "b4ccff"
+    success:
+      foreground: "a8df8e"
+    failure:
+      foreground: "f78ca2"
+    not_started:
+      foreground: "ee9322"
+
+inline_code:
+  colors:
+    foreground: "61afef"
+    background: "282c34"
+
+intro_slide:
+  title:
+    alignment: center
+    colors:
+      foreground: "b4ccff"
+  subtitle:
+    alignment: center
+    colors:
+      foreground: "a5d7e8"
+  event:
+    alignment: center
+    colors:
+      foreground: "b4ccff"
+  location:
+    alignment: center
+    colors:
+      foreground: "a5d7e8"
+  date:
+    alignment: center
+    colors:
+      foreground: "ee9322"
+  author:
+    alignment: center
+    colors:
+      foreground: "b6eada"
+    positioning: page_bottom
+  footer: false
+
+headings:
+  h1:
+    prefix: "██"
+    alignment: center
+    colors:
+      foreground: "3085c3"
+  h2:
+    prefix: "▓▓▓"
+    alignment: center
+    colors:
+      foreground: "a8df8e"
+  h3:
+    prefix: "▒▒▒▒"
+    alignment: center
+    colors:
+      foreground: "f78ca2"
+  h4:
+    prefix: ""
+    alignment: center
+    skip_newline: true
+    colors:
+      foreground: "d2d2d2"
+  h5:
+    prefix: ""
+    alignment: center
+    colors:
+      foreground: "d2d2d2"
+  h6:
+    prefix: ""
+    alignment: center
+    colors:
+      foreground: "d2d2d2"
+
+block_quote:
+  prefix: "▍ "
+  colors:
+    foreground: "f0f0f0"
+    background: "292e42"
+    prefix: "ee9322"
+
+typst:
+  colors:
+    foreground: "f0f0f0"
+    background: "292e42"
+
+footer:
+  style: empty
+
+modals:
+  selection_colors:
+    foreground: "ee9322"
+
+mermaid:
+  background: transparent
+  theme: dark
