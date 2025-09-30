@@ -97,6 +97,8 @@ A Childish Line Follower
 #### if one side senses, turn that way
 #### otherwise, go straight
 
+#### LETS SEE
+
 ---
 
 Can we do better?
@@ -121,7 +123,7 @@ Analog Sensors
 Use a 🅿 🅸 🅳 Controller
 ---
 
-#### What is it?
+##### What is it?
 
 ```
 🅿 Proportional
@@ -129,9 +131,11 @@ Use a 🅿 🅸 🅳 Controller
 🅳 Derivative
 ```
 
-##### given three constants `k`: `ₖ🄿 ` `ₖ🄸 ` `ₖ🄳 `
+#### given the error ⓔ
+#### *(the distance from the line)*
+##### and three constants `k`: `ₖ🄿 ` `ₖ🄸 ` `ₖ🄳 `
 
-##### `turn` = ⓔ ⋅`ₖ🄿 ` + (∫ⓔ dt)⋅`ₖ🄸 ` + (dⓔ /dt)⋅`ₖ🄳 `
+##### `turn` = ⓔ ×`ₖ🄿 ` + (∫ⓔ dt)×`ₖ🄸 ` + (dⓔ /dt)×`ₖ🄳 `
 
 ##### this gives smooth trajectory control
 
@@ -223,10 +227,13 @@ Enter EV3RT
 
 #### compile a sample EV3RT C app
 #### with a trivial `main()`
-#### compile Rust code to a static lib
+##### and keep all the `.o` files
+#### compile Rust code to a static lib (`.a`)
+##### that implements the `main()` function
 #### replace the `main` C `.o` file
-#### with the Rust `.a` library
-#### use the EV3RT linbker script
+##### with the Rust `.a` library
+#### use the EV3RT linker script
+#### to produce the loadable app
 
 ---
 
@@ -245,15 +252,16 @@ Enter EV3RT
 The Need for `async`
 ---
 
-#### (not really in this robot)
-#### sensors read rate mismatches
+##### sensors read rate mismatches
 #### NXT analog: 3㎳
 #### Ultrasound: 20㎳
-#### RGB color: 1㎳
+##### RGB color: 1㎳
 
-#### a logic loop read in parallel
-#### RGB color data every 1ms, and also
-#### get Ultrasound updates every 20㎳
+#### a logic loop should read in parallel
+#### RGB color data every 1ms
+##### Ultrasound updates every 20㎳
+
+#### *(not really in this robot)*
 
 ---
 
@@ -395,4 +403,148 @@ pub fn pin_boxed<T>(t: T) -> PinBoxed<T> {
 }
 ```
 
+
+---
+
+A Fast UI
+---
+
+##### Having a UI for the robot is useful!
+
+##### Let's see what I mean
+
+##### PICTURE GUI
+
+---
+
+The Fast UI Challenge
+---
+
+##### the EV3 screen
+
+##### resolution is small (178×128)
+
+#### framebuffer memory layout is crazy
+#### monochrome, 2 bits per pixel, 3 pixels per byte
+#####  not so big (total size 7680 bytes), but...
+
+##### ...a full screen render is insanely slow
+
+##### and latency is bad, right?
+
+---
+
+Graphical Requirements
+---
+
+##### writing text, numbers and symbols
+
+##### statically pick a screen orientation
+
+##### very easy to read "in action"
+
+##### drowing real time bar charts
+
+---
+
+Idea: a Character Based UI
+---
+
+#### a 18×18 square font
+#### is big and readable
+#### can be easily rotated
+##### does not cross bytes
+
+##### the screen fits 10×7 chars
+##### three square regions
+##### (1 main 7×7, 2 secondary 3×3)
+##### again, easy to rotate
+
+---
+
+Fast Screen Refresh
+---
+
+#### a full frame buffer now is 10×7 = 70 bytes
+#### double buffering becomes feasible
+#### a diff between two screens is almost instant
+#### we can redrow only changed characters
+#### drowing each character is a 54 bytes write
+#### redrows are limited to a fixed framerate
+#### (refreshing every 25㎳ is fine)
+
+---
+
+Understanding What Goes Wrong
+---
+
+#### having a UI is fine
+##### but we cannot use it while the robot races
+
+#### filming the robot while it runs is fine
+##### but it does not show what happens inside
+
+#### we need a telemetry system
+
+---
+
+What Do We Need?
+---
+
+##### we would like to inspect
+
+#### timestamps `㎲`
+#### line error `ⓔ`
+#### error derivative `dⓔ /dt`
+#### gyro `deg/s`
+#### left and right wheel speed `㎜/s`
+#### left and right motor power `PWM`
+#### left, center, right sensor `flags`
+#### out condition `flag`
+##### overall distance `㎜`
+
+#### fits in 20 bytes
+
+
+---
+
+The Telemetry Challenge
+---
+
+#### we want to see every decision taken
+#### potentially at a 10㎑ rate
+#### transmitting 200 KB/s over BT
+#### while the robot runs
+#### NO WAY
+
+---
+
+Offline Telemetry
+---
+
+#### in practice the event loop runs at 0.5㎑
+#### 10k samples take 200 KB of RAM
+#### at 0.5㎑ they cover 20s
+#### this is more than enough!
+
+#### just save the data file when the race stops
+#### (reducing sample rate covers more time)
+
+---
+
+Telemetry Task
+---
+
+#### receives data samples from other tasks
+#### pushes samples to the ring buffer
+#### at the required rate
+#### saves data when requested
+#### (just as the race stops)
+
+---
+
+Telemetry Result
+---
+
+#### PICTURE
 
