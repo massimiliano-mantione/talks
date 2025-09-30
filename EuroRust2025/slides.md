@@ -50,31 +50,29 @@ About This Talk
 ---
 
 ##### 🦀 Rust Topics 🦀
-##### 🏎️ Line Follower Topics 🏎️
+##### 🤖 Line Follower Topics 🤖
+
+##### *like mixing two different talks*
 
 ---
 
-🦀 Rust Topics 🦀
+Talk Outline
 ---
 
-#### embedded Rust
-#### wrapping an embedded C SDK
-#### embedded GUI
-#### custom async runtime
-#### data visualization
-
----
-
-🏎️ Line Follower Topics 🏎️
----
-
-#### line following control algorithms
-#### dealing with imprecise sensors
-#### the importance of telemetry
+#### 🤖          Line Follower Robots          🤖
+#### 🤖             PID controller             🤖
+#### 🦀      embedded Rust on a EV3 brick      🦀
+#### 🦀       wrapping an embedded C SDK       🦀
+#### 🤖           the need for async           🤖
+#### 🦀         a custom async runtime         🦀
+#### 🦀              embedded GUI              🦀
+#### 🤖         the need for telemetry         🤖
+#### 🦀    telemetry and data visualization    🦀
+#### 🤖   advanced line following techniques   🤖
 
 ---
 
-Line Followers
+🤖 Line Follower Robots 🤖
 ---
 
 ##### there are...
@@ -90,14 +88,16 @@ Line Followers
 
 ---
 
-A Childish Line Follower
+A Toy Line Follower
 ---
 
 #### use only two sensors
-#### if one side senses, turn that way
-#### otherwise, go straight
+##### ⬅ left and right ➡
+#### if one side senses the line,
+##### turn that way
+##### otherwise, go straight
 
-#### LETS SEE
+#### **LET'S SEE**
 
 ---
 
@@ -120,7 +120,7 @@ Analog Sensors
 
 ---
 
-Use a 🅿 🅸 🅳 Controller
+🤖 Use a 🅿 🅸 🅳 Controller 🤖
 ---
 
 ##### What is it?
@@ -149,13 +149,13 @@ BUT WAIT
 
 ---
 
-Why Rust...
+🦀 Why Rust... 🦀
 ---
 
-#### ...in a hobby robotic project?
-#### to learn the language
-#### to avoid mistakes
-#### because it is possible!
+##### ...in a hobby robotic project?
+##### to *learn* the **language**
+##### to *avoid* **mistakes**
+##### *because* it is **possible!**
 
 ---
 
@@ -163,25 +163,25 @@ Why Rust...
 ---
 
 #### original firmware
-#### (let's skip this)
+##### *(let's skip this)*
 
 #### `ev3dev` (a Debian port)
-#### unpredictable latency (up to 20㎳)
+##### *unpredictable latency (up to 20㎳)*
 
-#### 🤔 why is latency an issue ❓
+#### 🤔 *why* is latency an **issue** ❓
 
 ---
 
-Hard Real Time
+🤖 Hard Real Time 🤖
 ---
 
-#### the PID runs in an event loop
-#### a late result is a wrong result
-#### how fast is fast enough?
-#### not
-#### as fast as possible
-#### but
-#### as fast as needed
+##### the **PID** runs in an *event loop*
+##### a *late* result is a **wrong** result
+##### 🤔 how *fast* is **fast enough?** 🤔
+#### ⛔ *not* ⛔
+##### as *fast* as **possible**
+#### ✅ *but* ✅
+##### as *fast* as **needed**
 
 ---
 
@@ -203,10 +203,10 @@ Line Follower Latency
 Enter EV3RT
 ---
 
-#### a port of TOPPERS HRP2
-#### an industrial Real Time OS
-#### 💥 Open Source 💥
-#### docs and comments in 🇯🇵 Japanese 😮
+#### a *port* of **TOPPERS HRP2**
+##### *an industrial Real Time OS*
+##### 💥 Open Source 💥
+##### *docs* and *comments* in 🇯🇵 **Japanese** 😮
 
 #### 😄 with a usable C SDK 👍
 
@@ -215,14 +215,14 @@ Enter EV3RT
 🦀 Rust on EV3RT 💻
 ---
 
-#### wrapping the C API is easy
-#### EV3RT has a dynamic program loader
-#### programs are "custom" ELF files
-#### the linker script is crazy
+##### *wrapping* the **C API** is easy
+##### EV3RT has a *dynamic* program **loader**
+##### *programs* are "custom" **ELF files**
+##### the *linker* script is **crazy**
 
 ---
 
-🦀 Rust, EV3RT, and Linking 🔗
+EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 ---
 
 #### compile a sample EV3RT C app
@@ -233,33 +233,40 @@ Enter EV3RT
 #### replace the `main` C `.o` file
 ##### with the Rust `.a` library
 #### use the EV3RT linker script
-#### to produce the loadable app
+##### to produce the loadable app
+
+##### **😄...PROFIT! 😄**
 
 ---
 
 💻 EV3RT 🦀 Rust `API` 💻
 ---
 
-#### simple, imperative low-level API
-#### read and write to every EV3 port
-#### handle every sensor and motor
-#### get time (㎲) and sleep (㎳)
+#### *simple*, **imperative** low-level **API**
+#### access *every* **EV3 port**
+#### support *every* **sensor** and **motor**
+##### get **time** (㎲) and **sleep** (㎳)
 
-#### usable, but not enough
+#### also provides *simplified* interfaces
+##### to **file** system and **Bluetooth**
+
+#### *usable*, but **not enough**
 
 ---
 
 The Need for `async`
 ---
 
-##### sensors read rate mismatches
-#### NXT analog: 3㎳
-#### Ultrasound: 20㎳
-##### RGB color: 1㎳
+##### PARALLEL READS
 
-#### a logic loop should read in parallel
-#### RGB color data every 1ms
-##### Ultrasound updates every 20㎳
+##### sensors *read* rate **mismatches**
+#### NXT analog:  **3㎳**
+#### Ultrasound: **20㎳**
+##### RGB color:  **1㎳**
+
+#### a logic *loop* should read in **parallel**
+#### *RGB* color data every **1ms**
+##### *Ultrasound* updates every **20㎳**
 
 #### *(not really in this robot)*
 
@@ -268,20 +275,22 @@ The Need for `async`
 The Need for `async`
 ---
 
+##### PARALLEL LOGIC
+
 #### robot logic can be composed of
-#### different parallel state machines
+##### different parallel state machines
 
 #### process line error
-#### (dⓔ/dt, ∫ⓔdt, filtering)
+##### (dⓔ/dt, ∫ⓔdt, filtering)
 
 #### process motor status
-#### (compute speed)
+##### (compute speed)
 
-#### run driving logic
+##### run driving logic
 
-#### collect telemetry
+##### collect telemetry
 
-#### handle screen and input
+##### handle screen and input
 
 ---
 
@@ -402,6 +411,33 @@ pub fn pin_boxed<T>(t: T) -> PinBoxed<T> {
     alloc::boxed::Box::pin(t)
 }
 ```
+
+---
+
+Inner Event Loop Details
+---
+
+```rust
+loop {
+    self.ev3.update();
+    if future.as_mut().poll(&mut context) == core::task::Poll::Ready(()) {
+        break;
+    }
+    self.ev3.apply();
+    ev3rt::msleep(1);
+}
+```
+
+#### `ev3` has the full hardware state but it is not `mut`
+##### its reference is shared with all tasks
+
+#### every piece of data is enclosed in a `Cell`
+##### OK, because the executor is single-threaded
+
+##### every `Future` (which refers to a `Cell`):
+#### can provide the **current** value immediately
+#### supports `.await` for the next value
+#### can provide a `Stream` of future values
 
 
 ---
@@ -548,3 +584,39 @@ Telemetry Result
 
 #### PICTURE
 
+---
+
+DEMO TIME
+---
+
+
+```
+ _    ____  ___. ____
+ |    |___  |  ' [__
+ |___ |___  |    ___]
+
+ _  _ ____ _  _ ____    ____ _  _ _  _   /
+ |__| |__| |  | |___    |___ |  | |\ |  / 
+ |  | |  |  \/  |___    |    |__| | \| .
+
+```
+
+---
+
+Finally...
+---
+
+```
+
+ ████████╗██╗  ██╗ █████╗ ███╗   ██╗██╗  ██╗███████╗██╗
+ ╚══██╔══╝██║  ██║██╔══██╗████╗  ██║██║ ██╔╝██╔════╝██║
+    ██║   ███████║███████║██╔██╗ ██║█████╔╝ ███████╗██║
+    ██║   ██╔══██║██╔══██║██║╚██╗██║██╔═██╗ ╚════██║╚═╝
+    ██║   ██║  ██║██║  ██║██║ ╚████║██║  ██╗███████║██╗
+    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝
+
+```
+
+![](img/slides-url.png)
+
+#### `https://github.com/massimiliano-mantione/talks/EuroRust2025`
