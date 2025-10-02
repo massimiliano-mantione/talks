@@ -40,7 +40,7 @@ That was me, Professionally
 
 ##### 🤖 Robotic Competitions as a Hobby 🎉
 
-##### PICTURE-team
+![image:width:90%](img/itlug-team.jpg)
 
 ##### ItLUG Robotics Team
 
@@ -68,7 +68,9 @@ Talk Outline
 #### 🦀              embedded GUI              🦀
 #### 🤖         the need for telemetry         🤖
 #### 🦀    telemetry and data visualization    🦀
-#### 🤖   advanced line following techniques   🤖
+##### 🤖   advanced line following techniques   🤖
+
+#### these are **two** *talks* in **one**!
 
 ---
 
@@ -92,10 +94,10 @@ A Toy Line Follower
 ---
 
 #### use only two sensors
-##### ⬅ left and right ➡
-#### if one side senses the line,
-##### turn that way
-##### otherwise, go straight
+##### ⬅ **left** and **right** ➡
+#### if one **side** *senses* the **line**,
+##### **turn** that *way*
+##### *otherwise*, go **straight**
 
 #### **LET'S SEE**
 
@@ -104,19 +106,19 @@ A Toy Line Follower
 Can we do better?
 ---
 
-#### this robot is "binary"
-#### it does not have proportional reactions
-#### how can we improve it?
+##### this *robot* is **"binary"**
+##### it does *not* have **proportional** reactions
+##### *how* can we **improve** it?
 
 ---
 
 Analog Sensors
 ---
 
-#### use analog sensors
-#### a strange configuration
-#### PICTURE sensors image
-#### sub millimeter accuracy
+#### use **analog** *sensors*
+##### *a strange configuration*
+![image:width:50%](img/slides-url.png)
+#### **sub millimeter** *accuracy*
 
 ---
 
@@ -137,7 +139,32 @@ Analog Sensors
 
 ##### `turn` = ⓔ ×`ₖ🄿 ` + (∫ⓔ dt)×`ₖ🄸 ` + (dⓔ /dt)×`ₖ🄳 `
 
-##### this gives smooth trajectory control
+##### *this gives **smooth** trajectory control*
+
+---
+
+🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+---
+
+<!-- column_layout: [1, 1, 1] -->
+<!-- column: 0 -->
+##### *proportional*
+##### `turn` = ⓔ ×`ₖ🄿 `
+![image:width:80%](img/slides-url.png)
+#### *considers*
+#### **now**
+<!-- column: 1 -->
+##### *derivative*
+##### `turn` = (dⓔ /dt)×`ₖ🄳 `
+![image:width:95%](img/slides-url.png)
+#### *predicts*
+#### the **future**
+<!-- column: 2 -->
+##### *integral*
+##### `turn` = (∫ⓔ dt)×`ₖ🄸 `
+![image:width:80%](img/slides-url.png)
+#### takes the **past**
+#### into *account*
 
 ---
 
@@ -188,15 +215,15 @@ BUT WAIT
 Line Follower Latency
 ---
 
-#### PICTURE 90 turn image
+![image:width:25%](img/slides-url.png)
 
 #### bot speed:
 #### 1.0㎧: 2㎳ ➡ 2㎜
 #### 1.5㎧: 2㎳ ➡ 3㎜
-#### 2.0㎧: 2㎳ ➡ 4㎜
+##### 2.0㎧: 2㎳ ➡ 4㎜
 
-#### line width: 20㎜
-#### max latency: about 3㎳
+#### line *width*: **20㎜**
+#### max *latency*: about **4㎳**
 
 ---
 
@@ -277,52 +304,52 @@ The Need for `async`
 
 ##### PARALLEL LOGIC
 
-#### robot logic can be composed of
-##### different parallel state machines
+#### robot *logic* can be composed of
+##### different **parallel** state machines
 
-#### process line error
-##### (dⓔ/dt, ∫ⓔdt, filtering)
+#### process **line error**
+##### *(dⓔ /dt, ∫ⓔ dt, filtering)*
 
-#### process motor status
-##### (compute speed)
+#### process **motor status**
+##### *(compute speed)*
 
-##### run driving logic
+##### run **driving logic**
 
-##### collect telemetry
+##### collect **telemetry**
 
-##### handle screen and input
+##### handle **screen** and **input**
 
 ---
 
 EV3RT API Mismatch
 ---
 
-#### the EV3RT API is synchronous
-#### it does not expose interrupts
-#### tasks are cumbersome to use
-#### (no channels)
-#### it's like ⬜ squaring a ⚪ circle
+##### the *EV3RT API* is **synchronous**
+##### it does **not** expose *interrupts*
+#### **tasks** are *cumbersome* to use
+##### *(no channels)*
+##### it's *like* ⬜ **squaring** a ⚪ **circle**
 
-#### but remember: 1㎳ latency is fine
+##### but *remember*: **1㎳** latency is **fine**
 
 ---
 
 💡 Idea: a Dumb `async` Runtime 💡
 ---
 
-#### run a 1㎳ event loop collecting
-#### all data with pending reads
+#### run a **1㎳** event **loop** collecting
+##### all **data** with *pending reads*
 
-#### use `Future` with no waker
+##### use `Future` with **no** *waker*
 
-#### implement `poll` checking for new data
+##### implement `poll` checking for **new** *data*
 
-#### in each event loop iteration
-#### poll the root `Future`
+#### in **each** event loop *iteration*
+##### **poll** the *root* `Future`
 
 ---
 
-`async` Event Loop
+🦀 `async` Event Loop 🦀
 ---
 
 ```rust
@@ -344,7 +371,7 @@ pub fn run(self, future: mut PinBoxed<impl Future<Output = ()>>) {
 
 ---
 
-`async` Boilerplate
+🦀 `async` Boilerplate 🦀
 ---
 
 ```rust
@@ -368,7 +395,7 @@ fn noop_waker() -> core::task::Waker {
 
 ---
 
-A `main` function, `async` style
+🦀 A `main` function, `async` style 🦀
 ---
 
 ```rust
@@ -392,7 +419,7 @@ async fn main<EV3: Ev3Brick>(ev3: EV3) {
 
 ---
 
-The full `main_task` function
+🦀 The full `main_task` function 🦀
 ---
 
 ```rust
@@ -405,6 +432,8 @@ pub extern "C" fn main_task() {
 }
 ```
 
+##### *pinning boilerplate*
+
 ```rust
 pub type PinBoxed<T> = core::pin::Pin<alloc::boxed::Box<T>>;
 pub fn pin_boxed<T>(t: T) -> PinBoxed<T> {
@@ -414,7 +443,7 @@ pub fn pin_boxed<T>(t: T) -> PinBoxed<T> {
 
 ---
 
-Inner Event Loop Details
+🦀 Inner Event Loop Details 🦀
 ---
 
 ```rust
@@ -428,45 +457,45 @@ loop {
 }
 ```
 
-#### `ev3` has the full hardware state but it is not `mut`
-##### its reference is shared with all tasks
+#### `ev3` has the **full** *hardware* **state** but it is **not** `mut`
+##### *its reference is shared with all tasks*
 
-#### every piece of data is enclosed in a `Cell`
-##### OK, because the executor is single-threaded
+#### *every* piece of **data** is *enclosed* in a `Cell`
+##### **OK**, because the *executor* is **single-threaded**
 
-##### every `Future` (which refers to a `Cell`):
-#### can provide the **current** value immediately
-#### supports `.await` for the next value
-#### can provide a `Stream` of future values
+##### *every* `Future` **refers** to a `Cell`:
+#### it can *provide* the **current** value immediately
+#### it supports `.await` for the **next value**
+#### it can provide a `Stream` of **future values**
 
 
 ---
 
-A Fast UI
+🦀 A Fast UI 🦀
 ---
 
-##### Having a UI for the robot is useful!
+##### Having a **UI** for the robot is **useful!**
 
-##### Let's see what I mean
+##### Let's *see* what it **means**
 
-##### PICTURE GUI
+![image:width:50%](img/slides-url.png)
 
 ---
 
 The Fast UI Challenge
 ---
 
-##### the EV3 screen
+##### the **EV3** *screen*
 
-##### resolution is small (178×128)
+##### resolution is **small** *(178×128)*
 
-#### framebuffer memory layout is crazy
-#### monochrome, 2 bits per pixel, 3 pixels per byte
-#####  not so big (total size 7680 bytes), but...
+#### framebuffer memory *layout* is **crazy**
+#### monochrome, **2 bits** per *pixel*, **3 pixels** per *byte*
+##### not so big (total size **7680 bytes**), but...
 
-##### ...a full screen render is insanely slow
+##### ...a **full** screen *render* is insanely **slow**
 
-##### and latency is bad, right?
+##### *and latency is bad, right?*
 
 ---
 
@@ -486,41 +515,41 @@ Graphical Requirements
 Idea: a Character Based UI
 ---
 
-#### a 18×18 square font
-#### is big and readable
-#### can be easily rotated
-##### does not cross bytes
+#### a **18×18** square *font*
+#### is **big** and **readable**
+#### can be *easily* **rotated**
+##### does *not* **cross** *bytes*
 
-##### the screen fits 10×7 chars
+##### the *screen* fits **10×7 chars**
 ##### three square regions
-##### (1 main 7×7, 2 secondary 3×3)
-##### again, easy to rotate
+##### (1 main **7×7**, 2 secondary **3×3**)
+##### *again, easy to rotate*
 
 ---
 
 Fast Screen Refresh
 ---
 
-#### a full frame buffer now is 10×7 = 70 bytes
-#### double buffering becomes feasible
-#### a diff between two screens is almost instant
-#### we can redrow only changed characters
-#### drowing each character is a 54 bytes write
-#### redrows are limited to a fixed framerate
-#### (refreshing every 25㎳ is fine)
+#### a **full** frame *buffer* now is **10×7** = **70** bytes
+##### **double** *buffering* becomes **feasible**
+#### a *diff* between two screens is almost **instant**
+##### we can *redrow* only **changed** characters
+##### drowing each *character* is a **54 bytes** write
+##### *redrows* are limited to a **fixed framerate**
+##### *(refreshing every 25㎳ is fine)*
 
 ---
 
 Understanding What Goes Wrong
 ---
 
-#### having a UI is fine
-##### but we cannot use it while the robot races
+#### having a **UI** is *fine*
+##### but we **cannot** use it while the *robot* **races**
 
-#### filming the robot while it runs is fine
-##### but it does not show what happens inside
+#### **filming** the *robot* while it runs is **fine**
+##### but it does **not** show what *happens* **inside**
 
-#### we need a telemetry system
+#### we **need** a *telemetry* **system**
 
 ---
 
@@ -536,10 +565,10 @@ What Do We Need?
 #### left and right wheel speed `㎜/s`
 #### left and right motor power `PWM`
 #### left, center, right sensor `flags`
-#### out condition `flag`
+#### out condition `direction`
 ##### overall distance `㎜`
 
-#### fits in 20 bytes
+#### *fits in 20 bytes*
 
 
 ---
@@ -547,42 +576,93 @@ What Do We Need?
 The Telemetry Challenge
 ---
 
-#### we want to see every decision taken
-#### potentially at a 10㎑ rate
-#### transmitting 200 KB/s over BT
-#### while the robot runs
-#### NO WAY
+##### we want to *see* **every** decision **taken**
+##### potentially at a **10㎑** rate
+##### transmitting **200 KB/s** over **BT**
+##### *while* the robot *runs*
+##### ⛔ **NO WAY** ⛔
 
 ---
 
 Offline Telemetry
 ---
 
-#### in practice the event loop runs at 0.5㎑
-#### 10k samples take 200 KB of RAM
-#### at 0.5㎑ they cover 20s
-#### this is more than enough!
+#### in *practice* the event loop *runs* at **0.5㎑**
+##### **10k** samples take **200 KB** of **RAM**
+#### at **0.5㎑** they cover **20s**
+##### *this is more than enough!*
 
-#### just save the data file when the race stops
-#### (reducing sample rate covers more time)
+##### *(reducing sample rate covers more time)*
+
+##### just **save** the *data file* when the race **stops**
 
 ---
 
 Telemetry Task
 ---
 
-#### receives data samples from other tasks
-#### pushes samples to the ring buffer
-#### at the required rate
-#### saves data when requested
-#### (just as the race stops)
+##### **receives** data samples from *other tasks*
+##### **pushes** samples to the *ring buffer*
+##### at the *required* **rate**
+##### **saves** data when *requested*
+##### *(just as the race stops)*
 
 ---
 
 Telemetry Result
 ---
 
-#### PICTURE
+![image:width:80%](img/slides-url.png)
+
+---
+
+🤖 A Better Line Follower 🤖
+---
+
+##### CONSTRUCTION
+
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:45%](img/slides-url.png)
+<!-- column: 1 -->
+![image:width:45%](img/slides-url.png)
+
+---
+
+🤖 A Better Control Algorithm 🤖
+---
+
+##### tuning **(dⓔ /dt)** usage
+
+![image:width:80%](img/slides-url.png)
+
+---
+
+🤖 Tuning for Straight Lines 🤖
+---
+
+![image:width:80%](img/slides-url.png)
+
+#### the *desired rotation* speed is **zero**
+
+---
+
+🤖 Tuning for Smooth Turns 🤖
+---
+
+![image:width:30%](img/slides-url.png)
+
+##### consider *rotation speeds*
+
+#### **actual** rotation speed **`RS`**
+##### *taken from gyro or from wheels speeds*
+
+#### **apparent** rotation speed **`LS`**
+##### *perceived from line side speed (dⓔ /dt)*
+
+#### the **desired** rotation *speed* is
+##### **`RS` - `LS`**
+
 
 ---
 
