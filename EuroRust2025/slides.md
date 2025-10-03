@@ -117,7 +117,7 @@ Analog Sensors
 
 #### use **analog** *sensors*
 ##### *a strange configuration*
-![image:width:50%](img/slides-url.png)
+![image:width:50%](img/bot-front-sensors.jpg)
 #### **sub millimeter** *accuracy*
 
 ---
@@ -150,19 +150,19 @@ Analog Sensors
 <!-- column: 0 -->
 ##### *proportional*
 ##### `turn` = ⓔ ×`ₖ🄿 `
-![image:width:80%](img/slides-url.png)
+![image:width:80%](img/bot-straight-error.jpg)
 #### *considers*
 #### **now**
 <!-- column: 1 -->
 ##### *derivative*
 ##### `turn` = (dⓔ /dt)×`ₖ🄳 `
-![image:width:95%](img/slides-url.png)
+![image:width:95%](img/bot-straight-zero.jpg)
 #### *predicts*
 #### the **future**
 <!-- column: 2 -->
 ##### *integral*
 ##### `turn` = (∫ⓔ dt)×`ₖ🄸 `
-![image:width:80%](img/slides-url.png)
+![image:width:80%](img/bot-curve-ok.jpg)
 #### takes the **past**
 #### into *account*
 
@@ -215,7 +215,7 @@ BUT WAIT
 Line Follower Latency
 ---
 
-![image:width:25%](img/slides-url.png)
+![image:width:25%](img/bot-90-degrees.jpg)
 
 #### bot speed:
 #### 1.0㎧: 2㎳ ➡ 2㎜
@@ -478,7 +478,7 @@ loop {
 
 ##### Let's *see* what it **means**
 
-![image:width:50%](img/slides-url.png)
+![image:width:50%](img/bot-gui.jpg)
 
 ---
 
@@ -612,7 +612,7 @@ Telemetry Task
 Telemetry Result
 ---
 
-![image:width:80%](img/slides-url.png)
+![image:width:80%](img/telemetry.png)
 
 ---
 
@@ -623,9 +623,9 @@ Telemetry Result
 
 <!-- column_layout: [1, 1] -->
 <!-- column: 0 -->
-![image:width:45%](img/slides-url.png)
+![image:width:45%](img/bot-top.jpg)
 <!-- column: 1 -->
-![image:width:45%](img/slides-url.png)
+![image:width:45%](img/bot-bottom.jpg)
 
 ---
 
@@ -634,14 +634,14 @@ Telemetry Result
 
 ##### tuning **(dⓔ /dt)** usage
 
-![image:width:80%](img/slides-url.png)
+![image:width:80%](img/bot-straight-error.jpg)
 
 ---
 
 🤖 Tuning for Straight Lines 🤖
 ---
 
-![image:width:80%](img/slides-url.png)
+![image:width:80%](img/bot-straight-error.jpg)
 
 #### the *desired rotation* speed is **zero**
 
@@ -650,7 +650,7 @@ Telemetry Result
 🤖 Tuning for Smooth Turns 🤖
 ---
 
-![image:width:30%](img/slides-url.png)
+![image:width:30%](img/bot-curve-ok.jpg)
 
 ##### consider *rotation speeds*
 
