@@ -46,16 +46,6 @@ That was me, Professionally
 
 ---
 
-About This Talk
----
-
-##### 🦀 Rust Topics 🦀
-##### 🤖 Line Follower Topics 🤖
-
-##### *like mixing two different talks*
-
----
-
 Talk Outline
 ---
 
@@ -70,7 +60,8 @@ Talk Outline
 #### 🦀    telemetry and data visualization    🦀
 ##### 🤖   advanced line following techniques   🤖
 
-#### these are **two** *talks* in **one**!
+##### these are **two** *talks* in **one**!
+##### let's go **full** *speed* and *hope* for the **best**
 
 ---
 
@@ -117,8 +108,30 @@ Analog Sensors
 
 #### use **analog** *sensors*
 ##### *a strange configuration*
-![image:width:50%](img/bot-front-sensors.jpg)
+![image:width:50%](img/bot-front-sensors-on.jpg)
 #### **sub millimeter** *accuracy*
+
+---
+
+Fixed Point Math
+---
+
+#### the EV3 CPU dos not have a
+##### Floating Point Unit
+
+##### fixed-point math to the rescue!
+
+##### time: **`㎲`**
+
+#### distance: **`㎜`**
+##### *(error in **`㎛`**)*
+
+#### speed: **`㎜/s`**
+##### *(same as **`㎛/㎳`**)*
+
+#### **wheel** *rotation speed*
+##### in **`㎛/㎲`!**
+
 
 ---
 
@@ -146,23 +159,89 @@ Analog Sensors
 🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
 ---
 
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:80%](img/PID-proportional.jpg)
+<!-- column: 1 -->
+##### *proportional*
+
+#### 🔵
+##### robot speed
+
+#### 🔴
+##### distance from line
+
+#### 🟢
+##### desired turn
+
+##### `turn` = ⓔ ×`ₖ🄿 `
+
+---
+
+🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+---
+
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:95%](img/PID-derivative.jpg)
+<!-- column: 1 -->
+##### *derivative*
+
+#### 🔵
+##### robot rotation
+
+#### 🔴
+##### apparent line speed
+
+#### 🟢
+##### desired compensation
+
+##### `turn` = (dⓔ /dt)×`ₖ🄳 `
+
+---
+
+🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+---
+
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:95%](img/PID-integral.jpg)
+<!-- column: 1 -->
+##### *integral*
+
+#### 🔵
+##### robot rotation
+
+#### 🔴
+##### line distance over time
+
+#### 🟢
+##### desired turn
+
+##### `turn` = (∫ⓔ dt)×`ₖ🄸 `
+
+---
+
+🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+---
+
 <!-- column_layout: [1, 1, 1] -->
 <!-- column: 0 -->
 ##### *proportional*
 ##### `turn` = ⓔ ×`ₖ🄿 `
-![image:width:80%](img/bot-straight-error.jpg)
+![image:width:80%](img/PID-proportional.jpg)
 #### *considers*
 #### **now**
 <!-- column: 1 -->
 ##### *derivative*
 ##### `turn` = (dⓔ /dt)×`ₖ🄳 `
-![image:width:95%](img/bot-straight-zero.jpg)
+![image:width:95%](img/PID-derivative.jpg)
 #### *predicts*
 #### the **future**
 <!-- column: 2 -->
 ##### *integral*
 ##### `turn` = (∫ⓔ dt)×`ₖ🄸 `
-![image:width:80%](img/bot-curve-ok.jpg)
+![image:width:80%](img/PID-integral.jpg)
 #### takes the **past**
 #### into *account*
 
@@ -215,7 +294,7 @@ BUT WAIT
 Line Follower Latency
 ---
 
-![image:width:25%](img/bot-90-degrees.jpg)
+![image:width:25%](img/bot-90-degrees-latency.jpg)
 
 #### bot speed:
 #### 1.0㎧: 2㎳ ➡ 2㎜
@@ -623,43 +702,94 @@ Telemetry Result
 
 <!-- column_layout: [1, 1] -->
 <!-- column: 0 -->
-![image:width:45%](img/bot-top.jpg)
+![image:width:75%](img/bot-top.jpg)
 <!-- column: 1 -->
-![image:width:45%](img/bot-bottom.jpg)
+![image:width:75%](img/bot-bottom.jpg)
 
 ---
 
 🤖 A Better Control Algorithm 🤖
 ---
 
-##### tuning **(dⓔ /dt)** usage
+##### tuning 🅿 🅸 🅳 parameters
 
-![image:width:80%](img/bot-straight-error.jpg)
+##### can be *very* **confusing**
+
+#### their *intuitive* meaning
+##### is **not** *difficult*
+
+#### but their **actual** *values*
+##### can be **elusive**
+
+##### 🤔 *is there a better way?* 🤔
 
 ---
 
-🤖 Tuning for Straight Lines 🤖
+🤖 Tuning Error Compensation 🤖
 ---
 
-![image:width:80%](img/bot-straight-error.jpg)
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:80%](img/tuning-proportional.jpg)
+<!-- column: 1 -->
 
-#### the *desired rotation* speed is **zero**
+#### 🔴
+##### distance from line
+
+#### 🔵
+##### robot direction
+
+#### 🟢
+##### desired direction
+
+#### the **desired** *direction* is
+##### **parallel** to the *line*
+
+
+---
+
+🤖 Tuning for Zero Rotation 🤖
+---
+
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:80%](img/tuning-rotation.jpg)
+<!-- column: 1 -->
+
+#### 🔵
+##### robot rotation speed
+
+#### 🔴
+##### apparent line speed
+
+#### 🟢
+##### desired compensation
+
+#### the **desired** *rotation*
+#### *speed* is **zero**
+#### *(a **gyro** can be useful!)*
 
 ---
 
 🤖 Tuning for Smooth Turns 🤖
 ---
 
-![image:width:30%](img/bot-curve-ok.jpg)
+<!-- column_layout: [1, 1] -->
+<!-- column: 0 -->
+![image:width:80%](img/tuning-turn.jpg)
+<!-- column: 1 -->
 
-##### consider *rotation speeds*
+##### consider *rotation speeds:*
 
+#### 🔵
 #### **actual** rotation speed **`RS`**
 ##### *taken from gyro or from wheels speeds*
 
+#### 🔴
 #### **apparent** rotation speed **`LS`**
-##### *perceived from line side speed (dⓔ /dt)*
+##### *from line side speed (dⓔ /dt)*
 
+#### 🟢
 #### the **desired** rotation *speed* is
 ##### **`RS` - `LS`**
 
