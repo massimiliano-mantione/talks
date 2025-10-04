@@ -49,6 +49,8 @@ That was me, Professionally
 Talk Outline
 ---
 
+##### Lego LIne Follower 🤖 Robots, and 🦀 Rust
+
 #### 🤖          Line Follower Robots          🤖
 #### 🤖             PID controller             🤖
 #### 🦀      embedded Rust on a EV3 brick      🦀
@@ -156,7 +158,7 @@ Fixed Point Math
 
 ---
 
-🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+🤖 Understanding a 🅿 🅸 🅳 Controller 🤖
 ---
 
 <!-- column_layout: [1, 1] -->
@@ -178,7 +180,7 @@ Fixed Point Math
 
 ---
 
-🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+🤖 Understanding a 🅿 🅸 🅳 Controller 🤖
 ---
 
 <!-- column_layout: [1, 1] -->
@@ -200,7 +202,7 @@ Fixed Point Math
 
 ---
 
-🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+🤖 Understanding a 🅿 🅸 🅳 Controller 🤖
 ---
 
 <!-- column_layout: [1, 1] -->
@@ -222,7 +224,7 @@ Fixed Point Math
 
 ---
 
-🤖 Tuning a 🅿 🅸 🅳 Controller 🤖
+🤖 Understanding a 🅿 🅸 🅳 Controller 🤖
 ---
 
 <!-- column_layout: [1, 1, 1] -->
@@ -542,7 +544,7 @@ loop {
 #### *every* piece of **data** is *enclosed* in a `Cell`
 ##### **OK**, because the *executor* is **single-threaded**
 
-##### *every* `Future` **refers** to a `Cell`:
+##### *every* sensor `Future` **refers** to a `Cell`:
 #### it can *provide* the **current** value immediately
 #### it supports `.await` for the **next value**
 #### it can provide a `Stream` of **future values**
@@ -617,6 +619,8 @@ Fast Screen Refresh
 ##### *redrows* are limited to a **fixed framerate**
 ##### *(refreshing every 25㎳ is fine)*
 
+##### **let's see it in action!**
+
 ---
 
 Understanding What Goes Wrong
@@ -655,7 +659,8 @@ What Do We Need?
 The Telemetry Challenge
 ---
 
-##### we want to *see* **every** decision **taken**
+#### we want to *see* **every** decision **taken**
+##### *(a 20 bytes sample)*
 ##### potentially at a **10㎑** rate
 ##### transmitting **200 KB/s** over **BT**
 ##### *while* the robot *runs*
