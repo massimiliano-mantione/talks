@@ -36,10 +36,13 @@ Who am I
 That was me, Professionally
 ---
 
+<!-- pause -->
 ##### *Who am I, for this talk?*
 
+<!-- pause -->
 ##### 🤖 Robotic Competitions as a Hobby 🎉
 
+<!-- pause -->
 ![image:width:90%](img/itlug-team.jpg)
 
 ##### ItLUG Robotics Team
@@ -49,21 +52,30 @@ That was me, Professionally
 Talk Outline
 ---
 
+<!-- pause -->
 ##### Lego LIne Follower 🤖 Robots, and 🦀 Rust
 
+<!-- pause -->
 #### 🤖          Line Follower Robots          🤖
 #### 🤖             PID controller             🤖
+<!-- pause -->
 #### 🦀      embedded Rust on a EV3 brick      🦀
 #### 🦀       wrapping an embedded C SDK       🦀
+<!-- pause -->
 #### 🤖           the need for async           🤖
 #### 🦀         a custom async runtime         🦀
+<!-- pause -->
 #### 🦀              embedded GUI              🦀
+<!-- pause -->
 #### 🤖         the need for telemetry         🤖
 #### 🦀    telemetry and data visualization    🦀
+<!-- pause -->
 ##### 🤖   advanced line following techniques   🤖
 
+<!-- pause -->
 ##### these are **two** *talks* in **one**!
-##### let's go **full** *speed* and *hope* for the **best**
+<!-- pause -->
+##### let's go **full** *speed* and *hope* for the **best!**
 
 ---
 
@@ -72,13 +84,18 @@ Talk Outline
 
 ##### there are...
 
+<!-- pause -->
 #### 🏎️💨 fast ones 🏎️💨
+<!-- pause -->
 #### 6㎧ on straight lines
 ##### 💥 engineering marvels 💥
 
+<!-- pause -->
 #### 🤖 Lego ones 🤖
+<!-- pause -->
 #### 🐌 much slower 🐌
 #### 1㎧ overall speed
+<!-- pause -->
 #### 🤔 different challenges 🤔
 
 ---
@@ -86,12 +103,16 @@ Talk Outline
 A Toy Line Follower
 ---
 
+<!-- pause -->
 #### use only two sensors
 ##### ⬅ **left** and **right** ➡
+<!-- pause -->
 #### if one **side** *senses* the **line**,
 ##### **turn** that *way*
+<!-- pause -->
 ##### *otherwise*, go **straight**
 
+<!-- pause -->
 #### **LET'S SEE**
 
 ---
@@ -99,8 +120,11 @@ A Toy Line Follower
 Can we do better?
 ---
 
+<!-- pause -->
 ##### this *robot* is **"binary"**
+<!-- pause -->
 ##### it does *not* have **proportional** reactions
+<!-- pause -->
 ##### *how* can we **improve** it?
 
 ---
@@ -108,29 +132,38 @@ Can we do better?
 Analog Sensors
 ---
 
+<!-- pause -->
 #### use **analog** *sensors*
+<!-- pause -->
 ##### *a strange configuration*
 ![image:width:50%](img/bot-front-sensors-on.jpg)
-#### **sub millimeter** *accuracy*
+<!-- pause -->
+#### 😮 **sub millimeter** *accuracy* 😮
 
 ---
 
 Fixed Point Math
 ---
 
+<!-- pause -->
 #### the EV3 CPU dos not have a
 ##### Floating Point Unit
 
+<!-- pause -->
 ##### fixed-point math to the rescue!
 
+<!-- pause -->
 ##### time: **`㎲`**
 
+<!-- pause -->
 #### distance: **`㎜`**
 ##### *(error in **`㎛`**)*
 
+<!-- pause -->
 #### speed: **`㎜/s`**
 ##### *(same as **`㎛/㎳`**)*
 
+<!-- pause -->
 #### **wheel** *rotation speed*
 ##### in **`㎛/㎲`!**
 
@@ -140,20 +173,26 @@ Fixed Point Math
 🤖 Use a 🅿 🅸 🅳 Controller 🤖
 ---
 
+<!-- pause -->
 ##### What is it?
 
+<!-- pause -->
 ```
 🅿 Proportional
 🅸 Integral
 🅳 Derivative
 ```
 
+<!-- pause -->
 #### given the error ⓔ
 #### *(the distance from the line)*
-##### and three constants `k`: `ₖ🄿 ` `ₖ🄸 ` `ₖ🄳 `
+<!-- pause -->
+##### and three constants: `ₖ🄿 ` `ₖ🄸 ` `ₖ🄳 `
 
+<!-- pause -->
 ##### `turn` = ⓔ ×`ₖ🄿 ` + (∫ⓔ dt)×`ₖ🄸 ` + (dⓔ /dt)×`ₖ🄳 `
 
+<!-- pause -->
 ##### *this gives **smooth** trajectory control*
 
 ---
@@ -167,12 +206,15 @@ Fixed Point Math
 <!-- column: 1 -->
 ##### *proportional*
 
+<!-- pause -->
 #### 🔵
 ##### robot speed
 
+<!-- pause -->
 #### 🔴
 ##### distance from line
 
+<!-- pause -->
 #### 🟢
 ##### desired turn
 
@@ -189,12 +231,15 @@ Fixed Point Math
 <!-- column: 1 -->
 ##### *derivative*
 
+<!-- pause -->
 #### 🔵
 ##### robot rotation
 
+<!-- pause -->
 #### 🔴
 ##### apparent line speed
 
+<!-- pause -->
 #### 🟢
 ##### desired compensation
 
@@ -211,12 +256,15 @@ Fixed Point Math
 <!-- column: 1 -->
 ##### *integral*
 
+<!-- pause -->
 #### 🔵
 ##### robot rotation
 
+<!-- pause -->
 #### 🔴
 ##### line distance over time
 
+<!-- pause -->
 #### 🟢
 ##### desired turn
 
@@ -252,7 +300,9 @@ Fixed Point Math
 BUT WAIT
 ---
 
+<!-- pause -->
 ##### 🦀 What About Rust? 🦀
+<!-- pause -->
 ##### 🤔 isn't this a Rust conference? 🤔
 
 ---
@@ -260,9 +310,13 @@ BUT WAIT
 🦀 Why Rust... 🦀
 ---
 
+<!-- pause -->
 ##### ...in a hobby robotic project?
+<!-- pause -->
 ##### to *learn* the **language**
+<!-- pause -->
 ##### to *avoid* **mistakes**
+<!-- pause -->
 ##### *because* it is **possible!**
 
 ---
@@ -270,12 +324,15 @@ BUT WAIT
 🦀 Rust on a EV3 🤖
 ---
 
+<!-- pause -->
 #### original firmware
 ##### *(let's skip this)*
 
+<!-- pause -->
 #### `ev3dev` (a Debian port)
 ##### *unpredictable latency (up to 20㎳)*
 
+<!-- pause -->
 #### 🤔 *why* is latency an **issue** ❓
 
 ---
@@ -283,11 +340,16 @@ BUT WAIT
 🤖 Hard Real Time 🤖
 ---
 
+<!-- pause -->
 ##### the **PID** runs in an *event loop*
+<!-- pause -->
 ##### a *late* result is a **wrong** result
+<!-- pause -->
 ##### 🤔 how *fast* is **fast enough?** 🤔
+<!-- pause -->
 #### ⛔ *not* ⛔
 ##### as *fast* as **possible**
+<!-- pause -->
 #### ✅ *but* ✅
 ##### as *fast* as **needed**
 
@@ -298,11 +360,13 @@ Line Follower Latency
 
 ![image:width:25%](img/bot-90-degrees-latency.jpg)
 
+<!-- pause -->
 #### bot speed:
 #### 1.0㎧: 2㎳ ➡ 2㎜
 #### 1.5㎧: 2㎳ ➡ 3㎜
 ##### 2.0㎧: 2㎳ ➡ 4㎜
 
+<!-- pause -->
 #### line *width*: **20㎜**
 #### max *latency*: about **4㎳**
 
@@ -311,11 +375,15 @@ Line Follower Latency
 Enter EV3RT
 ---
 
+<!-- pause -->
 #### a *port* of **TOPPERS HRP2**
 ##### *an industrial Real Time OS*
+<!-- pause -->
 ##### 💥 Open Source 💥
+<!-- pause -->
 ##### *docs* and *comments* in 🇯🇵 **Japanese** 😮
 
+<!-- pause -->
 #### 😄 with a usable C SDK 👍
 
 ---
@@ -323,9 +391,13 @@ Enter EV3RT
 🦀 Rust on EV3RT 💻
 ---
 
+<!-- pause -->
 ##### *wrapping* the **C API** is easy
+<!-- pause -->
 ##### EV3RT has a *dynamic* program **loader**
+<!-- pause -->
 ##### *programs* are "custom" **ELF files**
+<!-- pause -->
 ##### the *linker* script is **crazy**
 
 ---
@@ -333,16 +405,21 @@ Enter EV3RT
 EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 ---
 
+<!-- pause -->
 #### compile a sample EV3RT C app
 #### with a trivial `main()`
 ##### and keep all the `.o` files
+<!-- pause -->
 #### compile Rust code to a static lib (`.a`)
 ##### that implements the `main()` function
+<!-- pause -->
 #### replace the `main` C `.o` file
 ##### with the Rust `.a` library
+<!-- pause -->
 #### use the EV3RT linker script
 ##### to produce the loadable app
 
+<!-- pause -->
 ##### **😄...PROFIT! 😄**
 
 ---
@@ -350,14 +427,19 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 💻 EV3RT 🦀 Rust `API` 💻
 ---
 
-#### *simple*, **imperative** low-level **API**
+<!-- pause -->
+##### *simple*, **imperative** low-level **API**
+<!-- pause -->
 #### access *every* **EV3 port**
-#### support *every* **sensor** and **motor**
+##### support *every* **sensor** and **motor**
+<!-- pause -->
 ##### get **time** (㎲) and **sleep** (㎳)
 
+<!-- pause -->
 #### also provides *simplified* interfaces
 ##### to **file** system and **Bluetooth**
 
+<!-- pause -->
 #### *usable*, but **not enough**
 
 ---
@@ -367,15 +449,20 @@ The Need for `async`
 
 ##### PARALLEL READS
 
+<!-- pause -->
 ##### sensors *read* rate **mismatches**
 #### NXT analog:  **3㎳**
 #### Ultrasound: **20㎳**
 ##### RGB color:  **1㎳**
 
+<!-- pause -->
 #### a logic *loop* should read in **parallel**
+<!-- pause -->
 #### *RGB* color data every **1ms**
+<!-- pause -->
 ##### *Ultrasound* updates every **20㎳**
 
+<!-- pause -->
 #### *(not really in this robot)*
 
 ---
@@ -385,19 +472,25 @@ The Need for `async`
 
 ##### PARALLEL LOGIC
 
+<!-- pause -->
 #### robot *logic* can be composed of
 ##### different **parallel** state machines
 
+<!-- pause -->
 #### process **line error**
 ##### *(dⓔ /dt, ∫ⓔ dt, filtering)*
 
+<!-- pause -->
 #### process **motor status**
 ##### *(compute speed)*
 
+<!-- pause -->
 ##### run **driving logic**
 
+<!-- pause -->
 ##### collect **telemetry**
 
+<!-- pause -->
 ##### handle **screen** and **input**
 
 ---
@@ -405,12 +498,17 @@ The Need for `async`
 EV3RT API Mismatch
 ---
 
+<!-- pause -->
 ##### the *EV3RT API* is **synchronous**
+<!-- pause -->
 ##### it does **not** expose *interrupts*
+<!-- pause -->
 #### **tasks** are *cumbersome* to use
 ##### *(no channels)*
+<!-- pause -->
 ##### it's *like* ⬜ **squaring** a ⚪ **circle**
 
+<!-- pause -->
 ##### but *remember*: **1㎳** latency is **fine**
 
 ---
@@ -418,13 +516,17 @@ EV3RT API Mismatch
 💡 Idea: a Dumb `async` Runtime 💡
 ---
 
+<!-- pause -->
 #### run a **1㎳** event **loop** collecting
 ##### all **data** with *pending reads*
 
+<!-- pause -->
 ##### use `Future` with **no** *waker*
 
+<!-- pause -->
 ##### implement `poll` checking for **new** *data*
 
+<!-- pause -->
 #### in **each** event loop *iteration*
 ##### **poll** the *root* `Future`
 
@@ -433,7 +535,7 @@ EV3RT API Mismatch
 🦀 `async` Event Loop 🦀
 ---
 
-```rust
+```rust {all|2-3|6-11|6|7-9|10-11}
 pub fn run(self, future: mut PinBoxed<impl Future<Output = ()>>) {
     let waker = noop_waker();
     let mut context = core::task::Context::from_waker(&waker);
@@ -455,7 +557,7 @@ pub fn run(self, future: mut PinBoxed<impl Future<Output = ()>>) {
 🦀 `async` Boilerplate 🦀
 ---
 
-```rust
+```rust {all|1,2,6|5-6,9-11|3,14-16}
 fn no_op(_: *const ()) {}
 fn no_op_clone(_: *const ()) -> core::task::RawWaker {
     noop_raw_waker()
@@ -479,7 +581,7 @@ fn noop_waker() -> core::task::Waker {
 🦀 A `main` function, `async` style 🦀
 ---
 
-```rust
+```rust {all|2-3|5-7|10-13|9,14,15}
 async fn main<EV3: Ev3Brick>(ev3: EV3) {
     ev3.init();
     ev3.setup().await;
@@ -503,7 +605,7 @@ async fn main<EV3: Ev3Brick>(ev3: EV3) {
 🦀 The full `main_task` function 🦀
 ---
 
-```rust
+```rust {all|4|5|6}
 static FONT: Font<LcdTopSideUp> = build_font::<LcdTopSideUp>();
 #[no_mangle]
 pub extern "C" fn main_task() {
@@ -513,6 +615,7 @@ pub extern "C" fn main_task() {
 }
 ```
 
+<!-- pause -->
 ##### *pinning boilerplate*
 
 ```rust
@@ -538,15 +641,21 @@ loop {
 }
 ```
 
+<!-- pause -->
 #### `ev3` has the **full** *hardware* **state** but it is **not** `mut`
 ##### *its reference is shared with all tasks*
 
-#### *every* piece of **data** is *enclosed* in a `Cell`
+<!-- pause -->
+#### *every* piece of **data** in **EV3** is *enclosed* in a `Cell`
 ##### **OK**, because the *executor* is **single-threaded**
 
+<!-- pause -->
 ##### *every* sensor `Future` **refers** to a `Cell`:
+<!-- pause -->
 #### it can *provide* the **current** value immediately
+<!-- pause -->
 #### it supports `.await` for the **next value**
+<!-- pause -->
 #### it can provide a `Stream` of **future values**
 
 
@@ -555,8 +664,10 @@ loop {
 🦀 A Fast UI 🦀
 ---
 
+<!-- pause -->
 ##### Having a **UI** for the robot is **useful!**
 
+<!-- pause -->
 ##### Let's *see* what it **means**
 
 ![image:width:50%](img/bot-gui.jpg)
@@ -566,16 +677,22 @@ loop {
 The Fast UI Challenge
 ---
 
+<!-- pause -->
 ##### the **EV3** *screen*
 
+<!-- pause -->
 ##### resolution is **small** *(178×128)*
 
+<!-- pause -->
 #### framebuffer memory *layout* is **crazy**
 #### monochrome, **2 bits** per *pixel*, **3 pixels** per *byte*
+<!-- pause -->
 ##### not so big (total size **7680 bytes**), but...
 
+<!-- pause -->
 ##### ...a **full** screen *render* is insanely **slow**
 
+<!-- pause -->
 ##### *and latency is bad, right?*
 
 ---
@@ -583,12 +700,16 @@ The Fast UI Challenge
 Graphical Requirements
 ---
 
+<!-- pause -->
 ##### writing text, numbers and symbols
 
+<!-- pause -->
 ##### statically pick a screen orientation
 
+<!-- pause -->
 ##### very easy to read "in action"
 
+<!-- pause -->
 ##### drowing real time bar charts
 
 ---
@@ -596,14 +717,20 @@ Graphical Requirements
 Idea: a Character Based UI
 ---
 
+<!-- pause -->
 #### a **18×18** square *font*
 #### is **big** and **readable**
+<!-- pause -->
 #### can be *easily* **rotated**
+<!-- pause -->
 ##### does *not* **cross** *bytes*
 
+<!-- pause -->
 ##### the *screen* fits **10×7 chars**
-##### three square regions
+<!-- pause -->
+#### divided in three square regions
 ##### (1 main **7×7**, 2 secondary **3×3**)
+<!-- pause -->
 ##### *again, easy to rotate*
 
 ---
@@ -611,14 +738,20 @@ Idea: a Character Based UI
 Fast Screen Refresh
 ---
 
+<!-- pause -->
 #### a **full** frame *buffer* now is **10×7** = **70** bytes
 ##### **double** *buffering* becomes **feasible**
+<!-- pause -->
 #### a *diff* between two screens is almost **instant**
 ##### we can *redrow* only **changed** characters
+<!-- pause -->
 ##### drowing each *character* is a **54 bytes** write
+<!-- pause -->
 ##### *redrows* are limited to a **fixed framerate**
+<!-- pause -->
 ##### *(refreshing every 25㎳ is fine)*
 
+<!-- pause -->
 ##### **let's see it in action!**
 
 ---
@@ -626,12 +759,15 @@ Fast Screen Refresh
 Understanding What Goes Wrong
 ---
 
+<!-- pause -->
 #### having a **UI** is *fine*
 ##### but we **cannot** use it while the *robot* **races**
 
+<!-- pause -->
 #### **filming** the *robot* while it runs is **fine**
 ##### but it does **not** show what *happens* **inside**
 
+<!-- pause -->
 #### we **need** a *telemetry* **system**
 
 ---
@@ -639,18 +775,30 @@ Understanding What Goes Wrong
 What Do We Need?
 ---
 
-##### we would like to inspect
+<!-- pause -->
+##### we would like to inspect:
 
+<!-- pause -->
 #### timestamps `㎲`
+<!-- pause -->
 #### line error `ⓔ`
+<!-- pause -->
 #### error derivative `dⓔ /dt`
+<!-- pause -->
 #### gyro `deg/s`
+<!-- pause -->
 #### left and right wheel speed `㎜/s`
+<!-- pause -->
 #### left and right motor power `PWM`
+<!-- pause -->
 #### left, center, right sensor `flags`
+<!-- pause -->
 #### out condition `direction`
+<!-- pause -->
 ##### overall distance `㎜`
 
+<!-- pause -->
+#### *each sample*
 #### *fits in 20 bytes*
 
 
@@ -659,11 +807,16 @@ What Do We Need?
 The Telemetry Challenge
 ---
 
+<!-- pause -->
 #### we want to *see* **every** decision **taken**
 ##### *(a 20 bytes sample)*
+<!-- pause -->
 ##### potentially at a **10㎑** rate
+<!-- pause -->
 ##### transmitting **200 KB/s** over **BT**
+<!-- pause -->
 ##### *while* the robot *runs*
+<!-- pause -->
 ##### ⛔ **NO WAY** ⛔
 
 ---
@@ -671,13 +824,17 @@ The Telemetry Challenge
 Offline Telemetry
 ---
 
+<!-- pause -->
 #### in *practice* the event loop *runs* at **0.5㎑**
 ##### **10k** samples take **200 KB** of **RAM**
+<!-- pause -->
 #### at **0.5㎑** they cover **20s**
 ##### *this is more than enough!*
 
+<!-- pause -->
 ##### *(reducing sample rate covers more time)*
 
+<!-- pause -->
 ##### just **save** the *data file* when the race **stops**
 
 ---
@@ -685,10 +842,15 @@ Offline Telemetry
 Telemetry Task
 ---
 
+<!-- pause -->
 ##### **receives** data samples from *other tasks*
+<!-- pause -->
 ##### **pushes** samples to the *ring buffer*
+<!-- pause -->
 ##### at the *required* **rate**
+<!-- pause -->
 ##### **saves** data when *requested*
+<!-- pause -->
 ##### *(just as the race stops)*
 
 ---
@@ -716,16 +878,19 @@ Telemetry Result
 🤖 A Better Control Algorithm 🤖
 ---
 
-##### tuning 🅿 🅸 🅳 parameters
-
+<!-- pause -->
+#### tuning 🅿 🅸 🅳 parameters
 ##### can be *very* **confusing**
 
+<!-- pause -->
 #### their *intuitive* meaning
 ##### is **not** *difficult*
 
+<!-- pause -->
 #### but their **actual** *values*
 ##### can be **elusive**
 
+<!-- pause -->
 ##### 🤔 *is there a better way?* 🤔
 
 ---
@@ -738,12 +903,15 @@ Telemetry Result
 ![image:width:80%](img/tuning-proportional.jpg)
 <!-- column: 1 -->
 
+<!-- pause -->
 #### 🔴
 ##### distance from line
 
+<!-- pause -->
 #### 🔵
 ##### robot direction
 
+<!-- pause -->
 #### 🟢
 ##### desired direction
 
@@ -761,12 +929,15 @@ Telemetry Result
 ![image:width:80%](img/tuning-rotation.jpg)
 <!-- column: 1 -->
 
+<!-- pause -->
 #### 🔵
 ##### robot rotation speed
 
+<!-- pause -->
 #### 🔴
 ##### apparent line speed
 
+<!-- pause -->
 #### 🟢
 ##### desired compensation
 
@@ -786,14 +957,17 @@ Telemetry Result
 
 ##### consider *rotation speeds:*
 
+<!-- pause -->
 #### 🔵
 #### **actual** rotation speed **`RS`**
 ##### *taken from gyro or from wheels speeds*
 
+<!-- pause -->
 #### 🔴
 #### **apparent** rotation speed **`LS`**
 ##### *from line side speed (dⓔ /dt)*
 
+<!-- pause -->
 #### 🟢
 #### the **desired** rotation *speed* is
 ##### **`RS` - `LS`**
