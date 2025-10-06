@@ -133,9 +133,8 @@ Analog Sensors
 ---
 
 <!-- pause -->
-#### use **analog** *sensors*
-<!-- pause -->
-##### *a strange configuration*
+#### set them up to *sense* the **line**
+##### *position* **gradually**
 ![image:width:50%](img/bot-front-sensors-on.jpg)
 <!-- pause -->
 #### 😮 **sub millimeter** *accuracy* 😮
@@ -146,8 +145,8 @@ Fixed Point Math
 ---
 
 <!-- pause -->
-#### the EV3 CPU dos not have a
-##### Floating Point Unit
+#### the *EV3* **CPU** does **not** have a
+##### **Floating Point** *Unit*
 
 <!-- pause -->
 ##### fixed-point math to the rescue!
@@ -303,7 +302,11 @@ BUT WAIT
 <!-- pause -->
 ##### 🦀 What About Rust? 🦀
 <!-- pause -->
-##### 🤔 isn't this a Rust conference? 🤔
+#### we have been talking about
+#### *line follower* **robots** and
+##### *trajectory control* **algorithms**
+<!-- pause -->
+##### 🤔 *isn't this a **Rust** conference?* 🤔
 
 ---
 
@@ -311,13 +314,13 @@ BUT WAIT
 ---
 
 <!-- pause -->
-##### ...in a hobby robotic project?
+##### ...in a 🔧 hobby 🤖 robotic project?
 <!-- pause -->
-##### to *learn* the **language**
+##### to *learn* 🧠 the **language**
 <!-- pause -->
-##### to *avoid* **mistakes**
+##### to *avoid* 🐞 **bugs**
 <!-- pause -->
-##### *because* it is **possible!**
+##### *because* it is 🎉 **possible!**
 
 ---
 
@@ -329,8 +332,11 @@ BUT WAIT
 ##### *(let's skip this)*
 
 <!-- pause -->
-#### `ev3dev` (a Debian port)
-##### *unpredictable latency (up to 20㎳)*
+##### `ev3dev` (a Debian port)
+<!-- pause -->
+#### extremely **flexible**, but with
+#### unpredictable **latency**
+##### *up to 20㎳*
 
 <!-- pause -->
 #### 🤔 *why* is latency an **issue** ❓
@@ -436,6 +442,9 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 ##### get **time** (㎲) and **sleep** (㎳)
 
 <!-- pause -->
+##### overall *latency*  is **sub ㎳**
+
+<!-- pause -->
 #### also provides *simplified* interfaces
 ##### to **file** system and **Bluetooth**
 
@@ -447,7 +456,8 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 The Need for `async`
 ---
 
-##### PARALLEL READS
+<!-- pause -->
+##### PARALLEL SENSOR READS
 
 <!-- pause -->
 ##### sensors *read* rate **mismatches**
@@ -474,7 +484,8 @@ The Need for `async`
 
 <!-- pause -->
 #### robot *logic* can be composed of
-##### different **parallel** state machines
+#### different **parallel** state machines
+##### *(different **tasks**)*
 
 <!-- pause -->
 #### process **line error**
@@ -482,7 +493,7 @@ The Need for `async`
 
 <!-- pause -->
 #### process **motor status**
-##### *(compute speed)*
+##### *(compute actual wheels speed)*
 
 <!-- pause -->
 ##### run **driving logic**
@@ -517,14 +528,22 @@ EV3RT API Mismatch
 ---
 
 <!-- pause -->
-#### run a **1㎳** event **loop** collecting
-##### all **data** with *pending reads*
+#### **EV3RT** does **not** expose **interrupts**
+##### but it *reads* sensors in **parallel** *internally*
 
 <!-- pause -->
-##### use `Future` with **no** *waker*
+#### run an **event loop** collecting
+#### all **data** from *pending reads*
+##### *(sleeping **1㎳** at every iteration)*
+
+<!-- pause -->
+##### implement `Future` values with **no** *waker*
 
 <!-- pause -->
 ##### implement `poll` checking for **new** *data*
+
+<!-- pause -->
+##### **compose** `Future`s as *usual*
 
 <!-- pause -->
 #### in **each** event loop *iteration*
@@ -535,14 +554,14 @@ EV3RT API Mismatch
 🦀 `async` Event Loop 🦀
 ---
 
-```rust {all|2-3|6-11|6|7-9|10-11}
-pub fn run(self, future: mut PinBoxed<impl Future<Output = ()>>) {
+```rust {all|1|2-3|6-11|6|7-9|10-11}
+pub fn run(self, root_task: mut PinBoxed<impl Future<Output = ()>>) {
     let waker = noop_waker();
     let mut context = core::task::Context::from_waker(&waker);
 
     loop {
         self.ev3.update();
-        if future.as_mut().poll(&mut context) == core::task::Poll::Ready(()) {
+        if root_task.as_mut().poll(&mut context) == core::task::Poll::Ready(()) {
             break;
         }
         self.ev3.apply();
@@ -624,6 +643,8 @@ pub fn pin_boxed<T>(t: T) -> PinBoxed<T> {
     alloc::boxed::Box::pin(t)
 }
 ```
+
+##### *(`alloc` is fine, we have **64 MB** of **RAM**)*
 
 ---
 
@@ -717,8 +738,13 @@ Graphical Requirements
 Idea: a Character Based UI
 ---
 
+<!-- column_layout: [2, 3] -->
+<!-- column: 0 -->
+![image:width:99%](img/bot-gui-annotated.jpg)
+
+<!-- column: 1 -->
 <!-- pause -->
-#### a **18×18** square *font*
+#### 🔴 a **18×18** square *font* 🔴
 #### is **big** and **readable**
 <!-- pause -->
 #### can be *easily* **rotated**
@@ -726,9 +752,9 @@ Idea: a Character Based UI
 ##### does *not* **cross** *bytes*
 
 <!-- pause -->
-##### the *screen* fits **10×7 chars**
+##### 🟢 the *screen* fits **10×7 chars** 🟢
 <!-- pause -->
-#### divided in three square regions
+#### 🔵 divided in three square regions 🔵
 ##### (1 main **7×7**, 2 secondary **3×3**)
 <!-- pause -->
 ##### *again, easy to rotate*
@@ -740,7 +766,8 @@ Fast Screen Refresh
 
 <!-- pause -->
 #### a **full** frame *buffer* now is **10×7** = **70** bytes
-##### **double** *buffering* becomes **feasible**
+#### **double** *buffering* becomes **feasible**
+##### *(the problem was **speed** and not **memory**)*
 <!-- pause -->
 #### a *diff* between two screens is almost **instant**
 ##### we can *redrow* only **changed** characters
@@ -835,7 +862,7 @@ Offline Telemetry
 ##### *(reducing sample rate covers more time)*
 
 <!-- pause -->
-##### just **save** the *data file* when the race **stops**
+##### **save** the *data file* when the race **stops**
 
 ---
 
@@ -989,6 +1016,29 @@ DEMO TIME
  |  | |  |  \/  |___    |    |__| | \| .
 
 ```
+
+---
+
+🚧 IMPORTANT NOTICE 🚧
+---
+
+<!-- pause -->
+#### no 🦀 crab 🦀 was *harmed*
+##### in the *production* of this talk
+
+<!-- pause -->
+##### but **several** were put to *good* **use**
+
+<!-- pause -->
+#### 📊 presenterm 📊
+#### 💻 **WEZ** terminal 💻
+##### 🌠 **Cosmic** desktop 🌠
+
+<!-- pause -->
+##### 🙏 **thanks to the community** 🙏
+
+<!-- pause -->
+##### 🦀 *the **Rust** ecosystem is **amazing*** 🦀
 
 ---
 
