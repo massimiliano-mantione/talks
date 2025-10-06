@@ -442,7 +442,7 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 ##### get **time** (㎲) and **sleep** (㎳)
 
 <!-- pause -->
-##### overall *latency*  is **sub ㎳**
+##### **OS** *latency* is **sub ㎳**
 
 <!-- pause -->
 #### also provides *simplified* interfaces
@@ -450,6 +450,28 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 
 <!-- pause -->
 #### *usable*, but **not enough**
+
+---
+
+API for Arduino-style Coding
+---
+
+<!-- pause -->
+##### *full* logic in a **single** *event* **loop**
+
+<!-- pause -->
+```rust
+loop {
+    read_sensors()
+    compute_something()
+    apply_results()
+}
+```
+<!-- pause -->
+##### 🤔 *what's **wrong** with it?* 🤔
+
+<!-- pause -->
+##### **nothing!** *but...*
 
 ---
 
@@ -597,11 +619,11 @@ fn noop_waker() -> core::task::Waker {
 
 ---
 
-🦀 A `main` function, `async` style 🦀
+🦀 A `root_task` function, `async` style 🦀
 ---
 
 ```rust {all|2-3|5-7|10-13|9,14,15}
-async fn main<EV3: Ev3Brick>(ev3: EV3) {
+async fn root_task<EV3: Ev3Brick>(ev3: EV3) {
     ev3.init();
     ev3.setup().await;
 
@@ -621,16 +643,16 @@ async fn main<EV3: Ev3Brick>(ev3: EV3) {
 
 ---
 
-🦀 The full `main_task` function 🦀
+🦀 The full `main` function 🦀
 ---
 
 ```rust {all|4|5|6}
 static FONT: Font<LcdTopSideUp> = build_font::<LcdTopSideUp>();
 #[no_mangle]
-pub extern "C" fn main_task() {
+pub extern "C" fn main() {
     let ev3 = Ev3::new(&FONT, Duration::from_ms(25));
-    let future = main(ev3.clone());
-    ev3.run(pin_boxed(future), false);
+    let future = root_task(ev3.clone());
+    ev3.run(pin_boxed(future));
 }
 ```
 
@@ -682,20 +704,35 @@ loop {
 
 ---
 
-🦀 A Fast UI 🦀
+So far, so good
+---
+
+<!-- pause -->
+##### *...but...*
+
+<!-- pause -->
+#### how do we *interact*
+##### with the **robot**?
+
+<!-- pause -->
+#### how do we *inspect*
+##### what the **robot** is **doing**?
+
+---
+
+We Need a UI
 ---
 
 <!-- pause -->
 ##### Having a **UI** for the robot is **useful!**
 
 <!-- pause -->
-##### Let's *see* what it **means**
-
 ![image:width:50%](img/bot-gui.jpg)
+##### Let's *see* what it **means**
 
 ---
 
-The Fast UI Challenge
+🦀 The Fast UI Challenge 🦀
 ---
 
 <!-- pause -->
@@ -779,7 +816,18 @@ Fast Screen Refresh
 ##### *(refreshing every 25㎳ is fine)*
 
 <!-- pause -->
-##### **let's see it in action!**
+##### **we'll see it in action at the end!**
+
+<!-- pause -->
+##### *what's missing?*
+
+---
+
+Understanding What Goes Wrong
+---
+
+##### from **UI**
+##### to **TELEMETRY**
 
 ---
 
