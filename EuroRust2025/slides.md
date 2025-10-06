@@ -79,6 +79,27 @@ Talk Outline
 
 ---
 
+Talk Progress
+---
+
+```rust {2}
+
+ line_followers() & PID::controllers
+ 
+ embedded_rust + EV3::Brick
+ 
+ why_async() & custom::Async::runtime()
+ 
+ embedded * GUI
+ 
+ Telemetry
+ 
+ line_follower(control + algorithms) -> Advanced
+
+```
+
+---
+
 🤖 Line Follower Robots 🤖
 ---
 
@@ -310,6 +331,27 @@ BUT WAIT
 
 ---
 
+Talk Progress
+---
+
+```rust {4}
+
+ line_followers() & PID::controllers
+ 
+ embedded_rust + EV3::Brick
+ 
+ why_async() & custom::Async::runtime()
+ 
+ embedded * GUI
+ 
+ Telemetry
+ 
+ line_follower(control + algorithms) -> Advanced
+
+```
+
+---
+
 🦀 Why Rust... 🦀
 ---
 
@@ -460,7 +502,7 @@ API for Arduino-style Coding
 ##### *full* logic in a **single** *event* **loop**
 
 <!-- pause -->
-```rust
+```rust {1,5|2|3|4|all}
 loop {
     read_sensors()
     compute_something()
@@ -472,6 +514,27 @@ loop {
 
 <!-- pause -->
 ##### **nothing!** *but...*
+
+---
+
+Talk Progress
+---
+
+```rust {6}
+
+ line_followers() & PID::controllers
+ 
+ embedded_rust + EV3::Brick
+ 
+ why_async() & custom::Async::runtime()
+ 
+ embedded * GUI
+ 
+ Telemetry
+ 
+ line_follower(control + algorithms) -> Advanced
+
+```
 
 ---
 
@@ -720,6 +783,27 @@ So far, so good
 
 ---
 
+Talk Progress
+---
+
+```rust {8}
+
+ line_followers() & PID::controllers
+ 
+ embedded_rust + EV3::Brick
+ 
+ why_async() & custom::Async::runtime()
+ 
+ embedded * GUI
+ 
+ Telemetry
+ 
+ line_follower(control + algorithms) -> Advanced
+
+```
+
+---
+
 We Need a UI
 ---
 
@@ -820,6 +904,27 @@ Fast Screen Refresh
 
 <!-- pause -->
 ##### *what's missing?*
+
+---
+
+Talk Progress
+---
+
+```rust {10}
+
+ line_followers() & PID::controllers
+ 
+ embedded_rust + EV3::Brick
+ 
+ why_async() & custom::Async::runtime()
+ 
+ embedded * GUI
+ 
+ Telemetry
+ 
+ line_follower(control + algorithms) -> Advanced
+
+```
 
 ---
 
@@ -934,6 +1039,27 @@ Telemetry Result
 ---
 
 ![image:width:80%](img/telemetry.png)
+
+---
+
+Talk Progress
+---
+
+```rust {12}
+
+ line_followers() & PID::controllers
+ 
+ embedded_rust + EV3::Brick
+ 
+ why_async() & custom::Async::runtime()
+ 
+ embedded * GUI
+ 
+ Telemetry
+ 
+ line_follower(control + algorithms) -> Advanced
+
+```
 
 ---
 
