@@ -84,17 +84,17 @@ Talk Progress
 
 ```rust {2}
 
- line_followers() & PID::controllers
+ line_followers() & PID::controllers;
  
- embedded_rust + EV3::Brick
+ embedded_rust + Lego::EV3::Brick;
  
- why_async() & custom::Async::runtime()
+ why_async() & custom::Async::runtime();
  
- embedded * GUI
+ embedded * GUI;
  
- Telemetry
+ Telemetry;
  
- line_follower(control + algorithms) -> Advanced
+ line_follower(control + algorithms) -> Advanced;
 
 ```
 
@@ -257,7 +257,7 @@ Fixed Point Math
 
 <!-- pause -->
 #### 🔴
-##### apparent line speed
+##### apparent line side speed
 
 <!-- pause -->
 #### 🟢
@@ -334,19 +334,19 @@ BUT WAIT
 Talk Progress
 ---
 
-```rust {4}
+```rust {2|4}
 
- line_followers() & PID::controllers
+ line_followers() & PID::controllers;
  
- embedded_rust + EV3::Brick
+ embedded_rust + Lego::EV3::Brick;
  
- why_async() & custom::Async::runtime()
+ why_async() & custom::Async::runtime();
  
- embedded * GUI
+ embedded * GUI;
  
- Telemetry
+ Telemetry;
  
- line_follower(control + algorithms) -> Advanced
+ line_follower(control + algorithms) -> Advanced;
 
 ```
 
@@ -416,7 +416,7 @@ Line Follower Latency
 
 <!-- pause -->
 #### line *width*: **20㎜**
-#### max *latency*: about **4㎳**
+#### max *sensing period*: about **4㎳**
 
 ---
 
@@ -442,9 +442,12 @@ Enter EV3RT
 <!-- pause -->
 ##### *wrapping* the **C API** is easy
 <!-- pause -->
+#### just *declare* all **C external** *functions*
+##### and **wrap** them with *safe Rust* ones
+<!-- pause -->
 ##### EV3RT has a *dynamic* program **loader**
 <!-- pause -->
-##### *programs* are "custom" **ELF files**
+##### *programs* are "plain" **ELF files**
 <!-- pause -->
 ##### the *linker* script is **crazy**
 
@@ -461,10 +464,10 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 #### compile Rust code to a static lib (`.a`)
 ##### that implements the `main()` function
 <!-- pause -->
-#### replace the `main` C `.o` file
+#### replace the C `.o` file providing **`main`**
 ##### with the Rust `.a` library
 <!-- pause -->
-#### use the EV3RT linker script
+#### use the **original** EV3RT **linker script**
 ##### to produce the loadable app
 
 <!-- pause -->
@@ -488,7 +491,7 @@ EV3RT 🤖 Rust 🦀 Linking 🔗 Recipe
 
 <!-- pause -->
 #### also provides *simplified* interfaces
-##### to **file** system and **Bluetooth**
+##### to **file** system and **Bluetooth** serial
 
 <!-- pause -->
 #### *usable*, but **not enough**
@@ -520,19 +523,19 @@ loop {
 Talk Progress
 ---
 
-```rust {6}
+```rust {4|6}
 
- line_followers() & PID::controllers
+ line_followers() & PID::controllers;
  
- embedded_rust + EV3::Brick
+ embedded_rust + Lego::EV3::Brick;
  
- why_async() & custom::Async::runtime()
+ why_async() & custom::Async::runtime();
  
- embedded * GUI
+ embedded * GUI;
  
- Telemetry
+ Telemetry;
  
- line_follower(control + algorithms) -> Advanced
+ line_follower(control + algorithms) -> Advanced;
 
 ```
 
@@ -542,7 +545,7 @@ The Need for `async`
 ---
 
 <!-- pause -->
-##### PARALLEL SENSOR READS
+##### CONCURRENT SENSOR READS
 
 <!-- pause -->
 ##### sensors *read* rate **mismatches**
@@ -551,7 +554,7 @@ The Need for `async`
 ##### RGB color:  **1㎳**
 
 <!-- pause -->
-#### a logic *loop* should read in **parallel**
+#### a logic *loop* should read **concurrently**
 <!-- pause -->
 #### *RGB* color data every **1ms**
 <!-- pause -->
@@ -565,12 +568,12 @@ The Need for `async`
 The Need for `async`
 ---
 
-##### PARALLEL LOGIC
+##### CONCURRENT LOGIC
 
 <!-- pause -->
 #### robot *logic* can be composed of
-#### different **parallel** state machines
-##### *(different **tasks**)*
+#### different **concurrent** state machines
+##### *(different **tasks** progressing at different **rates**)*
 
 <!-- pause -->
 #### process **line error**
@@ -587,7 +590,7 @@ The Need for `async`
 ##### collect **telemetry**
 
 <!-- pause -->
-##### handle **screen** and **input**
+##### handle **screen** and **input** buttons
 
 ---
 
@@ -614,7 +617,9 @@ EV3RT API Mismatch
 
 <!-- pause -->
 #### **EV3RT** does **not** expose **interrupts**
-##### but it *reads* sensors in **parallel** *internally*
+<!-- pause -->
+#### but it *reads* sensors **concurrently** *internally*
+##### *(and provides their **values** in a **shared RAM** area)*
 
 <!-- pause -->
 #### run an **event loop** collecting
@@ -628,11 +633,13 @@ EV3RT API Mismatch
 ##### implement `poll` checking for **new** *data*
 
 <!-- pause -->
-##### **compose** `Future`s as *usual*
+#### **compose** `Future`s with *usual combinators*
+##### *(`zip` or `join`, `select`...)*
 
 <!-- pause -->
-#### in **each** event loop *iteration*
-##### **poll** the *root* `Future`
+#### **each** event loop *iteration*
+#### **`poll`s** the *root* `Future`
+##### *(this kicks all tasks into making progress)*
 
 ---
 
@@ -786,19 +793,19 @@ So far, so good
 Talk Progress
 ---
 
-```rust {8}
+```rust {6|8}
 
- line_followers() & PID::controllers
+ line_followers() & PID::controllers;
  
- embedded_rust + EV3::Brick
+ embedded_rust + Lego::EV3::Brick;
  
- why_async() & custom::Async::runtime()
+ why_async() & custom::Async::runtime();
  
- embedded * GUI
+ embedded * GUI;
  
- Telemetry
+ Telemetry;
  
- line_follower(control + algorithms) -> Advanced
+ line_follower(control + algorithms) -> Advanced;
 
 ```
 
@@ -812,7 +819,7 @@ We Need a UI
 
 <!-- pause -->
 ![image:width:50%](img/bot-gui.jpg)
-##### Let's *see* what it **means**
+##### it *looks* like **this**
 
 ---
 
@@ -849,7 +856,7 @@ Graphical Requirements
 ##### statically pick a screen orientation
 
 <!-- pause -->
-##### very easy to read "in action"
+##### should be easy to read "in action"
 
 <!-- pause -->
 ##### drowing real time bar charts
@@ -910,19 +917,19 @@ Fast Screen Refresh
 Talk Progress
 ---
 
-```rust {10}
+```rust {8|10}
 
- line_followers() & PID::controllers
+ line_followers() & PID::controllers;
  
- embedded_rust + EV3::Brick
+ embedded_rust + Lego::EV3::Brick;
  
- why_async() & custom::Async::runtime()
+ why_async() & custom::Async::runtime();
  
- embedded * GUI
+ embedded * GUI;
  
- Telemetry
+ Telemetry;
  
- line_follower(control + algorithms) -> Advanced
+ line_follower(control + algorithms) -> Advanced;
 
 ```
 
@@ -931,6 +938,7 @@ Talk Progress
 Understanding What Goes Wrong
 ---
 
+<!-- pause -->
 ##### from **UI**
 ##### to **TELEMETRY**
 
@@ -991,10 +999,11 @@ The Telemetry Challenge
 #### we want to *see* **every** decision **taken**
 ##### *(a 20 bytes sample)*
 <!-- pause -->
-##### potentially at a **10㎑** rate
+##### potentially at a **1㎑** rate
 <!-- pause -->
-##### transmitting **200 KB/s** over **BT**
+##### transmitting **20 KB/s** over **BT** serial
 <!-- pause -->
+#### with *EV3RT*,
 ##### *while* the robot *runs*
 <!-- pause -->
 ##### ⛔ **NO WAY** ⛔
@@ -1012,10 +1021,10 @@ Offline Telemetry
 ##### *this is more than enough!*
 
 <!-- pause -->
-##### *(reducing sample rate covers more time)*
+##### **save** the *data file* when the race **stops**
 
 <!-- pause -->
-##### **save** the *data file* when the race **stops**
+##### *(reducing sample rate covers more time)*
 
 ---
 
@@ -1045,19 +1054,19 @@ Telemetry Result
 Talk Progress
 ---
 
-```rust {12}
+```rust {10|12}
 
- line_followers() & PID::controllers
+ line_followers() & PID::controllers;
  
- embedded_rust + EV3::Brick
+ embedded_rust + Lego::EV3::Brick;
  
- why_async() & custom::Async::runtime()
+ why_async() & custom::Async::runtime();
  
- embedded * GUI
+ embedded * GUI;
  
- Telemetry
+ Telemetry;
  
- line_follower(control + algorithms) -> Advanced
+ line_follower(control + algorithms) -> Advanced;
 
 ```
 
@@ -1136,7 +1145,7 @@ Talk Progress
 
 <!-- pause -->
 #### 🔴
-##### apparent line speed
+##### apparent line side speed
 
 <!-- pause -->
 #### 🟢
