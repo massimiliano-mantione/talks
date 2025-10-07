@@ -213,7 +213,8 @@ Fixed Point Math
 ##### `turn` = ⓔ ×`ₖ🄿 ` + (∫ⓔ dt)×`ₖ🄸 ` + (dⓔ /dt)×`ₖ🄳 `
 
 <!-- pause -->
-##### *this gives **smooth** trajectory control*
+#### *this should give **smooth** trajectory control*
+##### ***if** the constans are **tuned** properly*
 
 ---
 
@@ -692,7 +693,7 @@ fn noop_waker() -> core::task::Waker {
 🦀 A `root_task` function, `async` style 🦀
 ---
 
-```rust {all|2-3|5-7|10-13|9,14,15}
+```rust {all|1|2-3|5-7|10-13|9,14,15}
 async fn root_task<EV3: Ev3Brick>(ev3: EV3) {
     ev3.init();
     ev3.setup().await;
@@ -759,7 +760,7 @@ loop {
 ##### *its reference is shared with all tasks*
 
 <!-- pause -->
-#### *every* piece of **data** in **EV3** is *enclosed* in a `Cell`
+#### *every* atomic piece of **data** in **EV3** is *enclosed* in a `Cell`
 ##### **OK**, because the *executor* is **single-threaded**
 
 <!-- pause -->
@@ -1021,6 +1022,7 @@ Offline Telemetry
 ##### *this is more than enough!*
 
 <!-- pause -->
+#### **push** each *sample to a *ring buffer* while the robot **runs**
 ##### **save** the *data file* when the race **stops**
 
 <!-- pause -->
