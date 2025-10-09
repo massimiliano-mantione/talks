@@ -1115,6 +1115,8 @@ Talk Progress
 ![image:width:80%](img/tuning-proportional.jpg)
 <!-- column: 1 -->
 
+##### *tuning* `ₖ🄿 `
+
 <!-- pause -->
 #### 🔴
 ##### distance from line
@@ -1140,6 +1142,8 @@ Talk Progress
 <!-- column: 0 -->
 ![image:width:80%](img/tuning-rotation.jpg)
 <!-- column: 1 -->
+
+##### *tuning* `ₖ🄳 `
 
 <!-- pause -->
 #### 🔵
@@ -1167,6 +1171,9 @@ Talk Progress
 ![image:width:80%](img/tuning-turn.jpg)
 <!-- column: 1 -->
 
+##### *finely tuning* `ₖ🄳 `
+
+<!-- pause -->
 ##### consider *rotation speeds:*
 
 <!-- pause -->
@@ -1201,6 +1208,30 @@ DEMO TIME
  |  | |  |  \/  |___    |    |__| | \| .
 
 ```
+
+---
+
+A Quick Recap
+---
+
+<!-- pause -->
+##### we have seen...
+
+<!-- pause -->
+##### **line** *followers* and **PID** *controllers*
+
+<!-- pause -->
+#### embedded **Rust** on a strange **RTOS**
+##### *(and running on a **Lego brick**!)*
+
+<!-- pause -->
+##### a **custom**, embedded `async` runtime
+
+<!-- pause -->
+##### a *minimal* and *efficient* **telemetry** system
+
+<!-- pause -->
+##### **advanced** line follower **algorithms**
 
 ---
 
